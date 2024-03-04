@@ -1,0 +1,23 @@
+# ?? ?? ??
+server:
+port: 8082
+
+# database ?? ??
+spring:
+ datasource:
+  driver-class-name: com.mysql.jdbc.Driver
+  url: ${DB_url}
+  username: ${DB_username}
+  password: ${DB_password}
+
+thymeleaf:
+cache: false
+
+# spring data jpa ??
+jpa:
+database-platform: org.hibernate.dialect.MySQL8Dialect
+open-in-view: false
+show-sql: true
+hibernate:
+ddl-auto: update
+# ??? ??? create ->update
