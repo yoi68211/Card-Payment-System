@@ -1,11 +1,11 @@
 # ?? ?? ??
 server:
-port: 8082
+  port: 8082
 
 # database ?? ??
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${DB_url}
     username: ${DB_username}
     password: ${DB_password}
