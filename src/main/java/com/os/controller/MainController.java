@@ -19,4 +19,13 @@ public class MainController {
         return "/dashboard";
     }
 
+
+    @GetMapping("/join")
+    public String joinPage()   {
+
+        return "/user/join";
+
+    }
+
+
 }

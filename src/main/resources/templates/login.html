@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login page</title>
+    <meta charset="UTF-8">
+    <title>로그인 페이지</title>
 </head>
 <body>
-<h1>Login page</h1>
-<p th:if="${loginError}" class="error">Wrong user or password</p>
+<h1>로그인 페이지</h1>
 <form th:action="@{/login}" method="post">
-    <label for="email">email</label>:
-    <input type="text" id="email" name="email" autofocus="autofocus" /> <br />
-    <label for="password">Password</label>:
-    <input type="password" id="password" name="password" /> <br />
-    <input type="submit" value="Log in" />
+    <label for="email">이메일</label>:
+    <input type="text" id="email" name="email" autofocus="autofocus" />
+    <br/>
+    <label for="password">비밀번호</label>:
+    <input type="password" id="password" name="password"/>
+    <br/>
+    <a href="join">회원가입</a>
+    <input type="submit" value="로그인"/>
 </form>
 </body>
 </html>
