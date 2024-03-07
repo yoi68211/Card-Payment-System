@@ -33,4 +33,7 @@ public class MainController {
         return "/pageSample";
     }
 
+    @GetMapping("insert_form")
+    public String insert_form(){ return "insert_form"; }
+
 }
