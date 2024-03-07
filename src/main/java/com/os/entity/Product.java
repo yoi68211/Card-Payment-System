@@ -1,5 +1,6 @@
-package com.os.product;
+package com.os.entity;
 
+import com.os.entity.Payment;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,5 +14,11 @@ public class Product {
     private String name;
     private String amount;
     private String price;
+
+    @ManyToOne
+    @JoinColumn(name = "paymentId")
+    private Payment payment;
+
+
 
 }

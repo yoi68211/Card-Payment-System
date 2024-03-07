@@ -1,9 +1,7 @@
-package com.os.customer;
+package com.os.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.os.entity.Payment;
+import jakarta.persistence.*;
 
 @Entity
 public class Customer {
@@ -16,8 +14,8 @@ public class Customer {
     private String phone;
     private String address;
 
-
-
-
+    @ManyToOne
+    @JoinColumn(name = "paymentId")
+    private Payment payment;
 
 }

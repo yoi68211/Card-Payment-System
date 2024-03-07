@@ -19,6 +19,15 @@ public class MainController {
         return "/dashboard";
     }
 
+
+    @GetMapping("/join")
+    public String joinPage()   {
+
+        return "/user/join";
+
+    }
+
+
     @GetMapping("pageSample")
     public String pageSample() {
         return "/pageSample";

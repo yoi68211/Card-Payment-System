@@ -1,8 +1,9 @@
-package com.os.user.service;
+package com.os.service;
 
-import com.os.user.User;
-import com.os.user.dto.CustomUserDetails;
-import com.os.user.repository.UserRepository;
+import com.os.entity.User;
+import com.os.dto.CustomUserDetails;
+import com.os.repository.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,7 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
+        
         User user = userRepository.findByEmail(email);
 
         if (user == null){

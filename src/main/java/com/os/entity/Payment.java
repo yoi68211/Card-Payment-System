@@ -1,11 +1,12 @@
-package com.os.payment;
+package com.os.entity;
 
-import com.os.payment.util.OrderStatus;
-import com.os.payment.util.OrderType;
+import com.os.util.OrderStatus;
+import com.os.util.OrderType;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Payment {
@@ -22,9 +23,16 @@ public class Payment {
     private OrderStatus status;
     private LocalDateTime paymentDate;
     private LocalDateTime paymentCycle;
+
     @CreationTimestamp
     private LocalDateTime createTime;
     @UpdateTimestamp
     private LocalDateTime updateTime;
+
+    @OneToMany(mappedBy = "payment", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
+    private List<Product> products;
+
+    @OneToMany(mappedBy = "payment",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Customer> customers;
 
 }

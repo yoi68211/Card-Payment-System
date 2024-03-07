@@ -1,11 +1,13 @@
-package com.os.user;
+package com.os.entity;
 
-import com.os.payment.util.UserRole;
+import com.os.util.UserRole;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,15 +18,21 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String username;
-    @Column(nullable = true,unique = true)
+    @Column(nullable = false ,unique = true)
     private String email;
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String password;
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+    @OneToMany
+    @JoinColumn(name = "userId")
+    private List<Payment> payments;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
+    private List<Memo> memos;
 
     @Builder
     public User(Long userId, String username, String email, String password, UserRole role) {
@@ -34,4 +42,6 @@ public class User {
         this.password = password;
         this.role = role;
     }
+
+
 }

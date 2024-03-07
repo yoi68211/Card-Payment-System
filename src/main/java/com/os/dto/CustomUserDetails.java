@@ -1,6 +1,6 @@
-package com.os.user.dto;
+package com.os.dto;
 
-import com.os.user.User;
+import com.os.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -36,6 +36,10 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public String getUsername() {
         return user.getEmail();
+    }
+
+    public String  getName(){
+        return user.getUsername();
     }
 
     @Override
