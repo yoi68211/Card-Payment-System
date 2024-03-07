@@ -13,7 +13,7 @@ public class MainController {
     public String index() {
         return "/login";
     }
-
+    
     @GetMapping("dashboard")
     public String login() {
         return "/dashboard";
@@ -27,5 +27,10 @@ public class MainController {
 
     }
 
+
+    @GetMapping("pageSample")
+    public String pageSample() {
+        return "/pageSample";
+    }
 
 }

@@ -1,0 +1,161 @@
+*{
+            box-sizing: border-box;
+        }
+        body{
+            background-color: #e8e9ed;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            margin-left: 20px;
+
+            display: grid;
+            grid-template-columns: 20% 75%;
+            grid-template-rows: 100px auto 50px;
+            grid-template-areas:
+                'header header'
+                'side main';
+            transition: grid-template-columns 0.5s ease;
+        }
+        a{
+            text-decoration: none;
+        }
+        i{
+            margin: 0px 5px;
+        }
+        header{
+            grid-area: header;
+            font-size: 18px;
+            font-weight: bold;
+            color: blue;
+        }
+        header a{
+            color: black;
+        }
+        .header-flex{
+            display: flex;
+            justify-content: space-between;
+        }
+        .header-icon{
+            margin-right: 10px;
+        }
+        #sidebar-action-icon{
+            border: 1px solid white;
+            border-radius: 100%;
+            padding: 10px;
+            background-color: white;
+        }
+        .collapsed {
+            grid-template-columns: 10% 85%;
+        }
+
+        #profile-img{
+            width: 30px;
+            margin-bottom: 5px;
+            vertical-align: middle;
+        }
+
+        .header-flex-box:nth-child(1){
+            width: 20%;
+        }
+        .header-flex-box:nth-child(2){
+            width: 50%;
+            margin-left: 13px;
+        }
+        .header-flex-box:nth-child(3){
+            width: 30%;
+        }
+        .header-flex-three{
+            float: right;
+
+        }
+
+        main{
+            grid-area: main;
+            border: 1px solid black;
+        }
+        aside{
+            grid-area: side;
+        }
+        .item{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+
+        }
+        .header-nav{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #sidebar{
+            background-color: white;
+            border: 1px solid black;
+            border-radius: 22px;
+            width: 80%;
+            display: inline-block;
+            height: 100%;
+
+        }
+        ul{
+            list-style-type: none;
+            padding-top: 10px;
+
+
+        }
+        li{
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            margin: 20px 0px;
+        }
+
+        #submenu-trigger{
+            position: relative;
+            display: inline-block;
+        }
+        #submenu {
+            display: none;
+            position: absolute;
+            left: -35px;
+            background-color: white;
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 15px;
+
+        }
+
+        #submenu a {
+            display: block;
+            color: black;
+            text-decoration: none;
+            margin-bottom: 5px;
+        }
+
+        #submenu-trigger:hover #submenu {
+            display: block;
+        }
+        #submenuLhover #submenu{
+            display: block;
+        }
+
+        .payList{
+            margin-left: 15px;
+        }
+        .payList-nav {
+            display: block;
+            opacity: 0; /* 초기에는 투명하게 설정 */
+            transition: opacity 0.2s; /* opacity 속성에 대한 트랜지션 효과 적용 */
+        }
+
+        .hidden {
+            opacity: 0; /* 투명하게 설정하여 숨김 */
+            pointer-events: none; /* 투명한 상태에서 이벤트 처리 비활성화 */
+        }
+
+        .visible {
+            opacity: 1; /* 불투명하게 설정하여 표시 */
+            pointer-events: auto; /* 이벤트 처리 활성화 */
+        }
