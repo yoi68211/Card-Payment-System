@@ -5,7 +5,7 @@ server:
 # database ?? ??
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${DB_url}
     username: ${DB_username}
     password: ${DB_password}
