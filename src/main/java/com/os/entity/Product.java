@@ -1,9 +1,13 @@
 package com.os.entity;
 
-import com.os.entity.Payment;
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Product {
 
     @Id
@@ -12,13 +16,13 @@ public class Product {
     private Long productId;
 
     private String name;
+    private String totalItems;
     private String amount;
     private String price;
 
     @ManyToOne
     @JoinColumn(name = "paymentId")
     private Payment payment;
-
 
 
 }

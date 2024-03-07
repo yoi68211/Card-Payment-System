@@ -23,7 +23,7 @@ public class MainController {
     @GetMapping("/join")
     public String joinPage()   {
 
-        return "/user/join";
+        return "/join";
 
     }
 

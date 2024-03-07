@@ -1,9 +1,14 @@
 package com.os.entity;
 
-import com.os.entity.Payment;
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Customer {
 
     @Id
@@ -18,4 +23,14 @@ public class Customer {
     @JoinColumn(name = "paymentId")
     private Payment payment;
 
+
+//    @Builder
+//    public Customer(Long customerId, String name, String email, String phone, String address, Payment payment) {
+//        this.customerId = customerId;
+//        this.name = name;
+//        this.email = email;
+//        this.phone = phone;
+//        this.address = address;
+//        this.payment = payment;
+//    }
 }
