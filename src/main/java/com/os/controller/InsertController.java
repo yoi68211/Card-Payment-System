@@ -1,6 +1,6 @@
 package com.os.controller;
 
-import com.os.product.Product;
+import com.os.entity.Product;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
