@@ -157,7 +157,7 @@
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     alert("비밀번호가 성공적으로 변경되었습니다.");
-                    location.href = "http:localhost:8082/dashboard"; // 세미콜론 추가
+                    location.href = "/dashboard"; // 세미콜론 추가
                 } else if (xhr.status === 400) {
                     alert("현재 비밀번호가 일치하지 않습니다.");
                 }
