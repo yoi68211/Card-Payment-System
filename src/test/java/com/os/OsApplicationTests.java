@@ -3,21 +3,20 @@ package com.os;
 import com.os.entity.Customer;
 import com.os.entity.Payment;
 import com.os.entity.Product;
+import com.os.entity.User;
 import com.os.repository.CustomerRepository;
 import com.os.repository.PaymentRepository;
 import com.os.repository.ProductRepository;
+import com.os.repository.UserRepository;
 import com.os.util.BizTo;
 import com.os.util.OrderStatus;
 import com.os.util.OrderType;
 import com.os.util.UserRole;
-import com.os.entity.User;
-import com.os.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,11 +62,11 @@ class   OsApplicationTests {
 
 				.documentNo("docu-1")
 				.title("paymentTitle")
-				.bizTo(BizTo.BToB)
+				.bizTo(BizTo.BtoB)
 				.type(OrderType.basic)
 				.status(OrderStatus.paid)
-				.paymentDate(payday)
-				.paymentCycle(payday.plusMonths(1))
+				.paymentDate("5")
+				.cycle("다음달")
 				.build();
 
 		paymentRepository.save(setpayment);
