@@ -13,11 +13,20 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long customerId;
-    private String name;
-    private String email;
-    private String phone;
-    private String address;
+    @Column(nullable = false)
+    private Long customerId;            // customer 순번
+
+    @Column(nullable = false)
+    private String name;                // 고객명
+
+    @Column(nullable = false)
+    private String email;               // 이메일
+
+    @Column(nullable = false)
+    private String phone;               // 전화번호
+
+    @Column(nullable = false)
+    private String address;             // 주소
 
     @ManyToOne
     @JoinColumn(name = "paymentId")

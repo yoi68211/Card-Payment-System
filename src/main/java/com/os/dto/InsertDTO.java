@@ -1,7 +1,10 @@
 package com.os.dto;
 
+import com.os.util.BizTo;
+import com.os.util.OrderType;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -14,12 +17,12 @@ public class InsertDTO {
     private String phone;
     private String address;
     private String title;
-    private String type;
+    private OrderType type;
     private String firstPay;
-    private String bizTo;
+    private BizTo bizTo;
     private String cycle;
-    private int paymentDate;
-    private int pay;
+    private String paymentDate;
+    private String pay;
     private String memo;
     private List<ProductDTO> productList;
 }

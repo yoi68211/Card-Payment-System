@@ -3,21 +3,20 @@ package com.os;
 import com.os.entity.Customer;
 import com.os.entity.Payment;
 import com.os.entity.Product;
+import com.os.entity.User;
 import com.os.repository.CustomerRepository;
 import com.os.repository.PaymentRepository;
 import com.os.repository.ProductRepository;
+import com.os.repository.UserRepository;
 import com.os.util.BizTo;
 import com.os.util.OrderStatus;
 import com.os.util.OrderType;
 import com.os.util.UserRole;
-import com.os.entity.User;
-import com.os.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,11 +62,11 @@ class   OsApplicationTests {
 
 				.documentNo("docu-1")
 				.title("paymentTitle")
-				.bizTo(BizTo.BToB)
+				.bizTo(BizTo.BtoB)
 				.type(OrderType.basic)
 				.status(OrderStatus.paid)
-				.paymentDate(payday)
-				.paymentCycle(payday.plusMonths(1))
+				.paymentDate("5")
+				.cycle("다음달")
 				.build();
 
 		paymentRepository.save(setpayment);
@@ -86,13 +85,13 @@ class   OsApplicationTests {
 
 		for (int i = 0; i < 3; i++) {
 			productList.add(Product.builder()
-					.payment(setpayment) 
-					.price("10000")
-					.totalItems("3")
-					.amount("30000")
+					.payment(setpayment)
+					.price(10000)
+					.totalItems(3)
+
 					.build());
 		}
-		
+
 		productRepository.saveAll(productList);
 	}
 
@@ -114,7 +113,7 @@ class   OsApplicationTests {
 				System.out.println("문서 번호가 " + "docu-1" + "인 결제에 속한 상품들:");
 				for (Product product : products) {
 					System.out.println("상품 ID: " + product.getProductId());
-					System.out.println("상품 이름: " + product.getName());
+					System.out.println("상품 이름: " + product.getProductName());
 					System.out.println("상품 가격: " +  product.getPrice());
 					// 추가 필요한 정보가 있다면 출력
 				}
