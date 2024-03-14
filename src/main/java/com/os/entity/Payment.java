@@ -67,33 +67,18 @@ public class Payment {
     @Column(nullable = false)
     private long userId;                   // user id값
 
+    @OneToOne
+    @JoinColumn(name = "autoPaymentId")
+    private AutoPayment autoPayment;
+
     @OneToMany(mappedBy = "payment", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
     private List<Product> products;
 
-    @OneToMany(mappedBy = "payment",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Customer> customers;
-
-    /////////////////////////////////////////////
-    // 임시저장 테이블 관계지정
+    @ManyToOne
+    @JoinColumn(name = "customerId")
+    private Customer customer;
 
 
 
-    /////////////////////////////////////////////
 
-//    @Builder
-//    public Payment(Long paymentId, String documentNo, String title, BizTo bizTo, String memo, OrderType type, OrderStatus status, LocalDateTime paymentDate, LocalDateTime paymentCycle, LocalDateTime createTime, LocalDateTime updateTime, List<Product> products, List<Customer> customers) {
-//        this.paymentId = paymentId;
-//        this.documentNo = documentNo;
-//        this.title = title;
-//        this.bizTo = bizTo;
-//        this.memo = memo;
-//        this.type = type;
-//        this.status = status;
-//        this.paymentDate = paymentDate;
-//        this.paymentCycle = paymentCycle;
-//        this.createTime = createTime;
-//        this.updateTime = updateTime;
-//        this.products = products;
-//        this.customers = customers;
-//    }
 }

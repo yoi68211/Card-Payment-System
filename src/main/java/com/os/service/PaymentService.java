@@ -52,7 +52,7 @@ public class PaymentService {
         customer.setEmail(dto.getEmail());
         customer.setPhone(dto.getPhone());
         customer.setAddress(dto.getAddress());
-        customer.setPayment(payment);
+//        customer.setPayment(payment);
 
         customerRepository.save(customer);
 

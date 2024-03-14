@@ -3,12 +3,13 @@ package com.os.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Customer {
 
     @Id
@@ -28,18 +29,12 @@ public class Customer {
     @Column(nullable = false)
     private String address;             // 주소
 
-    @ManyToOne
-    @JoinColumn(name = "paymentId")
-    private Payment payment;
+
+    @Column(nullable = false)
+    private long userId;                   // user id값
 
 
-//    @Builder
-//    public Customer(Long customerId, String name, String email, String phone, String address, Payment payment) {
-//        this.customerId = customerId;
-//        this.name = name;
-//        this.email = email;
-//        this.phone = phone;
-//        this.address = address;
-//        this.payment = payment;
-//    }
+    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Payment> payments;
+
 }

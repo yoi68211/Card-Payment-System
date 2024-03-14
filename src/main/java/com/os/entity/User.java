@@ -29,10 +29,15 @@ public class User {
 
     @OneToMany
     @JoinColumn(name = "userId")
-    private List<Payment> payments;
+    private List<Customer> customers;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
     private List<Memo> memos;
+
+    @OneToOne
+    @JoinColumn(name = "savePaymentId")
+    private SavePayment savePayment;
+
 
     @Builder
     public User(Long userId, String username, String email, String password, UserRole role) {

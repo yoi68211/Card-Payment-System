@@ -19,12 +19,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 //@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Save_payment {
+public class SavePayment {
 
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long s_paymentId;                 // 임시저장ID
+    private Long savePaymentId;                 // 임시저장ID
 
     @Column(nullable = false)
     private String documentNo;              // 문서번호
@@ -81,36 +81,16 @@ public class Save_payment {
     @Column(nullable = false)
     private char delYn;                     // 삭제여부(Y / N)
 
-    @Column(nullable = false)
-    private long userId;                   // user id값
 
-    @OneToMany(mappedBy = "payment", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
-    private List<Product> products;
+//    @OneToMany(mappedBy = "payment", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
+//    private List<SaveProduct> saveProducts;
 
-    @OneToMany(mappedBy = "payment",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Customer> customers;
 
-    /////////////////////////////////////////////
-    // 임시저장 테이블 관계지정
+    // TODO: 2024-03-14 아래르 SaveProduct 안에 추가 하셔야합니다 -김홍성-
+    //  @ManyToOne
+    //  @JoinColumn(name = "paymentId")
+    //  private SavePayment savePayment;
 
 
 
-    /////////////////////////////////////////////
-
-//    @Builder
-//    public Payment(Long paymentId, String documentNo, String title, BizTo bizTo, String memo, OrderType type, OrderStatus status, LocalDateTime paymentDate, LocalDateTime paymentCycle, LocalDateTime createTime, LocalDateTime updateTime, List<Product> products, List<Customer> customers) {
-//        this.paymentId = paymentId;
-//        this.documentNo = documentNo;
-//        this.title = title;
-//        this.bizTo = bizTo;
-//        this.memo = memo;
-//        this.type = type;
-//        this.status = status;
-//        this.paymentDate = paymentDate;
-//        this.paymentCycle = paymentCycle;
-//        this.createTime = createTime;
-//        this.updateTime = updateTime;
-//        this.products = products;
-//        this.customers = customers;
-//    }
 }

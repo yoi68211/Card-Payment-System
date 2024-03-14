@@ -86,9 +86,8 @@ class   OsApplicationTests {
 		for (int i = 0; i < 3; i++) {
 			productList.add(Product.builder()
 					.payment(setpayment)
-					.price("10000")
-					.totalItems("3")
-					.amount("30000")
+					.price(10000)
+					.totalItems(3)
 					.build());
 		}
 

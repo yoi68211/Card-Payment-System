@@ -24,9 +24,6 @@ public class Product {
     @Column(nullable = false)
     private int price;                       // 가격
 
-   /* @Column(nullable = false)
-    private int productAmount;     */                 // 금액
-
     @ManyToOne
     @JoinColumn(name = "paymentId")
     private Payment payment;
