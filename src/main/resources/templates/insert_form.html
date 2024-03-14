@@ -5,99 +5,6 @@
     <title>Title</title>
     <link rel="stylesheet" href="/css/insert_form.css">
     <script src="/js/insert_form.js"></script>
-    <script>
-        function send(f) {
-      var documentNo = f.documentNo.value;
-      var createTime = f.createTime.value;
-      var name = f.name.value;
-      var email = f.email.value;
-      var phone = f.phone.value;
-      var address = f.address.value;
-      var title = f.title.value;
-      var type = f.type.checked ? "자동결제" : "일반결제";
-      var firstPay = f.firstPay.checked ? "처음결제금액" : "다름";
-      var bizTo = f.bizTo.value;
-      var cycle = f.cycle.value;
-      var paymentDate = f.paymentDate.value;
-      var pay = f.pay.value;
-      var memo = f.memo.value;
-
-      var productList = [];
-      var productRows = document.querySelectorAll("#product tbody tr");
-      for (var i = 1; i < productRows.length - 1; i++) {
-          var productName = productRows[i].querySelector("input[name^='productList']").value;
-          var totalItems = productRows[i].querySelector("input[name^='productList'][name$='totalItems']").value;
-          var price = productRows[i].querySelector("input[name^='productList'][name$='price']").value;
-          productList.push({ productName: productName, totalItems: totalItems, price: price });
-      }
-
-      var data = {
-          documentNo: documentNo,
-          createTime: createTime,
-          name: name,
-          email: email,
-          phone: phone,
-          address: address,
-          title: title,
-          type: type,
-          firstPay: firstPay,
-          bizTo: bizTo,
-          cycle: cycle,
-          paymentDate: paymentDate,
-          pay: pay,
-          memo: memo,
-          productList: productList
-      };
-
-      // JSON 데이터를 서버에 전송
-      fetch('/insert', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-      }).then(response => {
-          if (response.ok) {
-              // 요청이 성공적으로 처리되었을 때의 동작
-              console.log('Request succeeded');
-          } else {
-              // 요청이 실패했을 때의 동작
-              console.error('Request failed');
-          }
-      }).catch(error => {
-          console.error('Error:', error);
-      });
-  }
-
-                  function addRow() {
-                      var table = document.getElementById("product");
-                      var rowCount = table.rows.length;
-                      var row = table.insertRow(rowCount - 1);
-                      var checkBoxCell = row.insertCell(0);
-                      var productNameCell = row.insertCell(1);
-                      var totalItemsCell = row.insertCell(2);
-                      var priceCell = row.insertCell(3);
-                      var resCell = row.insertCell(4);
-
-                      checkBoxCell.innerHTML = "<input type='checkbox'>";
-                      productNameCell.innerHTML = "<input type='text' name='productList[" + (rowCount - 2) + "].productName'>";
-                      totalItemsCell.innerHTML = "<input type='text' name='productList[" + (rowCount - 2) + "].totalItems' oninput='updatetotalItems(this.parentNode.parentNode)'>";
-                      priceCell.innerHTML = "<input type='text' name='productList[" + (rowCount - 2) + "].price' oninput='updatePrice(this.parentNode.parentNode)'>";
-                      resCell.id = "res";
-                  }
-
-                  function toggleAllCheckboxes() {
-                      var masterCheckbox = document.getElementById('masterCheckbox');
-                      var checkboxes = document.querySelectorAll("#product input[type='checkbox']");
-                      checkboxes.forEach(function(checkbox) {
-                          checkbox.checked = masterCheckbox.checked;
-                      });
-                  }
-
-                  window.addEventListener('DOMContentLoaded', function() {
-                      document.getElementById('masterCheckbox').addEventListener('click', toggleAllCheckboxes);
-                  });
-    </script>
 </head>
 <body>
 <form id="paymentForm">
@@ -141,8 +48,8 @@
             </th>
             <th>결제구분</th>
             <th>
-                <label><input type="radio" name='bizTo' value='BTOC'/>B TO C</label>
-                <label><input type='radio' name='bizTo' value='BTOB'/>B TO B</label>
+                <label><input type="radio" name='bizTo' value='BtoC'/>B TO C</label>
+                <label><input type='radio' name='bizTo' value='BtoB'/>B TO B</label>
             </th>
         </tr>
         <tr>
@@ -179,9 +86,9 @@
             <th>
                 <input type="checkbox">
             </th>
-            <th><input type=text id="productName" name="productList[0].productName"></th>
-            <th><input type="text" id="totalItems" name="productList[0].totalItems" oninput="updatetotalItems(this.parentNode.parentNode)"></th>
-            <th><input type="text" id="price" name="productList[0].price" oninput="updatePrice(this.parentNode.parentNode)"></th>
+            <th><input type=text id="productName" name="productName"></th>
+            <th><input type="text" id="totalItems" name="totalItems" oninput="updatetotalItems(this.parentNode.parentNode)"></th>
+            <th><input type="text" id="price" name="price" oninput="updatePrice(this.parentNode.parentNode)"></th>
             <th id="res"></th>
         </tr>
         <tr>
@@ -192,8 +99,8 @@
             <th id="final"></th>
         </tr>
     </table>
-    <input type="button" value="등록" onclick="send(this.form)">
+    <input type="button" value="등록" onclick="send()">
 </form>
 </body>
-<script>document.getElementById('createTime').value = new Date().toISOString().substring(0, 10);</script>
+
 </html>

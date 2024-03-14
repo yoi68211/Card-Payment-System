@@ -86,44 +86,56 @@ class   OsApplicationTests {
 
 		for (int i = 0; i < 3; i++) {
 			productList.add(Product.builder()
-					.payment(setpayment) 
+					.payment(setpayment)
 					.price("10000")
 					.totalItems("3")
 					.amount("30000")
 					.build());
 		}
-		
+
 		productRepository.saveAll(productList);
 	}
 
 	@Test
 	void testGetPaymentAndProductsByDocumentNo() {
 
-		Optional<Payment> optionalPayment = paymentRepository.findByDocumentNo("docu-1");
-		if (optionalPayment.isPresent()) {
-			Payment payment = optionalPayment.get();
-			List<Product> products = productRepository.findByPayment(payment);
+//		Optional<Payment> optionalPayment = paymentRepository.findByDocumentNo("docu-1");
+//		if (optionalPayment.isPresent()) {
+//			Payment payment = optionalPayment.get();
+//			List<Product> products = productRepository.findByPayment(payment);
+//
+//			// Payment 정보 출력
+//			System.out.println("문서 번호가 "+ "docu-1"+ "인 결제 정보:");
+//			System.out.println("결제 ID: " + payment.getPaymentId());
+//			// 추가 필요한 정보가 있다면 출력
+//
+//			// Product 정보 출력
+//			if (!products.isEmpty()) {
+//				System.out.println("문서 번호가 " + "docu-1" + "인 결제에 속한 상품들:");
+//				for (Product product : products) {
+//					System.out.println("상품 ID: " + product.getProductId());
+//					System.out.println("상품 이름: " + product.getName());
+//					System.out.println("상품 가격: " +  product.getPrice());
+//					// 추가 필요한 정보가 있다면 출력
+//				}
+//			} else {
+//				System.out.println("문서 번호가 " + "docu-1" + "인 결제에 속한 상품이 없습니다.");
+//			}
+//		} else {
+//			System.out.println("문서 번호가 " + "docu-1" + "인 결제를 찾을 수 없습니다.");
+//		}
 
-			// Payment 정보 출력
-			System.out.println("문서 번호가 "+ "docu-1"+ "인 결제 정보:");
-			System.out.println("결제 ID: " + payment.getPaymentId());
-			// 추가 필요한 정보가 있다면 출력
 
-			// Product 정보 출력
-			if (!products.isEmpty()) {
-				System.out.println("문서 번호가 " + "docu-1" + "인 결제에 속한 상품들:");
-				for (Product product : products) {
-					System.out.println("상품 ID: " + product.getProductId());
-					System.out.println("상품 이름: " + product.getName());
-					System.out.println("상품 가격: " +  product.getPrice());
-					// 추가 필요한 정보가 있다면 출력
-				}
-			} else {
-				System.out.println("문서 번호가 " + "docu-1" + "인 결제에 속한 상품이 없습니다.");
+		List<Payment> payments = paymentRepository.findAll();
+
+		for (Payment payment : payments) {
+			List<Customer> customers = payment.getCustomers();
+			for (Customer customer : customers) {
+				String customerName = customer.getName();
+				System.out.println("이름"+customerName);
 			}
-		} else {
-			System.out.println("문서 번호가 " + "docu-1" + "인 결제를 찾을 수 없습니다.");
 		}
+
 	}
 
 	@Test

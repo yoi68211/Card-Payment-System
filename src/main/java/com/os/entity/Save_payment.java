@@ -4,9 +4,12 @@ import com.os.util.BizTo;
 import com.os.util.OrderStatus;
 import com.os.util.OrderType;
 import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,15 +19,30 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 //@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Payment {
+public class Save_payment {
 
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long paymentId;                 // payment 순번
+    private Long s_paymentId;                 // 임시저장ID
 
     @Column(nullable = false)
     private String documentNo;              // 문서번호
+
+    @Column(nullable = false)
+    private String createTime;              // 작성일
+
+    @Column(nullable = false)
+    private String name;                    // 고객명
+
+    @Column(nullable = false)
+    private String email;                   // 이메일
+
+    @Column(nullable = false)
+    private String phone;                   // 연락처
+
+    @Column(nullable = false)
+    private String address;                 // 주소
 
     @Column(nullable = false)
     private String title;                   // 제목
@@ -48,8 +66,7 @@ public class Payment {
 
     private String memo;                    // 결제등록메모
 
-    @Column(nullable = false)
-    private String createTime;              // 작성일*/
+
 
     /*@CreationTimestamp
     @Column(nullable = false)
@@ -70,7 +87,7 @@ public class Payment {
     @OneToMany(mappedBy = "payment", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
     private List<Product> products;
 
-    @OneToMany(mappedBy = "payment",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "payment",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Customer> customers;
 
     /////////////////////////////////////////////
