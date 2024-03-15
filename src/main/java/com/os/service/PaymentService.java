@@ -33,7 +33,7 @@ public class PaymentService {
         payment.setDocumentNo(dto.getDocumentNo());
         payment.setTitle(dto.getTitle());
         payment.setType(dto.getType());
-        payment.setFirstPay(dto.getFirstPay());
+        payment.paymentsetFirstPay(dto.getFirstPay());
         payment.setBizTo(dto.getBizTo());
         payment.setCycle(dto.getCycle());
         payment.setPaymentDate(dto.getPaymentDate());

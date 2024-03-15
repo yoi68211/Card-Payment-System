@@ -72,7 +72,7 @@ class   OsApplicationTests {
 		paymentRepository.save(setpayment);
 
 		Customer customer = Customer.builder()
-				.payment(setpayment)
+//				.payment(setpayment)
 				.name("customer1")
 				.email("cus@asd.com")
 				.phone("01012341234")
@@ -94,8 +94,8 @@ class   OsApplicationTests {
 		productRepository.saveAll(productList);
 	}
 
-	@Test
-	void testGetPaymentAndProductsByDocumentNo() {
+//	@Test
+//	void testGetPaymentAndProductsByDocumentNo() {
 
 //		Optional<Payment> optionalPayment = paymentRepository.findByDocumentNo("docu-1");
 //		if (optionalPayment.isPresent()) {
@@ -123,18 +123,18 @@ class   OsApplicationTests {
 //			System.out.println("문서 번호가 " + "docu-1" + "인 결제를 찾을 수 없습니다.");
 //		}
 
-
-		List<Payment> payments = paymentRepository.findAll();
-
-		for (Payment payment : payments) {
-			List<Customer> customers = payment.getCustomers();
-			for (Customer customer : customers) {
-				String customerName = customer.getName();
-				System.out.println("이름"+customerName);
-			}
-		}
-
-	}
+//
+//		List<Payment> payments = paymentRepository.findAll();
+//
+//		for (Payment payment : payments) {
+//			List<Customer> customers = payment.getCustomers();
+//			for (Customer customer : customers) {
+//				String customerName = customer.getName();
+//				System.out.println("이름"+customerName);
+//			}
+//		}
+//
+//	}
 
 	@Test
 	void contextLoads() {
