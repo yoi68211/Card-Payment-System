@@ -21,7 +21,7 @@ public class InsertController {
     @PostMapping("/insert")
     public void insertData(@RequestBody InsertDTO dto) {
 
-        System.out.println(dto.toString());
+        System.out.println(dto.toString()); 
         paymentService.insert_basic(dto);
 
 
