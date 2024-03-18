@@ -13,7 +13,7 @@ public class Product {
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long productId;                    // product IDX
+    private Long id;                    // product IDX
 
     @Column(nullable = false)
     private String productName;                // 상품 명
@@ -31,7 +31,11 @@ public class Product {
     // 결제 IDX
 
     @ManyToOne
-    @JoinColumn(name = "paymentId")
+    @JoinColumn(name = "payment_id", referencedColumnName = "id")
     private Payment payment;
+
+
+
+
 
 }
