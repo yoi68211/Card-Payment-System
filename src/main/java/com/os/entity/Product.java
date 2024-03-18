@@ -27,9 +27,8 @@ public class Product {
     @Column(nullable = false)
     private int productAmount;                       // 상품 총액
 
-    // 결제 IDX
-
     ///////////////////////////////////////////////////////
+    // 결제 IDX
 
     @ManyToOne
     @JoinColumn(name = "paymentId")

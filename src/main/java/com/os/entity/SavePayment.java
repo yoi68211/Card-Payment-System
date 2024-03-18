@@ -53,27 +53,17 @@ public class SavePayment {
 
     private String s_paymentPay;                     // 결제임시저장 결제금액
 
-
-    // 유저 IDX
-
     ///////////////////////////////////////////////////////////////////////////
+    // 유저 IDX
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
+
+    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<SaveProduct> saveProducts;
 
     /*@CreationTimestamp
     @Column(nullable = false)
     private LocalDateTime createTime;  */     // 생성시간
-
-
-
-
-//    @OneToMany(mappedBy = "payment", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
-//    private List<SaveProduct> saveProducts;
-
-
-    // TODO: 2024-03-14 아래르 SaveProduct 안에 추가 하셔야합니다 -김홍성-
-    //  @ManyToOne
-    //  @JoinColumn(name = "paymentId")
-    //  private SavePayment savePayment;
-
-
 
 }

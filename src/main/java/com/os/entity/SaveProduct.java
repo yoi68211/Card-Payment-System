@@ -34,9 +34,10 @@ public class SaveProduct {
     @Column(nullable = false)
     private String s_productTotalItem;        // 상품임시저장 상품수량
 
+    ///////////////////////////////////////////////////////////////
     // 결제임시저장 IDX
 
-    ///////////////////////////////////////////////////////////////
-
-
+    @ManyToOne
+    @JoinColumn(name = "s_paymentId")
+    private SavePayment savePayment;
 }

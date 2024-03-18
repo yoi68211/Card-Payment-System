@@ -41,39 +41,31 @@ public class Payment {
 
     @CreationTimestamp
     @Column(nullable = false)
-    private String createTime;                      // 결제 생성시간
+    private LocalDateTime paymentCreateTime;                      // 결제 생성시간
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private OrderStatus status;             // 결제상태(성공 / 불가 / 오류)
+    private OrderStatus paymentStatus;                     // 결제상태(성공 / 불가 / 오류)
 
     @Column(nullable = false)
-    private char payYn;                     // 결제 여부(Y / N)
+    private char paymentPayYn;                             // 결제 여부(Y / N)
 
     @UpdateTimestamp
-    private LocalDateTime updateTime;       // 수정시간
+    private LocalDateTime paymentUpdateTime;               // 수정시간
 
     @Column(nullable = false)
-    private char delYn;                     // 결제 삭제여부(Y / N)
-
-    // 고객 IDX
-
-
+    private char paymentDelYn;                             // 결제 삭제여부(Y / N)
 
     //////////////////////////////////////////////////////////////////////////////////
-
-    @OneToOne
-    @JoinColumn(name = "autoPaymentId")
-    private AutoPayment autoPayment;
-
-    @OneToMany(mappedBy = "payment", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
-    private List<Product> products;
-
+    // 고객 IDX
     @ManyToOne
     @JoinColumn(name = "customerId")
     private Customer customer;
 
+    @OneToMany(mappedBy = "payment",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private AutoPayment autoPayment;
 
-
+    @OneToMany(mappedBy = "payment", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
+    private List<Product> products;
 
 }

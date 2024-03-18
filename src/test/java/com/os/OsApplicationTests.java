@@ -25,74 +25,74 @@ import java.util.Optional;
 @SpringBootTest
 class   OsApplicationTests {
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-
-	@Autowired
-	private PaymentRepository paymentRepository;
-
-	@Autowired
-	private ProductRepository productRepository;
-
-	@Autowired
-	private CustomerRepository customerRepository;
-
-	@Autowired
-	private UserRepository userRepository;
-
-
-	@Test
-	void insert(){
-		User user = User.builder()
-				.email("asd@asd.com")
-				.password(passwordEncoder.encode("1234"))
-				.username("kim")
-				.role(UserRole.ADMIN)
-				.build();
-		userRepository.save(user);
-	}
-
-
-	@Test
-	void paymentInsert(){
-
-		LocalDateTime payday = LocalDateTime.now();
-
-		Payment setpayment = Payment.builder()
-
-				.documentNo("docu-1")
-				.title("paymentTitle")
-				.bizTo(BizTo.BtoB)
-				.type(OrderType.basic)
-				.status(OrderStatus.paid)
-				.paymentDate("5")
-				.cycle("다음달")
-				.build();
-
-		paymentRepository.save(setpayment);
-
-		Customer customer = Customer.builder()
-//				.payment(setpayment)
-				.name("customer1")
-				.email("cus@asd.com")
-				.phone("01012341234")
-				.build();
-
-
-		customerRepository.save(customer);
-
-		List<Product> productList = new ArrayList<>();
-
-		for (int i = 0; i < 3; i++) {
-			productList.add(Product.builder()
-					.payment(setpayment)
-					.price(10000)
-					.totalItems(3)
-					.build());
-		}
-
-		productRepository.saveAll(productList);
-	}
+//	@Autowired
+//	private PasswordEncoder passwordEncoder;
+//
+//	@Autowired
+//	private PaymentRepository paymentRepository;
+//
+//	@Autowired
+//	private ProductRepository productRepository;
+//
+//	@Autowired
+//	private CustomerRepository customerRepository;
+//
+//	@Autowired
+//	private UserRepository userRepository;
+//
+//
+//	@Test
+//	void insert(){
+//		User user = User.builder()
+//				.email("asd@asd.com")
+//				.password(passwordEncoder.encode("1234"))
+//				.username("kim")
+//				.role(UserRole.ADMIN)
+//				.build();
+//		userRepository.save(user);
+//	}
+//
+//
+//	@Test
+//	void paymentInsert(){
+//
+//		LocalDateTime payday = LocalDateTime.now();
+//
+//		Payment setpayment = Payment.builder()
+//
+////				.documentNo("docu-1")
+//				.title("paymentTitle")
+//				.bizTo(BizTo.BtoB)
+//				.type(OrderType.basic)
+//				.status(OrderStatus.paid)
+//				.paymentDate("5")
+//				.cycle("다음달")
+//				.build();
+//
+//		paymentRepository.save(setpayment);
+//
+//		Customer customer = Customer.builder()
+////				.payment(setpayment)
+////				.name("customer1")
+////				.email("cus@asd.com")
+////				.phone("01012341234")
+////				.build();
+//
+//
+//		customerRepository.save(customer);
+//
+//		List<Product> productList = new ArrayList<>();
+//
+//		for (int i = 0; i < 3; i++) {
+//			productList.add(Product.builder()
+//					.payment(setpayment)
+//					.price(10000)
+//					.totalItems(3)
+//					.build());
+//		}
+//
+//		productRepository.saveAll(productList);
+//	}
 
 //	@Test
 //	void testGetPaymentAndProductsByDocumentNo() {

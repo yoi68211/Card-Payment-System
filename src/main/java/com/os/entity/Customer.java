@@ -29,10 +29,13 @@ public class Customer {
     @Column(nullable = false)
     private String customerAddress;            // 고객 주소
 
-    @Column(nullable = false)
-    private long userId;                   // 유저 IDX
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;                        // 유저 IDX
+
+
     @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Payment> payments;
 
