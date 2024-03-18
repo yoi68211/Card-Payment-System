@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class ProductDTO {
 
     private String productName;
-    private int totalItems;
-    private int price;
-    /*private int productAmount;*/
+    private int productTotalItems;
+    private int productPrice;
+    private int productAmount;
 }
