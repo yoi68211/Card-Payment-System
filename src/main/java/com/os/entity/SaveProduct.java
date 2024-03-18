@@ -17,12 +17,13 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SaveProduct {
 
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;                 // 상품임시저장 IDX
+    private Long s_prodcutId;                 // 상품임시저장 IDX
 
     @Column(nullable = false)
     private String s_productName;             // 상품임시저장 상품명
@@ -33,7 +34,10 @@ public class SaveProduct {
     @Column(nullable = false)
     private String s_productTotalItem;        // 상품임시저장 상품수량
 
+    ///////////////////////////////////////////////////////////////
+    // 결제임시저장 IDX
+
     @ManyToOne
-    @JoinColumn(name = "savePayment_id", referencedColumnName = "id")
+    @JoinColumn(name = "s_paymentId")
     private SavePayment savePayment;
 }

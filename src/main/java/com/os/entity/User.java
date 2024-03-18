@@ -12,12 +12,12 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User{
+public class User {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userId;
 
     @Column(nullable = false)
     private String username;
@@ -35,15 +35,19 @@ public class User{
     private List<Memo> memos;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
-    private List<Customer> customer;
+    private Customer customer;
+/*
+    @OneToMany
+    @JoinColumn(name = "userId")
+    private List<Customer> customers;
 
-    @OneToOne(mappedBy= "user" , cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "savePaymentId")
     private SavePayment savePayment;
-
-
+*/
     @Builder
-    public User(Long id, String username, String email, String password, UserRole role) {
-        this.id = id;
+    public User(Long userId, String username, String email, String password, UserRole role) {
+        this.userId = userId;
         this.username = username;
         this.email = email;
         this.password = password;

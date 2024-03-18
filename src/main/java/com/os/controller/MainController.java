@@ -11,27 +11,22 @@ public class MainController {
 
     @GetMapping
     public String index() {
-        return "login";
+        return "/login";
     }
     
     @GetMapping("dashboard")
     public String login() {
-        return "dashboard";
+        return "/dashboard";
     }
 
 
     @GetMapping("/join")
     public String joinPage()   {
 
-        return "join";
+        return "/join";
 
     }
-    @GetMapping("/paymentDetails")
-    public String paymentDetailsPage()   {
 
-        return "paymentDetails";
-
-    }
 
     @GetMapping("pageSample")
     public String pageSample() {

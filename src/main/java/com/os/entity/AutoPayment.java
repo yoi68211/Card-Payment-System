@@ -20,7 +20,7 @@ public class AutoPayment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Long id;                              // 자동결제 IDX
+    private Long autoId;                              // 자동결제 IDX
 
 /*
     @Column(nullable = false)
@@ -44,14 +44,6 @@ public class AutoPayment {
     private int autoPayCount;                        // 자동결제 횟수
 
 
-    @OneToOne(mappedBy = "autoPayment", cascade = CascadeType.ALL)
-    private Payment payment;
-
-
-    @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private Customer customer;
-
     public LocalDateTime calculateLocalDateTime(InsertDTO dto){
         return autoCreateTime.plusMonths(dto.getAutoMonth()).withDayOfMonth(dto.getAutoDate());
 
@@ -59,6 +51,10 @@ public class AutoPayment {
 
     ///////////////////////////////////////////////////////////////////
     // 결제 IDX
+    @ManyToOne
+    @JoinColumn(name = "paymentId")
+    private Payment payment;
+
 
 
 

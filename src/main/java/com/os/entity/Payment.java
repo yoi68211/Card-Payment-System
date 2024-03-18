@@ -21,8 +21,10 @@ public class Payment {
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;                         // 결제 IDX
+    private Long paymentId;                         // 결제 IDX
 
+   /* @Column(nullable = false)
+        private String documentNo;                  // 문서번호*/
 
     @Column(nullable = false)
     private String paymentTitle;                    // 결제 제목
@@ -57,21 +59,13 @@ public class Payment {
     //////////////////////////////////////////////////////////////////////////////////
     // 고객 IDX
     @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    @JoinColumn(name = "customerId")
     private Customer customer;
 
-
-    @OneToOne
-    @JoinColumn(name = "auto_payment_id" , referencedColumnName = "id")
+    @OneToMany(mappedBy = "payment",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private AutoPayment autoPayment;
 
     @OneToMany(mappedBy = "payment", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
     private List<Product> products;
-
-
-
-
-
-
 
 }

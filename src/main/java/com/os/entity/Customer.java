@@ -15,7 +15,7 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Long id;            // 고객 IDX
+    private Long customerId;            // 고객 IDX
 
     @Column(nullable = false)
     private String customerName;               // 고객 이름
@@ -32,16 +32,11 @@ public class Customer {
     /////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "userId")
     private User user;                        // 유저 IDX
 
 
     @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Payment> payments;
-
-
-    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<AutoPayment> autoPayments;
-
 
 }

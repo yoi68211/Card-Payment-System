@@ -24,7 +24,7 @@ public class SavePayment {
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;                       // 결제임시저장 IDX
+    private Long s_paymentId;                       // 결제임시저장 IDX
 
     private String s_paymentName;                    // 결제임시저장 고객명
 
@@ -55,15 +55,11 @@ public class SavePayment {
 
     ///////////////////////////////////////////////////////////////////////////
     // 유저 IDX
-
-
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id" , referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "userId")
     private User user;
 
-
-    @OneToMany(mappedBy = "savePayment", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
+    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<SaveProduct> saveProducts;
 
     /*@CreationTimestamp
