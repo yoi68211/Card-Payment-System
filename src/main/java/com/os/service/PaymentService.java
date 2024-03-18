@@ -19,10 +19,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PaymentService {
     private final PaymentRepository paymentRepository;
-    private final ProductRepository productRepository;
-    private final CustomerRepository customerRepository;
+//    private final ProductRepository productRepository;
+//    private final CustomerRepository customerRepository;
 
-    private final UserRepository userRepository;
+
     public void insert(InsertDTO dto){
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -54,7 +54,7 @@ public class PaymentService {
         customer.setAddress(dto.getAddress());
 //        customer.setPayment(payment);
 
-        customerRepository.save(customer);
+//        customerRepository.save(customer);
 
 ////////////////////////////////////////////////////////////////////
 
@@ -66,7 +66,7 @@ public class PaymentService {
             product.setPrice(productDTO.getPrice());
             product.setPayment(payment);
 
-            productRepository.save(product);
+//            productRepository.save(product);
         }
 
     }
