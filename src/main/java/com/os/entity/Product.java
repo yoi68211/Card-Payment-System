@@ -31,7 +31,7 @@ public class Product {
     // 결제 IDX
 
     @ManyToOne
-    @JoinColumn(name = "payment_id", referencedColumnName = "id")
+    @JoinColumn(name = "payment_id", referencedColumnName = "id",nullable = false)
     private Payment payment;
 
 
