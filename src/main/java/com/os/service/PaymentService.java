@@ -1,6 +1,6 @@
 package com.os.service;
 
-import com.os.dto.CustomUserDetails;
+import com.os.security.CustomUserDetails;
 import com.os.dto.InsertDTO;
 import com.os.dto.ProductDTO;
 import com.os.entity.*;

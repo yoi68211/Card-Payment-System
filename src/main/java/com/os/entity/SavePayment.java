@@ -53,9 +53,6 @@ public class SavePayment {
 
     private String s_paymentPay;                     // 결제임시저장 결제금액
 
-    ///////////////////////////////////////////////////////////////////////////
-    // 유저 IDX
-
 
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -66,8 +63,5 @@ public class SavePayment {
     @OneToMany(mappedBy = "savePayment", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
     private List<SaveProduct> saveProducts;
 
-    /*@CreationTimestamp
-    @Column(nullable = false)
-    private LocalDateTime createTime;  */     // 생성시간
 
 }

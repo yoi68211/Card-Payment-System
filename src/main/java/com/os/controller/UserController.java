@@ -1,6 +1,6 @@
 package com.os.controller;
 
-import com.os.dto.CustomUserDetails;
+import com.os.security.CustomUserDetails;
 import com.os.dto.UserResponse;
 import com.os.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;

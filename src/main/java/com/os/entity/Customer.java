@@ -29,8 +29,6 @@ public class Customer {
     @Column(nullable = false)
     private String customerAddress;            // 고객 주소
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;                        // 유저 IDX

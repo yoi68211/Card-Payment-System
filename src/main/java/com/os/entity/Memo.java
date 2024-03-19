@@ -41,8 +41,6 @@ public class Memo {
     @Column(nullable = false)
     private String memoDelYn;
 
-    ///////////////////////////////////////////////////////////////////////
-    // 유저 IDX
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
