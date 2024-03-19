@@ -20,7 +20,7 @@ public class Memo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Long memoId;
+    private Long id;
 
     @Column(nullable = false)
     private String memoContents;
@@ -44,7 +44,7 @@ public class Memo {
     ///////////////////////////////////////////////////////////////////////
     // 유저 IDX
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
 }

@@ -10,7 +10,7 @@ window.addEventListener('DOMContentLoaded', function() {
         }
 
         // createTime input 태그를 찾아 현재 시간을 설정
-        const createTimeInput = document.getElementById('paymentCreateTime');
+        const createTimeInput = document.getElementById('createTime');
         if (createTimeInput) {
             createTimeInput.value = getCurrentTime();
         }
@@ -149,7 +149,7 @@ function validateInput(input) {
 
                     const input3 = document.createElement("input");
                     input3.setAttribute("type", "text");
-                    input3.setAttribute("name", "productTotalItems");
+                    input3.setAttribute("name", "totalItems");
                     input3.addEventListener("input", function () {
                         updatetotalItems(newRow);
                     });
@@ -157,7 +157,7 @@ function validateInput(input) {
 
                     const input4 = document.createElement("input");
                     input4.setAttribute("type", "text");
-                    input4.setAttribute("name", "productPrice");
+                    input4.setAttribute("name", "price");
                     input4.addEventListener("input", function () {
                         updatePrice(newRow);
                     });
@@ -196,45 +196,48 @@ function validateInput(input) {
 
         function send() {
                     var f = document.getElementById('paymentForm');
-                    var createTime = f.paymentCreateTime.value;
-                    var name = f.customerName.value;
-                    var email = f.customerEmail.value;
-                    var phone = f.customerPhone.value;
-                    var address = f.customerAddress.value;
-                    var title = f.paymentTitle.value;
-                    var type = f.paymentType.checked ? "auto" : "basic";
-                    var bizTo = f.paymentBizTo.value;
-                    var month = f.autoMonth.value == "다음달" ? 1 : 2;
-                    var autoDate = f.autoDate.value;
-                    var pay = f.autoPay.value;
-
-                    var productRows = document.querySelectorAll("#product tbody tr");
-                    if (productRows.length > 2 && productRows[1].querySelector("input[type='checkbox']").checked) {
-                            alert("결제 물품에 등록된 전체 물품을 결제합니다. 체크박스를 해제해 주세요");
-                            return;
-                    }
+                    var documentNo = f.documentNo.value;
+                    var createTime = f.createTime.value;
+                    var name = f.name.value;
+                    var email = f.email.value;
+                    var phone = f.phone.value;
+                    var address = f.address.value;
+                    var title = f.title.value;
+                    var type = f.type.checked ? "auto" : "basic";
+                    var firstPay = f.firstPay.checked ? "처음결제금액" : "다름";
+                    var bizTo = f.bizTo.value;
+                    var cycle = f.cycle.value;
+                    var paymentDate = f.paymentDate.value;
+                    var pay = f.pay.value;
+                    var memo = f.memo.value;
 
                     var productList = [];
+                    var productRows = document.querySelectorAll("#product tbody tr");
                     for (var i = 1; i < productRows.length - 1; i++) {
-                        var productName = productRows[i].querySelector("input[name='productName']").value;
-                        var totalItems = productRows[i].querySelector("input[name='productTotalItems']").value;
-                        var price = productRows[i].querySelector("input[name='productPrice']").value;
-                        var productAmount = productRows[i].querySelector("#productAmount").innerText;
-                        productList.push({ productName: productName, productTotalItems: totalItems, productPrice: price, productAmount: productAmount });
+                        var checkbox = productRows[i].querySelector("input[type='checkbox']");
+                        if (checkbox.checked) {
+                            var productName = productRows[i].querySelector("input[name='productName']").value;
+                            var totalItems = productRows[i].querySelector("input[name='totalItems']").value;
+                            var price = productRows[i].querySelector("input[name='price']").value;
+                            productList.push({ productName: productName, totalItems: totalItems, price: price });
+                        }
                     }
 
                     var data = {
-                        paymentCreateTime: createTime,
-                        customerName: name,
-                        customerEmail: email,
-                        customerPhone: phone,
-                        customerAddress: address,
-                        paymentTitle: title,
-                        paymentType: type,
-                        paymentBizTo: bizTo,
-                        autoMonth: month,
-                        autoDate: autoDate,
-                        autoPay: autoPay,
+                        documentNo: documentNo,
+                        createTime: createTime,
+                        name: name,
+                        email: email,
+                        phone: phone,
+                        address: address,
+                        title: title,
+                        type: type,
+                        firstPay: firstPay,
+                        bizTo: bizTo,
+                        cycle: cycle,
+                        paymentDate: paymentDate,
+                        pay: pay,
+                        memo: memo,
                         productList: productList
                     };
 

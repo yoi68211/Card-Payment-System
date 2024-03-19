@@ -4,14 +4,10 @@ import com.os.dto.CustomUserDetails;
 import com.os.dto.InsertDTO;
 import com.os.dto.ProductDTO;
 import com.os.entity.*;
-import com.os.repository.CustomerRepository;
-import com.os.repository.PaymentRepository;
-import com.os.repository.ProductRepository;
-import com.os.repository.UserRepository;
+import com.os.repository.*;
 import com.os.util.AutoStatus;
 import com.os.util.OrderStatus;
 import com.os.util.OrderType;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -20,13 +16,21 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final ProductRepository productRepository;
     private final CustomerRepository customerRepository;
-
+    private final AutoPaymentRepository autopaymentRepository;
     private final UserRepository userRepository;
+
+    public PaymentService(PaymentRepository paymentRepository, ProductRepository productRepository, CustomerRepository customerRepository, AutoPaymentRepository autopaymentRepository, UserRepository userRepository) {
+        this.paymentRepository = paymentRepository;
+        this.productRepository = productRepository;
+        this.customerRepository = customerRepository;
+        this.autopaymentRepository = autopaymentRepository;
+        this.userRepository = userRepository;
+    }
+
     public void insert_basic(InsertDTO dto) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -34,8 +38,6 @@ public class PaymentService {
         Long userId = userDetails.getUserId();
 
         Optional<User> userOptional = userRepository.findById(userId);
-
-////////////////////////////////////////////////////////////////////
 
 
 
@@ -61,13 +63,14 @@ public class PaymentService {
             payment.setPaymentPayYn('N');
             payment.setPaymentDelYn('N');
             payment.setCustomer(customer);
-
-            paymentRepository.save(payment);
             if(dto.getPaymentType().equals(OrderType.auto)) {
+
+
                 AutoPayment autoPayment = new AutoPayment();
 
                 autoPayment.setAutoMonth(dto.getAutoMonth());
 
+                payment.setAutoPayment(autoPayment);
                 LocalDateTime date = autoPayment.calculateLocalDateTime(dto);
                 autoPayment.setAutoCreateTime(date);
                 autoPayment.setPayment(payment);
@@ -76,7 +79,12 @@ public class PaymentService {
                 /*autoPayment.setAutoPayCount(0);*/
 
 
+                System.out.println(autoPayment.getPayment());
+                autopaymentRepository.save(autoPayment);
+
             }
+
+            paymentRepository.save(payment);
             for (ProductDTO productDTO : dto.getProductList()) {
                 Product product = new Product();
                 product.setProductName(productDTO.getProductName());
@@ -88,15 +96,13 @@ public class PaymentService {
 
                 productRepository.save(product);
             }
+
+
+
+
         }
 
 
-
-
-
-
-
-////////////////////////////////////////////////////////////////////
 
     }
 

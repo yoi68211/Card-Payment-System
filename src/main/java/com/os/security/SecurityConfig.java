@@ -1,8 +1,7 @@
-package com.os.config;
+package com.os.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -30,7 +29,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests((auth)->auth
                 .requestMatchers("/","/login","/pageSample",
-                        "/js/**","/css/**","/img/**","/join","/dashboard").permitAll()
+                        "/js/**","/css/**","/img/**","/join","/paymentDetails").permitAll()
                 .anyRequest().authenticated()
 
         );
