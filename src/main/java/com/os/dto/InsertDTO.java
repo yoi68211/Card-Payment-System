@@ -18,7 +18,7 @@ public class InsertDTO {
     private String paymentTitle;
     private OrderType paymentType;
     private BizTo paymentBizTo;
-    private Long paymentMonth;
+    private int paymentMonth;
     private int autoDate;
     private int paymentFirstPay;
     private List<ProductDTO> productList;

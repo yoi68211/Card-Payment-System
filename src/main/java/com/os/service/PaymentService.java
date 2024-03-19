@@ -60,16 +60,17 @@ public class PaymentService {
             payment.setPaymentBizTo(dto.getPaymentBizTo());
             payment.setPaymentCreateTime(dto.getPaymentCreateTime());
             payment.setPaymentStatus(OrderStatus.wait);
-            Payment.setPaymentMonth(dto.getPaymentMonth());
 
+            /*if(dto.getPaymentMonth() != 0) {
+                payment.setPaymentMonth(dto.getPaymentMonth());
+            }*/
             if(dto.getAutoDate() != 0) {
-                LocalDateTime date = Payment.calculateLocalDateTime(dto);
-                Payment.setPaymentNextTime(date);
+                LocalDateTime date = payment.calculateLocalDateTime(dto);
+                payment.setPaymentNextTime(date);
             }
-            if(dto.getPaymentFirstPay() != 0) {
-                Payment.setPaymentFirstPay(dto.getPaymentFirstPay());
-            }
-            payment.setPaymentPayYn('N');
+            /*if(dto.getPaymentFirstPay() != 0) {
+                payment.setPaymentFirstPay(dto.getPaymentFirstPay());
+            }*/
             payment.setPaymentDelYn('N');
             payment.setCustomer(customer);
 

@@ -204,20 +204,20 @@ function validateInput(input) {
         function cycle(){
             var paymentTypeCheck = document.getElementById("paymentType");
             var firstPay_check = document.getElementById("firstPay_check");
-            var autoMonth = document.getElementById("autoMonth");
+            var autoMonth = document.getElementById("paymentMonth");
             var autoDate = document.getElementById("autoDate");
-            var autoPay = document.getElementById("autoPay");
+            var paymentFirstPay = document.getElementById("paymentFirstPay");
 
             if(paymentTypeCheck.checked){
                 firstPay_check.disabled = false;
-                autoMonth.disabled = false;
+                paymentMonth.disabled = false;
                 autoDate.disabled = false;
-                autoPay.disabled = false;
+                paymentFirstPay.disabled = false;
             } else {
                 firstPay_check.disabled = true;
-                autoMonth.disabled = true;
+                paymentMonth.disabled = true;
                 autoDate.disabled = true;
-                autoPay.disabled = true;
+                paymentFirstPay.disabled = true;
             }
         }
 
@@ -236,7 +236,7 @@ function validateInput(input) {
                     var autoDate = f.autoDate.value;
                     var paymentFirstPay = f.paymentFirstPay.value;
                     if(type == "basic"){
-                          month = null;
+                          month = 0;
                           autoDate = 0;
                           paymentFirstPay = 0;
                     }

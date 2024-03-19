@@ -1,5 +1,6 @@
 package com.os.entity;
 
+import com.os.dto.InsertDTO;
 import com.os.util.BizTo;
 import com.os.util.OrderStatus;
 import com.os.util.OrderType;
@@ -52,13 +53,13 @@ public class Payment {
     @Column(nullable = false)
     private char paymentDelYn;                             // 결제 삭제여부(Y / N)
 
-    @Column(nullable = false)
-    private Long paymentMonth;                           // 자동결제 다음결제일
 
-    @Column(nullable = false)
+    private int paymentMonth;                           // 자동결제 다음결제일
+
+
     private LocalDateTime paymentNextTime;                            // 자동결제 마지막결제일
 
-    @Column(nullable = false)
+
     private int paymentFirstPay;                                 // 자동결제 금액
 
 
@@ -72,7 +73,10 @@ public class Payment {
     @OneToMany(mappedBy = "payment", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
     private List<Product> products;
 
+    public LocalDateTime calculateLocalDateTime(InsertDTO dto){
+        return paymentNextTime.plusMonths(dto.getPaymentMonth()).withDayOfMonth(dto.getAutoDate());
 
+    }
 
 
 
