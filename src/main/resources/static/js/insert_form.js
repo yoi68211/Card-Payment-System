@@ -10,7 +10,7 @@ window.addEventListener('DOMContentLoaded', function() {
         }
 
         // createTime input 태그를 찾아 현재 시간을 설정
-        const createTimeInput = document.getElementById('createTime');
+        const createTimeInput = document.getElementById('paymentCreateTime');
         if (createTimeInput) {
             createTimeInput.value = getCurrentTime();
         }
@@ -27,6 +27,7 @@ function validateInput(input) {
                 const amountInput = table.rows[i].cells[2].querySelector("input").value;
                 if (!validateInput(amountInput)) {
                     document.getElementById("totaltotalItems").innerHTML = "";
+                    return;
                 }
                 totalAmount += parseInt(amountInput);
             }
@@ -38,20 +39,21 @@ function validateInput(input) {
 
             const amountInput = row.cells[2].querySelector("input").value;
             const priceInput = row.cells[3].querySelector("input").value;
-            const totalInput = row.cells[4];
+            const totalInput = row.cells[4].querySelector("input");
             if (validateInput(amountInput)) {
                 const amount = parseInt(amountInput); // 수량 값
                 const price = parseInt(priceInput); // 단가 값
                 const total = amount * price;
                 if (isNaN(total)) {
-                    totalInput.innerHTML = "";
-                    return;
+                    totalInput.value = "";
+                }else{
+                    totalInput.value = total;
                 }
-                totalInput.innerHTML = total;
+
                 const table = document.getElementById("product");
                 let ttotal = 0;
                 for (let i = 1; i < table.rows.length - 1; i++) {
-                    const amountInput = table.rows[i].cells[4].innerHTML;
+                    const amountInput = table.rows[i].cells[4].querySelector("input").value;
                     if (!isNaN(amountInput)) {
                         ttotal += parseInt(amountInput);
                     }
@@ -63,10 +65,11 @@ function validateInput(input) {
                 }
 
             } else {
-                totalInput.innerHTML = "";
+                totalInput.value = "";
                 document.getElementById("final").innerHTML = "";
                 return;
             }
+
 
         }
 
@@ -78,6 +81,7 @@ function validateInput(input) {
                 const priceInput = table.rows[i].cells[3].querySelector("input").value;
                 if (!validateInput(priceInput)) {
                     document.getElementById("totalPrice").innerHTML = "";
+
                 }
                 totalPrice += parseInt(priceInput);
             }
@@ -89,20 +93,21 @@ function validateInput(input) {
 
             const amountInput = row.cells[2].querySelector("input").value;
             const priceInput = row.cells[3].querySelector("input").value;
-            const totalInput = row.cells[4];
+            const totalInput = row.cells[4].querySelector("input");
             if (validateInput(priceInput)) {
                 const amount = parseInt(amountInput); // 수량 값
                 const price = parseInt(priceInput); // 단가 값
                 const total = amount * price;
                 if (isNaN(total)) {
-                    totalInput.innerHTML = "";
-                    return;
+                    totalInput.value = "";
+                }else{
+                    totalInput.value = total;
                 }
-                totalInput.innerHTML = total;
+
                 const table = document.getElementById("product");
                 let ttotal = 0;
                 for (let i = 1; i < table.rows.length - 1; i++) {
-                    const amountInput = table.rows[i].cells[4].innerHTML;
+                    const amountInput = table.rows[i].cells[4].querySelector("input").value;
                     if (!isNaN(amountInput)) {
                         ttotal += parseInt(amountInput);
                     }
@@ -113,7 +118,7 @@ function validateInput(input) {
                     document.getElementById("final").innerHTML = ttotal;
                 }
             } else {
-                totalInput.innerHTML = "";
+                totalInput.value = "";
                 document.getElementById("final").innerHTML = "";
                 return;
             }
@@ -149,7 +154,7 @@ function validateInput(input) {
 
                     const input3 = document.createElement("input");
                     input3.setAttribute("type", "text");
-                    input3.setAttribute("name", "totalItems");
+                    input3.setAttribute("name", "productTotalItems");
                     input3.addEventListener("input", function () {
                         updatetotalItems(newRow);
                     });
@@ -157,14 +162,16 @@ function validateInput(input) {
 
                     const input4 = document.createElement("input");
                     input4.setAttribute("type", "text");
-                    input4.setAttribute("name", "price");
+                    input4.setAttribute("name", "productPrice");
                     input4.addEventListener("input", function () {
                         updatePrice(newRow);
                     });
                     newCell4.appendChild(input4);
 
-                    newCell5.innerText = "";
-                    newCell5.classList.add("center-text");
+                    const input5 = document.createElement("input");
+                    input5.setAttribute("type", "text");
+                    input5.setAttribute("name", "productAmount");
+                    newCell5.appendChild(input5);
 
                     num++;
 
@@ -194,50 +201,73 @@ function validateInput(input) {
             }
         }
 
+        function cycle(){
+            var paymentTypeCheck = document.getElementById("paymentType");
+            var firstPay_check = document.getElementById("firstPay_check");
+            var autoMonth = document.getElementById("autoMonth");
+            var autoDate = document.getElementById("autoDate");
+            var autoPay = document.getElementById("autoPay");
+
+            if(paymentTypeCheck.checked){
+                firstPay_check.disabled = false;
+                autoMonth.disabled = false;
+                autoDate.disabled = false;
+                autoPay.disabled = false;
+            } else {
+                firstPay_check.disabled = true;
+                autoMonth.disabled = true;
+                autoDate.disabled = true;
+                autoPay.disabled = true;
+            }
+        }
+
         function send() {
                     var f = document.getElementById('paymentForm');
-                    var documentNo = f.documentNo.value;
-                    var createTime = f.createTime.value;
-                    var name = f.name.value;
-                    var email = f.email.value;
-                    var phone = f.phone.value;
-                    var address = f.address.value;
-                    var title = f.title.value;
-                    var type = f.type.checked ? "auto" : "basic";
-                    var firstPay = f.firstPay.checked ? "처음결제금액" : "다름";
-                    var bizTo = f.bizTo.value;
-                    var cycle = f.cycle.value;
-                    var paymentDate = f.paymentDate.value;
-                    var pay = f.pay.value;
-                    var memo = f.memo.value;
+                    var createTime = f.paymentCreateTime.value;
+                    var name = f.customerName.value;
+                    var email = f.customerEmail.value;
+                    var phone = f.customerPhone.value;
+                    var address = f.customerAddress.value;
+                    var title = f.paymentTitle.value;
+                    var type = f.paymentType.checked ? "auto" : "basic";
+                    var bizTo = f.paymentBizTo.value;
+
+                    var month = f.paymentMonth.value == "다음달" ? 1 : 2;
+                    var autoDate = f.autoDate.value;
+                    var paymentFirstPay = f.paymentFirstPay.value;
+                    if(type == "basic"){
+                          month = null;
+                          autoDate = 0;
+                          paymentFirstPay = 0;
+                    }
+
+                    var productRows = document.querySelectorAll("#product tbody tr");
+                    if (productRows.length > 2 && productRows[1].querySelector("input[type='checkbox']").checked) {
+                            alert("결제 물품에 등록된 전체 물품을 결제합니다. 체크박스를 해제해 주세요");
+                            return;
+                    }
 
                     var productList = [];
-                    var productRows = document.querySelectorAll("#product tbody tr");
                     for (var i = 1; i < productRows.length - 1; i++) {
-                        var checkbox = productRows[i].querySelector("input[type='checkbox']");
-                        if (checkbox.checked) {
-                            var productName = productRows[i].querySelector("input[name='productName']").value;
-                            var totalItems = productRows[i].querySelector("input[name='totalItems']").value;
-                            var price = productRows[i].querySelector("input[name='price']").value;
-                            productList.push({ productName: productName, totalItems: totalItems, price: price });
-                        }
+                        var productName = productRows[i].querySelector("input[name='productName']").value;
+                        var totalItems = productRows[i].querySelector("input[name='productTotalItems']").value;
+                        var price = productRows[i].querySelector("input[name='productPrice']").value;
+                        var productAmount = productRows[i].querySelector("input[name='productAmount']").value;
+                        productList.push({ productName: productName, productTotalItems: totalItems, productPrice: price, productAmount: productAmount });
                     }
 
                     var data = {
-                        documentNo: documentNo,
-                        createTime: createTime,
-                        name: name,
-                        email: email,
-                        phone: phone,
-                        address: address,
-                        title: title,
-                        type: type,
-                        firstPay: firstPay,
-                        bizTo: bizTo,
-                        cycle: cycle,
-                        paymentDate: paymentDate,
-                        pay: pay,
-                        memo: memo,
+                        paymentCreateTime: createTime,
+                        customerName: name,
+                        customerEmail: email,
+                        customerPhone: phone,
+                        customerAddress: address,
+                        paymentTitle: title,
+                        paymentType: type,
+                        paymentBizTo: bizTo,
+                        paymentMonth: month,
+                        autoDate: autoDate,
+                        paymentFirstPay: paymentFirstPay,
                         productList: productList
                     };
 

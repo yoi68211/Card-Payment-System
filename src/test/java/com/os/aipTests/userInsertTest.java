@@ -4,16 +4,18 @@ import com.os.entity.User;
 import com.os.repository.UserRepository;
 import com.os.util.UserRole;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+@SpringBootTest
 public class userInsertTest {
 
-    private final PasswordEncoder passwordEncoder;
-    private final UserRepository userRepository;
-    public userInsertTest(PasswordEncoder passwordEncoder, UserRepository userRepository) {
-        this.passwordEncoder = passwordEncoder;
-        this.userRepository = userRepository;
-    }
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 
 
     @Test

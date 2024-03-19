@@ -22,7 +22,7 @@ public class InsertController {
     public void insertData(@RequestBody InsertDTO dto) {
 
         System.out.println(dto.toString()); 
-        paymentService.insert_basic(dto);
+//        paymentService.insert_basic(dto);
 
 
         System.out.println("결제 등록 성공");
