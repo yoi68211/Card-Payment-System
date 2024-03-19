@@ -97,6 +97,53 @@ class   OsApplicationTests {
 	}
 
 	@Test
+	void paymentInsert1() {
+
+		for (int j = 0; j < 10; j++) {
+
+			LocalDateTime payday = LocalDateTime.now();
+			LocalDateTime oneMonthEarlier = payday.minusMonths(1);
+
+			Payment setpayment = Payment.builder()
+
+					.documentNo("i")
+					.title("paymentTitle")
+					.bizTo(BizTo.BToB)
+					.type(OrderType.auto)
+					.status(OrderStatus.stop)
+					.paymentDate(oneMonthEarlier)
+					.paymentCycle(payday.plusMonths(1))
+					.build();
+
+			paymentRepository.save(setpayment);
+
+			Customer customer = Customer.builder()
+					.payment(setpayment)
+					.name("customer1")
+					.email("cus@asd.com")
+					.phone("01012341234")
+					.build();
+
+
+			customerRepository.save(customer);
+
+
+			List<Product> productList = new ArrayList<>();
+
+			for (int i = 0; i < 3; i++) {
+				productList.add(Product.builder()
+						.payment(setpayment)
+						.price("10000")
+						.totalItems("3")
+						.amount("30000")
+						.build());
+			}
+
+			productRepository.saveAll(productList);
+		}
+	}
+
+	@Test
 	void testGetPaymentAndProductsByDocumentNo() {
 
 		Optional<Payment> optionalPayment = paymentRepository.findByDocumentNo("docu-1");

@@ -14,10 +14,10 @@ public class MainController {
         return "/login";
     }
     
-    @GetMapping("dashboard")
-    public String login() {
-        return "/dashboard";
-    }
+//    @GetMapping("dashboard")
+//    public String login() {
+//        return "/dashboard";
+//    }
 
 
     @GetMapping("/join")
