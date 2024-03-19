@@ -21,60 +21,51 @@ public class Payment {
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long paymentId;
+    private Long paymentId;                         // 결제 IDX
+
+   /* @Column(nullable = false)
+        private String documentNo;                  // 문서번호*/
+
     @Column(nullable = false)
-    private String documentNo;
-    @Column(nullable = false)
-    private String title;
+    private String paymentTitle;                    // 결제 제목
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private BizTo bizTo;
-
-    private String memo;
+    private OrderType paymentType;                  // 결제 종류(자동결제 / 일반결제)
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private OrderType type;
+    private BizTo paymentBizTo;                     // 결제 구분(BtoC / BtoB)
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private OrderStatus status;
-
-    @Column(nullable = false)
-    private LocalDateTime paymentDate;
-    @Column(nullable = false)
-    private LocalDateTime paymentCycle;
-
+    private String paymentMemo;                     // 결제 메모
 
     @CreationTimestamp
     @Column(nullable = false)
-    private LocalDateTime createTime;
-    @UpdateTimestamp
+    private LocalDateTime paymentCreateTime;                      // 결제 생성시간
+
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private LocalDateTime updateTime;
+    private OrderStatus paymentStatus;                     // 결제상태(성공 / 불가 / 오류)
+
+    @Column(nullable = false)
+    private char paymentPayYn;                             // 결제 여부(Y / N)
+
+    @UpdateTimestamp
+    private LocalDateTime paymentUpdateTime;               // 수정시간
+
+    @Column(nullable = false)
+    private char paymentDelYn;                             // 결제 삭제여부(Y / N)
+
+    //////////////////////////////////////////////////////////////////////////////////
+    // 고객 IDX
+    @ManyToOne
+    @JoinColumn(name = "customerId")
+    private Customer customer;
+
+    @OneToMany(mappedBy = "payment",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private AutoPayment autoPayment;
 
     @OneToMany(mappedBy = "payment", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
     private List<Product> products;
 
-    @OneToMany(mappedBy = "payment",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Customer> customers;
-
-
-//    @Builder
-//    public Payment(Long paymentId, String documentNo, String title, BizTo bizTo, String memo, OrderType type, OrderStatus status, LocalDateTime paymentDate, LocalDateTime paymentCycle, LocalDateTime createTime, LocalDateTime updateTime, List<Product> products, List<Customer> customers) {
-//        this.paymentId = paymentId;
-//        this.documentNo = documentNo;
-//        this.title = title;
-//        this.bizTo = bizTo;
-//        this.memo = memo;
-//        this.type = type;
-//        this.status = status;
-//        this.paymentDate = paymentDate;
-//        this.paymentCycle = paymentCycle;
-//        this.createTime = createTime;
-//        this.updateTime = updateTime;
-//        this.products = products;
-//        this.customers = customers;
-//    }
 }

@@ -19,15 +19,30 @@ public class Memo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long memoId;
 
-    private String contents;
-    private String title;
-    @CreationTimestamp
-    private LocalDateTime createTime;
-    @UpdateTimestamp
-    private LocalDateTime updateTime;
+    @Column(nullable = false)
+    private String memoContents;
 
+    @Column(nullable = false)
+    private String memoTitle;
+
+    @CreationTimestamp
+    @Column(nullable = false)
+    private LocalDateTime memoCreateTime;
+
+    @UpdateTimestamp
+    private LocalDateTime memoModifiedAt;
+
+    @Column(nullable = false)
+    private String memoExposeYn;
+
+    @Column(nullable = false)
+    private String memoDelYn;
+
+    ///////////////////////////////////////////////////////////////////////
+    // 유저 IDX
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;

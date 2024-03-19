@@ -3,34 +3,40 @@ package com.os.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long customerId;
-    private String name;
-    private String email;
-    private String phone;
-    private String address;
+    @Column(nullable = false)
+    private Long customerId;            // 고객 IDX
+
+    @Column(nullable = false)
+    private String customerName;               // 고객 이름
+
+    @Column(nullable = false)
+    private String customerEmail;              // 고객 이메일
+
+    @Column(nullable = false)
+    private String customerPhone;              // 고객 전화번호
+
+    @Column(nullable = false)
+    private String customerAddress;            // 고객 주소
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @ManyToOne
-    @JoinColumn(name = "paymentId")
-    private Payment payment;
+    @JoinColumn(name = "userId")
+    private User user;                        // 유저 IDX
 
 
-//    @Builder
-//    public Customer(Long customerId, String name, String email, String phone, String address, Payment payment) {
-//        this.customerId = customerId;
-//        this.name = name;
-//        this.email = email;
-//        this.phone = phone;
-//        this.address = address;
-//        this.payment = payment;
-//    }
+    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Payment> payments;
+
 }
