@@ -1,9 +1,8 @@
-package com.os.dto;
+package com.os.security;
 
 import com.os.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -18,12 +17,7 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new GrantedAuthority() {
-            @Override
-            public String getAuthority() {
-                return user.getRole().toString();
-            }
-        });
+        authorities.add((GrantedAuthority) () -> user.getRole().toString());
 
         return authorities;
     }
@@ -44,7 +38,7 @@ public class CustomUserDetails implements UserDetails {
 
 
     public Long getUserId(){
-        return user.getUserId();
+        return user.getId();
     }
 
     @Override

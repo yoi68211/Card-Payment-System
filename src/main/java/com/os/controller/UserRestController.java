@@ -1,5 +1,5 @@
 package com.os.controller;
-import com.os.dto.CustomUserDetails;
+import com.os.security.CustomUserDetails;
 import com.os.dto.UpdateUserRequest;
 import com.os.entity.User;
 import com.os.service.UserService;

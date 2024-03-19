@@ -12,36 +12,38 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+public class User{
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long id;
+
     @Column(nullable = false)
     private String username;
+
     @Column(nullable = false ,unique = true)
     private String email;
+
     @Column(nullable = false)
     private String password;
+
     @Enumerated(EnumType.STRING)
     private UserRole role;
-
-    @OneToMany
-    @JoinColumn(name = "userId")
-    private List<Customer> customers;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
     private List<Memo> memos;
 
-    @OneToOne
-    @JoinColumn(name = "savePaymentId")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
+    private List<Customer> customer;
+
+    @OneToOne(mappedBy= "user" , cascade = CascadeType.ALL)
     private SavePayment savePayment;
 
 
     @Builder
-    public User(Long userId, String username, String email, String password, UserRole role) {
-        this.userId = userId;
+    public User(Long id, String username, String email, String password, UserRole role) {
+        this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;

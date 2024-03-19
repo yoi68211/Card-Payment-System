@@ -30,7 +30,7 @@ public class UserService {
         Optional<User> userOptional = userRepository.findById(userId);
         userOptional.ifPresent(user -> {
             User updatedUser = User.builder()
-                    .userId(user.getUserId())
+                    .id(user.getId())
                     .username(user.getUsername())
                     .email(user.getEmail())
                     .password(passwordEncoder.encode(newPassword))
@@ -43,7 +43,7 @@ public class UserService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             UserResponse userResponse = new UserResponse();
-            userResponse.setUserId(user.getUserId());
+            userResponse.setId(user.getId());
             userResponse.setUsername(user.getUsername());
             userResponse.setEmail(user.getEmail());
             userResponse.setPassword(user.getPassword());

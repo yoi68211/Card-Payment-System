@@ -15,26 +15,31 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Long customerId;            // customer 순번
+    private Long id;            // 고객 IDX
 
     @Column(nullable = false)
-    private String name;                // 고객명
+    private String customerName;               // 고객 이름
 
     @Column(nullable = false)
-    private String email;               // 이메일
+    private String customerEmail;              // 고객 이메일
 
     @Column(nullable = false)
-    private String phone;               // 전화번호
+    private String customerPhone;              // 고객 전화번호
 
     @Column(nullable = false)
-    private String address;             // 주소
+    private String customerAddress;            // 고객 주소
 
-
-    @Column(nullable = false)
-    private long userId;                   // user id값
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;                        // 유저 IDX
 
 
     @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Payment> payments;
+
+
+    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<AutoPayment> autoPayments;
+
 
 }
