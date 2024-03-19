@@ -17,54 +17,51 @@
         <tr>
             <th><label for="documentNo">문서번호</label></th>
             <th><input type="text" id="documentNo" name="documentNo"></th>
-            <th><label for="createTime">작성일</label></th>
-            <th><input type="date" id="createTime" name="createTime"></th>
+            <th><label for="paymentCreateTime">작성일</label></th>
+            <th><input type="date" id="paymentCreateTime" name="paymentCreateTime"></th>
         </tr>
         <tr>
-            <th><label for="name">고객명</label></th>
-            <th><input type="text" id="name" name="name"></th>
-            <th><label for="email">이메일</label></th>
-            <th><input type="text" id="email" name="email"></th>
+            <th><label for="customerName">고객명</label></th>
+            <th><input type="text" id="customerName" name="customerName"></th>
+            <th><label for="customerEmail">이메일</label></th>
+            <th><input type="text" id="customerEmail" name="customerEmail"></th>
         </tr>
         <tr>
-            <th><label for="phone">연락처</label></th>
-            <th><input type="text" id="phone" name="phone"></th>
-            <th><label for="address">주소</label></th>
-            <th><input type="text" id="address" name="address"></th>
+            <th><label for="customerPhone">연락처</label></th>
+            <th><input type="text" id="customerPhone" name="customerPhone"></th>
+            <th><label for="customerAddress">주소</label></th>
+            <th><input type="text" id="customerAddress" name="customerAddress"></th>
         </tr>
         <tr>
-            <th><label for="title">제목</label></th>
-            <th colspan="3"><input type="text" id="title" name="title"></th>
+            <th><label for="paymentTitle">제목</label></th>
+            <th colspan="3"><input type="text" id="paymentTitle" name="paymentTitle"></th>
         </tr>
         <tr>
             <th>결제설정</th>
             <th>
-                <input type="checkbox" id="type" name="type" value="자동결제">
-                <label for="type">자동결제</label>
+                <input type="checkbox" id="paymentType" name="paymentType" value="자동결제" onclick="cycle()">
+                <label for="paymentType">자동결제</label>
                 <input type="button" value="!">
-                <input type="checkbox" id="firstPay" name="firstPay" value="처음결제금액">
-                <label for="firstPay">처음결제금액</label>
+                <input type="checkbox" id="firstPay_check" name="firstPay_check" disabled>
+                <label for="firstPay_check">처음결제금액</label>
                 <input type="button" value="!">
             </th>
             <th>결제구분</th>
             <th>
-                <label><input type="radio" name='bizTo' value='BtoC'/>B TO C</label>
-                <label><input type='radio' name='bizTo' value='BtoB'/>B TO B</label>
+                <label><input type="radio" name='paymentBizTo' value='BtoC'/>B TO C</label>
+                <label><input type='radio' name='paymentBizTo' value='BtoB'/>B TO B</label>
             </th>
         </tr>
         <tr>
             <th>자동결제 주기</th>
             <th>
-                <label for="cycle"><select id="cycle" name="cycle">
+                <label for="paymentMonth"><select id="paymentMonth" name="paymentMonth" disabled>
                     <option>다음달</option>
                     <option>다다음달</option>
                 </select></label>
-                <label for="paymentDate"><input type="text" id="paymentDate" name="paymentDate"></label>  일
-                <label for="pay"><input type="text" id="pay" name="pay"></label> 엔
+                <label for="autoDate"><input type="text" id="autoDate" name="autoDate" disabled></label>  일
+                <label for="paymentFirstPay"><input type="text" id="paymentFirstPay" name="paymentFirstPay" disabled></label> 엔
             </th>
-        </tr>
-        <tr>
-            <th colspan="4"><label for="memo"><textarea cols="150" rows="10" id="memo" name="memo"></textarea></label></th>
         </tr>
     </table>
 
@@ -87,9 +84,9 @@
                 <input type="checkbox">
             </th>
             <th><input type=text id="productName" name="productName"></th>
-            <th><input type="text" id="totalItems" name="totalItems" oninput="updatetotalItems(this.parentNode.parentNode)"></th>
-            <th><input type="text" id="price" name="price" oninput="updatePrice(this.parentNode.parentNode)"></th>
-            <th id="res"></th>
+            <th><input type="text" id="productTotalItems" name="productTotalItems" oninput="updatetotalItems(this.parentNode.parentNode)"></th>
+            <th><input type="text" id="productPrice" name="productPrice" oninput="updatePrice(this.parentNode.parentNode)"></th>
+            <th><input type="text" id="productAmount" name="productAmount" readonly></th>
         </tr>
         <tr>
             <th></th>
@@ -102,5 +99,4 @@
     <input type="button" value="등록" onclick="send()">
 </form>
 </body>
-
 </html>

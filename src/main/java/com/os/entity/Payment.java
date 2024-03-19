@@ -37,7 +37,7 @@ public class Payment {
 
     private String paymentMemo;                     // 결제 메모
 
-    @CreationTimestamp
+   /* @CreationTimestamp*/
     @Column(nullable = false)
     private LocalDateTime paymentCreateTime;                      // 결제 생성시간
 
