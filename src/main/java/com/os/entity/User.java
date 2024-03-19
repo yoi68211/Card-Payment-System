@@ -37,6 +37,9 @@ public class User{
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
     private List<Customer> customer;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
+    private List<AutoPayment> autoPayments;
+
     @OneToOne(mappedBy= "user" , cascade = CascadeType.ALL)
     private SavePayment savePayment;
 

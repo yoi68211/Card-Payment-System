@@ -27,14 +27,7 @@ public class AutoPayment {
     private String autoFirstpay;                        // 자동결제 첫결제금액
 */
 
-    @Column(nullable = false)
-    private Long autoMonth;                           // 자동결제 다음결제일
 
-    @Column(nullable = false)
-    private LocalDateTime autoCreateTime;                            // 자동결제 마지막결제일
-
-    @Column(nullable = false)
-    private int autoPay;                             // 자동결제 금액
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -44,18 +37,15 @@ public class AutoPayment {
     private int autoPayCount;                        // 자동결제 횟수
 
 
-    @OneToOne(mappedBy = "autoPayment", cascade = CascadeType.ALL)
-    private Payment payment;
-
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private Customer customer;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
-    public LocalDateTime calculateLocalDateTime(InsertDTO dto){
-        return autoCreateTime.plusMonths(dto.getAutoMonth()).withDayOfMonth(dto.getAutoDate());
-
-    }
+//    public LocalDateTime calculateLocalDateTime(InsertDTO dto){
+//        return autoCreateTime.plusMonths(dto.getAutoMonth()).withDayOfMonth(dto.getAutoDate());
+//
+//    }
 
 
 

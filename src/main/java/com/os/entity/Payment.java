@@ -45,8 +45,6 @@ public class Payment {
     @Column(nullable = false)
     private OrderStatus paymentStatus;                     // 결제상태(성공 / 불가 / 오류)
 
-    @Column(nullable = false)
-    private char paymentPayYn;                             // 결제 여부(Y / N)
 
     @UpdateTimestamp
     private LocalDateTime paymentUpdateTime;               // 수정시간
@@ -54,16 +52,22 @@ public class Payment {
     @Column(nullable = false)
     private char paymentDelYn;                             // 결제 삭제여부(Y / N)
 
+    @Column(nullable = false)
+    private Long paymentMonth;                           // 자동결제 다음결제일
+
+    @Column(nullable = false)
+    private LocalDateTime paymentNextTime;                            // 자동결제 마지막결제일
+
+    @Column(nullable = false)
+    private int paymentFirstPay;                                 // 자동결제 금액
+
+
     //////////////////////////////////////////////////////////////////////////////////
     // 고객 IDX
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-
-    @OneToOne
-    @JoinColumn(name = "auto_payment_id" , referencedColumnName = "id")
-    private AutoPayment autoPayment;
 
     @OneToMany(mappedBy = "payment", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
     private List<Product> products;

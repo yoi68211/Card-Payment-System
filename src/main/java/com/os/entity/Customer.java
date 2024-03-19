@@ -38,8 +38,8 @@ public class Customer {
     private List<Payment> payments;
 
 
-    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<AutoPayment> autoPayments;
+//    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private List<AutoPayment> autoPayments;
 
 
 }
