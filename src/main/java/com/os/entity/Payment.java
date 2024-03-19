@@ -6,6 +6,7 @@ import com.os.util.OrderStatus;
 import com.os.util.OrderType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
@@ -54,7 +55,11 @@ public class Payment {
     private char paymentDelYn;                             // 결제 삭제여부(Y / N)
 
 
+
     private int paymentMonth;                           // 자동결제 다음결제일
+
+    private int paymentMonth;                           // 자동결제 다음결제월
+
 
 
     private LocalDateTime paymentNextTime;                            // 자동결제 마지막결제일
@@ -73,10 +78,6 @@ public class Payment {
     @OneToMany(mappedBy = "payment", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
     private List<Product> products;
 
-    public LocalDateTime calculateLocalDateTime(InsertDTO dto){
-        return paymentNextTime.plusMonths(dto.getPaymentMonth()).withDayOfMonth(dto.getAutoDate());
-
-    }
 
 
 
