@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/pageSample.css}" rel="stylesheet">
+    <link th:href="@{/css/basicPayInfoDetail.css}" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/047f82d071.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header class="header-nav">
+        <span class="header-flex-box header-logo">
+
+            <span class="sidebar-action-border">
+                <img th:src="@{/img/header_sidebar.png}" id="sidebar-action-icon">
+            </span>
+            <a href="/dashboard">AIP System</a>
+        </span>
+
+    <span class="header-pageName header-flex-box" >결제 목록 / 전체 결제 목록</span><!-- 현재 페이지 이름 -->
+
+    <span class="header-flex-box">
+            <span class="header-flex-three">
+                <span class="header-icon">
+                    <a href="#"><img th:src="@{/img/help.png}" id="help_icon"></a>
+                    <a href="#"><img th:src="@{/img/chart.png}" id="chart_icon"></a>
+                    <a href="#"><img th:src="@{/img/memo.png}" id="memo_icon"></a>
+                </span>
+                <img th:src="@{/img/profileImg.png}" id="profile-img">
+                <span id="submenu-trigger">
+                    <a href="#">Nacamora</a>
+                    <div id="submenu">
+                        <a href="#">정보 변경</a>
+                        <a href="#">비밀번호 변경</a>
+                        <a href="/logout">로그아웃</a>
+                    </div>
+                </span>
+            </span>
+        </span>
+</header>
+<main>
+    <div class="main-cell">
+        <div class="basic-main">
+            <div class="basic-header">
+                <div>
+                    <span>회원 ID : </span>
+                    <span>BASIC-<span class="customer-id">1313</span> 전체결제 상세내역</span>
+                </div>
+                <div>
+                    <button>편집</button>
+                    <button><i class="fa-solid fa-chevron-left"></i>목록으로</button>
+                </div>
+            </div>
+            <div class="basic-body">
+                <div class="basic-input-group">
+                    <label>
+                        <span>등록일시</span>
+                        <input type="date">
+                    </label>
+                    <label>
+
+                    </label>
+                    <label>
+                        <span>고객명</span>
+                        <input type="text">
+                    </label>
+                    <label>
+                        <span>E-Mail</span>
+                        <input type="email">
+                    </label>
+                    <label class="basic-title">
+                        <span>제목</span>
+                        <input type="text">
+                    </label>
+
+                    <label class="basic-custom-input">
+                        <span>결제 설정</span>
+                        <input type="text">
+                    </label>
+                    <label class="basic-custom-input">
+                        <span>결제구분</span>
+                        <select>
+                            <option>sdf</option>
+                            <option>하이</option>
+                            <option>ㅂㅈㄷㄱ</option>
+                        </select>
+                    </label>
+
+                    <label>
+
+                    </label>
+                </div>
+            </div>
+            <div class="basic-footer">
+                <div class="basic-footer-header">
+                    <span>결제 물품 정보 등록</span>
+                    <span>
+                        <button><i class="fa-solid fa-plus"></i>행 추가</button>
+                        <button><i class="fa-solid fa-minus"></i>행 삭제</button>
+                    </span>
+                </div>
+                <div class="basic-footer-table">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox"></th>
+                            <th>No.</th>
+                            <th>상품명</th>
+                            <th>수량</th>
+                            <th>단가</th>
+                            <th>금액</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>1</td>
+                            <td>초코파이</td>
+                            <td>2</td>
+                            <td>1300</td>
+                            <td>2600</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>1</td>
+                            <td>초코파이</td>
+                            <td>2</td>
+                            <td>1300</td>
+                            <td>2600</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>1</td>
+                            <td>초코파이</td>
+                            <td>2</td>
+                            <td>1300</td>
+                            <td>2600</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>1</td>
+                            <td>초코파이</td>
+                            <td>2</td>
+                            <td>1300</td>
+                            <td>2600</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>1</td>
+                            <td>초코파이</td>
+                            <td>2</td>
+                            <td>1300</td>
+                            <td>2600</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>합계</td>
+                            <td></td>
+                            <td></td>
+                            <td>2600</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="basic-real-footer">
+                    <button>즉시 결제</button>
+                    <button>QR 결제</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+<aside>
+        <span id="sidebar">
+            <nav>
+                <ul class="sidebar-ul">
+                    <li> <!-- 현재 페이지 의 해당하는 span태그에 style="color: blue;" 써주세여  -->
+                        <span>
+                            <img th:src="@{/img/sidebar_dashboard.png}" id="sidebar_dashboard_icon">
+                            <span class="sidebar-nav-text">DashBoard</span>
+                        </span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </li>
+                    <li>
+                        <span>
+                            <img th:src="@{/img/sidebar_card.png}" id="sidebar_card_icon">
+                            <span class="sidebar-nav-text">결제등록</span>
+                        </span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </li>
+                    <li>
+                        <span style="color: blue;">
+                            <img th:src="@{/img/sidebar_payList.png}" id="sidebar_payList_icon">
+                            <span class="sidebar-nav-text">결제목록</span>
+                        </span>
+                        <i class="fa-solid fa-chevron-down" id="payList-toggle"></i>
+                    </li>
+                    <li class="payList-nav">
+                        <span class="payList" style="color: blue;">
+                            <i class="fa-solid fa-square fa-2xs"></i>
+                            <span class="sidebar-nav-text">전체 결제 목록</span>
+                        </span>
+                        <!-- <i class="fa-solid fa-chevron-right"></i> -->
+                    </li>
+                    <li class="payList-nav">
+                        <span class="payList">
+                            <i class="fa-solid fa-square fa-2xs"></i>
+                            <span class="sidebar-nav-text" ><a href="#">자동 결제 목록</a></span>
+                        </span>
+                        <!-- <i class="fa-solid fa-chevron-right"></i> -->
+                    </li>
+
+                </ul>
+            </nav>
+            </span>
+</aside>
+</body>
+<script th:src="@{/js/pageSample.js}"></script>
+</html>

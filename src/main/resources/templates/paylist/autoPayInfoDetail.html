@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/pageSample.css}" rel="stylesheet">
+    <link th:href="@{/css/autopayInfoDetail.css}" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/047f82d071.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header class="header-nav">
+        <span class="header-flex-box header-logo">
+
+            <span class="sidebar-action-border">
+                <img th:src="@{/img/header_sidebar.png}" id="sidebar-action-icon">
+            </span>
+            <a href="/dashboard">AIP System</a>
+        </span>
+
+    <span class="header-pageName header-flex-box" >결제 목록 / 자동 결제 목록</span><!-- 현재 페이지 이름 -->
+
+    <span class="header-flex-box">
+            <span class="header-flex-three">
+                <span class="header-icon">
+                    <a href="#"><img th:src="@{/img/help.png}" id="help_icon" alt=""></a>
+                    <a href="#"><img th:src="@{/img/chart.png}" id="chart_icon" alt=""></a>
+                    <a href="#"><img th:src="@{/img/memo.png}" id="memo_icon" alt=""></a>
+                </span>
+                <img th:src="@{/img/profileImg.png}" id="profile-img">
+                <span id="submenu-trigger">
+                    <a href="#">Nacamora</a>
+                    <div id="submenu">
+
+                    </div>
+                </span>
+            </span>
+        </span>
+</header>
+<main>
+    <div class="main-cell">
+        <div class="auto-main">
+            <div class="auto-header">
+                <div>
+                    <span>회원 ID : </span>
+                    <span>AUTO-<span class="customer-id">1313</span> 자동결제 상세내역</span>
+                </div>
+                <div>
+                    <button>편집</button>
+                    <button><i class="fa-solid fa-chevron-left"></i>목록으로</button>
+                </div>
+            </div>
+            <div class="auto-body">
+                <div class="auto-input-group">
+                    <label>
+                        <span>등록일시</span>
+                        <input type="date">
+                    </label>
+                    <label>
+                        <span>회원ID</span>
+                        <input type="text">
+                    </label>
+                    <label>
+                        <span>고객명</span>
+                        <input type="text">
+                    </label>
+                    <label>
+                        <span>E-Mail</span>
+                        <input type="email">
+                    </label>
+                    <label class="phone-inputs">
+                        <span>연락번호</span>
+                        <div class="phone-flex">
+                            <input type="tel" maxlength="3" placeholder="010" class="phone-part">
+                            -
+                            <input type="tel" maxlength="4" placeholder="1234" class="phone-part">
+                            -
+                            <input type="tel" maxlength="4" placeholder="5678" class="phone-part">
+                        </div>
+                    </label>
+                    <label>
+                        <span>주소</span>
+                        <input type="text">
+                    </label>
+                    <label class="auto-custom-input">
+                        <span>자동결제 금액</span>
+                        <input type="number">
+                    </label>
+                    <label class="auto-custom-input">
+                        <span>결제구분</span>
+                        <input type="text">
+                    </label>
+                    <label>
+                        <span>마지막 결제일</span>
+                        <input type="date">
+                    </label>
+                    <label class="auto-custom-input">
+                        <span>마지막 거래상태</span>
+                        <input type="text">
+                    </label>
+                    <label>
+                        <span>다음 결제일</span>
+                        <input type="date">
+                    </label>
+                    <label class="auto-custom-input">
+                        <span>결제 회차</span>
+                        <input type="text">
+                    </label>
+                    <label class="auto-memo">
+                        <span>메모</span>
+                        <input type="text">
+                    </label>
+                </div>
+            </div>
+            <div class="auto-footer">
+                <button>중지</button>
+                <button><i class="fa-solid fa-credit-card"></i>카드정보 변경 요청</button>
+            </div>
+        </div>
+
+
+
+    </div>
+</main>
+<aside>
+        <span id="sidebar">
+            <nav>
+                <ul class="sidebar-ul">
+                    <li> <!-- 현재 페이지 의 해당하는 span태그에 style="color: blue;" 써주세여  -->
+                        <span>
+                            <img th:src="@{/img/sidebar_dashboard.png}" id="sidebar_dashboard_icon">
+                            <span class="sidebar-nav-text">DashBoard</span>
+                        </span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </li>
+                    <li>
+                        <span>
+                            <img th:src="@{/img/sidebar_card.png}" id="sidebar_card_icon">
+                            <span class="sidebar-nav-text">결제등록</span>
+                        </span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </li>
+                    <li>
+                        <span style="color: blue;">
+                            <img th:src="@{/img/sidebar_payList.png}" id="sidebar_payList_icon">
+                            <span class="sidebar-nav-text">결제목록</span>
+                        </span>
+                        <i class="fa-solid fa-chevron-down" id="payList-toggle"></i>
+                    </li>
+                    <li class="payList-nav">
+                        <span class="payList">
+                            <i class="fa-solid fa-square fa-2xs"></i>
+                            <span class="sidebar-nav-text">전체 결제 목록</span>
+                        </span>
+                        <!-- <i class="fa-solid fa-chevron-right"></i> -->
+                    </li>
+                    <li class="payList-nav">
+                        <span class="payList" style="color: blue;">
+                            <i class="fa-solid fa-square fa-2xs"></i>
+                            <span class="sidebar-nav-text" ><a href="#">자동 결제 목록</a></span>
+                        </span>
+                        <!-- <i class="fa-solid fa-chevron-right"></i> -->
+                    </li>
+
+                </ul>
+            </nav>
+            </span>
+</aside>
+</body>
+<script th:src="@{/js/pageSample.js}"></script>
+</html>
