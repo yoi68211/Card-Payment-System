@@ -56,7 +56,7 @@ public class SavePayment {
 
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id" , referencedColumnName = "id")
+    @JoinColumn(name = "user_id" , referencedColumnName = "id",nullable = false)
     private User user;
 
 

@@ -3,6 +3,9 @@ package com.os.controller;
 import com.os.dto.InsertDTO;
 import com.os.service.PaymentService;
 import com.os.util.OrderType;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,12 +22,20 @@ public class InsertController {
     }
 
     @PostMapping("/insert")
-    public void insertData(@RequestBody InsertDTO dto) {
-
-        System.out.println(dto.toString()); 
-        paymentService.insert_basic(dto);
+    public String insertData(@RequestBody @Valid InsertDTO dto) {
 
 
-        System.out.println("결제 등록 성공");
+           boolean res = paymentService.insert_basic(dto);
+
+           if (res){
+
+               return "ok";
+
+           }else {
+               return "bad";
+           }
+
+
+
     }
 }

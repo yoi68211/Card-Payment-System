@@ -7,6 +7,36 @@
     <script src="https://kit.fontawesome.com/047f82d071.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/insert_form.css">
     <script src="/js/insert_form.js"></script>
+    <script>
+        function save(){
+            var f = document.getElementById('paymentForm');
+            var name = f.customerName.value;
+            var email = f.customerEmail.value;
+            var phone = f.customerPhone.value;
+            var address = f.customerAddress.value;
+            var title = f.paymentTitle.value;
+            var type = f.paymentType.checked ? "auto" : "basic";
+            var paymentFirstPay = f.firstPay_check.checked ? 1 : 0;
+            var bizTo = f.paymentBizTo.value;
+
+            var month = f.paymentMonth.value == "다음달" ? 1 : 2;
+            var autoDate = f.autoDate.value;
+            var paymentFirstPay = f.paymentFirstPay.value;
+
+            var productRows = document.querySelectorAll("#product tbody tr");
+            var productList = [];
+            for (var i = 1; i < productRows.length - 1; i++) {
+                var productName = productRows[i].querySelector("input[name='productName']").value;
+                var totalItems = productRows[i].querySelector("input[name='productTotalItems']").value;
+                var price = productRows[i].querySelector("input[name='productPrice']").value;
+
+                productList.push({ s_productName: productName, s_productTotalItems: totalItems, s_productPrice: price});
+            }
+            var data = {
+
+            };
+        }
+    </script>
 </head>
 <body>
 <header class="header-nav">
@@ -39,8 +69,8 @@
 <main>
 <form id="paymentForm">
     결제등록
-    <input type="button" value="이전저장글">
-    <input type="button" value="임시저장">
+    <input type="button" value="이전저장글" onclick="load()" disabled>
+    <input type="button" value="임시저장" onclick="save">
     <br>
     <table border="1">
         <caption>기본 결제 등록</caption>

@@ -58,7 +58,6 @@ public class Payment {
 
     private int paymentMonth;                           // 자동결제 다음결제일
 
-    private int paymentMonth;                           // 자동결제 다음결제월
 
 
 
@@ -71,7 +70,7 @@ public class Payment {
     //////////////////////////////////////////////////////////////////////////////////
     // 고객 IDX
     @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    @JoinColumn(name = "customer_id", referencedColumnName = "id",nullable = false)
     private Customer customer;
 
 
@@ -79,7 +78,10 @@ public class Payment {
     private List<Product> products;
 
 
+    public LocalDateTime calculateLocalDateTime(InsertDTO dto){
+        return paymentNextTime.plusMonths(dto.getPaymentMonth()).withDayOfMonth(dto.getAutoDate());
 
+    }
 
 
 
