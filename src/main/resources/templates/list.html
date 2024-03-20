@@ -109,12 +109,12 @@
             <tbody>
                 <tr th:each="payment : ${payList}">
                     <td><label><input type="checkbox" name="selectedPayment" /></label></td>
-                    <td th:text="${#temporals.format(payment.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                    <td th:text="${payment.documentNo}"></td>
-                    <td th:text="${payment.name}">
-                    <td th:text="${payment.title}"></td>
-                    <td th:text="${payment.amount}"></td>
-                    <td th:text="${payment.status}"></td>
+                    <td th:text="${#temporals.format(payment.paymentCreateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    <td th:text="${payment.id}"></td>
+                    <td th:text="${payment.customerName}">
+                    <td th:text="${payment.paymentTitle}"></td>
+                    <td th:text="${payment.productAmount}"></td>
+                    <td th:text="${payment.paymentStatus}"></td>
                 </tr>
             </tbody>
         </table>

@@ -24,18 +24,7 @@ import java.util.Optional;
 
 @SpringBootTest
 class   OsApplicationTests {
-
-
-
-
-	@Test
-	void testList(){
-		List<Payment> paymentList = paymentRepository.findAll();
-
-		for(Payment list : paymentList){
-			System.out.println(list.toString());
-		}
-	}
+	
 
 	@Test
 	void contextLoads() {

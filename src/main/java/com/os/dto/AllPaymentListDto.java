@@ -18,51 +18,22 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class AllPaymentListDto {
-    private LocalDateTime createTime;
-    private String documentNo;
-    private String name;
-    private String title;
-    private String amount;
+    private LocalDateTime paymentCreateTime;
+    private Long id;
+    private String customerName;
+    private String paymentTitle;
+    private int productAmount;
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    private OrderStatus paymentStatus;
 
     public static AllPaymentListDto toAllPaymentListDto(Payment payment) {
         return AllPaymentListDto.builder()
-                .createTime(payment.getCreateTime())
-                .documentNo(payment.getDocumentNo())
-                .name(payment.getCustomers().get(0).getName())
-                .title(payment.getTitle())
-                .amount(payment.getProducts().get(0).getAmount())
-                .status(payment.getStatus())
+                .paymentCreateTime(payment.getPaymentCreateTime())
+                .id(payment.getId())
+                .customerName(payment.getCustomer().getCustomerName())
+                .paymentTitle(payment.getPaymentTitle())
+                .productAmount(payment.getProducts().get(0).getProductAmount())
+                .paymentStatus(payment.getPaymentStatus())
                 .build();
     }
-    /*
-    private Long paymentId;
-    private LocalDateTime createTime;
-    private String documentNo;
-    private String memo;
-    private LocalDateTime paymentCycle;
-    private LocalDateTime paymentDate;
-    @Enumerated(EnumType.STRING)
-    private OrderStatus status;
-    private String title;
-    @Enumerated(EnumType.STRING)
-    private OrderType type;
-    private LocalDateTime updateTime;
-
-    public static AllPaymentListDto toAllPaymentListDto(Payment payment) {
-        return AllPaymentListDto.builder()
-                .paymentId(payment.getPaymentId())
-                .createTime(payment.getCreateTime())
-                .documentNo(payment.getDocumentNo())
-                .memo(payment.getMemo())
-                .paymentCycle(payment.getPaymentCycle())
-                .paymentDate(payment.getPaymentDate())
-                .status(payment.getStatus())
-                .title(payment.getTitle())
-                .type(payment.getType())
-                .updateTime(payment.getUpdateTime())
-                .build();
-    }
-     */
 }
