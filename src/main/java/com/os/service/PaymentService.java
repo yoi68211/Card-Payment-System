@@ -26,6 +26,8 @@ public class PaymentService {
     private final CustomerRepository customerRepository;
     private final UserRepository userRepository;
 
+
+
     public PaymentService(PaymentRepository paymentRepository, ProductRepository productRepository, CustomerRepository customerRepository, UserRepository userRepository) {
         this.paymentRepository = paymentRepository;
         this.productRepository = productRepository;
@@ -33,7 +35,7 @@ public class PaymentService {
         this.userRepository = userRepository;
     }
 
-    public void insert_basic(InsertDTO dto) {
+    public boolean insert_basic(InsertDTO dto) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
@@ -86,7 +88,15 @@ public class PaymentService {
                 product.setPayment(payment);
 
                 productRepository.save(product);
+
+
+
+
             }
+
+        return true;
+        }else {
+            return false;
         }
     }
 }

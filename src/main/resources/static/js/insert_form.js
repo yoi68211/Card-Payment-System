@@ -1,4 +1,4 @@
-window.addEventListener('DOMContentLoaded', function() {
+/*window.addEventListener('DOMContentLoaded', function() {
         // 현재 시간을 가져오는 함수
         function getCurrentTime() {
             const now = new Date();
@@ -14,7 +14,27 @@ window.addEventListener('DOMContentLoaded', function() {
         if (createTimeInput) {
             createTimeInput.value = getCurrentTime();
         }
+    });*/
+    window.addEventListener('DOMContentLoaded', function() {
+        // 현재 시간을 가져오는 함수
+        function getCurrentDateTime() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const currentDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+            return currentDateTime;
+        }
+
+        // createTime input 태그를 찾아 현재 시간을 설정
+        const createTimeInput = document.getElementById('paymentCreateTime');
+        if (createTimeInput) {
+            createTimeInput.value = getCurrentDateTime();
+        }
     });
+
 
 function validateInput(input) {
             return /^\d+$/.test(input) ? input : ""; // 숫자가 아닌 경우 빈 문자열 반환
@@ -282,9 +302,11 @@ function validateInput(input) {
                         if (response.ok) {
                             // 요청이 성공적으로 처리되었을 때의 동작
                             console.log('Request succeeded');
+
                         } else {
                             // 요청이 실패했을 때의 동작
                             console.error('Request failed');
+
                         }
                     }).catch(error => {
                         console.error('Error:', error);
