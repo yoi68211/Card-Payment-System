@@ -19,6 +19,8 @@ spring:
       show_sql: true
       format_sql: true
 
+  resources:
+    static-locations=classpath:/static/:
 
   thymeleaf:
     cache: false
