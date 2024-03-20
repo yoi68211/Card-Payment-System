@@ -30,7 +30,7 @@ public class Customer {
     private String customerAddress;            // 고객 주소
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id",nullable = false)
     private User user;                        // 유저 IDX
 
 

@@ -24,16 +24,16 @@ public class SaveProduct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;                 // 상품임시저장 IDX
 
-    @Column(nullable = false)
+
     private String s_productName;             // 상품임시저장 상품명
 
-    @Column(nullable = false)
+
     private String s_productPrice;            // 상품임시저장 상품가격
 
-    @Column(nullable = false)
+
     private String s_productTotalItem;        // 상품임시저장 상품수량
 
     @ManyToOne
-    @JoinColumn(name = "savePayment_id", referencedColumnName = "id")
+    @JoinColumn(name = "savePayment_id", referencedColumnName = "id",nullable = false)
     private SavePayment savePayment;
 }
