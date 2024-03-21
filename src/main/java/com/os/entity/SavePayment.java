@@ -20,7 +20,7 @@ import java.util.List;
 public class SavePayment {
 
     @Id
-    @Column(nullable = false)
+    @Column(nullable = false, name = "s_payment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;                       // 결제임시저장 IDX
 
@@ -54,7 +54,7 @@ public class SavePayment {
 
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id" , referencedColumnName = "id",nullable = false)
+    @JoinColumn(name = "user_id" , referencedColumnName = "user_id",nullable = false)
     private User user;
 
 

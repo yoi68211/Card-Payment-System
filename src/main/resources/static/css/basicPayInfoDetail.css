@@ -5,13 +5,26 @@ button{
 .main-cell{
     height: 100%;
     padding: 20px;
+    max-height: 807px;
 }
+
+@media (max-width: 1900px) {
+  .main-cell{
+      height: 100%;
+      padding: 20px;
+      max-height: 544px;
+
+  }
+}
+
 
 .basic-main{
     width: 100%;
     height: 100%;
 }
-
+.basic-form{
+    height: 100%;
+}
 .basic-header{
     height: 15%;
     display: flex;
@@ -45,6 +58,7 @@ button{
 
 .basic-body{
     height: 35%;
+
     border-bottom: 1px solid black;
 
 }
@@ -121,7 +135,13 @@ button{
     color: white;
 }
 
-
+.basic-footer-header button:disabled {
+    border: 1px solid black;
+    background-color: gray;
+    color: white;
+    opacity: 0.5; /* 예시: 투명도 조절 */
+    cursor: not-allowed; /* 예시: 커서 스타일 변경 */
+}
 
 
 .basic-footer-table {
@@ -152,7 +172,11 @@ button{
     text-align: center;
 }
 
-
+.basic-footer-table input {
+    border: none;
+    outline: none;
+    background-color: white;
+}
 
 .basic-real-footer{
     height: 30%;
@@ -180,4 +204,5 @@ button{
     background-color: #4E8DF5;
     color: white;
 }
+
 

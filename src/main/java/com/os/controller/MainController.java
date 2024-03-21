@@ -1,13 +1,14 @@
 package com.os.controller;
 
-import com.os.entity.User;
-import com.os.service.UserService;
-import lombok.RequiredArgsConstructor;
+import com.os.dto.AllPaymentListDto;
+import com.os.service.AllPaymentListService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequiredArgsConstructor
+import java.util.List;
+
 @Controller
 @RequestMapping("/")
 public class MainController {
@@ -18,7 +19,6 @@ public class MainController {
     public String index() {
         return "login";
     }
-    
     @GetMapping("dashboard")
     public String login() {
         return "dashboard";
@@ -49,6 +49,19 @@ public class MainController {
         long userId = user.getId();
         System.out.println(userId);
         return "insert_form";
+    }
+
+    private final AllPaymentListService allPaymentListService;
+
+    public MainController(AllPaymentListService allPaymentListService) {
+        this.allPaymentListService = allPaymentListService;
+    }
+
+    @GetMapping("/list")
+    public String findAll(Model model) {
+        List<AllPaymentListDto> allPayments = allPaymentListService.findAll();
+        model.addAttribute("payList", allPayments);
+        return "list";
     }
 
 }

@@ -19,7 +19,7 @@ public class AutoPayment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+    @Column(nullable = false, name = "auto_id")
     private Long id;                              // 자동결제 IDX
 
 /*
@@ -39,7 +39,7 @@ public class AutoPayment {
 
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id",nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id",nullable = false)
     private User user;
 
 //    public LocalDateTime calculateLocalDateTime(InsertDTO dto){

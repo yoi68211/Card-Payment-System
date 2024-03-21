@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class SaveProduct {
 
     @Id
-    @Column(nullable = false)
+    @Column(nullable = false, name = "s_product_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;                 // 상품임시저장 IDX
 
@@ -28,6 +28,6 @@ public class SaveProduct {
     private int s_productTotalItem;        // 상품임시저장 상품수량
 
     @ManyToOne
-    @JoinColumn(name = "savePayment_id", referencedColumnName = "id",nullable = false)
+    @JoinColumn(name = "s_payment_id", referencedColumnName = "s_payment_id",nullable = false)
     private SavePayment savePayment;
 }

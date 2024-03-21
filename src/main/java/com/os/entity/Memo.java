@@ -20,7 +20,7 @@ public class Memo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+    @Column(nullable = false, name = "memo_id")
     private Long id;
 
     @Column(nullable = false)
@@ -41,7 +41,7 @@ public class Memo {
     private String memoDelYn;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id",nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id",nullable = false)
     private User user;
 
 }

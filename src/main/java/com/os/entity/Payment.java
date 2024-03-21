@@ -23,7 +23,7 @@ import java.util.List;
 public class Payment {
 
     @Id
-    @Column(nullable = false)
+    @Column(nullable = false, name = "payment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;                         // 결제 IDX
 
@@ -72,7 +72,7 @@ public class Payment {
     //////////////////////////////////////////////////////////////////////////////////
     // 고객 IDX
     @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id",nullable = false)
+    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id",nullable = false)
     private Customer customer;
 
 

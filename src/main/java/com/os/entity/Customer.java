@@ -14,7 +14,7 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+    @Column(nullable = false, name = "customer_id")
     private Long id;            // 고객 IDX
 
     @Column(nullable = false)
@@ -30,7 +30,7 @@ public class Customer {
     private String customerAddress;            // 고객 주소
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id",nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id",nullable = false)
     private User user;                        // 유저 IDX
 
 
