@@ -23,15 +23,28 @@ public class SavePaymentService {
     private final UserService userService;
 
 
-    public boolean save(SavePaymentDTO dto) {
+    public boolean save(SavePaymentDTO dto , User user) {
 
-        User user = userService.findId();
+        System.out.println("dto = " + dto.toString());
 
         if (user != null) {
+            SavePayment savepayment = new SavePayment();
+            savepayment.setS_paymentName(dto.getS_paymentName());
+            savepayment.setS_paymentEmail(dto.getS_paymentEmail());
+            savepayment.setS_paymentPhone(dto.getS_paymentPhone());
+            savepayment.setS_paymentAddress(dto.getS_paymentAddress());
+            savepayment.setS_paymentTitle(dto.getS_paymentTitle());
+            savepayment.setS_paymentType(dto.getS_paymentType());
+            savepayment.setS_paymentFirstpay(dto.getS_paymentFirstPay());
+            savepayment.setS_paymentBizTo(dto.getS_paymentBizTo());
+            savepayment.setS_paymentCycle(dto.getS_paymentCycle());
+            savepayment.setS_paymentDate(dto.getS_paymentDate());
+            savepayment.setS_paymentPay(dto.getS_paymentPay());
+            savepayment.setUser(user);
 
-            SavePayment savePayment= new SavePayment();
-            savePayment.toSavePayment(dto);
-            savePaymentRepository.save(savePayment);
+
+
+            savePaymentRepository.save(savepayment);
 
             for (SaveProductDTO saveProductDTO : dto.getProductList()) {
                 SaveProduct saveProduct = new SaveProduct();
@@ -39,7 +52,7 @@ public class SavePaymentService {
                 saveProduct.setS_productTotalItem(saveProductDTO.getS_productTotalItems());
                 saveProduct.setS_productPrice(saveProductDTO.getS_productPrice());
 
-                saveProduct.setSavePayment(savePayment);
+                saveProduct.setSavePayment(savepayment);
 
                 saveproductRepository.save(saveProduct);
             }
@@ -141,7 +154,4 @@ public class SavePaymentService {
 ////        return saveproductRepository.findFirstByUserIdOrderByCreatedAtDesc(s_paymentId);
 //        return null;
 //    }
-    public long countByUserId(long userId){
-        return savePaymentRepository.countByUserId(userId);
-    }
 }

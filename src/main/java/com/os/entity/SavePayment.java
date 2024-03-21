@@ -20,7 +20,7 @@ import java.util.List;
 public class SavePayment {
 
     @Id
-    @Column(nullable = false, name = "s_payment_id")
+    @Column(nullable = false , name = "s_payment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;                       // 결제임시저장 IDX
 
@@ -61,23 +61,6 @@ public class SavePayment {
     @OneToMany(mappedBy = "savePayment", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
     private List<SaveProduct> saveProducts;
 
-    public void toSavePayment(SavePaymentDTO dto){
-        SavePayment savepayment = new SavePayment();
-        savepayment.setS_paymentName(dto.getS_paymentName());
-        savepayment.setS_paymentEmail(dto.getS_paymentEmail());
-        savepayment.setS_paymentPhone(dto.getS_paymentPhone());
-        savepayment.setS_paymentAddress(dto.getS_paymentAddress());
-        savepayment.setS_paymentTitle(dto.getS_paymentTitle());
-        savepayment.setS_paymentType(dto.getS_paymentType());
-        savepayment.setS_paymentFirstpay(dto.getS_paymentFirstPay());
-        savepayment.setS_paymentBizTo(dto.getS_paymentBizTo());
-        savepayment.setS_paymentCycle(dto.getS_paymentCycle());
-        savepayment.setS_paymentDate(dto.getS_paymentDate());
-        savepayment.setS_paymentPay(dto.getS_paymentPay());
-        savepayment.setUser(user);
 
-
-
-    }
 
 }
