@@ -4,14 +4,11 @@ import com.os.util.BizTo;
 import com.os.util.OrderType;
 import lombok.Data;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class SavePaymentDTO {
-
-//    private String documentNo;
-//    private LocalDateTime paymentCreateTime;
+public class SavePaymentLoadDTO {
+    private long id;
     private String s_paymentName;
     private String s_paymentEmail;
     private String s_paymentPhone;
@@ -25,5 +22,4 @@ public class SavePaymentDTO {
     private int s_paymentCycle;
     private int s_paymentDate;
     private int s_paymentPay;
-    private List<SaveProductDTO> productList;
 }

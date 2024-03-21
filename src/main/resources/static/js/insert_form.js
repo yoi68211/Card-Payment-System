@@ -243,7 +243,8 @@ function validateInput(input) {
 
         function send() {
                     var f = document.getElementById('paymentForm');
-                    var createTime = f.paymentCreateTime.value;
+//                    var createTime = f.paymentCreateTime.value;
+                    var createTime = new Date().toISOString().slice(0, 16);
                     var name = f.customerName.value;
                     var email = f.customerEmail.value;
                     var phone = f.customerPhone.value;
