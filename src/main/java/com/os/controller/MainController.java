@@ -1,7 +1,10 @@
 package com.os.controller;
 
 import com.os.dto.AllPaymentListDto;
+import com.os.entity.User;
 import com.os.service.AllPaymentListService;
+import com.os.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +14,10 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/")
+@RequiredArgsConstructor
 public class MainController {
-
     public final UserService userService;
+    public final AllPaymentListService allPaymentListService;
 
     @GetMapping
     public String index() {
@@ -49,12 +53,6 @@ public class MainController {
         long userId = user.getId();
         System.out.println(userId);
         return "insert_form";
-    }
-
-    private final AllPaymentListService allPaymentListService;
-
-    public MainController(AllPaymentListService allPaymentListService) {
-        this.allPaymentListService = allPaymentListService;
     }
 
     @GetMapping("/list")
