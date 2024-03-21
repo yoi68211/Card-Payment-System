@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -39,71 +39,71 @@
         </span>
 </header>
 <main>
+    <form class="basic-form">
     <div class="main-cell">
+
         <div class="basic-main">
             <div class="basic-header">
+
                 <div>
                     <span>회원 ID : </span>
                     <span>BASIC-<span class="customer-id">1313</span> 전체결제 상세내역</span>
                 </div>
                 <div>
-                    <button>편집</button>
-                    <button><i class="fa-solid fa-chevron-left"></i>목록으로</button>
+                    <button type="button" onclick="toggleEdit()">편집</button>
+                    <button type="button">삭제</button>
+                    <button type="button"><i class="fa-solid fa-chevron-left"></i>목록으로</button>
                 </div>
             </div>
             <div class="basic-body">
                 <div class="basic-input-group">
                     <label>
                         <span>등록일시</span>
-                        <input type="date">
+                        <input type="date" id="createDate" disabled>
                     </label>
                     <label>
 
                     </label>
                     <label>
                         <span>고객명</span>
-                        <input type="text">
+                        <input type="text" id="customerName" class="editable" disabled th:value="${customerInfo.customerName}">
                     </label>
                     <label>
                         <span>E-Mail</span>
-                        <input type="email">
+                        <input type="email" id="customerEmail" class="editable" disabled th:value="${customerInfo.customerEmail}">
                     </label>
                     <label class="basic-title">
                         <span>제목</span>
-                        <input type="text">
+                        <input type="text" id="paymentTitle" class="editable" disabled th:value="${payInfo.paymentTitle}">
                     </label>
-
+                    <!-- th:if="${payInfo.paymentType == 'basic'}" -->
                     <label class="basic-custom-input">
                         <span>결제 설정</span>
-                        <input type="text">
+                        <input type="text"  value="일반결제" disabled>
                     </label>
                     <label class="basic-custom-input">
                         <span>결제구분</span>
-                        <select>
-                            <option>sdf</option>
-                            <option>하이</option>
-                            <option>ㅂㅈㄷㄱ</option>
+                        <select id="paymentBizTo" disabled>
+                            <option value="BtoB">B To B</option>
+                            <option value="BtoC">B To C</option>
                         </select>
                     </label>
 
-                    <label>
-
-                    </label>
                 </div>
             </div>
             <div class="basic-footer">
                 <div class="basic-footer-header">
                     <span>결제 물품 정보 등록</span>
                     <span>
-                        <button><i class="fa-solid fa-plus"></i>행 추가</button>
-                        <button><i class="fa-solid fa-minus"></i>행 삭제</button>
+                        <button type="button" onclick="fnAddTable()" disabled><i class="fa-solid fa-plus"></i>행 추가</button>
+                        <button type="button" onclick="fnDelTable()" disabled><i class="fa-solid fa-minus"></i>행 삭제</button>
                     </span>
                 </div>
                 <div class="basic-footer-table">
                     <table>
                         <thead>
                         <tr>
-                            <th><input type="checkbox"></th>
+                            <th><input type="checkbox" disabled></th>
                             <th>No.</th>
                             <th>상품명</th>
                             <th>수량</th>
@@ -112,66 +112,53 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>1</td>
-                            <td>초코파이</td>
-                            <td>2</td>
-                            <td>1300</td>
-                            <td>2600</td>
+                        <tr th:each="product, index : ${productInfo}">
+                            <td><input type="checkbox" disabled th:value="${product.id}"></td>
+                            <td th:text="${index.count}"></td>
+                            <td>
+                                <label>
+                                    <input type="text" class="editable" disabled th:value="${product.productName}">
+                                </label>
+                            </td>
+                            <td>
+                                <label>
+                                    <input type="number" class="editable" disabled th:value="${product.productTotalItems}">
+                                </label>
+                            </td>
+                            <td>
+                                <label>
+                                    <input type="number" class="editable" disabled th:value="${product.productPrice}">
+                                </label>
+                            </td>
+                            <td>
+                                <label>
+                                    <input type="number" class="editable" disabled th:value="${product.productAmount}">
+                                </label>
+                            </td>
                         </tr>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>1</td>
-                            <td>초코파이</td>
-                            <td>2</td>
-                            <td>1300</td>
-                            <td>2600</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>1</td>
-                            <td>초코파이</td>
-                            <td>2</td>
-                            <td>1300</td>
-                            <td>2600</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>1</td>
-                            <td>초코파이</td>
-                            <td>2</td>
-                            <td>1300</td>
-                            <td>2600</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>1</td>
-                            <td>초코파이</td>
-                            <td>2</td>
-                            <td>1300</td>
-                            <td>2600</td>
-                        </tr>
+
                         <tr>
                             <td></td>
                             <td></td>
                             <td>합계</td>
                             <td></td>
                             <td></td>
-                            <td>2600</td>
+                            <td id="totalAmount"></td>
                         </tr>
 
                         </tbody>
                     </table>
                 </div>
                 <div class="basic-real-footer">
-                    <button>즉시 결제</button>
-                    <button>QR 결제</button>
+                    <button type="button">즉시 결제</button>
+                    <button type="button">QR 결제</button>
                 </div>
             </div>
 
         </div>
+
     </div>
+    </form>
 </main>
 <aside>
         <span id="sidebar">
@@ -219,4 +206,31 @@
 </aside>
 </body>
 <script th:src="@{/js/pageSample.js}"></script>
+<script th:src="@{/js/basicPayInfoDetail.js}"></script>
+<script th:inline="javascript">
+    let paymentType = [[${payInfo.paymentType}]]; // basic, auto, stop
+    console.log(paymentType);
+
+    let productInfo = [[${productInfo}]]; // product 목록
+
+    // 총합 계산
+    let totalAmount = 0; // 총합
+    for (let i = 0; i < productInfo.length; i++) {
+        totalAmount += productInfo[i].productAmount;
+    }
+    document.getElementById("totalAmount").innerText = totalAmount;
+    // 총합 계산 end
+
+    //날짜 가공
+    let payCreate = [[${payInfo.paymentCreateTime}]];
+    let createDate = dateProcess(payCreate);
+    document.getElementById("createDate").value = createDate;
+    //날짜 가공 end
+
+
+    // BtoB BtoC select value 삽입
+    let paymentBizTo = [[${payInfo.paymentBizTo}]];
+    document.getElementById("paymentBizTo").value = paymentBizTo;
+    // BtoB BtoC select value 삽입 end
+</script>
 </html>

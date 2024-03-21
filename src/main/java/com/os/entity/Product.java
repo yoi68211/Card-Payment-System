@@ -11,7 +11,7 @@ import lombok.*;
 public class Product {
 
     @Id
-    @Column(nullable = false)
+    @Column(nullable = false, name = "product_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;                    // product IDX
 
@@ -31,7 +31,7 @@ public class Product {
     // 결제 IDX
 
     @ManyToOne
-    @JoinColumn(name = "payment_id", referencedColumnName = "id",nullable = false)
+    @JoinColumn(name = "payment_id", referencedColumnName = "payment_id",nullable = false)
     private Payment payment;
 
 
