@@ -3,6 +3,9 @@ package com.os.service;
 import com.os.dto.UserResponse;
 import com.os.entity.User;
 import com.os.repository.UserRepository;
+import com.os.security.CustomUserDetails;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -54,7 +57,15 @@ public class UserService {
         }
     }
 
+    public User findId(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        Long userId = userDetails.getUserId();
 
+        Optional<User> userOptional = userRepository.findById(userId);
+        return userOptional.orElse(null);
+
+    }
 
 
 }

@@ -1,13 +1,18 @@
 package com.os.controller;
 
+import com.os.entity.User;
+import com.os.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/")
 public class MainController {
 
+    public final UserService userService;
 
     @GetMapping
     public String index() {
@@ -39,6 +44,11 @@ public class MainController {
     }
 
     @GetMapping("insert_form")
-    public String insert_form(){ return "insert_form"; }
+    public String insert_form(){
+        User user = userService.findId();
+        long userId = user.getId();
+        System.out.println(userId);
+        return "insert_form";
+    }
 
 }

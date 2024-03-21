@@ -9,42 +9,26 @@ import com.os.entity.User;
 import com.os.repository.CustomerRepository;
 import com.os.repository.PaymentRepository;
 import com.os.repository.ProductRepository;
-import com.os.repository.UserRepository;
-import com.os.security.CustomUserDetails;
 import com.os.util.OrderStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
-public class PaymentService {
+@Transactional
+public class PaymentInsertService {
     private final PaymentRepository paymentRepository;
     private final ProductRepository productRepository;
     private final CustomerRepository customerRepository;
-    private final UserRepository userRepository;
-
-
-
-    public PaymentService(PaymentRepository paymentRepository, ProductRepository productRepository, CustomerRepository customerRepository, UserRepository userRepository) {
-        this.paymentRepository = paymentRepository;
-        this.productRepository = productRepository;
-        this.customerRepository = customerRepository;
-        this.userRepository = userRepository;
-    }
+    public final UserService userService;
 
     public boolean insert_basic(InsertDTO dto) {
+        User user = userService.findId();
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        Long userId = userDetails.getUserId();
-
-        Optional<User> userOptional = userRepository.findById(userId);
-
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
+        if (user != null) {
 
             Customer customer = new Customer();
             customer.setCustomerName(dto.getCustomerName());
@@ -63,16 +47,10 @@ public class PaymentService {
             payment.setPaymentCreateTime(dto.getPaymentCreateTime());
             payment.setPaymentStatus(OrderStatus.wait);
 
-            /*if(dto.getPaymentMonth() != 0) {
-                payment.setPaymentMonth(dto.getPaymentMonth());
-            }*/
             if(dto.getAutoDate() != 0) {
                 LocalDateTime date = payment.calculateLocalDateTime(dto);
                 payment.setPaymentNextTime(date);
             }
-            /*if(dto.getPaymentFirstPay() != 0) {
-                payment.setPaymentFirstPay(dto.getPaymentFirstPay());
-            }*/
             payment.setPaymentDelYn('N');
             payment.setCustomer(customer);
 
@@ -89,11 +67,7 @@ public class PaymentService {
 
                 productRepository.save(product);
 
-
-
-
             }
-
         return true;
         }else {
             return false;

@@ -9,6 +9,8 @@
     <script src="/js/insert_form.js"></script>
     <script>
         function save(){
+            var before = document.getElementById("before");
+
             var f = document.getElementById('paymentForm');
             var name = f.customerName.value;
             var email = f.customerEmail.value;
@@ -16,7 +18,7 @@
             var address = f.customerAddress.value;
             var title = f.paymentTitle.value;
             var type = f.paymentType.checked ? "auto" : "basic";
-            var paymentFirstPay = f.firstPay_check.checked ? 1 : 0;
+            var firstPayCheck = f.firstPay_check.checked ? 1 : 0;
             var bizTo = f.paymentBizTo.value;
 
             var month = f.paymentMonth.value == "다음달" ? 1 : 2;
@@ -33,8 +35,44 @@
                 productList.push({ s_productName: productName, s_productTotalItems: totalItems, s_productPrice: price});
             }
             var data = {
-
+                s_paymentName: name,
+                s_paymentEmail: email,
+                s_paymentPhone: phone,
+                s_paymentAddress: address,
+                s_paymentTitle: title,
+                s_paymentType: type,
+                s_paymentFirstPay: firstPayCheck,
+                s_paymentBizTo: bizTo,
+                s_paymentCycle: month,
+                s_paymentDate: autoDate,
+                s_paymentPay: paymentFirstPay,
+                productList: productList
             };
+
+            // JSON 데이터를 서버에 전송
+            fetch('/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(response => {
+                if (response.ok) {
+                    // 요청이 성공적으로 처리되었을 때의 동작
+                    console.log('Request succeeded');
+                    alert('임시저장 성공!');
+                    before.disabled = false;
+                } else {
+                    // 요청이 실패했을 때의 동작
+                    console.error('Request failed');
+                    before.disabled = true;
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }
+        function load(){
+
         }
     </script>
 </head>
@@ -69,17 +107,17 @@
 <main>
 <form id="paymentForm">
     결제등록
-    <input type="button" value="이전저장글" onclick="load()" disabled>
-    <input type="button" value="임시저장" onclick="save">
+    <input type="button" id="before" value="이전저장글" onclick="load()" disabled>
+    <input type="button" value="임시저장" onclick="save()">
     <br>
     <table border="1">
         <caption>기본 결제 등록</caption>
-        <tr>
-            <th><label for="documentNo">문서번호</label></th>
-            <th><input type="text" id="documentNo" name="documentNo"></th>
-            <th><label for="paymentCreateTime">작성일</label></th>
-            <th><input type="datetime-local" id="paymentCreateTime" name="paymentCreateTime"></th>
-        </tr>
+<!--        <tr>-->
+<!--            <th><label for="documentNo">문서번호</label></th>-->
+<!--            <th><input type="text" id="documentNo" name="documentNo"></th>-->
+<!--            <th><label for="paymentCreateTime">작성일</label></th>-->
+<!--            <th><input type="datetime-local" id="paymentCreateTime" name="paymentCreateTime"></th>-->
+<!--        </tr>-->
         <tr>
             <th><label for="customerName">고객명</label></th>
             <th><input type="text" id="customerName" name="customerName"></th>
@@ -108,7 +146,7 @@
             </th>
             <th>결제구분</th>
             <th>
-                <label><input type="radio" name='paymentBizTo' value='BtoC'/>B TO C</label>
+                <label><input type="radio" name='paymentBizTo' value='BtoC' checked/>B TO C</label>
                 <label><input type='radio' name='paymentBizTo' value='BtoB'/>B TO B</label>
             </th>
         </tr>
