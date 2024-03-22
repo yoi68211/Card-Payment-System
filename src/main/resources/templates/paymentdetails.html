@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -19,33 +19,33 @@
         </tr>
         <tr class="table-light" >
             <th scope="row" class="text-center">이름</th>
-            <td class="text-end">이름</td>
+            <td class="text-end" th:text="${paymentDetailsDTO.customerName}"></td>
         </tr>
         <tr class="table-light">
-            <th scope="row" class="text-center">메일</th>
-            <td class="text-end">메일</td>
+            <th scope="row" class="text-center">이메일</th>
+            <td class="text-end" th:text="${paymentDetailsDTO.customerEmail}">
         </tr>
         <tr class="table-light">
             <th scope="row" class="text-center" >날짜</th>
-            <td class="text-end">날짜</td>
+            <td class="text-end" th:text="${paymentDetailsDTO.createTime}">
+
         </tr >
         <tr class="table-light">
             <th scope="row" class="text-center">문서번호</th>
-            <td class="text-end">문서번호</td>
+            <td class="text-end" th:text="${paymentDetailsDTO.id}">
         </tr>
         <tr class="table-light">
             <th scope="row" class="text-center">제목</th>
-            <td class="text-end">제목</td>
+            <td class="text-end" th:text="${paymentDetailsDTO.paymentTitle}">
         </tr>
         <tr class="table-light">
             <th scope="row" class="text-center">결제 구분</th>
-            <td class="text-end">결제구분</td>
+            <td class="text-end" th:text="${paymentDetailsDTO.bizTo}">
         </tr>
 
         <tr class="table-light">
             <th scope="row" class="text-center">결제 금액</th>
-            <td class="text-end">금액</td>
-        </tr>
+            <td class="text-end" th:text="${paymentDetailsDTO.amount}">        </tr>
 
         <tr>
             <td class="text-center" colspan="2">
@@ -61,16 +61,15 @@
     </table>
     <div class="text-end">
         <button type="button" class="btn btn-success">결제</button>
-        <button type="button" class="btn btn-info">메일 전송</button>
+<!--        <button type="button" class="btn btn-info">메일 전송</button>-->
         <button type="button" class="btn btn-warning">결제 완료 등록</button>
         <button type="button" class="btn btn-light">뒤로가기</button>
     </div>
 </div>
 
 <script>
-    // 서버에서 가져온 dburl 변수
 
-     //(url는 현지에서 어떤 api를 사용할지 알수없어서 기존 url을 넣어뒀습니다)
+     //(url는 현지에서 어떤 api를 사용할지 알수없어서 기존 url을 넣어뒀습니다 PaymentDetailsDTO에 payload를 추가하여 PaymentDetailsDTO를 수정하던지 entity를 구현해주세요)
     var url = "http://demo.nippon-kessai.link/aip/?member_registration=JTdCJTIyMCUyMiUzQSUyMjI2NjUlMjIlMkMlMjIxJTIyJTNBJTIydGVzdCUyMiU3RA==";
 
     // URL을 인코딩하여 QR 코드와 링크에 사용

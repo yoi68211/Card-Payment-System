@@ -14,7 +14,4 @@ public class UpdateUserRequest {
     private String newPassword;
     private String confirmNewPassword;
 
-
-
-
 }
