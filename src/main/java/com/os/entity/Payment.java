@@ -76,7 +76,7 @@ public class Payment {
     private Customer customer;
 
 
-    @OneToMany(mappedBy = "payment", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
+    @OneToMany(mappedBy = "payment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Product> products;
 
 
