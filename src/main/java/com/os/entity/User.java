@@ -42,7 +42,7 @@ public class User{
     private List<AutoPayment> autoPayments;
 
     @OneToOne(mappedBy= "user" , cascade = CascadeType.ALL)
-    private SavePayment savePayment;
+    private  SavePayment savePayment;
 
 
     @Builder

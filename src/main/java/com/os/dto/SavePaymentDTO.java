@@ -1,5 +1,6 @@
 package com.os.dto;
 
+import com.os.entity.SavePayment;
 import com.os.util.BizTo;
 import com.os.util.OrderType;
 import lombok.Data;
@@ -26,4 +27,7 @@ public class SavePaymentDTO {
     private int s_paymentDate;
     private int s_paymentPay;
     private List<SaveProductDTO> productList;
+
+
+
 }

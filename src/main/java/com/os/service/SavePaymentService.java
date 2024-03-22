@@ -26,42 +26,13 @@ public class SavePaymentService {
     public boolean save(SavePaymentDTO dto , User user) {
 
         System.out.println("dto = " + dto.toString());
-
-        if (user != null) {
-            SavePayment savepayment = new SavePayment();
-            savepayment.setS_paymentName(dto.getS_paymentName());
-            savepayment.setS_paymentEmail(dto.getS_paymentEmail());
-            savepayment.setS_paymentPhone(dto.getS_paymentPhone());
-            savepayment.setS_paymentAddress(dto.getS_paymentAddress());
-            savepayment.setS_paymentTitle(dto.getS_paymentTitle());
-            savepayment.setS_paymentType(dto.getS_paymentType());
-            savepayment.setS_paymentFirstpay(dto.getS_paymentFirstPay());
-            savepayment.setS_paymentBizTo(dto.getS_paymentBizTo());
-            savepayment.setS_paymentCycle(dto.getS_paymentCycle());
-            savepayment.setS_paymentDate(dto.getS_paymentDate());
-            savepayment.setS_paymentPay(dto.getS_paymentPay());
-            savepayment.setUser(user);
-
-
-
-            savePaymentRepository.save(savepayment);
-
-            for (SaveProductDTO saveProductDTO : dto.getProductList()) {
-                SaveProduct saveProduct = new SaveProduct();
-                saveProduct.setS_productName(saveProductDTO.getS_productName());
-                saveProduct.setS_productTotalItem(saveProductDTO.getS_productTotalItems());
-                saveProduct.setS_productPrice(saveProductDTO.getS_productPrice());
-
-                saveProduct.setSavePayment(savepayment);
-
-                saveproductRepository.save(saveProduct);
-            }
+        SavePayment savePayment = SavePayment.ToEntity(dto, user);
+        savePaymentRepository.save(savePayment);
 
         return true;
-        }else {
-            return false;
-        }
+
     }
+
 
     public boolean save_update(SavePaymentDTO dto){
         User user = userService.findId();
