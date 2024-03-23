@@ -32,8 +32,8 @@ public class Customer {
     private User user;                        // 유저 IDX
 
 
-    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Payment> payments;
+    @OneToOne(mappedBy= "customer" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Payment payments;
 
 
 //    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)

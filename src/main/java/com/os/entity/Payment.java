@@ -77,7 +77,7 @@ public class Payment {
 
     //////////////////////////////////////////////////////////////////////////////////
     // 고객 IDX
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id",nullable = false)
     private Customer customer;
 

@@ -56,20 +56,13 @@ public class PaymentInsertService {
                 payment.setProducts(productList);
                 customer.setUser(user);
                 payment.setCustomer(customer);
-
-                List<Payment> payments = new ArrayList<>();
-                payments.add(payment);
-                customer.setPayments(payments);
+                customer.setPayments(payment);
 
                 customerRepository.save(customer);
                 return true;
             } else {
                 return false;
             }
-
-
-
-
 
 
 

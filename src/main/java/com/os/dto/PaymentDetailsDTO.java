@@ -23,7 +23,7 @@ public class PaymentDetailsDTO {
     private String customerName;
     private String customerEmail;
     private LocalDateTime createTime;
-    private List<Payment> payments;
+    private Payment payments;
     private String paymentTitle;
     private String amount;
     private BizTo bizTo;
@@ -32,33 +32,24 @@ public class PaymentDetailsDTO {
     @Builder
     public PaymentDetailsDTO(Customer customer) {
 
-        this.id = customer.getId();
+        this.id = customer.getPayments().getId();
+
         this.customerName = customer.getCustomerName();
         this.customerEmail = customer.getCustomerEmail();
         this.payments = customer.getPayments();
-        this.createTime = customer.getPayments().stream()
-                .map(Payment::getPaymentCreateTime)
-                .min(LocalDateTime::compareTo)
-                .orElse(null);
+        this.createTime = customer.getPayments().getPaymentCreateTime();
 
-        this.paymentTitle = customer.getPayments().stream()
-                .map(Payment::getPaymentTitle)
-                .findFirst()
-                .orElse(null);
+        this.paymentTitle = customer.getPayments().getPaymentTitle();
 
-        this.bizTo = customer.getPayments().stream()
-                .map(Payment::getPaymentBizTo)
-                .findFirst()
-                .orElse(null);
+        this.bizTo = customer.getPayments().getPaymentBizTo();
 
 
         this.amount = calculateTotalAmount(customer.getPayments());
     }
 
-    private String calculateTotalAmount(List<Payment> payments) {
-        int totalAmount = payments.stream()
-                .flatMap(payment -> payment.getProducts().stream()) // 모든 Product를 하나의 스트림으로 평면화
-                .mapToInt(Product::getProductAmount) // Product의 총액을 가져옴
+    private String calculateTotalAmount(Payment payment) {
+        int totalAmount = payment.getProducts().stream()
+                .mapToInt(Product::getProductAmount)
                 .sum();
         return String.valueOf(totalAmount);
     }
