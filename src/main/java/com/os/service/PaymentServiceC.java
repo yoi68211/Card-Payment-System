@@ -21,9 +21,7 @@ public class PaymentServiceC {
         if(paymentOptional.isPresent()){
             Payment payment = paymentOptional.get();
 
-            PaymentDTOC payInfo = PaymentDTOC.payInfoDTO(payment);
-
-            return payInfo;
+            return PaymentDTOC.payInfoDTO(payment);
         } else{
             return null;
         }

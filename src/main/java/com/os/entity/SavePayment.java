@@ -1,6 +1,7 @@
 package com.os.entity;
 
 import com.os.dto.SavePaymentDTO;
+import com.os.dto.SaveProductDTO;
 import com.os.util.BizTo;
 import com.os.util.OrderType;
 import jakarta.persistence.*;
@@ -9,6 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -62,5 +64,34 @@ public class SavePayment {
     private List<SaveProduct> saveProducts;
 
 
+
+    public static SavePayment ToEntity(SavePaymentDTO dto, User user) {
+
+        SavePayment savePayment = new SavePayment();
+
+        savePayment.setS_paymentName(dto.getS_paymentName());
+        savePayment.setS_paymentEmail(dto.getS_paymentEmail());
+        savePayment.setS_paymentPhone(dto.getS_paymentPhone());
+        savePayment.setS_paymentAddress(dto.getS_paymentAddress());
+        savePayment.setS_paymentTitle(dto.getS_paymentTitle());
+        savePayment.setS_paymentType(dto.getS_paymentType());
+        savePayment.setS_paymentFirstpay(dto.getS_paymentFirstPay());
+        savePayment.setS_paymentBizTo(dto.getS_paymentBizTo());
+        savePayment.setS_paymentCycle(dto.getS_paymentCycle());
+        savePayment.setS_paymentDate(dto.getS_paymentDate());
+        savePayment.setS_paymentPay(dto.getS_paymentPay());
+        List<SaveProduct> saveProductList = new ArrayList<>();
+        for (SaveProductDTO productDTO : dto.getProductList()) {
+            SaveProduct saveProduct = new SaveProduct();
+            saveProduct.setS_productTotalItem(productDTO.getS_productTotalItems());
+            saveProduct.setS_productPrice(productDTO.getS_productPrice());
+            saveProductList.add(saveProduct);
+        }
+        // 이런식으로 매핑 따로 빼주세요!
+        savePayment.setUser(user);
+        savePayment.setSaveProducts(saveProductList);
+        return savePayment;
+
+    }
 
 }

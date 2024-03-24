@@ -23,9 +23,7 @@ public class CustomerServiceC {
         if(customerOptional.isPresent()){
             Customer customer = customerOptional.get();
 
-            CustomerDTOC customerInfo = CustomerDTOC.CustomerInfoDTO(customer);
-
-            return customerInfo;
+            return CustomerDTOC.CustomerInfoDTO(customer);
         } else{
             return null;
         }

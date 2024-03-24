@@ -25,11 +25,7 @@ public class userInsertTest {
 				.username("kim")
 				.role(UserRole.ADMIN)
 				.build();
-//		userRepository.save(user);
-
-
-		Assertions.assertThat(user.getUsername()).isNotEqualTo("kim");
-
+				userRepository.save(user);
 
 
 	}

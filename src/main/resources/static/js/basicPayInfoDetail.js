@@ -63,18 +63,55 @@
                         deleteButton.disabled = true;
 
                         isEditing = false;
-
-
             if(!result){
                 alert("취소되었습니다.");
 
                 return;
+
             }
-            alert("수정되었습니다.");
+
+            // product id 체크박스 value 리스트
+            // product table 리스트
+            // 행 삭제시 다른 삭제된 체크박스 id 배열에 저장
+
+            let f = document.getElementById("basic-form");
+                let param = {
+                    customerId : f.customerId.value,
+                    customerName : f.customerName.value,
+                    customerEmail : f.customerEmail.value,
+                    paymentTitle : f.paymentTitle.value,
+                    paymentId : f.paymentId.value
+                }
+            //
+
+
+            fetch('/payDetailEdit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(param)
+                }).then(response => {
+                if (response.ok) {
+                    // 요청이 성공적으로 처리되었을 때의 동작
+                    console.log('Request succeeded');
+                    alert("수정되었습니다.");
+                    console.log(response);
+                } else {
+                    // 요청이 실패했을 때의 동작
+                    console.error('Request failed');
+                    alert("실패했습니다.");
+                }
+                }).catch(error => {
+                    console.error('Error:', error);
+                    alert("알수없는 에러.");
+            });
+
+
             // update aJax 요청 실행
 
             // 행 삭제가 있다면 product 는 delete 실행
-
+            // 행 삭제시 product_id 배열에 저장하고 백에서 해당 변수 비어있지 않다면 delete 실헹
 
         }
     }; // 편집 버튼 end
@@ -97,10 +134,10 @@
 
         // 각 셀에 input 요소 추가
         checkboxCell.innerHTML = '<input type="checkbox" >';
-        productNameCell.innerHTML = '<label><input type="text" class="editable" ></label>';
-        productTotalItemsCell.innerHTML = '<label><input type="number" class="editable" ></label>';
-        productPriceCell.innerHTML = '<label><input type="number" class="editable" ></label>';
-        productAmountCell.innerHTML = '<label><input type="number" class="editable" ></label>';
+        productNameCell.innerHTML = '<label><input type="text" name="productTitle" class="editable" ></label>';
+        productTotalItemsCell.innerHTML = '<label><input type="number" name="TotalItem" class="editable" ></label>';
+        productPriceCell.innerHTML = '<label><input type="number" name="productPrice" class="editable" ></label>';
+        productAmountCell.innerHTML = '<label><input type="number" name="productAmount" class="editable" ></label>';
 
         // 새로운 행에 셀 추가
         newRow.appendChild(checkboxCell);

@@ -60,7 +60,12 @@ public class Payment {
 
     private int paymentMonth;                           // 자동결제 다음결제일
 
+    private String paymentAmount;
 
+    @PostLoad
+    public void initializeAmount() {
+        paymentAmount = calculateTotalAmount(products);
+    }
 
 
     private LocalDateTime paymentNextTime;                            // 자동결제 마지막결제일
@@ -69,14 +74,15 @@ public class Payment {
     private int paymentFirstPay;                                 // 자동결제 금액
 
 
+
     //////////////////////////////////////////////////////////////////////////////////
     // 고객 IDX
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id",nullable = false)
     private Customer customer;
 
 
-    @OneToMany(mappedBy = "payment", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
+    @OneToMany(mappedBy = "payment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Product> products;
 
 
@@ -85,6 +91,12 @@ public class Payment {
 
     }
 
+    private String calculateTotalAmount(List<Product> products){
+
+        double totalAmount =  products.stream().mapToDouble(Product::getProductAmount).sum();
+
+        return String.valueOf(totalAmount);
+    }
 
 
 }
