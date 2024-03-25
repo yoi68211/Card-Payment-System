@@ -65,9 +65,6 @@ public class MainController {
 
     @GetMapping("insert_form")
     public String insert_form(){
-        User user = userService.findId();
-        long userId = user.getId();
-        System.out.println(userId);
         return "insert_form";
     }
 

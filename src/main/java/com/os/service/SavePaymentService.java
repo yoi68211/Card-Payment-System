@@ -1,6 +1,7 @@
 package com.os.service;
 
 import com.os.dto.SavePaymentDTO;
+import com.os.dto.SavePaymentLoadDTO;
 import com.os.dto.SaveProductDTO;
 import com.os.entity.SavePayment;
 import com.os.entity.SaveProduct;
@@ -8,6 +9,7 @@ import com.os.entity.User;
 import com.os.repository.SavePaymentRepository;
 import com.os.repository.SaveProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +26,7 @@ public class SavePaymentService {
 
 
     public boolean save(SavePaymentDTO dto , User user) {
-
+        System.out.println("savee");
         System.out.println("dto = " + dto.toString());
         SavePayment savePayment = SavePayment.ToEntity(dto, user);
         savePaymentRepository.save(savePayment);
@@ -35,6 +37,7 @@ public class SavePaymentService {
 
 
     public boolean save_update(SavePaymentDTO dto){
+        System.out.println("saveupdatee");
         User user = userService.findId();
 
         if (user != null) {
@@ -117,12 +120,18 @@ public class SavePaymentService {
 
     }
 
-//    public SavePaymentLoadDTO load_info(long userId) {
-//        return savePaymentRepository.findFirstByUserIdOrderByCreatedAtDesc(userId);
-//    }
-//
-//    public List<SaveProductDTO> load_info(long s_paymentId) {
-////        return saveproductRepository.findFirstByUserIdOrderByCreatedAtDesc(s_paymentId);
-//        return null;
-//    }
+    public SavePaymentLoadDTO load_info(long userId) {
+        Optional<SavePayment> optionalSavePayment = savePaymentRepository.findByUserId(userId);
+        SavePayment savePayment = optionalSavePayment.orElse(null);
+
+        SavePaymentLoadDTO dto = new SavePaymentLoadDTO();
+        if (savePayment != null) {
+            BeanUtils.copyProperties(savePayment, dto);
+        }
+        return dto;
+    }
+
+    public List<SaveProduct> load_list(long s_payment_id) {
+        return saveproductRepository.findBySavePaymentId(s_payment_id);
+    }
 }

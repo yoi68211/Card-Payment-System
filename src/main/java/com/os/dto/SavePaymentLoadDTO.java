@@ -22,4 +22,6 @@ public class SavePaymentLoadDTO {
     private int s_paymentCycle;
     private int s_paymentDate;
     private int s_paymentPay;
+
+    private List<SaveProductDTO> productList;
 }
