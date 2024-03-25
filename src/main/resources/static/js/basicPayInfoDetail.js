@@ -1,5 +1,6 @@
 
 
+let productDelCheck = [];
 
 
     // 편집버튼 클릭
@@ -38,34 +39,34 @@
             const result = confirm("수정하시겠습니까?");
 
             // 클래스 요소들의 disabled 속성 설정
-                        const inputs = document.querySelectorAll('.basic-main .editable');
-                        inputs.forEach(input => {
-                            input.disabled = true; // 저장 모드에서는 모든 input 활성화
-                        });
+             const inputs = document.querySelectorAll('.basic-main .editable');
+             inputs.forEach(input => {
+                input.disabled = true; // 저장 모드에서는 모든 input 활성화
+             });
 
-                        // 편집 버튼 텍스트 변경
-                        const editButton = document.querySelector('.basic-header button:nth-of-type(1)');
-                        editButton.textContent = '편집';
+             // 편집 버튼 텍스트 변경
+             const editButton = document.querySelector('.basic-header button:nth-of-type(1)');
+             editButton.textContent = '편집';
 
-                        // 테두리 안보이게 설정
-                        const tableInputs = document.querySelectorAll('.basic-footer-table input');
-                        tableInputs.forEach(input => {
-                            input.style.border = 'none';
-                            input.style.outline = 'none';
-                            input.style.backgroundColor = 'white';
-                        });
+             // 테두리 안보이게 설정
+             const tableInputs = document.querySelectorAll('.basic-footer-table input');
+             tableInputs.forEach(input => {
+                 input.style.border = 'none';
+                 input.style.outline = 'none';
+                 input.style.backgroundColor = 'white';
+             });
 
 
-                        // 행 추가, 삭제 버튼 비활성화
-                        const addButton = document.querySelector('.basic-footer-header button:nth-of-type(1)');
-                        const deleteButton = document.querySelector('.basic-footer-header button:nth-of-type(2)');
-                        addButton.disabled = true;
-                        deleteButton.disabled = true;
+            // 행 추가, 삭제 버튼 비활성화
+            const addButton = document.querySelector('.basic-footer-header button:nth-of-type(1)');
+            const deleteButton = document.querySelector('.basic-footer-header button:nth-of-type(2)');
+            addButton.disabled = true;
+            deleteButton.disabled = true;
 
-                        isEditing = false;
+            isEditing = false;
             if(!result){
                 alert("취소되었습니다.");
-
+                location.reload(true);
                 return;
 
             }
@@ -74,17 +75,50 @@
             // product table 리스트
             // 행 삭제시 다른 삭제된 체크박스 id 배열에 저장
 
-            let f = document.getElementById("basic-form");
-                let param = {
-                    customerId : f.customerId.value,
-                    customerName : f.customerName.value,
-                    customerEmail : f.customerEmail.value,
-                    paymentTitle : f.paymentTitle.value,
-                    paymentId : f.paymentId.value
+
+
+            var productRows = document.querySelectorAll("#basic-proTable tbody tr");
+//            if (productRows.length > 2 && productRows[1].querySelector("input[type='checkbox']").checked) {
+//                alert("결제 물품에 등록된 전체 물품을 결제합니다. 체크박스를 해제해 주세요");
+//                return;
+//            }
+            console.log("productRows",productRows.length);
+            let productList = [];
+            for (var i = 0; i < productRows.length - 1; i++) {
+                var productId = productRows[i].querySelector("input[name='productId']");
+
+                var productName = productRows[i].querySelector("input[name='productName']").value;
+                var totalItems = productRows[i].querySelector("input[name='productTotalItems']").value;
+                var price = productRows[i].querySelector("input[name='productPrice']").value;
+                var productAmount = productRows[i].querySelector("input[name='productAmount']").value;
+
+
+
+                if(productId.value != 'on' && productId.value != ""){
+                    var id = productId.value;
+                } else {
+                    var id = 0;
                 }
-            //
 
 
+                productList.push({ productName: productName, productTotalItems: totalItems, productPrice: price, productAmount: productAmount, id: id});
+
+
+
+                console.log("productList for" ,productList[i]);
+            }
+
+            let f = document.getElementById("basic-form");
+            let param = {
+                customerId : f.customerId.value,
+                customerName : f.customerName.value,
+                customerEmail : f.customerEmail.value,
+                paymentTitle : f.paymentTitle.value,
+                paymentId : f.paymentId.value,
+                productDelCheck : productDelCheck,
+                productList : productList
+            }
+            console.log("productList", param.productList);
             fetch('/payDetailEdit', {
                 method: 'POST',
                 headers: {
@@ -94,12 +128,10 @@
                 }).then(response => {
                 if (response.ok) {
                     // 요청이 성공적으로 처리되었을 때의 동작
-                    console.log('Request succeeded');
                     alert("수정되었습니다.");
-                    console.log(response);
+                    location.reload(true);
                 } else {
                     // 요청이 실패했을 때의 동작
-                    console.error('Request failed');
                     alert("실패했습니다.");
                 }
                 }).catch(error => {
@@ -133,11 +165,11 @@
         const productAmountCell = document.createElement('td');
 
         // 각 셀에 input 요소 추가
-        checkboxCell.innerHTML = '<input type="checkbox" >';
-        productNameCell.innerHTML = '<label><input type="text" name="productTitle" class="editable" ></label>';
-        productTotalItemsCell.innerHTML = '<label><input type="number" name="TotalItem" class="editable" ></label>';
-        productPriceCell.innerHTML = '<label><input type="number" name="productPrice" class="editable" ></label>';
-        productAmountCell.innerHTML = '<label><input type="number" name="productAmount" class="editable" ></label>';
+        checkboxCell.innerHTML = '<input type="checkbox" name="productId">';
+        productNameCell.innerHTML = '<label><input type="text" name="productName" class="editable" ></label>';
+        productTotalItemsCell.innerHTML = '<label><input type="number" name="productTotalItems" class="editable" onchange="updatePrice(this)"></label>';
+        productPriceCell.innerHTML = '<label><input type="number" name="productPrice" class="editable" onchange="updatePrice(this)"></label>';
+        productAmountCell.innerHTML = '<label><input type="number" name="productAmount" class="editable" readonly></label>';
 
         // 새로운 행에 셀 추가
         newRow.appendChild(checkboxCell);
@@ -166,8 +198,102 @@
         }
     }
     // 헹 삭제 버튼
-    function fnDelTable(){
+    function fnDelTable() {
+        const checkedRows = [];
 
+        const tableBody = document.querySelector('.basic-footer-table tbody');
+        const checkboxes = tableBody.querySelectorAll('input[type="checkbox"]');
+
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                // 체크된 체크박스의 value 가져와서 배열에 저장
+                const value = checkbox.value;
+                // 체크된 행 저장
+                checkedRows.push(checkbox.closest('tr'));
+                if (checkbox.value != 'on') {
+                    productDelCheck.push(value); // 전역 변수
+
+                }
+
+            }
+        });
+
+        if (checkedRows.length === 0) {
+            alert("삭제할 행을 선택해주세요.");
+            return;
+        }
+
+        checkedRows.forEach(row => {
+            row.remove();
+        });
+
+        // 선택된 체크박스의 value 출력
+        console.log("선택된 체크박스의 value:", productDelCheck);
+
+        // 행 삭제 후 총합 재계산
+        updateTotalAmount();
 
 
     }
+    // 결제 내역 삭제
+    function fnDelPay(){
+        let f = document.getElementById("basic-form");
+        let param = {
+            paymentId : f.paymentId.value
+        }
+
+        fetch('/payDetailDel', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(param)
+            }).then(response => {
+                if (response.ok) {
+                // 요청이 성공적으로 처리되었을 때의 동작
+                    alert("삭제 되었습니다..");
+                    // location.reload(true);
+                } else {
+                    // 요청이 실패했을 때의 동작
+                    alert("실패했습니다.");
+                }
+            }).catch(error => {
+                alert("알수없는 에러.");
+            });
+    }
+
+
+function updatePrice(element) {
+    const row = element.closest("tr");
+    const count = row.querySelector('[name="productTotalItems"]');
+    const price = row.querySelector('[name="productPrice"]');
+    const amount = row.querySelector('[name="productAmount"]');
+    console.log("count", count.value);
+    console.log("price", price.value);
+
+    let amountNum = parseFloat(count.value) * parseFloat(price.value); // parseInt 대신 parseFloat 사용
+    console.log("amountNum", amountNum);
+
+    amount.value = amountNum;
+    updateTotalAmount(); // 총합 업데이트
+}
+
+function updateTotalAmount() {
+    const tableBody = document.querySelector('.basic-footer-table tbody');
+    const rows = tableBody.querySelectorAll('tr');
+    let totalAmount = 0;
+
+    rows.forEach(row => {
+        const amountInput = row.querySelector('[name="productAmount"]');
+        if (amountInput) {
+            totalAmount += parseFloat(amountInput.value) || 0;
+        }
+    });
+
+    const totalAmountCell = document.getElementById("totalAmount");
+    totalAmountCell.value = totalAmount;
+}
+
+
+
+

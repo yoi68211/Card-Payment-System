@@ -36,18 +36,24 @@ button{
 }
 
 .customer-id{
-    color: blue;
+    color: #2D5CBE;
 }
+#payStatus{
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 9px;
+}
+
 
 .basic-header button{
     background-color: white;
     border: 1px solid blue;
-    color: blue;
+    color: #2D5CBE;
     padding: 8px 20px;
 }
 
 .basic-header button:hover{
-    background-color: blue;
+    background-color: #2D5CBE;
     color: white;
 }
 
@@ -121,12 +127,12 @@ button{
 .basic-footer-header button{
     background-color: white;
     border: 1px solid blue;
-    color: blue;
+    color: #2D5CBE;
     padding: 5px 15px;
 }
 
 .basic-footer-header button:hover{
-    background-color: blue;
+    background-color: #2D5CBE;
     color: white;
 }
 
@@ -156,7 +162,7 @@ button{
 }
 
 .basic-footer-table th, .basic-footer-table td {
-    padding: 8px;
+    padding: 5px;
     border: 1px solid #ddd;
     text-align: center;
 }
@@ -178,6 +184,12 @@ button{
     background-color: white;
 }
 
+.basic-footer-table input[type='readonly'] {
+    border: none;
+    outline: none;
+    background-color: white;
+}
+
 .basic-real-footer{
     height: 30%;
     display: flex;
@@ -187,15 +199,15 @@ button{
 
 .basic-real-footer button{
     margin-left: 20px;
-    padding: 10px 50px;
-    background-color: blue;
+    padding: 8px 50px;
+    background-color: #2D5CBE;
     color: white;
     border: 1px solid blue;
 }
 
 .basic-real-footer button:hover{
     border: 1px solid blue;
-    background-color: #8FCEFF;
+    background-color: #8CEF;
     color: blue;
 }
 
@@ -204,5 +216,7 @@ button{
     background-color: #4E8DF5;
     color: white;
 }
+
+
 
 
