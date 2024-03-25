@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class InsertDTO {
+public class    InsertDTO {
 
 //    private String documentNo;
     private LocalDateTime paymentCreateTime;

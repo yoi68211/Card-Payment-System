@@ -19,16 +19,13 @@ import java.util.*;
 @Service
 @Transactional
 public class PaymentInsertService {
-    private final PaymentRepository paymentRepository;
-    private final ProductRepository productRepository;
     private final CustomerRepository customerRepository;
-    private final UserService userService;
 
-    public boolean insert_basic(InsertDTO dto) {
+    public void insert_basic(InsertDTO dto, User user) {
 
-            User user = userService.findId();
 
-            if (user != null) {
+
+
                 Customer customer = new Customer();
                 customer.setCustomerName(dto.getCustomerName());
                 customer.setCustomerEmail(dto.getCustomerEmail());
@@ -59,13 +56,11 @@ public class PaymentInsertService {
                 customer.setPayments(payment);
 
                 customerRepository.save(customer);
-                return true;
-            } else {
-                return false;
+
             }
 
 
 
         }
-    }
+
 
