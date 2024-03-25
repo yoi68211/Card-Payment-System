@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface PaymentRepository extends JpaRepository<Payment,Long> {
 
-    Optional<Payment> findByCustomerId(Long customerId);
+    // CustomerId와 delYn이 각각 주어진 값과 일치하는 Payment 엔티티를 찾습니다.
+    Optional<Payment> findByCustomerIdAndPaymentDelYn(Long customerId, char delYn);
 
 }

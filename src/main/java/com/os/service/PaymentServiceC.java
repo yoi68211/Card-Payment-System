@@ -16,7 +16,7 @@ public class PaymentServiceC {
     private final PaymentRepository paymentRepository;
 
     public PaymentDTOC paymentRoad(Long id){
-        Optional<Payment> paymentOptional = paymentRepository.findByCustomerId(id);
+        Optional<Payment> paymentOptional = paymentRepository.findByCustomerIdAndPaymentDelYn(id, 'N');
 
         if(paymentOptional.isPresent()){
             Payment payment = paymentOptional.get();

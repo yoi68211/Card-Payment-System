@@ -28,16 +28,18 @@ public class PayInfoController {
         System.out.println("받은 id =>" + id);
         CustomerDTOC customerInfo = customerService.customerRoad(id);
         PaymentDTOC payInfo = paymentService.paymentRoad(customerInfo.getId());
+        if(payInfo == null){
+            return "redirect:/dashboard";
+        }
+
         List<ProductDTOC> productInfo = productService.productRoad(payInfo.getId());
         model.addAttribute("customerInfo", customerInfo);
         model.addAttribute("payInfo", payInfo);
         model.addAttribute("productInfo", productInfo);
 
-
         return "paylist/basicPayInfoDetail";
 
-        // 결제 타입이 auto 면 자동결제상세 페이지
-        // 아니면 전체결제 상세페이지
+
     }
 
 

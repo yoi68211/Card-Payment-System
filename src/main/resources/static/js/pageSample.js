@@ -39,6 +39,11 @@
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
+
+    // 쉼표 제거 후 정수 타입으로 변환하여 반환
+    function removeCommasAndParseInt(str) {
+        return parseInt(str.replace(/,/g, ''), 10);
+    }
     // date yyyy-MM_dd 로 변환
     function dateProcess(date){
         return date.split('T')[0];
@@ -61,3 +66,30 @@
         document.getElementById('phone2').value = formattedPhoneNumber.slice(4, 8);
         document.getElementById('phone3').value = formattedPhoneNumber.slice(9, 13);
     }
+
+    // 전화번호 합치기
+    function combinePhoneNumber(phone1, phone2, phone3) {
+        // 각 부분을 하나의 문자열로 합치기
+        return phone1 + phone2 + phone3;
+    }
+
+    // 전화번호 합쳐서 저장
+    function storeCombinedPhoneNumber() {
+        let phone1 = document.getElementById('phone1').value;
+        let phone2 = document.getElementById('phone2').value;
+        let phone3 = document.getElementById('phone3').value;
+        let combinedPhoneNumber = combinePhoneNumber(phone1, phone2, phone3);
+        // 합쳐진 전화번호를 변수에 저장하거나 다른 처리를 수행할 수 있음
+        console.log('합친 전화번호', combinedPhoneNumber);
+    }
+
+   const titleRex = /^.{0,100}$/; // 제목 정규식 최대 100 글자 not null
+   const memoRex = /^.{0,300}$/; // 메모 정규식 최대 300글자 null 가능
+   const intRex= /^[0-9]+$/; // 연락처 수량 등 숫자만 입력 null 가능
+   const nameRex = /^.{0,16}$/; // 이름 정규식 최대 16글자 not null
+   // 이메일 정규식 이메일 형식만 가능 not null
+   const emailRex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+   // 비밀번호 정규식 13글자 영어+숫자+대문자+특수문자not null
+   const pwdRex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*()\-_=+\\|[\]{};:'",.<>/?]).{13,}$/;
+   const phoneRex = /^[0-9]{10,13}$/; // 연락처 정규식 숫자만 10 ~ 13 글자 가능
+   const proNameRex = /^[\p{L}\d\s]{0,100}$/u; // 상품명 정규식 특수기호 없이 최대 100글자

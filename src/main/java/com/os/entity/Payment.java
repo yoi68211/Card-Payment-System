@@ -1,26 +1,26 @@
 package com.os.entity;
 
 import com.os.dto.InsertDTO;
+import com.os.util.BaseEntity;
 import com.os.util.BizTo;
 import com.os.util.OrderStatus;
 import com.os.util.OrderType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.UpdateTimestamp;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Payment {
+public class Payment extends BaseEntity{
 
     @Id
     @Column(nullable = false, name = "payment_id")
@@ -28,6 +28,8 @@ public class Payment {
     private Long id;                         // 결제 IDX
 
 
+    @NotBlank(message = "제목은 필수값입니다.")
+    @Length(min = 1,max = 100 ,message = "1~100자 사이로 입력해주세요")
     @Column(nullable = false)
     private String paymentTitle;                    // 결제 제목
 
@@ -42,16 +44,18 @@ public class Payment {
     private String paymentMemo;                     // 결제 메모
 
    /* @CreationTimestamp*/
-    @Column(nullable = false)
-    private LocalDateTime paymentCreateTime;                      // 결제 생성시간
+//    @Column(nullable = false)
+//    @CreationTimestamp
+//    private LocalDateTime CreateTime;                      // 결제 생성시간
+//
+//    @UpdateTimestamp
+//    private LocalDateTime paymentUpdateTime;               // 수정시간
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private OrderStatus paymentStatus;                     // 결제상태(성공 / 불가 / 오류)
 
 
-    @UpdateTimestamp
-    private LocalDateTime paymentUpdateTime;               // 수정시간
 
     @Column(nullable = false)
     private char paymentDelYn;                             // 결제 삭제여부(Y / N)
@@ -59,13 +63,6 @@ public class Payment {
 
 
     private int paymentMonth;                           // 자동결제 다음결제일
-
-    private String paymentAmount;
-
-    @PostLoad
-    public void initializeAmount() {
-        paymentAmount = calculateTotalAmount(products);
-    }
 
 
     private LocalDateTime paymentNextTime;                            // 자동결제 마지막결제일
@@ -91,9 +88,9 @@ public class Payment {
 
     }
 
-    private String calculateTotalAmount(List<Product> products){
+    public String calculateTotalAmount(List<Product> products){
 
-        double totalAmount =  products.stream().mapToDouble(Product::getProductAmount).sum();
+        int totalAmount =  products.stream().mapToInt(Product::getProductAmount).sum();
 
         return String.valueOf(totalAmount);
     }

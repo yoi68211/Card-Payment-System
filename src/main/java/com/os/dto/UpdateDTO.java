@@ -14,14 +14,13 @@ import java.util.List;
 @Getter
 public class UpdateDTO {
 
-    private Long customerId;
-    private String customerName;
-    private String customerEmail;
+    private Long customerId; // 고객 id
+    private String customerName; // 고객이름
+    private String customerEmail; // 고객 이메일
 
-    private Long paymentId;
-    private String paymentTitle;
-
-    private List<Long> productId;
-    private List<ProductDTO> productList;
+    private Long paymentId;  // 수정할 paymentId
+    private String paymentTitle; // 제목
+    private List<Long> productDelCheck; // 삭제할 productIdl
+    private List<ProductDTO> productList; // 추가되거나 업데이트할 리스트
 
 }

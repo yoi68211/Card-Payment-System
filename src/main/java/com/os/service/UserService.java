@@ -36,11 +36,14 @@ public class UserService {
                     .id(user.getId())
                     .username(user.getUsername())
                     .email(user.getEmail())
+                    .role(user.getRole())
                     .password(passwordEncoder.encode(newPassword))
                     .build();
             userRepository.save(updatedUser);
         });
     }
+
+
     public UserResponse getUserResponseById(Long id) {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
