@@ -237,6 +237,11 @@ let productDelCheck = [];
     }
     // 결제 내역 삭제
     function fnDelPay(){
+        const result = confirm("삭제하시겠습니까?");
+        if(!result){
+            alert("취소되었습니다.");
+            return;
+        }
         let f = document.getElementById("basic-form");
         let param = {
             paymentId : f.paymentId.value
@@ -270,8 +275,8 @@ function updatePrice(element) {
     const amount = row.querySelector('[name="productAmount"]');
     console.log("count", count.value);
     console.log("price", price.value);
-
     let amountNum = parseFloat(count.value) * parseFloat(price.value); // parseInt 대신 parseFloat 사용
+
     console.log("amountNum", amountNum);
 
     amount.value = amountNum;
@@ -295,5 +300,11 @@ function updateTotalAmount() {
 }
 
 
+
+function moveQrPay(){
+    let customerId = document.getElementById("customerId").value;
+
+    location.href="/paymentDetails?id="+customerId;
+}
 
 

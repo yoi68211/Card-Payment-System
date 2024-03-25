@@ -131,17 +131,17 @@
                             </td>
                             <td>
                                 <label>
-                                    <input type="number" name="productTotalItems" class="editable" onchange="updatePrice(this)" disabled th:value="${product.productTotalItems}">
+                                    <input type="text" name="productTotalItems" class="editable" onchange="updatePrice(this)" disabled th:value="${product.productTotalItems}">
                                 </label>
                             </td>
                             <td>
                                 <label>
-                                    <input type="number" name="productPrice" class="editable" onchange="updatePrice(this)" disabled th:value="${product.productPrice}">
+                                    <input type="text" name="productPrice" class="editable" onchange="updatePrice(this)" disabled th:value="${product.productPrice}">
                                 </label>
                             </td>
                             <td>
                                 <label>
-                                    <input type="number" name="productAmount" readonly th:value="${product.productAmount}" >
+                                    <input type="text" name="productAmount" readonly th:value="${product.productAmount}" >
                                 </label>
                             </td>
                         </tr>
@@ -159,7 +159,7 @@
                 </div>
                 <div class="basic-real-footer">
                     <button type="button" onclick="test()">즉시 결제</button>
-                    <button type="button">QR 결제</button>
+                    <button type="button" onclick="moveQrPay()">QR 결제</button>
                 </div>
             </div>
 
@@ -223,10 +223,14 @@
 
     let productInfo = [[${productInfo}]]; // product 목록
 
+    // 콤마찍기..
+    let totalNum = null;
+    let priceNum = null;
     // 총합 계산
     let totalAmount = 0; // 총합
     for (let i = 0; i < productInfo.length; i++) {
         totalAmount += productInfo[i].productAmount;
+
     }
     document.getElementById("totalAmount").value = totalAmount;
     // 총합 계산 end

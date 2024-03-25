@@ -39,6 +39,11 @@
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
+
+    // 쉼표 제거 후 정수 타입으로 변환하여 반환
+    function removeCommasAndParseInt(str) {
+        return parseInt(str.replace(/,/g, ''), 10);
+    }
     // date yyyy-MM_dd 로 변환
     function dateProcess(date){
         return date.split('T')[0];
