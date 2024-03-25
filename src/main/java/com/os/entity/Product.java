@@ -23,11 +23,9 @@ public class Product extends BaseEntity {
     private String productName;                // 상품 명
 
     @Column(nullable = false)
-    @NotBlank(message = "상품 수량을 입력해주세요")
     private int productTotalItems;                  // 상품 수량
 
     @Column(nullable = false)
-    @NotBlank(message = "상품 가격을 입력해주세요")
     private int productPrice;                       // 상품 가격
 
     @Column(nullable = false)

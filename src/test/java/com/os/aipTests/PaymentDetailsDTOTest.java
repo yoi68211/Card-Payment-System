@@ -52,7 +52,6 @@ public class PaymentDetailsDTOTest {
                 .paymentType(OrderType.auto)
                 .paymentBizTo(BizTo.BtoC)
                 .paymentMemo("Memo")
-                .paymentCreateTime(LocalDateTime.now())
                 .paymentStatus(OrderStatus.paid)
                 .paymentDelYn('N')
                 .paymentMonth(1)
@@ -61,10 +60,8 @@ public class PaymentDetailsDTOTest {
                 .products(products)
                 .build();
 
-//        List<Payment> payments = new ArrayList<>();
-//        payments.add(payment);
 
-//        customer.setPayments(payments);
+        customer.setPayments(payment);
 
         // PaymentDetailsDTO 생성
         PaymentDetailsDTO dto = PaymentDetailsDTO.builder()
@@ -75,8 +72,7 @@ public class PaymentDetailsDTOTest {
         assertNotNull(dto);
         assertEquals("John Doe", dto.getCustomerName());
         assertEquals("john@example.com", dto.getCustomerEmail());
-//        assertEquals(payments, dto.getPayments());
-        assertNotNull(dto.getCreateTime());
+        assertEquals(payment, dto.getPayments());
         assertEquals("3000", dto.getAmount()); // product1의 총액(100) + product2의 총액(100) = 200
     }
 }

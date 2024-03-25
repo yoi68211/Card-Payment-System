@@ -18,8 +18,6 @@ import java.util.*;
 @RequiredArgsConstructor
 @Service
 public class PaymentInsertService {
-    private final PaymentRepository paymentRepository;
-    private final ProductRepository productRepository;
     private final CustomerRepository customerRepository;
     private final UserService userService;
 
@@ -52,14 +50,7 @@ public class PaymentInsertService {
                     productList.add(product);
                     product.setPayment(payment);
 
-
-
                 }
-
-
-
-
-
 
                 payment.setProducts(productList);
                 customer.setUser(user);
@@ -71,8 +62,6 @@ public class PaymentInsertService {
             } else {
                 return false;
             }
-
-
 
         }
     }
