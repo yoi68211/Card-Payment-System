@@ -17,13 +17,13 @@ import java.util.*;
 
 @RequiredArgsConstructor
 @Service
-@Transactional
 public class PaymentInsertService {
     private final PaymentRepository paymentRepository;
     private final ProductRepository productRepository;
     private final CustomerRepository customerRepository;
     private final UserService userService;
 
+    @Transactional
     public boolean insert_basic(InsertDTO dto) {
 
             User user = userService.findId();
@@ -39,7 +39,7 @@ public class PaymentInsertService {
                 payment.setPaymentTitle(dto.getPaymentTitle());
                 payment.setPaymentType(dto.getPaymentType());
                 payment.setPaymentBizTo(dto.getPaymentBizTo());
-                payment.setPaymentCreateTime(dto.getPaymentCreateTime());
+                payment.setCreateTime(dto.getPaymentCreateTime());
                 payment.setPaymentStatus(OrderStatus.wait);
 
                 List<Product> productList = new ArrayList<>();
@@ -51,8 +51,6 @@ public class PaymentInsertService {
                     product.setProductAmount(productDTO.getProductAmount());
                     productList.add(product);
                     product.setPayment(payment);
-
-
 
 
 
