@@ -51,7 +51,17 @@ public class PaymentInsertService {
                     product.setProductAmount(productDTO.getProductAmount());
                     productList.add(product);
                     product.setPayment(payment);
+
+
+
+
+
                 }
+
+
+
+
+
 
                 payment.setProducts(productList);
                 customer.setUser(user);
