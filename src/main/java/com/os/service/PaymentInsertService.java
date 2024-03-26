@@ -17,11 +17,11 @@ import java.util.*;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class PaymentInsertService {
     private final CustomerRepository customerRepository;
 
-    @Transactional
-    public void insert_basic(InsertDTO dto, User user) {
+    public boolean insert_basic(InsertDTO dto) {
 
 
                 Customer customer = new Customer();

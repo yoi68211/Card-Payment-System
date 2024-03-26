@@ -9,8 +9,16 @@ import java.util.List;
 
 public interface CustomerRepository extends JpaRepository<Customer,Long> {
 
+    //결제 성공목록
+    List<Customer> findByPayments_PaymentStatus(OrderStatus orderStatus);
 
-    List<Customer> findByPayments_PaymentStatusAndPayments_CreateTimeBetween(OrderStatus orderStatus, LocalDateTime startOfMonth, LocalDateTime endOfMonth);
 
-    long countByPayments_PaymentStatusAndPayments_CreateTimeBetween(OrderStatus orderStatus, LocalDateTime startOfMonth, LocalDateTime endOfMonth);
+
+    //이번달 결제등록 목록
+    List<Customer> findByAndPayments_CreateTimeBetween(LocalDateTime startOfMonth, LocalDateTime endOfMonth);
+
+
+    long countByPayments_CreateTimeBetween(LocalDateTime startOfMonth, LocalDateTime endOfMonth);
+
+    long countByPayments_PaymentStatus(OrderStatus orderStatus);
 }
