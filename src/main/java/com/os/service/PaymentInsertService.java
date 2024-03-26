@@ -17,13 +17,11 @@ import java.util.*;
 
 @RequiredArgsConstructor
 @Service
-@Transactional
 public class PaymentInsertService {
     private final CustomerRepository customerRepository;
 
-    public void insert_basic(InsertDTO dto, User user) {
-
-
+    @Transactional
+    public boolean insert_basic(InsertDTO dto) {
 
 
                 Customer customer = new Customer();
@@ -36,7 +34,7 @@ public class PaymentInsertService {
                 payment.setPaymentTitle(dto.getPaymentTitle());
                 payment.setPaymentType(dto.getPaymentType());
                 payment.setPaymentBizTo(dto.getPaymentBizTo());
-                payment.setPaymentCreateTime(dto.getPaymentCreateTime());
+                payment.setCreateTime(dto.getPaymentCreateTime());
                 payment.setPaymentStatus(OrderStatus.wait);
 
                 List<Product> productList = new ArrayList<>();
@@ -48,6 +46,7 @@ public class PaymentInsertService {
                     product.setProductAmount(productDTO.getProductAmount());
                     productList.add(product);
                     product.setPayment(payment);
+
                 }
 
                 payment.setProducts(productList);
@@ -58,8 +57,6 @@ public class PaymentInsertService {
                 customerRepository.save(customer);
 
             }
-
-
 
         }
 

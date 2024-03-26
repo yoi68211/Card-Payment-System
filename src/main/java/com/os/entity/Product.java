@@ -1,14 +1,17 @@
 package com.os.entity;
 
+import com.os.util.BaseEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
+public class Product extends BaseEntity {
 
     @Id
     @Column(nullable = false, name = "product_id")
@@ -16,6 +19,7 @@ public class Product {
     private Long id;                    // product IDX
 
     @Column(nullable = false)
+    @NotBlank(message = "상품명을 입력해주세요")
     private String productName;                // 상품 명
 
     @Column(nullable = false)

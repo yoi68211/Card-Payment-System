@@ -28,7 +28,7 @@ public class AllPaymentListDto {
 
     public static AllPaymentListDto toAllPaymentListDto(Payment payment) {
         return AllPaymentListDto.builder()
-                .paymentCreateTime(payment.getPaymentCreateTime())
+                .paymentCreateTime(payment.getCreateTime())
                 .id(payment.getId())
                 .customerName(payment.getCustomer().getCustomerName())
                 .paymentTitle(payment.getPaymentTitle())

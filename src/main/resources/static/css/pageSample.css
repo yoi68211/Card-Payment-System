@@ -27,7 +27,7 @@
             grid-area: header;
             font-size: 18px;
             font-weight: bold;
-            color: blue;
+            color: #2D5CBE;
         }
         header a{
             color: black;
@@ -190,4 +190,12 @@
         .visible {
             opacity: 1; /* 불투명하게 설정하여 표시 */
             pointer-events: auto; /* 이벤트 처리 활성화 */
+        }
+
+        .nowPage span{
+            color: #2D5CBE; /* 이미지와 텍스트의 색상을 파란색으로 변경합니다. */
+        }
+
+        .nowPage img{
+            filter: invert(28%) sepia(78%) saturate(1146%) hue-rotate(196deg) brightness(96%) contrast(92%);
         }
