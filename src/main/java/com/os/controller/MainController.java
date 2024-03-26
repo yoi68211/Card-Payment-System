@@ -31,8 +31,16 @@ public class MainController {
     public String index() {
         return "login";
     }
+
+
     @GetMapping("dashboard")
-    public String login() {
+    public String login(Model model) {
+
+
+        model.addAttribute("paymentSuccessCount", customerService.countByCustomersByPaid());
+        model.addAttribute("paymentInsertThisMonth", customerService.thisMonthInsertCount());
+
+
         return "dashboard";
     }
 

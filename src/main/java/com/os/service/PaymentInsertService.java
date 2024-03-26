@@ -17,6 +17,7 @@ import java.util.*;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class PaymentInsertService {
     private final CustomerRepository customerRepository;
 
@@ -37,6 +38,7 @@ public class PaymentInsertService {
                 payment.setPaymentDelYn('N');
                 payment.setCreateTime(dto.getPaymentCreateTime());
                 payment.setPaymentStatus(OrderStatus.wait);
+                payment.setPaymentDelYn('N');
 
                 List<Product> productList = new ArrayList<>();
                 for (ProductDTO productDTO : dto.getProductList()) {

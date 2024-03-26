@@ -85,7 +85,7 @@ main-cell {
 
 .countBox:nth-of-type(5) {
 
-    background-color: #1D50B9;
+    background-color: #FF5533;
     border-radius: 5px;
     padding-top: 15px;
     /* square 안의 글자 간격 */
@@ -95,7 +95,7 @@ main-cell {
 
 .countBox:nth-of-type(6) {
 
-    background-color: #1D50B9;
+    background-color: #000000;
     border-radius: 5px;
     padding-top: 15px;
     /* square 안의 글자 간격 */
