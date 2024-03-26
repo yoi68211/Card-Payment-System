@@ -7,6 +7,10 @@ import com.os.service.AllPaymentListService;
 import com.os.service.CustomerService;
 import com.os.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -69,9 +73,19 @@ public class MainController {
     }
 
     @GetMapping("/list")
-    public String findAll(Model model) {
-        List<AllPaymentListDto> allPayments = allPaymentListService.findAll();
-        model.addAttribute("payList", allPayments);
+    public String findAll(Model model, @PageableDefault(page = 0, size = 10, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword) {
+        Page<AllPaymentListDto> allPaymentsPage;
+
+        if (keyword != null && !keyword.isEmpty()) {
+            allPaymentsPage = allPaymentListService.findByTitleContaining(keyword, pageable);
+        } else {
+            allPaymentsPage = allPaymentListService.findAll(pageable);
+        }
+
+        long payCount = allPaymentsPage.getTotalElements();
+        model.addAttribute("payList", allPaymentsPage);
+        model.addAttribute("payCount", payCount);
+        model.addAttribute("keyword", keyword);
         return "list";
     }
 
