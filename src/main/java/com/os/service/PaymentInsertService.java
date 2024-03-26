@@ -21,7 +21,7 @@ import java.util.*;
 public class PaymentInsertService {
     private final CustomerRepository customerRepository;
 
-    public boolean insert_basic(InsertDTO dto) {
+    public void insert_basic(InsertDTO dto ,User user) {
 
 
                 Customer customer = new Customer();
