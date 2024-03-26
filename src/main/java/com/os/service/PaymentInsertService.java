@@ -21,7 +21,7 @@ public class PaymentInsertService {
     private final CustomerRepository customerRepository;
 
     @Transactional
-    public boolean insert_basic(InsertDTO dto) {
+    public void insert_basic(InsertDTO dto, User user) {
 
 
                 Customer customer = new Customer();
@@ -36,6 +36,7 @@ public class PaymentInsertService {
                 payment.setPaymentBizTo(dto.getPaymentBizTo());
                 payment.setCreateTime(dto.getPaymentCreateTime());
                 payment.setPaymentStatus(OrderStatus.wait);
+                payment.setPaymentDelYn('N');
 
                 List<Product> productList = new ArrayList<>();
                 for (ProductDTO productDTO : dto.getProductList()) {
