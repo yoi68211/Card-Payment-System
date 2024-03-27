@@ -2,18 +2,18 @@ package com.os.service;
 
 import com.os.dto.InsertDTO;
 import com.os.dto.ProductDTO;
-import com.os.entity.*;
+import com.os.entity.Customer;
+import com.os.entity.Payment;
+import com.os.entity.Product;
+import com.os.entity.User;
 import com.os.repository.CustomerRepository;
-import com.os.repository.PaymentRepository;
-import com.os.repository.ProductRepository;
 import com.os.util.OrderStatus;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
