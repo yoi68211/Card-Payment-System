@@ -126,6 +126,22 @@ main-cell {
 }
 
 
+/* 차트 상단 */
+.chart-header{
+    display: grid;
+    grid-template-columns: 30% 20% 30%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tab-bar{
+    text-align: center;
+    display:flex;
+    justify-content: space-around;
+}
+.tab-bar .tab-btn{
+    cursor: pointer;
+}
 
 /* 차트 css */
 .custom-tooltip{
@@ -145,3 +161,4 @@ main-cell {
     padding: 10px;
     padding-bottom: 0px;
 }
+
