@@ -201,9 +201,11 @@ function validateInput(input) {
             // 새로운 행 추가 후에도 1번 행에 대해 calculateAmount 호출
             updatetotalItems(newRow);
             updatePrice(newRow);
+
         }
 
         function deleteRow(rownum) {
+
             const table = document.getElementById('product');
             var deleteRow_btn = document.getElementById("deleteRow_btn");
             let numRows = table.rows.length - 2; // 첫 행과 마지막 행은 무시하기 위해 -2
@@ -217,6 +219,7 @@ function validateInput(input) {
                 }
             }
             num -= deletedRows; // 삭제된 행의 개수만큼 num에서 빼기
+
             if (numRows == 0) {
                 deleteRow_btn.disabled = true;
                 document.getElementById("totaltotalItems").innerHTML = "";
@@ -462,6 +465,7 @@ function validateInput(input) {
                     }
                     num = 1;
                     // HTML에 리스트 데이터 표시
+
                     productList.forEach(product => {
                         const newRow = tbody.insertRow(num);
 
@@ -514,6 +518,7 @@ function validateInput(input) {
                         updatePrice(newRow);
 
                     });
+
                 })
                 .catch(error => {
                     console.error('Error:', error);

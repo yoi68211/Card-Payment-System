@@ -28,6 +28,7 @@ public class InsertController {
 
     @PostMapping("/insert")
     public String insertData(@RequestBody @Valid InsertDTO dto) {
+        System.out.println(dto.toString());
         User user = userService.findId();
         if (user != null) {
             paymentService.insert_basic(dto, user);

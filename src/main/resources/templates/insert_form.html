@@ -5,11 +5,8 @@
     <title>Title</title>
     <link th:href="@{/css/pageSample.css}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/047f82d071.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/css/insert_form.css">
+    <link th:href="@{/css/insert_form.css}" rel="stylesheet">
     <script src="/js/insert_form.js"></script>
-    <script>
-
-    </script>
 </head>
 <body>
 <header class="header-nav">
@@ -18,13 +15,13 @@
              <a href="/dashboard">AIP System</a>
         </span>
 
-    <span class="header-pageName header-flex-box" >DashBoard</span><!-- 현재 페이지 이름 -->
+    <span class="header-pageName header-flex-box">DashBoard</span><!-- 현재 페이지 이름 -->
 
     <span class="header-flex-box">
             <span class="header-flex-three">
                 <span class="header-icon">
                     <a href="#"><i class="fa-solid fa-circle-question fa-xl"></i></a>
-                    <a href="#"><i class="fa-solid fa-comment-dots fa-xl"></i></i></a>
+                    <a href="#"><i class="fa-solid fa-comment-dots fa-xl"></i></a>
 
                 </span>
                 <img th:src="@{/img/defaultImg.png}" id="profile-img">
@@ -40,98 +37,161 @@
         </span>
 </header>
 <main>
-<form id="paymentForm">
-    결제등록
-    <input type="button" id="before" value="이전저장글" onclick="load()" disabled>
-    <input type="button" value="임시저장" onclick="save()">
-    <br>
-    <table border="1">
-        <caption>기본 결제 등록</caption>
-<!--        <tr>-->
-<!--            <th><label for="documentNo">문서번호</label></th>-->
-<!--            <th><input type="text" id="documentNo" name="documentNo"></th>-->
-<!--            <th><label for="paymentCreateTime">작성일</label></th>-->
-<!--            <th><input type="datetime-local" id="paymentCreateTime" name="paymentCreateTime"></th>-->
-<!--        </tr>-->
-        <tr>
-            <th><label for="customerName">고객명</label></th>
-            <th><input type="text" id="customerName" name="customerName"></th>
-            <th><label for="customerEmail">이메일</label></th>
-            <th><input type="text" id="customerEmail" name="customerEmail"></th>
-        </tr>
-        <tr>
-            <th><label for="customerPhone">연락처</label></th>
-            <th><input type="text" id="customerPhone" name="customerPhone"></th>
-            <!--3등분 하고 js에서 합쳐서 서버 전송 숫자11자리 바꿔야함-->
-            <th><label for="customerAddress">주소</label></th>
-            <th><input type="text" id="customerAddress" name="customerAddress"></th>
-        </tr>
-        <tr>
-            <th><label for="paymentTitle">제목</label></th>
-            <th colspan="3"><input type="text" id="paymentTitle" name="paymentTitle"></th>
-        </tr>
-        <tr>
-            <th>결제설정</th>
-            <th>
-                <input type="checkbox" id="paymentType" name="paymentType" value="자동결제" onclick="cycle()">
-                <label for="paymentType">자동결제</label>
-                <input type="button" value="!">
-                <input type="checkbox" id="firstPay_check" name="firstPay_check" disabled>
-                <label for="firstPay_check">처음결제금액</label>
-                <input type="button" value="!">
-            </th>
-            <th>결제구분</th>
-            <th>
-                <label><input type="radio" name='paymentBizTo' value='BtoC' checked/>B TO C</label>
-                <label><input type='radio' name='paymentBizTo' value='BtoB'/>B TO B</label>
-            </th>
-        </tr>
-        <tr>
-            <th>자동결제 주기</th>
-            <th>
-                <label for="paymentMonth"><select id="paymentMonth" name="paymentMonth" disabled>
-                    <option>다음달</option>
-                    <option>다다음달</option>
-                </select></label>
-                <label for="autoDate"><input type="text" id="autoDate" name="autoDate" disabled></label>  일
-                <label for="paymentFirstPay"><input type="text" id="paymentFirstPay" name="paymentFirstPay" disabled></label> 엔
-            </th>
-        </tr>
-    </table>
+    <form class="basic-form" id="paymentForm">
+        <div class="main-cell">
+            <div class="basic-main">
+                <div class="basic-header">
+                    <div>
+                        <span>결제등록</span>
+                    </div>
+                    <div>
+                        <button type="button" id="before" onclick="load()" disabled>이전저장글</button>
+                        <button type="button" onclick="save()">임시저장</button>
+                    </div>
+                </div>
+                <div class="basic-body">
+                    <div class="basic-one">
+                        <div class="basic-title">고객명</div>
+                        <div class="basic-input-text">
+                            <input type="text" id="customerName" name="customerName">
+                        </div>
+                        <div class="basic-title">이메일</div>
+                        <div class="basic-input-text">
+                            <input type="text" id="customerEmail" name="customerEmail">
+                        </div>
+                    </div>
+                    <div class="basic-one">
+                        <div class="basic-title">연락처</div>
+                        <div class="basic-input-text">
+                            <input type="text" id="customerPhone" name="customerPhone">
+                            <!--3등분 하고 js에서 합쳐서 서버 전송 숫자11자리 바꿔야함-->
+                        </div>
+                        <div class="basic-title">주소</div>
+                        <div class="basic-input-text">
+                            <input type="text" id="customerAddress" name="customerAddress">
+                        </div>
+                    </div>
+                    <div class="basic-one">
+                        <div class="basic-title2">제목</div>
+                        <div class="basic-input-text2">
+                            <input type="text" id="paymentTitle" name="paymentTitle">
+                        </div>
+                    </div>
+                    <div class="basic-one">
+                        <div class="basic-title">결제 설정</div>
+                        <div class="basic-input-checkbox">
+                            <span>
+                                <input type="checkbox" id="paymentType" name="paymentType" value="자동결제" onclick="cycle()">
+                            </span>
+                            자동결제
+                            <span>
+                                <button type="button"class="helptbtn">!</button>
+                            </span>
+                            <span>
+                                <input type="checkbox" id="firstPay_check" name="firstPay_check" disabled>
+                            </span>
+                            처음결제금액
+                            </span>
+                            <button type="button"class="helptbtn">!</button>
+                            </span>
+                        </div>
+                        <div class="basic-title">결제구분</div>
+                        <div class="basic-input-checkbox2">
+                            <div class="text">
+                                <span >
+                                    <input type="radio" name='paymentBizTo' value='BtoC' checked/>
+                                </span>
+                                <span>
+                                    B TO C
+                                </span>
+                            </div>
+                            <div>
+                                <span>
+                                    <input type='radio' name='paymentBizTo' value='BtoB'/>
+                                </span>
+                                <span>
+                                    B TO B
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="basic-one">
+                        <div class="basic-title2">자동결제 주기</div>
+                        <div class="basic-input-selectbox">
+                            <select class="paymentMonth" id="paymentMonth" name="paymentMonth" disabled>
+                                <option>다음달</option>
+                                <option>다다음달</option>
+                            </select>
 
-    결제물품정보등록
-    <input type="button" value="+행추가" onclick="addRow()">
-    <input type="button" value="-행삭제" id="deleteRow_btn" onclick='deleteRow(-1)' disabled>
-    <table border="1" id="product">
-        <tr>
-            <th>
-                <input type="checkbox" id="masterCheckbox">
-                <label for="masterCheckbox"></label>
-            </th>
-            <th>상품명</th>
-            <th>수량</th>
-            <th>단가</th>
-            <th>금액</th>
-        </tr>
-        <tr>
-            <th>
-                <input type="checkbox">
-            </th>
-            <th><input type=text id="productName" name="productName"></th>
-            <th><input type="text" id="productTotalItems" name="productTotalItems" oninput="updatetotalItems(this.parentNode.parentNode)"></th>
-            <th><input type="text" id="productPrice" name="productPrice" oninput="updatePrice(this.parentNode.parentNode)"></th>
-            <th><input type="text" id="productAmount" name="productAmount" readonly></th>
-        </tr>
-        <tr>
-            <th></th>
-            <th>합계</th>
-            <th id="totaltotalItems"></th>
-            <th id="totalPrice"></th>
-            <th id="final"></th>
-        </tr>
-    </table>
-    <input type="button" value="등록" onclick="send()">
-</form>
+                            <input type="text" id="autoDate" name="autoDate" disabled>
+                            <input type="text" id="paymentFirstPay" name="paymentFirstPay" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="basic-footer">
+                    <div class="basic-footer-header">
+                        <span>결제 물품 정보 등록</span>
+                        <span>
+                            <button type="button" onclick="addRow()">+행추가</button>
+                            <button type="button" id="deleteRow_btn" onclick='deleteRow(-1)' disabled>-행삭제</button>
+                        </span>
+                    </div>
+                    <div class="basic-footer-table">
+                        <table id="product">
+
+                            <tr class="thead">
+                                <th>
+                                    <input type="checkbox" id="masterCheckbox">
+                                </th>
+                                <th>상품명</th>
+                                <th>수량</th>
+                                <th>단가</th>
+                                <th>금액</th>
+                            </tr>
+                            <tr>
+                                <th>
+                                        <input type="checkbox">
+                                </th>
+                                <th>
+
+                                        <input type=text id="productName" name="productName">
+
+                                </th>
+                                <th>
+
+                                        <input type="text" id="productTotalItems" name="productTotalItems"
+                                               oninput="updatetotalItems(this.parentNode.parentNode)">
+
+                                </th>
+                                <th>
+
+                                        <input type="text" id="productPrice" name="productPrice"
+                                               oninput="updatePrice(this.parentNode.parentNode)">
+
+                                </th>
+                                <th>
+
+                                        <input type="text" id="productAmount" name="productAmount" readonly>
+
+                                </th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th>합계</th>
+                                <th id="totaltotalItems"></th>
+                                <th id="totalPrice"></th>
+                                <th id="final"></th>
+                            </tr>
+
+                        </table>
+                    </div>
+                    <div class="basic-real-footer">
+                        <button type="button" onclick="send()">등록</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </main>
 <aside>
         <span id="sidebar">
@@ -168,7 +228,7 @@
                     <li class="payList-nav">
                         <span class="payList">
                             <i class="fa-solid fa-square fa-2xs"></i>
-                            <span class="sidebar-nav-text" ><a href="/autoPayListDetail">자동 결제 목록</a></span>
+                            <span class="sidebar-nav-text"><a href="/autoPayListDetail">자동 결제 목록</a></span>
                         </span>
                         <!-- <i class="fa-solid fa-chevron-right"></i> -->
                     </li>
@@ -180,3 +240,4 @@
 </body>
 <script th:src="@{/js/pageSample.js}"></script>
 </html>
+
