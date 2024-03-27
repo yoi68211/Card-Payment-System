@@ -64,7 +64,7 @@ public class CustomerService {
             customerDtoList.add(customerDTO);
         }
 
-        long count = customerRepository.countByPayments_CreateTimeBetween(startOfMonth, endOfMonth);
+//        long count = customerRepository.countByPayments_CreateTimeBetween(startOfMonth, endOfMonth);
 //        System.out.println("Count: " + count);
 //
         return customerDtoList;
@@ -75,7 +75,7 @@ public class CustomerService {
 
 
 
-    public long thisMonthPaidCount(){
+    public long thisMonthInsertCount(){
         LocalDateTime now = LocalDateTime.now();
         YearMonth thisMonth = YearMonth.from(now);
         LocalDateTime startOfMonth = thisMonth.atDay(1).atStartOfDay();
@@ -87,6 +87,11 @@ public class CustomerService {
     }
 
 
+
+    public long countByCustomersByPaid() {
+
+        return customerRepository.countByPayments_PaymentStatus(OrderStatus.paid);
+    }
 
 
 
@@ -111,11 +116,6 @@ public class CustomerService {
         return customerDTOS;
     }
 
-
-    public long countByCustomersByPaid() {
-
-        return customerRepository.countByPayments_PaymentStatus(OrderStatus.paid);
-    }
 
 
 

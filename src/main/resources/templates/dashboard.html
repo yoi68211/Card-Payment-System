@@ -69,13 +69,13 @@
             <div class="countBox count-5">
                 <div>N월</div>
                 <div>결제 신규 등록</div>
-                <div>13</div>
+                <div th:text="${paymentInsertThisMonth}">13</div>
                 <button>View All</button>
             </div>
             <div class="countBox count-6">
                 <div>N월</div>
                 <div>결제 성공</div>
-                <div>133</div>
+                <div th:text="${paymentSuccessCount}"></div>
                 <button>View All</button>
             </div>
 
@@ -87,8 +87,17 @@
         </div>
         <div class="dashboard-chart">
             <div class="chart-box">
-                <div id="chart-title">결제 처리 통계</div>
-                <div id="chart">
+                <div class="chart-header">
+                    <span id="chart-title">결제 처리 통계</span>
+                    <span class="tab-bar">
+                        <span id="monthChart" class="tab-btn active" onclick="openTab('chartMonth')">Month</span>
+                        <span id="yearChart" class="tab-btn" onclick="openTab('chartYear')">Year</span>
+                    </span>
+                </div>
+                <div id="chartMonth" class="tab-content active">
+                    <apexchart type="line" height="200px" width="600px" :options="chartOptions" :series="series"></apexchart>
+                </div>
+                <div id="chartYear" class="tab-content">
                     <apexchart type="line" height="200px" width="600px" :options="chartOptions" :series="series"></apexchart>
                 </div>
             </div>

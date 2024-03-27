@@ -22,7 +22,7 @@
         <span class="header-flex-three">
             <span class="header-icon">
                 <a href=""><i class="fa-solid fa-circle-question fa-xl"></i></a>
-                <a href="#"><i class="fa-solid fa-comment-dots fa-xl"></i></i></a>
+                <a href="#"><i class="fa-solid fa-comment-dots fa-xl"></i></a>
             </span>
             <img th:src="@{/img/defaultImg.png}" id="profile-img">
             <span id="submenu-trigger">
@@ -91,7 +91,9 @@
 
         <div>
             <button type="button" id="deleteButton" disabled>삭제</button>
-            <label for="searchInput"></label><input type="text" id="searchInput" placeholder="검색어를 입력해 주세요">
+            <form th:action="@{/list}" method="get" id="searchForm">
+                <input type="text" id="searchInput" name="keyword" placeholder="검색어를 입력해 주세요">
+            </form>
         </div>
 
         <table class="custom-table" border="1">
@@ -107,70 +109,49 @@
             </tr>
             </thead>
             <tbody>
-                <tr th:each="payment : ${payList}">
-                    <td><label><input type="checkbox" name="selectedPayment" /></label></td>
-                    <td th:text="${#temporals.format(payment.paymentCreateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                    <td th:text="${payment.id}"></td>
-                    <td th:text="${payment.customerName}">
-                    <td th:text="${payment.paymentTitle}"></td>
-                    <td th:text="${payment.productAmount}"></td>
-                    <td th:text="${payment.paymentStatus}"></td>
-                </tr>
+            <tr th:each="payment : ${payList}">
+                <td><label><input type="checkbox" name="selectedPayment" onchange="toggleDeleteButton()" /></label></td>
+                <td th:text="${#temporals.format(payment.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td th:text="${payment.id}"></td>
+                <td th:text="${payment.customerName}"></td>
+                <td th:text="${payment.paymentTitle}"></td>
+                <td th:text="${payment.totalAmount}"></td>
+                <td th:text="${payment.paymentStatus}"></td>
+            </tr>
             </tbody>
         </table>
 
-        <script>
-            $(function() {
-                $("#startDt").datepicker({
-                    dateFormat: 'yy-mm-dd',
-                    onSelect: function(selectedDate) {
-                        var endDate = $('#endDt');
-                        var startDate = $(this).datepicker('getDate');
-                        startDate.setDate(startDate.getDate() + 1);
-                        endDate.datepicker('option', 'minDate', startDate);
-                    }
-                });
+        <div>
+            <select id="pageSelect" onchange="changePageSize()">
+                <option value="10" th:selected="${payList.size == 10}">10건</option>
+                <option value="30" th:selected="${payList.size == 30}">30건</option>
+                <option value="50" th:selected="${payList.size == 50}">50건</option>
+            </select>
+            <p>(데이터 총 <span th:text="${payCount}"></span>건)</p>
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <!-- 이전 페이지 -->
+                    <li th:if="${payList.hasPrevious()}" class="page-item">
+                        <a class="page-link" th:href="@{'/list?page=' + (${payList.getNumber()} - 1) + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + ${keyword != null ? keyword : ''}}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <!-- 페이지 번호 -->
+                    <li th:each="page : ${#numbers.sequence(0, payList.totalPages - 1)}" th:class="${payList.number == page} ? 'page-item active' : 'page-item'">
+                        <a class="page-link" th:href="@{'/list?page=' + ${page} + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + ${keyword != null ? keyword : ''}}" th:text="${page + 1}"></a>
+                    </li>
+                    <!-- 다음 페이지 -->
+                    <li th:if="${payList.hasNext()}" class="page-item">
+                        <a class="page-link" th:href="@{'/list?page=' + (${payList.getNumber()} + 1) + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + ${keyword != null ? keyword : ''}}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
 
-                $("#endDt").datepicker({
-                    dateFormat: 'yy-mm-dd',
-                    onSelect: function(selectedDate) {
-                        var startDate = $('#startDt');
-                        var endDate = $(this).datepicker('getDate');
-                        endDate.setDate(endDate.getDate() - 1);
-                        startDate.datepicker('option', 'maxDate', endDate);
-                    }
-                });
-            });
+        <script th:src="@{/js/list.js}"></script>
 
-            function toggleContent() {
-                var content = document.getElementById("form");
-                if (content.hasAttribute("hidden")) {
-                    content.removeAttribute("hidden"); // 펼쳐짐
-                } else {
-                    content.setAttribute("hidden", true); // 접힘
-                }
-            }
-
-            function setDateRange(months) {
-                var endDate = new Date();
-                var startDate = new Date();
-                startDate.setMonth(startDate.getMonth() + months);
-
-                // 종료일을 계산된 값으로 설정
-                $('#endDt').datepicker('setDate', startDate);
-
-                // 시작일을 오늘 날짜로 설정
-                $('#startDt').datepicker('setDate', endDate);
-            }
-
-            function resetForm() {
-                document.getElementById("form").reset();
-            }
-
-            function submitForm() {
-                // 조회 기능 구현
-            }
-        </script>
     </div>
 </main>
 <aside>

@@ -21,6 +21,7 @@ import java.util.List;
 public class PaymentInsertService {
     private final CustomerRepository customerRepository;
 
+    @Transactional
     public void insert_basic(InsertDTO dto, User user) {
 
 
@@ -34,6 +35,7 @@ public class PaymentInsertService {
                 payment.setPaymentTitle(dto.getPaymentTitle());
                 payment.setPaymentType(dto.getPaymentType());
                 payment.setPaymentBizTo(dto.getPaymentBizTo());
+                payment.setPaymentDelYn('N');
                 payment.setCreateTime(dto.getPaymentCreateTime());
                 payment.setPaymentStatus(OrderStatus.wait);
                 payment.setPaymentDelYn('N');

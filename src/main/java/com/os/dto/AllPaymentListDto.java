@@ -18,22 +18,26 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class AllPaymentListDto {
-    private LocalDateTime paymentCreateTime;
+    private LocalDateTime createTime;
     private Long id;
     private String customerName;
     private String paymentTitle;
-    private int productAmount;
+    private String totalAmount;
     @Enumerated(EnumType.STRING)
     private OrderStatus paymentStatus;
+    private char paymentDelYn;
 
     public static AllPaymentListDto toAllPaymentListDto(Payment payment) {
+        String totalAmount = payment.calculateTotalAmount(payment.getProducts());
+
         return AllPaymentListDto.builder()
-                .paymentCreateTime(payment.getCreateTime())
+                .createTime(payment.getCreateTime())
                 .id(payment.getId())
                 .customerName(payment.getCustomer().getCustomerName())
                 .paymentTitle(payment.getPaymentTitle())
-                .productAmount(payment.getProducts().get(0).getProductAmount())
+                .totalAmount(totalAmount)
                 .paymentStatus(payment.getPaymentStatus())
+                .paymentDelYn(payment.getPaymentDelYn())
                 .build();
     }
 }
