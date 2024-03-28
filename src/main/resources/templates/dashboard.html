@@ -149,6 +149,11 @@
             </span>
 </aside>
 </body>
+<script th:inline="javascript">
+    let monthChartList = [[${monthChartList}]];
+
+</script>
 <script th:src="@{/js/pageSample.js}"></script>
 <script th:src="@{/js/dashboard.js}"></script>
+
 </html>

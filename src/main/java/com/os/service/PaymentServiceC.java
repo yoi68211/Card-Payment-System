@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -26,4 +27,9 @@ public class PaymentServiceC {
             return null;
         }
     }
+
+    public List<Object[]> getCountByDateInMonth(int month) {
+        return paymentRepository.countByDateInMonth(month);
+    }
+
 }

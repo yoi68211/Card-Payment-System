@@ -5,6 +5,7 @@ import com.os.dto.PaymentDetailsDTO;
 import com.os.entity.User;
 import com.os.service.AllPaymentListService;
 import com.os.service.CustomerService;
+import com.os.service.PaymentServiceC;
 import com.os.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 @Controller
@@ -26,6 +30,7 @@ public class MainController {
     public final UserService userService;
     public final AllPaymentListService allPaymentListService;
     private final CustomerService customerService;
+    private final PaymentServiceC paymentService;
 
     @GetMapping
     public String index() {
@@ -35,8 +40,11 @@ public class MainController {
 
     @GetMapping("dashboard")
     public String login(Model model) {
+        LocalDateTime currentTime = LocalDateTime.now();
+        int month = currentTime.getMonthValue();
+        List<Object[]> monthChart = paymentService.getCountByDateInMonth(month);
 
-
+        model.addAttribute("monthChartList",monthChart);
         model.addAttribute("paymentSuccessCount", customerService.countByCustomersByPaid());
         model.addAttribute("paymentInsertThisMonth", customerService.thisMonthInsertCount());
 

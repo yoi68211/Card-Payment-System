@@ -9,6 +9,7 @@ import com.os.repository.CustomerRepository;
 import com.os.repository.PaymentRepository;
 import com.os.repository.ProductRepository;
 import com.os.repository.UserRepository;
+import com.os.service.PaymentServiceC;
 import com.os.service.UserService;
 import com.os.util.BizTo;
 import com.os.util.OrderStatus;
@@ -18,7 +19,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +40,31 @@ public class ChartInsertTest {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PaymentServiceC paymentService;
 
+
+
+
+    @Test
+    void count(){
+        LocalDateTime currentTime = LocalDateTime.now();
+        int month = currentTime.getMonthValue();
+        LocalDate firstDayOfMonth = LocalDate.of(currentTime.getYear(), month, 1);
+        LocalDate lastDayOfMonth = firstDayOfMonth.with(TemporalAdjusters.lastDayOfMonth()); // 마지막 날짜
+        List<Object[]> countList = paymentService.getCountByDateInMonth(month);
+        for(Object[] count : countList){
+            String date = (count[0]).toString().split("-")[2];
+            if (date.startsWith("0")) {
+                date = date.substring(1);
+            }
+            for(int i = 1; i <= lastDayOfMonth.getDayOfMonth(); i++) {
+
+            }
+            System.out.println("Date: " + date + ", Count: " + count[1]);
+
+        }
+    }
 
     @Test
     void chart() {
@@ -96,6 +123,7 @@ public class ChartInsertTest {
             }
         }
     }
+
 
 }
 

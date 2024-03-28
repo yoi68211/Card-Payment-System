@@ -34,10 +34,14 @@ function monthYearChange(tagName) {
 
 }
 
-
-
+let monthCount = [];
+for(let list in monthChartList){
+    console.log("date ==> "+ list[0]);
+    console.log("count ==> "+ list[1]);
+    monthCount.push(list[1]);
+}
+console.log("제발 == >" + monthCount);
 let categoriesMonth = monthYearChange('chartMonth');
-
 // 이번달 차트
 var optionMonth = {
     series: [{
@@ -205,8 +209,6 @@ var optionMonth = {
         var i, tabContent, tabBtns;
         let month = document.getElementById("monthChart");
         let year = document.getElementById("yearChart");
-        console.log("month",month.value);
-        console.log("year",year.value);
         // 모든 탭 내용과 탭 버튼을 숨김
         tabContent = document.getElementsByClassName('tab-content');
         for (i = 0; i < tabContent.length; i++) {
