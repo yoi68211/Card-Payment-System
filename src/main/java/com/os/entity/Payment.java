@@ -74,7 +74,7 @@ public class Payment extends BaseEntity{
 
     //////////////////////////////////////////////////////////////////////////////////
     // 고객 IDX
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id",nullable = false)
     private Customer customer;
 

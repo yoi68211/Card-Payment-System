@@ -67,9 +67,10 @@ function toggleDeleteButton() {
     }
 }
 
-function submitForm() {
-    // 조회 기능 구현
-}
+        function submitForm() {
+            var form = document.getElementById("form");
+            form.submit();
+        }
 
 function changePageSize() {
     var selectedSize = document.getElementById("pageSelect").value;

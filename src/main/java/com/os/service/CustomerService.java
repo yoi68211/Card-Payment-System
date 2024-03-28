@@ -1,13 +1,23 @@
 package com.os.service;
 
+import com.os.dto.AllPaymentListDto;
 import com.os.dto.CustomerDTO;
+import com.os.dto.DetailedSearchDTO;
 import com.os.dto.PaymentDetailsDTO;
 import com.os.entity.Customer;
+import com.os.entity.Payment;
+import com.os.entity.QCustomer;
+import com.os.entity.QPayment;
 import com.os.repository.CustomerRepository;
 import com.os.util.OrderStatus;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.time.YearMonth;
@@ -15,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +33,6 @@ import java.util.Optional;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
-
 
     public PaymentDetailsDTO getDetails(Long id) {
 
@@ -116,7 +126,59 @@ public class CustomerService {
         return customerDTOS;
     }
 
-
+//
+//    public List<AllPaymentListDto> DetailSearch(DetailedSearchDTO searchDTO) {
+//
+//         String status = searchDTO.getStatus();
+//        Integer dateRange = searchDTO.getDateRange();
+//
+//
+//        QPayment payment = QPayment.payment;
+//        BooleanBuilder builder = new BooleanBuilder();
+//
+//        if (searchDTO.getStartDt() != null &&  searchDTO.getEndDt() != null) {
+//            LocalDateTime startDate = LocalDateTime.parse(searchDTO.getStartDt() + "T00:00:00");
+//            LocalDateTime endDate = LocalDateTime.parse( searchDTO.getEndDt() + "T23:59:59");
+//
+//            builder.and(payment.createTime.between(startDate, endDate));
+//        }
+//        if (dateRange != null){
+//
+//            LocalDateTime startDate = LocalDateTime.now().minusMonths(dateRange);
+//            LocalDateTime endDate = LocalDateTime.now();
+//
+//            builder.and(payment.createTime.between(startDate,endDate));
+//        }
+//
+//        if (StringUtils.hasText(searchDTO.getCustomerName())){
+//            builder.and(payment.customer.customerName.like("%" + searchDTO.getCustomerName() + "%"));
+//        }
+//        if (StringUtils.hasText(searchDTO.getStatus())){
+//            builder.and(payment.paymentStatus.eq(OrderStatus.valueOf(searchDTO.getStatus())));
+//        }
+//        if (StringUtils.hasText(searchDTO.getEmail())){
+//            builder.and(payment.customer.customerEmail.eq(searchDTO.getEmail()));
+//        }
+//
+//        List<Payment> result = query
+//                .select(payment)
+//                .from(payment)
+//                .where(builder)
+//                .fetch();
+//
+//
+//
+//
+//
+//        return convertToAllPaymentListDto(result);
+//
+//    }
+//
+//    private List<AllPaymentListDto> convertToAllPaymentListDto(List<Payment> paymentList) {
+//        return paymentList.stream()
+//                .map(AllPaymentListDto::toAllPaymentListDto)
+//                .collect(Collectors.toList());
+//    }
 
 
 
