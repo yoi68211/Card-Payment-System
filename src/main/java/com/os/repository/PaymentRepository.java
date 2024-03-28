@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 @Transactional
@@ -26,8 +27,14 @@ public interface PaymentRepository extends JpaRepository<Payment,Long> {
 
     Page<Payment> findByPaymentTitleContainingAndPaymentDelYnNot(String keyword, char y, Pageable pageable);
 
-    @Query("SELECT DATE(p.createTime), COUNT(p) FROM Payment p WHERE MONTH(p.createTime) = :month GROUP BY DATE(p.createTime) ORDER BY DATE(p.createTime)")
-    List<Object[]> countByDateInMonth(@Param("month") int month);
+    @Query("SELECT COUNT(p) FROM Payment p WHERE DATE(p.createTime) = :date")
+    Long countPaymentsByDate(@Param("date") LocalDate date);
+
+    @Query("SELECT COUNT(p) FROM Payment p WHERE DATE(p.createTime) >= :startDate AND DATE(p.createTime) <= :endDate")
+    Long countPaymentsYearByDateRange(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
+
+
 
 
 }

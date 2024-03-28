@@ -48,22 +48,16 @@ public class ChartInsertTest {
 
     @Test
     void count(){
-        LocalDateTime currentTime = LocalDateTime.now();
-        int month = currentTime.getMonthValue();
-        LocalDate firstDayOfMonth = LocalDate.of(currentTime.getYear(), month, 1);
-        LocalDate lastDayOfMonth = firstDayOfMonth.with(TemporalAdjusters.lastDayOfMonth()); // 마지막 날짜
-        List<Object[]> countList = paymentService.getCountByDateInMonth(month);
-        for(Object[] count : countList){
-            String date = (count[0]).toString().split("-")[2];
-            if (date.startsWith("0")) {
-                date = date.substring(1);
-            }
-            for(int i = 1; i <= lastDayOfMonth.getDayOfMonth(); i++) {
 
-            }
-            System.out.println("Date: " + date + ", Count: " + count[1]);
+
+        List<Long> countList = paymentService.getCountsByYearRange();
+        int i=0;
+        for(Long count : countList){
+            i++;
+            System.out.println("Date: " + count);
 
         }
+        System.out.println("12 맞누? ==>"+i);
     }
 
     @Test
@@ -75,13 +69,19 @@ public class ChartInsertTest {
 
             Random random = new Random();
             for (int i = 1; i < 500; i++) {
+                // 월은 1부터 12까지의 랜덤한 값 설정
+                int month = random.nextInt(12) + 1;
+                // 일은 1부터 28까지의 랜덤한 값 설정 (월에 따라서 최대 일수가 달라질 수 있으니 적절히 수정하세요)
+                int day = random.nextInt(28) + 1;
+                LocalDateTime createTime = LocalDateTime.of(currentTime.getYear(), month, day, currentTime.getHour(), currentTime.getMinute(), currentTime.getSecond());
                 // Customer 생성
                 Customer customer = new Customer();
                 customer.setCustomerName(i+"찬신");
                 customer.setCustomerEmail("test"+i+"@naver.com");
                 customer.setCustomerPhone("0101111"+i);
                 customer.setCustomerAddress("숭의"+i+"동");
-                customer.setCreateTime(currentTime);
+                customer.setCreateTime(createTime);
+                customer.setUpdateTime(createTime);
 
                 Payment payment = new Payment();
                 payment.setPaymentTitle("테스트제목"+i);
@@ -90,15 +90,13 @@ public class ChartInsertTest {
                 payment.setPaymentDelYn('N');
                 payment.setPaymentStatus(OrderStatus.wait);
 
-                // 월은 1부터 12까지의 랜덤한 값 설정
-                int month = random.nextInt(12) + 1;
-                // 일은 1부터 28까지의 랜덤한 값 설정 (월에 따라서 최대 일수가 달라질 수 있으니 적절히 수정하세요)
-                int day = random.nextInt(28) + 1;
+
 
                 // LocalDateTime으로 현재 시간을 가져옴
 // 시간 설정
-                LocalDateTime createTime = LocalDateTime.of(currentTime.getYear(), month, day, currentTime.getHour(), currentTime.getMinute(), currentTime.getSecond());
+
                 payment.setCreateTime(createTime);
+                payment.setUpdateTime(createTime);
 
 
                 List<Product> productList = new ArrayList<>();
@@ -126,15 +124,25 @@ public class ChartInsertTest {
     @Test
     void insertMemo() {
         Optional<User> userOp = userRepository.findById(1L);
+        LocalDateTime currentTime = LocalDateTime.now();
         if(userOp.isPresent()) {
             User user = userOp.get();
+            Random random = new Random();
             for(int i=0; i<=50; i++){
-                Memo memo = Memo.builder()
-                        .memoContents("메모테스트"+i)
-                        .memoDelYn("N")
-                        .memoExposeYn("Y")
-                        .user(user)
-                        .build();
+                // 월은 1부터 12까지의 랜덤한 값 설정
+                int month = random.nextInt(12) + 1;
+                // 일은 1부터 28까지의 랜덤한 값 설정 (월에 따라서 최대 일수가 달라질 수 있으니 적절히 수정하세요)
+                int day = random.nextInt(28) + 1;
+                LocalDateTime createTime = LocalDateTime.of(currentTime.getYear(), month, day, currentTime.getHour(), currentTime.getMinute(), currentTime.getSecond());
+                Memo memo = new Memo();
+                memo.setMemoContents("메모테스트"+i);
+                memo.setMemoDelYn("N");
+                memo.setMemoExposeYn("Y");
+                memo.setCreateTime(createTime);
+                memo.setUpdateTime(createTime);
+                memo.setUser(user);
+
+
                 memoRepository.save(memo);
             }
         }

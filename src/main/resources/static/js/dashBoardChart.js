@@ -6,6 +6,7 @@
 
 
 
+
 // 탭을 변경할 때마다 해당 탭에 맞는 카테고리 생성
 function monthYearChange(tagName) {
   var today = new Date();
@@ -23,6 +24,7 @@ function monthYearChange(tagName) {
 
       for (var i = 1; i <= totalDays; i++) {
           categories.push(i);
+
       }
       return categories;
   } else if (tagName === 'chartYear') {
@@ -34,19 +36,12 @@ function monthYearChange(tagName) {
 
 }
 
-let monthCount = [];
-for(let list in monthChartList){
-    console.log("date ==> "+ list[0]);
-    console.log("count ==> "+ list[1]);
-    monthCount.push(list[1]);
-}
-console.log("제발 == >" + monthCount);
 let categoriesMonth = monthYearChange('chartMonth');
 // 이번달 차트
 var optionMonth = {
     series: [{
 
-        data: [30, 20, 15, 10, 14, 14, 6, 25, 22, 15, 17, 26, 20, 11, 27, 24, 22, 24, 9, 25, 17, 15, 11, 21, 25, 16, 25, 16, 14, 20, 30] // 날짜별 결제 내역갯수
+        data: monthData // 날짜별 결제 내역갯수
     }],
     chart: { // 차트 전체 크기
         height: '80%',
@@ -128,7 +123,7 @@ var optionMonth = {
     var optionYear = {
         series: [{
 
-            data: [30, 20, 15, 10, 14, 14, 6, 25, 22, 15, 17, 26] // 날짜별 결제 내역갯수
+            data: yearData // 날짜별 결제 내역갯수
         }],
         chart: { // 차트 전체 크기
             height: '80%',
@@ -222,8 +217,7 @@ var optionMonth = {
 
         // 선택된 탭을 보이게 함
         document.getElementById(tabName).style.display = 'block';
-        console.log(tabName);
-        // 선택된 탭의 차트를 그림
+
         if (tabName == 'chartMonth') {
             month.style.borderBottom = '1px solid blue';
             year.style.borderBottom = ''; // 다른 탭의 스타일 제거

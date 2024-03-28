@@ -38,11 +38,12 @@ public class MainController {
 
     @GetMapping("dashboard")
     public String login(Model model) {
-        LocalDateTime currentTime = LocalDateTime.now();
-        int month = currentTime.getMonthValue();
-        List<Object[]> monthChart = paymentService.getCountByDateInMonth(month);
+
+        List<Long> monthChart = paymentService.getCountsByMonthRange();
+        List<Long> yearChart = paymentService.getCountsByYearRange();
 
         model.addAttribute("monthChartList",monthChart);
+        model.addAttribute("yearChartList",yearChart);
         model.addAttribute("paymentSuccessCount", customerService.countByCustomersByPaid());
         model.addAttribute("paymentInsertThisMonth", customerService.thisMonthInsertCount());
 
