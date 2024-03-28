@@ -59,6 +59,7 @@ public class AllPaymentListService {
         String endDt = searchDTO.getEndDt();
 
 
+
         QPayment payment = QPayment.payment;
 
         List<Payment> resultList  = query
@@ -92,7 +93,7 @@ public class AllPaymentListService {
     //querydsl where 절 BooleanExpression
     private BooleanExpression eqDocNumber(String DocNumber){
         if (StringUtils.hasText(DocNumber)){
-            return payment.id.eq(Long.valueOf(DocNumber));
+            return payment.paymentDelYn.eq('N').and(payment.id.eq(Long.valueOf(DocNumber)));
         }
         return null;
     }
@@ -100,7 +101,7 @@ public class AllPaymentListService {
 
     private BooleanExpression likeCustomerName(String name) {
         if (StringUtils.hasText(name)) {
-           return payment.customer.customerName.like("%" + name + "%");
+           return payment.paymentDelYn.eq('N').and(payment.customer.customerName.like("%" + name + "%"));
         }
         return null;
     }
@@ -112,7 +113,7 @@ public class AllPaymentListService {
             LocalDateTime startDate = LocalDateTime.now().minusMonths(dateRange);
             LocalDateTime endDate = LocalDateTime.now();
 
-            payment.createTime.between(startDate, endDate);
+            return payment.paymentDelYn.eq('N').and(payment.createTime.between(startDate, endDate));
         }
         return null;
     }
@@ -120,16 +121,17 @@ public class AllPaymentListService {
 
     private BooleanExpression eqStatus(String status) {
         if (StringUtils.hasText(status)) {
-            payment.paymentStatus.eq(OrderStatus.valueOf(status));
+            return payment.paymentDelYn.eq('N').and(payment.paymentStatus.eq(OrderStatus.valueOf(status)));
         }
         return null;
     }
+
 
     private BooleanExpression betweenDt(String startDt ,String endDt) {
         if (StringUtils.hasText(startDt) && StringUtils.hasText(endDt)) {
             LocalDateTime startDate = LocalDateTime.parse(startDt + "T00:00:00");
             LocalDateTime endDate = LocalDateTime.parse(endDt + "T23:59:59");
-            payment.createTime.between(startDate, endDate);
+            return payment.paymentDelYn.eq('N').and(payment.createTime.between(startDate, endDate));
         }
         return null;
     }
