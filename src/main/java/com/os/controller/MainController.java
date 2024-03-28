@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-
 @Controller
 @RequestMapping("/")
 @RequiredArgsConstructor
@@ -23,6 +22,7 @@ public class MainController {
     public final UserService userService;
     public final AllPaymentListService allPaymentListService;
     private final CustomerService customerService;
+
 
     @GetMapping
     public String index() {
@@ -32,11 +32,8 @@ public class MainController {
 
     @GetMapping("dashboard")
     public String login(Model model) {
-
-
         model.addAttribute("paymentSuccessCount", customerService.countByCustomersByPaid());
         model.addAttribute("paymentInsertThisMonth", customerService.thisMonthInsertCount());
-
 
         return "dashboard";
     }
@@ -54,44 +51,47 @@ public class MainController {
     TODO: 2024-03-22 "paymentDetails.html" In the QR creation logic, I couldn't tell which code uses which code API, so I entered a random URL
           Please implement by adding payload to Payment Details DTO.
     */
+
+
     @GetMapping("/paymentDetails")
     public String paymentDetailsPage(@RequestParam Long id , Model model)   {
-
-
-
         PaymentDetailsDTO paymentDetailsDTO = customerService.getDetails(id);
         model.addAttribute("paymentDetailsDTO",paymentDetailsDTO);
-
 
         return "paymentDetails";
 
     }
+
 
     @GetMapping("pageSample")
     public String pageSample() {
         return "/pageSample";
     }
 
+    /*
+        @method : insert_form
+        @desc : /insert_form 으로 이동
+        @author : 김성민
+    */
     @GetMapping("insert_form")
     public String insert_form(){
         return "insert_form";
     }
 
+
     @GetMapping("/list")
     public String findAll(Model model, @PageableDefault(page = 0, size = 10, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword) {
         Page<AllPaymentListDto> allPaymentsPage;
-
-
         if (keyword != null && !keyword.isEmpty()) {
             allPaymentsPage = allPaymentListService.findByTitleContaining(keyword, pageable);
         } else {
             allPaymentsPage = allPaymentListService.findAll(pageable);
         }
-
         long payCount = allPaymentsPage.getTotalElements();
         model.addAttribute("payList", allPaymentsPage);
         model.addAttribute("payCount", payCount);
         model.addAttribute("keyword", keyword);
+
         return "list";
     }
 
@@ -103,11 +103,7 @@ public class MainController {
 
         model.addAttribute("payList", allPaymentsPage);
         model.addAttribute("payCount", payCount);
+
         return "list";
     }
-
-
-
-
-
 }
