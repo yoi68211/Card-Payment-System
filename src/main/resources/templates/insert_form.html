@@ -1,30 +1,33 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <link th:href="@{/css/pageSample.css}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/047f82d071.js" crossorigin="anonymous"></script>
     <link th:href="@{/css/insert_form.css}" rel="stylesheet">
-    <script src="/js/insert_form.js"></script>
+
 </head>
 <body>
 <header class="header-nav">
-        <span class="header-flex-box">
-            <i class="fa-solid fa-list" id="sidebar-action-icon"></i>
-             <a href="/dashboard">AIP System</a>
+        <span class="header-flex-box header-logo">
+
+            <span class="sidebar-action-border">
+                <img th:src="@{/img/header_sidebar.png}" id="sidebar-action-icon">
+            </span>
+            <a href="/dashboard">AIP System</a>
         </span>
 
-    <span class="header-pageName header-flex-box">DashBoard</span><!-- 현재 페이지 이름 -->
+    <span class="header-pageName header-flex-box" >결제 등록</span><!-- 현재 페이지 이름 -->
 
     <span class="header-flex-box">
             <span class="header-flex-three">
                 <span class="header-icon">
-                    <a href="#"><i class="fa-solid fa-circle-question fa-xl"></i></a>
-                    <a href="#"><i class="fa-solid fa-comment-dots fa-xl"></i></a>
-
+                    <a href="#"><img th:src="@{/img/help.png}" id="help_icon"></a>
+                    <a href="#"><img th:src="@{/img/chart.png}" id="chart_icon"></a>
+                    <a href="#"><img th:src="@{/img/memo.png}" id="memo_icon"></a>
                 </span>
-                <img th:src="@{/img/defaultImg.png}" id="profile-img">
+                <img th:src="@{/img/profileImg.png}" id="profile-img">
                 <span id="submenu-trigger">
                     <a href="#">Nacamora</a>
                     <div id="submenu">
@@ -36,6 +39,8 @@
             </span>
         </span>
 </header>
+
+
 <main>
     <form class="basic-form" id="paymentForm">
         <div class="main-cell">
@@ -150,28 +155,28 @@
                             </tr>
                             <tr>
                                 <th>
-                                        <input type="checkbox">
+                                    <input type="checkbox">
                                 </th>
                                 <th>
 
-                                        <input type=text id="productName" name="productName">
-
-                                </th>
-                                <th>
-
-                                        <input type="text" id="productTotalItems" name="productTotalItems"
-                                               oninput="updatetotalItems(this.parentNode.parentNode)">
+                                    <input type=text id="productName" name="productName">
 
                                 </th>
                                 <th>
 
-                                        <input type="text" id="productPrice" name="productPrice"
-                                               oninput="updatePrice(this.parentNode.parentNode)">
+                                    <input type="text" id="productTotalItems" name="productTotalItems"
+                                           oninput="updatetotalItems(this.parentNode.parentNode)">
 
                                 </th>
                                 <th>
 
-                                        <input type="text" id="productAmount" name="productAmount" readonly>
+                                    <input type="text" id="productPrice" name="productPrice"
+                                           oninput="updatePrice(this.parentNode.parentNode)">
+
+                                </th>
+                                <th>
+
+                                    <input type="text" id="productAmount" name="productAmount" readonly>
 
                                 </th>
                             </tr>
@@ -196,39 +201,39 @@
 <aside>
         <span id="sidebar">
             <nav>
-                <ul>
-                    <li> <!-- 현재 페이지 의 해당하는 span태그에 style="color: blue;" 써주세여  -->
-                        <span style="color: blue;">
-                            <i class="fa-solid fa-table-cells"></i>
+                <ul class="sidebar-ul">
+                    <li onclick="location.href='/dashboard'" > <!-- 현재 페이지 의 해당하는 span태그에 style="color: blue;" 써주세여  -->
+                        <span>
+                            <img th:src="@{/img/sidebar_dashboard.png}" id="sidebar_dashboard_icon">
                             <span class="sidebar-nav-text">DashBoard</span>
                         </span>
                         <i class="fa-solid fa-chevron-right"></i>
                     </li>
                     <li onclick="location.href='/insert_form'">
-                        <span>
-                            <i class="fa-solid fa-credit-card"></i>
+                        <span class="nowPage">
+                            <img th:src="@{/img/sidebar_card.png}" id="sidebar_card_icon">
                             <span class="sidebar-nav-text">결제등록</span>
                         </span>
                         <i class="fa-solid fa-chevron-right"></i>
                     </li>
-                    <li>
+                    <li onclick="location.href='#'">
                         <span>
-                            <i class="fa-solid fa-rectangle-list"></i>
+                            <img th:src="@{/img/sidebar_payList.png}" id="sidebar_payList_icon">
                             <span class="sidebar-nav-text">결제목록</span>
                         </span>
                         <i class="fa-solid fa-chevron-down" id="payList-toggle"></i>
                     </li>
-                    <li class="payList-nav">
+                    <li class="payList-nav" onclick="location.href='#'">
                         <span class="payList">
                             <i class="fa-solid fa-square fa-2xs"></i>
                             <span class="sidebar-nav-text">전체 결제 목록</span>
                         </span>
                         <!-- <i class="fa-solid fa-chevron-right"></i> -->
                     </li>
-                    <li class="payList-nav">
+                    <li class="payList-nav" onclick="location.href='#'">
                         <span class="payList">
                             <i class="fa-solid fa-square fa-2xs"></i>
-                            <span class="sidebar-nav-text"><a href="/autoPayListDetail">자동 결제 목록</a></span>
+                            <span class="sidebar-nav-text" >자동 결제 목록</span>
                         </span>
                         <!-- <i class="fa-solid fa-chevron-right"></i> -->
                     </li>
@@ -239,5 +244,5 @@
 </aside>
 </body>
 <script th:src="@{/js/pageSample.js}"></script>
+<script src="/js/insert_form.js"></script>
 </html>
-

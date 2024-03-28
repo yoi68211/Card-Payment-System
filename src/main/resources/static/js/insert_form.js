@@ -1,44 +1,4 @@
-/*window.addEventListener('DOMContentLoaded', function() {
-        // 현재 시간을 가져오는 함수
-        function getCurrentTime() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            const currentTime = `${year}-${month}-${day}`;
-            return currentTime;
-        }
-
-        // createTime input 태그를 찾아 현재 시간을 설정
-        const createTimeInput = document.getElementById('paymentCreateTime');
-        if (createTimeInput) {
-            createTimeInput.value = getCurrentTime();
-        }
-    });*/
-    window.addEventListener('DOMContentLoaded', function() {
-        // 현재 시간을 가져오는 함수
-        function getCurrentDateTime() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const currentDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
-            return currentDateTime;
-        }
-
-        // createTime input 태그를 찾아 현재 시간을 설정
-        const createTimeInput = document.getElementById('paymentCreateTime');
-        if (createTimeInput) {
-            createTimeInput.value = getCurrentDateTime();
-        }
-    });
-
-
-function validateInput(input) {
-            return /^\d+$/.test(input) ? input : ""; // 숫자가 아닌 경우 빈 문자열 반환
-        }
+        function validateInput(input) { return /^\d+$/.test(input) ? input : ""; }
 
         function updatetotalItems(row) {
             const table = document.getElementById("product");
@@ -56,7 +16,6 @@ function validateInput(input) {
             } else {
                 document.getElementById("totaltotalItems").innerHTML = totalAmount;
             }
-
             const amountInput = row.cells[2].querySelector("input").value;
             const priceInput = row.cells[3].querySelector("input").value;
             const totalInput = row.cells[4].querySelector("input");
@@ -69,7 +28,6 @@ function validateInput(input) {
                 }else{
                     totalInput.value = total;
                 }
-
                 const table = document.getElementById("product");
                 let ttotal = 0;
                 for (let i = 1; i < table.rows.length - 1; i++) {
@@ -83,25 +41,20 @@ function validateInput(input) {
                 }else{
                     document.getElementById("final").innerHTML = ttotal;
                 }
-
             } else {
                 totalInput.value = "";
                 document.getElementById("final").innerHTML = "";
                 return;
             }
-
-
         }
 
         function updatePrice(row) {
-
             const table = document.getElementById("product");
             let totalPrice = 0;
             for (let i = 1; i < table.rows.length - 1; i++) {
                 const priceInput = table.rows[i].cells[3].querySelector("input").value;
                 if (!validateInput(priceInput)) {
                     document.getElementById("totalPrice").innerHTML = "";
-
                 }
                 totalPrice += parseInt(priceInput);
             }
@@ -110,7 +63,6 @@ function validateInput(input) {
             } else {
                 document.getElementById("totalPrice").innerHTML = totalPrice;
             }
-
             const amountInput = row.cells[2].querySelector("input").value;
             const priceInput = row.cells[3].querySelector("input").value;
             const totalInput = row.cells[4].querySelector("input");
@@ -123,7 +75,6 @@ function validateInput(input) {
                 }else{
                     totalInput.value = total;
                 }
-
                 const table = document.getElementById("product");
                 let ttotal = 0;
                 for (let i = 1; i < table.rows.length - 1; i++) {
@@ -142,26 +93,20 @@ function validateInput(input) {
                 document.getElementById("final").innerHTML = "";
                 return;
             }
-
         }
-
-
 
         let num = 2;
 
         function addRow() {
-
             const table = document.getElementById("product");
             var deleteRow_btn = document.getElementById("deleteRow_btn");
             const newRow = table.insertRow(num);
-
 
             const newCell1 = newRow.insertCell(0);
             const newCell2 = newRow.insertCell(1);
             const newCell3 = newRow.insertCell(2);
             const newCell4 = newRow.insertCell(3);
             const newCell5 = newRow.insertCell(4);
-
 
             const input1 = document.createElement("input");
             input1.setAttribute("type", "checkbox");
@@ -201,11 +146,9 @@ function validateInput(input) {
             // 새로운 행 추가 후에도 1번 행에 대해 calculateAmount 호출
             updatetotalItems(newRow);
             updatePrice(newRow);
-
         }
 
         function deleteRow(rownum) {
-
             const table = document.getElementById('product');
             var deleteRow_btn = document.getElementById("deleteRow_btn");
             let numRows = table.rows.length - 2; // 첫 행과 마지막 행은 무시하기 위해 -2
@@ -232,7 +175,6 @@ function validateInput(input) {
                     updatetotalItems(row);
                 }
             }
-
         }
 
         function cycle(){
@@ -257,7 +199,6 @@ function validateInput(input) {
 
         function send() {
             var f = document.getElementById('paymentForm');
-    //                    var createTime = f.paymentCreateTime.value;
             var createTime = new Date().toISOString().slice(0, 16);
             var name = f.customerName.value;
             var email = f.customerEmail.value;
@@ -291,6 +232,34 @@ function validateInput(input) {
                 var productAmount = productRows[i].querySelector("input[name='productAmount']").value;
                 productList.push({ productName: productName, productTotalItems: totalItems, productPrice: price, productAmount: productAmount });
             }
+
+            /*
+            if(!NR(name)){
+                alert("100자 까지만 입력 가능합니다.");
+                return;
+            }else if(!empty(name)){
+                alert("이름을 입력하세요.");
+                return;
+            }
+
+            if(!ER(email)){
+                alert("이메일 형식으로만 입력 가능합니다.");
+                return;
+            }else if(!empty(email)){
+                alert("이메일을 입력하세요.");
+                return;
+            }
+
+            if(!TR(title)){ return;}
+
+            PHR(phone);
+            empty(phone);
+            TR(address);
+            empty(address);
+            TR(title);
+            empty(title);
+
+            */
 
             var data = {
                 paymentCreateTime: createTime,
@@ -345,7 +314,6 @@ function validateInput(input) {
 
         function save(){
             var before = document.getElementById("before");
-
             var f = document.getElementById('paymentForm');
             var name = f.customerName.value;
             var email = f.customerEmail.value;
@@ -366,9 +334,9 @@ function validateInput(input) {
                 var productName = productRows[i].querySelector("input[name='productName']").value;
                 var totalItems = productRows[i].querySelector("input[name='productTotalItems']").value;
                 var price = productRows[i].querySelector("input[name='productPrice']").value;
-
                 productList.push({ s_productName: productName, s_productTotalItems: totalItems, s_productPrice: price});
             }
+
             var data = {
                 s_paymentName: name,
                 s_paymentEmail: email,
@@ -406,6 +374,7 @@ function validateInput(input) {
                 console.error('Error:', error);
             });
         }
+
         function load() {
             fetch('/load')
                 .then(response => response.json())
@@ -516,9 +485,7 @@ function validateInput(input) {
                         // 새로운 행 추가 후에도 1번 행에 대해 calculateAmount 호출
                         updatetotalItems(newRow);
                         updatePrice(newRow);
-
                     });
-
                 })
                 .catch(error => {
                     console.error('Error:', error);

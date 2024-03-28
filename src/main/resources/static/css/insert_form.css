@@ -53,6 +53,13 @@
         background-color: #4E8DF5;
         color: white;
     }
+    .basic-header button:disabled {
+            border: 1px solid black;
+            background-color: gray;
+            color: white;
+            opacity: 0.5; /* 예시: 투명도 조절 */
+            cursor: not-allowed; /* 예시: 커서 스타일 변경 */
+        }
 
     .basic-body{
         height: 40%;
@@ -66,7 +73,8 @@
     }
     .basic-title{
         width: 30%;
-        text-align: center;
+        text-align: left;
+        padding-left: 50px;
     }
     .basic-input-text{
         width: 40%;
@@ -76,11 +84,12 @@
         height: 25px;
     }
     .basic-title2{
-        width: 21.3%;
-        text-align: center;
+        width: 22%;
+        text-align: left;
+        padding-left: 50px;
     }
     .basic-input-text2{
-        width: 78.7%;
+        width: 78%;
     }
     .basic-input-text2 input[type="text"]{
         width: 100%;
