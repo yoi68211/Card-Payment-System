@@ -46,10 +46,8 @@ public class MainController {
         model.addAttribute("paymentSuccessCount", customerService.countByCustomersByPaid());
         model.addAttribute("paymentInsertThisMonth", customerService.thisMonthInsertCount());
 
-
         return "dashboard";
     }
-
 
     @GetMapping("/join")
     public String joinPage()   {
