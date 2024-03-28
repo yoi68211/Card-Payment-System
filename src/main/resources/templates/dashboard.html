@@ -80,10 +80,20 @@
             </div>
 
         </div>
-        <div class="dashboard-memoBoard">
-            <div>
-                메모
-            </div>
+        <div class="dashboard-memoBoard" style="overflow-y:scroll">
+            Memo board<a href="/memo/paging" target="_blank"> > </a>
+            <table th:each="memo: ${MemoList}">
+                <tr>
+                    <td th:text="${memo.UserName}">
+                </tr>
+                <tr>
+                    <th style="text-align:right" th:text="*{#temporals.format(memo.createTime, 'yyyy-MM-dd hh:mm')}"></th>
+                </tr>
+                <tr>
+                    <td th:text="${memo.MemoContents}"></td>
+                    <td></td>
+                </tr>
+            </table>
         </div>
         <div class="dashboard-chart">
             <div class="chart-box">
@@ -149,6 +159,11 @@
             </span>
 </aside>
 </body>
+<script th:inline="javascript">
+    let monthChartList = [[${monthChartList}]];
+
+</script>
 <script th:src="@{/js/pageSample.js}"></script>
 <script th:src="@{/js/dashboard.js}"></script>
+
 </html>

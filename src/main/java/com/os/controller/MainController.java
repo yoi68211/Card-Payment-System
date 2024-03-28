@@ -5,6 +5,7 @@ import com.os.dto.DetailedSearchDTO;
 import com.os.dto.PaymentDetailsDTO;
 import com.os.service.AllPaymentListService;
 import com.os.service.CustomerService;
+import com.os.service.PaymentServiceC;
 import com.os.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,7 @@ public class MainController {
     public final UserService userService;
     public final AllPaymentListService allPaymentListService;
     private final CustomerService customerService;
+    private final PaymentServiceC paymentService;
 
 
     @GetMapping
@@ -37,7 +39,6 @@ public class MainController {
 
         return "dashboard";
     }
-
 
     @GetMapping("/join")
     public String joinPage()   {
@@ -96,10 +97,12 @@ public class MainController {
     }
 
 
-    @PostMapping("/search")
+    @GetMapping("/search")
     public String search(@ModelAttribute("form") DetailedSearchDTO searchDTO, Model model, @PageableDefault(page = 0, size = 10, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<AllPaymentListDto> allPaymentsPage = allPaymentListService.detailSearch(searchDTO, pageable);
-        long payCount = allPaymentsPage.getTotalElements();
+        int payCount = allPaymentsPage.getTotalPages();
+
+        System.out.println("payCount = " + payCount);
 
         model.addAttribute("payList", allPaymentsPage);
         model.addAttribute("payCount", payCount);

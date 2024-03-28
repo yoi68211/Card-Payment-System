@@ -6,9 +6,15 @@ import com.os.entity.Payment;
 import com.os.entity.QPayment;
 import com.os.repository.PaymentRepository;
 import com.os.util.OrderStatus;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.engine.spi.ManagedEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +35,7 @@ public class AllPaymentListService {
 
     private final PaymentRepository paymentRepository;
     private final JPAQueryFactory query;
+    private final EntityManager entityManager;
 
 
     public Page<AllPaymentListDto> findAll(Pageable pageable) {
@@ -56,10 +63,12 @@ public class AllPaymentListService {
         String endDt = searchDTO.getEndDt();
 
 
+
         QPayment payment = QPayment.payment;
 
-        List<Payment> resultList  = query
-                .select(payment)
+        JPAQuery<Payment> query = new JPAQuery<>(entityManager);
+
+        query.select(payment)
                 .from(payment)
                 .where(
                         eqDocNumber(DocNumber)
@@ -70,10 +79,18 @@ public class AllPaymentListService {
                 )
                 .fetch();
 
+        long count = query.stream().count();
+
+        List<Payment> resultList = query.offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+
         List<AllPaymentListDto> result = convertToAllPaymentListDto(resultList);
 
 
-         return new PageImpl<>(result,pageable,result.size());
+
+         return new PageImpl<>(result,pageable,count);
     }
 
 
@@ -89,7 +106,7 @@ public class AllPaymentListService {
     //querydsl where 절 BooleanExpression
     private BooleanExpression eqDocNumber(String DocNumber){
         if (StringUtils.hasText(DocNumber)){
-            return payment.id.eq(Long.valueOf(DocNumber));
+            return payment.paymentDelYn.eq('N').and(payment.id.eq(Long.valueOf(DocNumber)));
         }
         return null;
     }
@@ -97,7 +114,7 @@ public class AllPaymentListService {
 
     private BooleanExpression likeCustomerName(String name) {
         if (StringUtils.hasText(name)) {
-           return payment.customer.customerName.like("%" + name + "%");
+           return payment.paymentDelYn.eq('N').and(payment.customer.customerName.like("%" + name + "%"));
         }
         return null;
     }
@@ -109,7 +126,7 @@ public class AllPaymentListService {
             LocalDateTime startDate = LocalDateTime.now().minusMonths(dateRange);
             LocalDateTime endDate = LocalDateTime.now();
 
-            payment.createTime.between(startDate, endDate);
+            return payment.paymentDelYn.eq('N').and(payment.createTime.between(startDate, endDate));
         }
         return null;
     }
@@ -117,16 +134,17 @@ public class AllPaymentListService {
 
     private BooleanExpression eqStatus(String status) {
         if (StringUtils.hasText(status)) {
-            payment.paymentStatus.eq(OrderStatus.valueOf(status));
+            return payment.paymentDelYn.eq('N').and(payment.paymentStatus.eq(OrderStatus.valueOf(status)));
         }
         return null;
     }
+
 
     private BooleanExpression betweenDt(String startDt ,String endDt) {
         if (StringUtils.hasText(startDt) && StringUtils.hasText(endDt)) {
             LocalDateTime startDate = LocalDateTime.parse(startDt + "T00:00:00");
             LocalDateTime endDate = LocalDateTime.parse(endDt + "T23:59:59");
-            payment.createTime.between(startDate, endDate);
+            return payment.paymentDelYn.eq('N').and(payment.createTime.between(startDate, endDate));
         }
         return null;
     }

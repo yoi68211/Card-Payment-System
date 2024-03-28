@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>메모 보드 목록</title>
+    <link th:href="@{/css/paging.css}" rel="stylesheet">
+
+</head>
+<body>
+<div class="searchBox">
+    <input  type="radio" name="memoSearch" value="Entire">전체
+    <input  type="radio" name="memoSearch" value="Yes">Y
+    <input  type="radio" name="memoSearch" value="No">N
+
+    <select>
+        <option  value="entire">전체</option>
+        <option  value="contents">내용</option>
+        <option  value="writer">작성자</option>
+    </select>
+
+    <button  style="float:right" onclick="saveReq()">작성</button>
+    <button style="float:right" onclick="deleteReq()">삭제</button>
+
+    <input style="float:right" type="text" placeholder="검색어를 입력해 주세요">
+
+    <div class="memoListTable">
+    <table border="1">
+        <tr>
+            <th>
+                <input type="checkbox" id="allCheckBox" onclick="allChecked()">
+            </th>
+            <th>No.</th>
+            <th>내용</th>
+            <th>대시보드 노출</th>
+            <th>작성자</th>
+            <th>작성일</th>
+        </tr>
+        <tr style="text-align:center" th:each="memo: ${MemoList}">
+            <td>
+                <input type="checkbox" name="chk" class="chk" onclick="chkClicked()" th:value="${memo.id}">
+            </td>
+            <td> <a th:href="@{|/memo/${memo.id}|(page=${MemoList.number + 1})}" th:text="${memo.id}"></a></td>
+            <td> <a th:href="@{|/memo/${memo.id}|(page=${MemoList.number + 1})}" th:text="${memo.memoContents}" ></a></td>
+            <td> <a th:href="@{|/memo/${memo.id}|(page=${MemoList.number + 1})}" th:text="${memo.memoExposeYn}" ></a></td>
+            <td> <a th:href="@{|/memo/${memo.id}|(page=${MemoList.number + 1})}" th:text="${memo.userName}" ></a></td>
+            <td> <a th:href="@{|/memo/${memo.id}|(page=${MemoList.number + 1})}" th:text="${memo.createTime}"></a></td>
+        </tr>
+    </table>
+    </div>
+    <!-- 첫번째 페이지로 이동 -->
+    <!-- /Memo/paging?page=1 -->
+    <table>
+        <tr style="text-align:center">
+            <td><a th:href="@{/memo/paging(page=1)}"> << </a></td>
+
+            <!-- 이전 링크 활성화 비활성화 -->
+            <!-- MemoList.getNumber() 사용자:2페이지 getNumber()=1 -->
+            <td><a th:href="${MemoList.first} ? '#' : @{/memo/paging(page=${MemoList.number})}"> < </a></td>
+
+            <!-- 페이지 번호 링크(현재 페이지는 숫자만)
+                    for(int page=startPage; page<=endPage; page++)-->
+            <td>
+            <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
+<!-- 현재페이지는 링크 없이 숫자만 -->
+    <span th:if="${page == MemoList.number + 1}" th:text="${page}"></span>
+                <!-- 현재페이지 번호가 아닌 다른 페이지번호에는 링크를 보여줌 -->
+    <span th:unless="${page == MemoList.number + 1}">
+        <a th:href="@{/memo/paging(page=${page})}" th:text="${page}"></a>
+    </span>
+    </span>
+            </td>
+            <!-- 다음 링크 활성화 비활성화
+                사용자: 2페이지, getNumber: 1, 3페이지-->
+            <td><a th:href="${MemoList.last} ? '#' : @{/memo/paging(page=${MemoList.number + 2})}"> > </a></td>
+            <!-- 마지막 페이지로 이동 -->
+            <td> <a th:href="@{/memo/paging(page=${MemoList.totalPages})}"> >> </a></td>
+        </tr>
+    </table>
+</div>
+</body>
+<script>
+    function allChecked(target){
+
+         //전체 체크박스 버튼
+         const checkbox = document.getElementById('allCheckBox');
+
+         //전체 체크박스 버튼 체크 여부
+         const is_checked = checkbox.checked;
+
+         //전체 체크박스 제외한 모든 체크박스
+         if(is_checked){
+             //체크박스 전체 체크
+             chkAllChecked()
+         }
+
+         else{
+             //체크박스 전체 해제
+             chkAllUnChecked()
+         }
+     }
+
+     //자식 체크박스 클릭 이벤트
+     function chkClicked(){
+
+         //체크박스 전체개수
+         const allCount = document.querySelectorAll(".chk").length;
+
+         //체크된 체크박스 전체개수
+         const query = 'input[name="chk"]:checked'
+         const selectedElements = document.querySelectorAll(query)
+         const selectedElementsCnt = selectedElements.length;
+
+         //체크박스 전체개수와 체크된 체크박스 전체개수가 같으면 전체 체크박스 체크
+         if(allCount == selectedElementsCnt){
+              document.getElementById('allCheckBox').checked = true;
+         }
+
+         //같지않으면 전체 체크박스 해제
+         else{
+             document.getElementById('allCheckBox').checked = false;
+         }
+     }
+
+     //체크박스 전체 체크
+     function chkAllChecked(){
+         document.querySelectorAll(".chk").forEach(function(v, i) {
+             v.checked = true;
+         });
+     }
+
+     //체크박스 전체 체크 해제
+     function chkAllUnChecked(){
+         document.querySelectorAll(".chk").forEach(function(v, i) {
+             v.checked = false;
+         })
+     }
+
+   const saveReq = () => {
+        location.href = "/memo/save";
+    }
+
+   function deleteReq() {
+
+         const selectedIds = [];
+         const checkboxes = document.querySelectorAll('.chk:checked');
+         checkboxes.forEach((chk) => {
+             selectedIds.push(chk.value);
+             console.log("check", chk.value);
+             console.log("selectedIds", selectedIds);
+         });
+
+         if (selectedIds.length === 0) {
+             alert('삭제할 항목을 선택해주세요.');
+             return;
+         }
+
+         // Ajax 요청으로 선택된 항목의 ID를 서버로 전송
+         fetch('/memo/delete', {
+             method: 'POST',
+             headers: {
+                 'Content-Type': 'application/json'
+             },
+             body: JSON.stringify(selectedIds)
+         })
+         .then(response => {
+             if (response.ok) {
+
+                 console.log('Selected items deleted successfully.');
+                 location.reload(true);
+
+                 // 삭제 성공 시 페이지 새로고침 또는 필요한 처리
+             } else {
+                 console.error('Error occurred while deleting selected items.');
+             }
+         })
+         .catch(error => {
+             console.error('Error occurred while deleting selected items:', error);
+         });
+   }
+
+</script>
+</html>
