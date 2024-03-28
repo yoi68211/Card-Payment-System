@@ -92,4 +92,70 @@
    // 비밀번호 정규식 13글자 영어+숫자+대문자+특수문자not null
    const pwdRex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*()\-_=+\\|[\]{};:'",.<>/?]).{13,}$/;
    const phoneRex = /^[0-9]{10,13}$/; // 연락처 정규식 숫자만 10 ~ 13 글자 가능
-   const proNameRex = /^[\p{L}\d\s]{0,100}$/u; // 상품명 정규식 특수기호 없이 최대 100글자
+   const productNameRex = /^[\p{L}\d\s]{0,100}$/u; // 상품명 정규식 특수기호 없이 최대 100글자
+
+/*
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+*/
+    function titleR(text) {
+        if(text == ""){
+            alert("입력하셈");
+            return false;
+        }
+        if (!titleRex.test(text)) {
+            alert("입력하셈");
+            return false;
+        }
+        return true;
+    }
+
+    function memoR(text){
+        if (!memoRex.test(text)) {
+            alert("300자까지만 입력 가능합니다.");
+            return;
+        }
+    }
+
+    function IR(text) {
+        if (!intRex.test(text)) {
+            alert("숫자만 입력 가능합니다.");
+            return;
+        }
+    }
+
+    function NR(text) {
+        if (!nameRex.test(text)) {
+            alert("16자만 입력 가능합니다.");
+            return;
+        }
+    }
+
+    function ER(text) {
+        if (!emailRex.test(text)) {
+            alert("이메일 형식으로만 입력 가능합니다.");
+            return;
+        }
+    }
+
+    function PWR(text) {
+        if (!pwdRex.test(text)) {
+            alert("13자의 영어+숫자+대문자(특수문자불가)만 입력 가능합니다.");
+            return;
+        }
+    }
+
+    function PHR(text) {
+        if (!phoneRex.test(text)) {
+            alert("10~13자의 숫자만 입력 가능합니다.");
+            return;
+        }
+    }
+    
+    function proNameR(text) {
+        if (!productNameRex.test(text)) {
+            alert("100글자(특수기호불가)까지만 입력 가능합니다.");
+            return;
+        }
+    }
+
+
