@@ -41,7 +41,7 @@
         <!-- 여기서 작업하시면 됩니다. -->
         <button onclick="toggleContent()">상세 검색</button>
         <div id="expandableContent">
-            <form id="form" th:action="@{/search}" th:object="${searchDTO}" th:hidden="${true}" method="post">
+            <form id="form" th:action="@{/search}" th:object="${searchDTO}" th:hidden="${true}" method="get">
                 <table>
                     <tr>
                         <td colspan="2">
