@@ -86,18 +86,20 @@
    const titleRex = /^.{0,100}$/; // 제목 정규식 최대 100 글자 not null
    const addressRex = /^.{0,100}$/; // 주소 정규식 최대 100 글자 not null
    const memoRex = /^.{0,300}$/; // 메모 정규식 최대 300글자 null 가능
-   const totalItemsRex= /^[0-9]+$/; // 수량 정규식 숫자만 입력 null 가능
-   const priceRex= /^[0-9]+$/; // 금액 정규식 숫자만 입력 null 가능
+
+   const totalItemsRex2 = /^[0-9]*$/; // 수량 정규식 숫자만 입력 null 가능
+   const priceRex2= /^[0-9]*$/; // 금액 정규식 숫자만 입력 null 가능
    const nameRex = /^.{0,16}$/; // 이름 정규식 최대 16글자 not null
    // 이메일 정규식 이메일 형식만 가능 not null
    const emailRex = /^[a-zA-Z0-9._%+-]{1,64}@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+   const emailRex2 = /^[\s\S]{0,100}$/; // 100자 이내의 모든것
    // 비밀번호 정규식 13글자 영어+숫자+대문자+특수문자 not null
    const pwdRex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*()\-_=+\\|[\]{};:'",.<>/?]).{13,}$/;
    const phoneRex = /^[0-9]{10,13}$/; // 연락처 정규식 숫자만 10 ~ 13 글자 가능
+   const phoneRex2 = /^[\s\S]{0,100}$/; // 100자 이내의 모든것
    const proNameRex = /^[\p{L}\d\s]{0,100}$/u; // 상품명 정규식 특수기호 없이 최대 100글자
-
-   const autoDateRex1 = ^(0?[0-9]|1\d|2[0-8]|3[01])$; // 자동결제일 정규식1 0~31까지의 숫자
-   const autoDateRex2 = ^0$; // 자동결제일 정규식2 0만 가능
+   const proNameRex2 = /^[\s\S]{0,100}$/;
+   const autoDateRex = /^(0?[0-9]|1\d|2[0-8]|3[01])$/; // 자동결제일 정규식1 0~31까지의 숫자
 
     /*
         @function : __R()
@@ -110,7 +112,7 @@
             return false;
         }
         if (!titleRex.test(text)) {
-            alert("100글자까지 입력할 수 있습니다.");
+            alert("제목은 100글자까지 입력할 수 있습니다.");
             return false;
         }
         return true;
@@ -122,7 +124,7 @@
             return false;
         }
         if (!titleRex.test(text)) {
-            alert("100글자까지만 입력 가능합니다.");
+            alert("주소는 100글자까지만 입력 가능합니다.");
             return false;
         }
         return true;
@@ -134,7 +136,7 @@
             return false;
         }
         if (!memoRex.test(text)) {
-            alert("300자까지만 입력 가능합니다.");
+            alert("메모는 300자까지만 입력 가능합니다.");
             return false;
         }
         return true;
@@ -145,19 +147,16 @@
             alert("수량을 입력하세요.");
             return false;
         }
-        if (!totalItemsRex.test(text)) {
-            alert("숫자만 입력 가능합니다.");
+        if (!totalItemsRex2.test(text)) {
+            alert("수량은 숫자만 입력 가능합니다.");
             return false;
         }
         return true;
     }
     function priceR(text) {
-        if(text == ""){
-            alert("금액(지불액)을 입력하세요.");
-            return false;
-        }
-        if (!priceRex.test(text)) {
-            alert("숫자만 입력 가능합니다.");
+
+        if (!priceRex2.test(text)) {
+            alert("금액(지불액)은 숫자만 입력 가능합니다.");
             return false;
         }
         return true;
@@ -169,7 +168,7 @@
             return false;
         }
         if (!nameRex.test(text)) {
-            alert("16자만 입력 가능합니다.");
+            alert("이름은 16자만 입력 가능합니다.");
             return false;
         }
         return true;
@@ -181,7 +180,7 @@
             return false;
         }
         if (!emailRex.test(text)) {
-            alert("이메일 형식으로만 입력 가능합니다.");
+            alert("이메일은 이메일 형식으로만 입력 가능합니다.");
             return false;
         }
         return true;
@@ -193,7 +192,7 @@
             return false;
         }
         if (!pwdRex.test(text)) {
-            alert("13자의 영어+숫자+대문자(특수문자불가)만 입력 가능합니다.");
+            alert("비밀번호는 13자의 영어+숫자+대문자(특수문자불가)만 입력 가능합니다.");
             return false;
         }
         return true;
@@ -205,7 +204,7 @@
             return false;
         }
         if (!phoneRex.test(text)) {
-            alert("10~13자의 숫자만 입력 가능합니다.");
+            alert("연락처는 10~13자의 숫자만 입력 가능합니다.");
             return false;
         }
         return true;
@@ -217,28 +216,12 @@
             return false;
         }
         if (!proNameRex.test(text)) {
-            alert("100글자(특수기호불가)까지만 입력 가능합니다.");
+            alert("상품명은 100글자(특수기호불가)까지만 입력 가능합니다.");
             return false;
         }
         return true;
     }
 
-    function autoDateR(text){
-         if(text == ""){
-             alert("자동결제일을 입력하세요.");
-             return false;
-         }
-         if(type == "basic"){
-             if(!autoDateRex2.test(text)){
-                alert("입력할 수 없습니다.")
-                return false;
-             }
-         }else{
-            if(!autoDateRex.test(text)){
-            alert("1~31까지의 숫자만 입력 가능합니다.")
-            return false;
-         }
-         return true;
-    }
+
 
 
