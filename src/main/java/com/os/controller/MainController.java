@@ -1,10 +1,12 @@
 package com.os.controller;
 
 import com.os.dto.AllPaymentListDto;
+import com.os.dto.MemoDTO;
 import com.os.dto.PaymentDetailsDTO;
 import com.os.entity.User;
 import com.os.service.AllPaymentListService;
 import com.os.service.CustomerService;
+import com.os.service.MemoService;
 import com.os.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,6 +28,7 @@ public class MainController {
     public final UserService userService;
     public final AllPaymentListService allPaymentListService;
     private final CustomerService customerService;
+    private final MemoService memoService;
 
     @GetMapping
     public String index() {
@@ -40,10 +43,8 @@ public class MainController {
         model.addAttribute("paymentSuccessCount", customerService.countByCustomersByPaid());
         model.addAttribute("paymentInsertThisMonth", customerService.thisMonthInsertCount());
 
-
         return "dashboard";
     }
-
 
     @GetMapping("/join")
     public String joinPage()   {

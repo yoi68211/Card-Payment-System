@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>메모글 수정</title>
+</head>
+<body>
+<form action="/memo/update" method="post" name="updateForm">
+    <input type="hidden" name="id" th:value="${MemoUpdate.id}">
+   <textarea name="MemoContents" cols="100" rows="30" th:text="${MemoUpdate.MemoContents}"></textarea> <br>
+    <input type="button" value="수정하기" onclick="MemoUpdate()">
+</form>
+</body>

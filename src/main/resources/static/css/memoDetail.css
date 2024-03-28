@@ -1,0 +1,22 @@
+.detail-container {
+          width: 100%;
+          height: 100%;
+display: flex;
+              justify-content: center;
+              align-items: center;
+
+}
+
+.memoDetail-main{
+    width: 50%;
+    height: 70%;
+    background-color: white;
+              border: 1px solid blue;
+              padding: 5px;
+
+}
+
+.table-title td{
+            display: flex;
+            justify-content: space-between;
+}
