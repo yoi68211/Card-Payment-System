@@ -41,14 +41,7 @@ public class MainController {
         LocalDateTime currentTime = LocalDateTime.now();
         int month = currentTime.getMonthValue();
         List<Object[]> monthChart = paymentService.getCountByDateInMonth(month);
-        System.out.println("=========================================");
-        for(Object[] list : monthChart){
-            System.out.println("-----------------------");
-            System.out.println("date = " + list[0]);
-            System.out.println("count = " + list[1]);
 
-        }
-        System.out.println("=========================================");
         model.addAttribute("monthChartList",monthChart);
         model.addAttribute("paymentSuccessCount", customerService.countByCustomersByPaid());
         model.addAttribute("paymentInsertThisMonth", customerService.thisMonthInsertCount());

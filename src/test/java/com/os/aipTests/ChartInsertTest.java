@@ -1,14 +1,10 @@
 package com.os.aipTests;
 
+import com.os.dto.MemoDTO;
 import com.os.dto.ProductDTO;
-import com.os.entity.Customer;
-import com.os.entity.Payment;
-import com.os.entity.Product;
-import com.os.entity.User;
-import com.os.repository.CustomerRepository;
-import com.os.repository.PaymentRepository;
-import com.os.repository.ProductRepository;
-import com.os.repository.UserRepository;
+import com.os.entity.*;
+import com.os.repository.*;
+import com.os.service.MemoService;
 import com.os.service.PaymentServiceC;
 import com.os.service.UserService;
 import com.os.util.BizTo;
@@ -42,6 +38,10 @@ public class ChartInsertTest {
     private UserRepository userRepository;
     @Autowired
     private PaymentServiceC paymentService;
+    @Autowired
+    private MemoService memoService;
+    @Autowired
+    private MemoRepository memoRepository;
 
 
 
@@ -122,6 +122,24 @@ public class ChartInsertTest {
                 customerRepository.save(customer);
             }
         }
+    }
+    @Test
+    void insertMemo() {
+        Optional<User> userOp = userRepository.findById(1L);
+        if(userOp.isPresent()) {
+            User user = userOp.get();
+            for(int i=0; i<=50; i++){
+                Memo memo = Memo.builder()
+                        .memoContents("메모테스트"+i)
+                        .memoDelYn("N")
+                        .memoExposeYn("Y")
+                        .user(user)
+                        .build();
+                memoRepository.save(memo);
+            }
+        }
+
+
     }
 
 
