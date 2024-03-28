@@ -13,9 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -84,7 +82,7 @@ public class MainController {
     public String findAll(Model model, @PageableDefault(page = 0, size = 10, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword) {
         Page<AllPaymentListDto> allPaymentsPage;
 
-        if (keyword != null && !keyword.isEmpty()) {
+        if (keyword != null) {
             allPaymentsPage = allPaymentListService.findByTitleContaining(keyword, pageable);
         } else {
             allPaymentsPage = allPaymentListService.findAll(pageable);
@@ -95,6 +93,13 @@ public class MainController {
         model.addAttribute("payCount", payCount);
         model.addAttribute("keyword", keyword);
         return "list";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String deletePayment(@PathVariable String id) {
+        Long paymentId = Long.parseLong(id);
+        allPaymentListService.updatePaymentDelYnById(paymentId);
+        return "redirect:/list";
     }
 
 }

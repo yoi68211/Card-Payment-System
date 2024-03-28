@@ -46,25 +46,52 @@ function resetForm() {
 }
 
 function toggleDeleteButton() {
-    var checkboxes = document.querySelectorAll('input[name="selectedPayment"]');
-    var deleteButton = document.getElementById('deleteButton');
-    var anyChecked = false;
+    var deleteButton = document.getElementById("deleteButton");
+    var checkboxes = document.getElementsByName("selectedPayment");
+    var isAnyCheckboxChecked = false;
 
-    // 모든 체크 박스를 반복하면서 체크된 것이 있는지 확인합니다.
+    // 체크박스 중에 하나 이상이 선택되었는지 확인
     for (var i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].checked) {
-            anyChecked = true;
+            isAnyCheckboxChecked = true;
             break;
         }
     }
 
-    // 체크된 체크 박스가 있는 경우 삭제 버튼을 활성화합니다.
-    if (anyChecked) {
-        deleteButton.disabled = false;
-    } else {
-        // 아닌 경우 삭제 버튼을 비활성화합니다.
-        deleteButton.disabled = true;
+    // 선택된 체크박스가 있으면 삭제 버튼 활성화, 없으면 비활성화
+    deleteButton.disabled = !isAnyCheckboxChecked;
+}
+
+function getSelectedPaymentIds() {
+    var selectedIds = [];
+    var checkboxes = document.getElementsByName('selectedPayment');
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            selectedIds.push(checkboxes[i].value);
+        }
     }
+    return selectedIds;
+}
+
+function deleteSelectedPayments() {
+    var selectedPaymentIds = [];
+    var checkboxes = document.getElementsByName("selectedPayment");
+
+    // 선택된 결제의 ID를 배열에 추가
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            selectedPaymentIds.push(checkboxes[i].value);
+        }
+    }
+
+    // 결제 ID를 숨은 입력 필드에 설정
+    document.getElementById("paymentIds").value = selectedPaymentIds.join(",");
+
+    // 폼의 액션을 각 결제 ID에 맞게 설정
+    document.getElementById("deleteForm").action = "/delete/" + selectedPaymentIds[0];
+
+    // 폼을 제출
+    document.getElementById("deleteForm").submit();
 }
 
 function submitForm() {

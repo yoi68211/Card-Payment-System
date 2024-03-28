@@ -90,7 +90,12 @@
         </div>
 
         <div>
-            <button type="button" id="deleteButton" disabled>삭제</button>
+            <form id="deleteForm" action="/delete/{id}" method="post">
+                <!-- 선택된 결제 ID를 서버로 전송하기 위한 폼 -->
+                <input type="hidden" id="paymentIds" name="paymentIds">
+                <!-- 삭제 버튼 클릭 시 서버로 전송하도록 type을 submit으로 변경 -->
+                <button id="deleteButton" type="submit" onclick="deleteSelectedPayments()" disabled>삭제</button>
+            </form>
             <form th:action="@{/list}" method="get" id="searchForm">
                 <input type="text" id="searchInput" name="keyword" placeholder="검색어를 입력해 주세요">
             </form>
@@ -110,7 +115,7 @@
             </thead>
             <tbody>
             <tr th:each="payment : ${payList}">
-                <td><label><input type="checkbox" name="selectedPayment" onchange="toggleDeleteButton()" /></label></td>
+                <td><label><input type="checkbox" name="selectedPayment" th:value="${payment.id}" onchange="toggleDeleteButton()" /></label></td>
                 <td th:text="${#temporals.format(payment.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td th:text="${payment.id}"></td>
                 <td th:text="${payment.customerName}"></td>
