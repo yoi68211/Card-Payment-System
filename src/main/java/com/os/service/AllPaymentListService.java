@@ -8,9 +8,13 @@ import com.os.repository.AllPaymentListRepository;
 import com.os.repository.PaymentRepository;
 import com.os.util.OrderStatus;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.engine.spi.ManagedEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -32,6 +36,7 @@ public class AllPaymentListService {
 
     private final PaymentRepository paymentRepository;
     private final JPAQueryFactory query;
+    private final EntityManager entityManager;
 
 
     public Page<AllPaymentListDto> findAll(Pageable pageable) {
@@ -62,8 +67,9 @@ public class AllPaymentListService {
 
         QPayment payment = QPayment.payment;
 
-        List<Payment> resultList  = query
-                .select(payment)
+        JPAQuery<Payment> query = new JPAQuery<>(entityManager);
+
+        query.select(payment)
                 .from(payment)
                 .where(
                         eqDocNumber(DocNumber)
@@ -74,10 +80,18 @@ public class AllPaymentListService {
                 )
                 .fetch();
 
+        long count = query.stream().count();
+
+        List<Payment> resultList = query.offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+
         List<AllPaymentListDto> result = convertToAllPaymentListDto(resultList);
 
 
-         return new PageImpl<>(result,pageable,result.size());
+
+         return new PageImpl<>(result,pageable,count);
     }
 
 

@@ -99,17 +99,21 @@ public class MainController {
         model.addAttribute("payList", allPaymentsPage);
         model.addAttribute("payCount", payCount);
         model.addAttribute("keyword", keyword);
+        model.addAttribute("pageable", pageable);
         return "list";
     }
 
 
-    @PostMapping("/search")
+    @GetMapping("/search")
     public String search(@ModelAttribute("form") DetailedSearchDTO searchDTO, Model model, @PageableDefault(page = 0, size = 10, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<AllPaymentListDto> allPaymentsPage = allPaymentListService.detailSearch(searchDTO, pageable);
-        long payCount = allPaymentsPage.getTotalElements();
+        int payCount = allPaymentsPage.getTotalPages();
+
+        System.out.println("payCount = " + payCount);
 
         model.addAttribute("payList", allPaymentsPage);
         model.addAttribute("payCount", payCount);
+        model.addAttribute("pageable", pageable);
         return "list";
     }
 
