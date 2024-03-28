@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -39,8 +39,6 @@
             </span>
         </span>
 </header>
-
-
 <main>
     <form class="basic-form" id="paymentForm">
         <div class="main-cell">
@@ -58,53 +56,53 @@
                     <div class="basic-one">
                         <div class="basic-title">고객명</div>
                         <div class="basic-input-text">
-                            <input type="text" id="customerName" name="customerName">
+                            <label><input type="text" id="customerName" name="customerName"></label>
                         </div>
                         <div class="basic-title">이메일</div>
                         <div class="basic-input-text">
-                            <input type="text" id="customerEmail" name="customerEmail">
+                            <label><input type="text" id="customerEmail" name="customerEmail"></label>
                         </div>
                     </div>
                     <div class="basic-one">
                         <div class="basic-title">연락처</div>
                         <div class="basic-input-text">
                             <input type="text" id="customerPhone" name="customerPhone">
-                            <!--3등분 하고 js에서 합쳐서 서버 전송 숫자11자리 바꿔야함-->
+                            <!--3등분 하고 js 에서 합쳐서 서버 전송 숫자11자리 바꿔야함-->
                         </div>
                         <div class="basic-title">주소</div>
                         <div class="basic-input-text">
-                            <input type="text" id="customerAddress" name="customerAddress">
+                            <label><input type="text" id="customerAddress" name="customerAddress"></label>
                         </div>
                     </div>
                     <div class="basic-one">
                         <div class="basic-title2">제목</div>
                         <div class="basic-input-text2">
-                            <input type="text" id="paymentTitle" name="paymentTitle">
+                            <label><input type="text" id="paymentTitle" name="paymentTitle"></label>
                         </div>
                     </div>
                     <div class="basic-one">
                         <div class="basic-title">결제 설정</div>
                         <div class="basic-input-checkbox">
                             <span>
-                                <input type="checkbox" id="paymentType" name="paymentType" value="자동결제" onclick="cycle()">
+                                <label><input type="checkbox" id="paymentType" name="paymentType" value="자동결제" onclick="cycle()"></label>
                             </span>
                             자동결제
                             <span>
-                                <button type="button"class="helptbtn">!</button>
+                                <button type="button" class="helpBtn">!</button>
                             </span>
                             <span>
-                                <input type="checkbox" id="firstPay_check" name="firstPay_check" disabled>
+                                <label><input type="checkbox" id="firstPay_check" name="firstPay_check" disabled></label>
                             </span>
                             처음결제금액
-                            </span>
-                            <button type="button"class="helptbtn">!</button>
+                            <span>
+                                <label><button type="button" class="helpBtn">!</button></label>
                             </span>
                         </div>
                         <div class="basic-title">결제구분</div>
                         <div class="basic-input-checkbox2">
                             <div class="text">
                                 <span >
-                                    <input type="radio" name='paymentBizTo' value='BtoC' checked/>
+                                    <label><input type="radio" name='paymentBizTo' value='BtoC' checked/></label>
                                 </span>
                                 <span>
                                     B TO C
@@ -112,7 +110,7 @@
                             </div>
                             <div>
                                 <span>
-                                    <input type='radio' name='paymentBizTo' value='BtoB'/>
+                                    <label><input type='radio' name='paymentBizTo' value='BtoB'/></label>
                                 </span>
                                 <span>
                                     B TO B
@@ -122,14 +120,14 @@
                     </div>
                     <div class="basic-one">
                         <div class="basic-title2">자동결제 주기</div>
-                        <div class="basic-input-selectbox">
-                            <select class="paymentMonth" id="paymentMonth" name="paymentMonth" disabled>
+                        <div class="basic-input-selectBox">
+                            <label><select class="paymentMonth" id="paymentMonth" name="paymentMonth" disabled>
                                 <option>다음달</option>
                                 <option>다다음달</option>
-                            </select>
+                            </select></label>
 
-                            <input type="text" id="autoDate" name="autoDate" disabled>
-                            <input type="text" id="paymentFirstPay" name="paymentFirstPay" disabled>
+                            <label><input type="text" id="autoDate" name="autoDate" disabled></label>
+                            <label><input type="text" id="paymentFirstPay" name="paymentFirstPay" disabled></label>
                         </div>
                     </div>
                 </div>
@@ -143,10 +141,12 @@
                     </div>
                     <div class="basic-footer-table">
                         <table id="product">
-
-                            <tr class="thead">
+                            <tbody>
+                            <tr class="tHead">
                                 <th>
+                                    <label>
                                     <input type="checkbox" id="masterCheckbox">
+                                    </label>
                                 </th>
                                 <th>상품명</th>
                                 <th>수량</th>
@@ -155,39 +155,33 @@
                             </tr>
                             <tr>
                                 <th>
-                                    <input type="checkbox">
+                                    <label><input type="checkbox"></label>
                                 </th>
                                 <th>
-
-                                    <input type=text id="productName" name="productName">
-
+                                    <label><input type=text id="productName" name="productName"></label>
                                 </th>
                                 <th>
-
-                                    <input type="text" id="productTotalItems" name="productTotalItems"
-                                           oninput="updatetotalItems(this.parentNode.parentNode)">
-
+                                    <label><input type="text" id="productTotalItems" name="productTotalItems"
+                                           oninput="updateTotalItems(this.parentNode.parentNode)">
+                                    </label>
                                 </th>
                                 <th>
-
-                                    <input type="text" id="productPrice" name="productPrice"
+                                <label><input type="text" id="productPrice" name="productPrice"
                                            oninput="updatePrice(this.parentNode.parentNode)">
-
+                                </label>
                                 </th>
                                 <th>
-
-                                    <input type="text" id="productAmount" name="productAmount" readonly>
-
+                                <label><input type="text" id="productAmount" name="productAmount" readonly></label>
                                 </th>
                             </tr>
                             <tr>
                                 <th></th>
                                 <th>합계</th>
-                                <th id="totaltotalItems"></th>
+                                <th id="totalTotalItems"></th>
                                 <th id="totalPrice"></th>
                                 <th id="final"></th>
                             </tr>
-
+                            </tbody>
                         </table>
                     </div>
                     <div class="basic-real-footer">
@@ -202,7 +196,7 @@
         <span id="sidebar">
             <nav>
                 <ul class="sidebar-ul">
-                    <li onclick="location.href='/dashboard'" > <!-- 현재 페이지 의 해당하는 span태그에 style="color: blue;" 써주세여  -->
+                    <li onclick="location.href='/dashboard'" > <!-- 현재 페이지 의 해당하는 span 태그에 style="color: blue;" 써주세여  -->
                         <span>
                             <img th:src="@{/img/sidebar_dashboard.png}" id="sidebar_dashboard_icon">
                             <span class="sidebar-nav-text">DashBoard</span>
@@ -240,9 +234,9 @@
 
                 </ul>
             </nav>
-            </span>
+        </span>
 </aside>
 </body>
 <script th:src="@{/js/pageSample.js}"></script>
-<script src="/js/insert_form.js"></script>
+<script th:src="@{/js/insert_form.js}"></script>
 </html>

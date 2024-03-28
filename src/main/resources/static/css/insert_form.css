@@ -110,11 +110,11 @@
         display: flex;
         margin-right: 40px;
     }
-    .basic-input-selectbox input{
+    .basic-input-selectBox input{
         height: 25px;
     }
 
-    .basic-input-selectbox select{
+    .basic-input-selectBox select{
         height: 25px;
     }
 
@@ -177,7 +177,7 @@
         text-align: center;
     }
 
-    .thead {
+    .tHead {
         background-color: #f2f2f2;
         position: sticky;
         top: 0; /* 헤더를 상단에 고정 */

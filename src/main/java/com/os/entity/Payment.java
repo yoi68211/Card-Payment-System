@@ -25,75 +25,50 @@ public class Payment extends BaseEntity{
     @Id
     @Column(nullable = false, name = "payment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;                         // 결제 IDX
-
+    private Long id;                                            // 결제 IDX
 
     @NotBlank(message = "제목은 필수값입니다.")
     @Length(min = 1,max = 100 ,message = "1~100자 사이로 입력해주세요")
     @Column(nullable = false)
-    private String paymentTitle;                    // 결제 제목
+    private String paymentTitle;                                // 결제 제목
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private OrderType paymentType;                  // 결제 종류(자동결제 / 일반결제)
+    private OrderType paymentType;                              // 결제 종류(자동결제 / 일반결제)
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private BizTo paymentBizTo;                     // 결제 구분(BtoC / BtoB)
+    private BizTo paymentBizTo;                                 // 결제 구분(BtoC / BtoB)
 
-    private String paymentMemo;                     // 결제 메모
-
-   /* @CreationTimestamp*/
-//    @Column(nullable = false)
-//    @CreationTimestamp
-//    private LocalDateTime CreateTime;                      // 결제 생성시간
-//
-//    @UpdateTimestamp
-//    private LocalDateTime paymentUpdateTime;               // 수정시간
+    private String paymentMemo;                                 // 결제 메모
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private OrderStatus paymentStatus;                     // 결제상태(성공 / 불가 / 오류)
-
-
+    private OrderStatus paymentStatus;                          // 결제상태(성공 / 불가 / 오류)
 
     @Column(nullable = false)
-    private char paymentDelYn;                             // 결제 삭제여부(Y / N)
+    private char paymentDelYn;                                  // 결제 삭제여부(Y / N)
 
+    private int paymentMonth;                                   // 자동결제 다음결제일
 
+    private LocalDateTime paymentNextTime;                      // 자동결제 마지막결제일
 
-    private int paymentMonth;                           // 자동결제 다음결제일
-
-
-    private LocalDateTime paymentNextTime;                            // 자동결제 마지막결제일
-
-
-    private int paymentFirstPay;                                 // 자동결제 금액
-
-
+    private int paymentFirstPay;                                // 자동결제 금액
 
     //////////////////////////////////////////////////////////////////////////////////
+
     // 고객 IDX
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id",nullable = false)
     private Customer customer;
 
-
     @OneToMany(mappedBy = "payment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Product> products;
 
-
-    public LocalDateTime calculateLocalDateTime(InsertDTO dto){
-        return paymentNextTime.plusMonths(dto.getPaymentMonth()).withDayOfMonth(dto.getAutoDate());
-
-    }
-
     public String calculateTotalAmount(List<Product> products){
-
         int totalAmount =  products.stream().mapToInt(Product::getProductAmount).sum();
 
         return String.valueOf(totalAmount);
     }
-
 
 }

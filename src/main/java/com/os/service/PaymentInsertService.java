@@ -21,46 +21,46 @@ import java.util.List;
 public class PaymentInsertService {
     private final CustomerRepository customerRepository;
 
+    /*
+        @method : insert_basic
+        @desc : 받아온 정보를 db에 insert 하는 메서드
+        @author : 김성민
+    */
     @Transactional
     public void insert_basic(InsertDTO dto, User user) {
 
+            Customer customer = new Customer();
+            customer.setCustomerName(dto.getCustomerName());
+            customer.setCustomerEmail(dto.getCustomerEmail());
+            customer.setCustomerPhone(dto.getCustomerPhone());
+            customer.setCustomerAddress(dto.getCustomerAddress());
 
-                Customer customer = new Customer();
-                customer.setCustomerName(dto.getCustomerName());
-                customer.setCustomerEmail(dto.getCustomerEmail());
-                customer.setCustomerPhone(dto.getCustomerPhone());
-                customer.setCustomerAddress(dto.getCustomerAddress());
+            Payment payment = new Payment();
+            payment.setPaymentTitle(dto.getPaymentTitle());
+            payment.setPaymentType(dto.getPaymentType());
+            payment.setPaymentBizTo(dto.getPaymentBizTo());
+            payment.setPaymentDelYn('N');
+            payment.setCreateTime(dto.getPaymentCreateTime());
+            payment.setPaymentStatus(OrderStatus.wait);
+            payment.setPaymentDelYn('N');
 
-                Payment payment = new Payment();
-                payment.setPaymentTitle(dto.getPaymentTitle());
-                payment.setPaymentType(dto.getPaymentType());
-                payment.setPaymentBizTo(dto.getPaymentBizTo());
-                payment.setPaymentDelYn('N');
-                payment.setCreateTime(dto.getPaymentCreateTime());
-                payment.setPaymentStatus(OrderStatus.wait);
-                payment.setPaymentDelYn('N');
-
-                List<Product> productList = new ArrayList<>();
-                for (ProductDTO productDTO : dto.getProductList()) {
-                    Product product = new Product();
-                    product.setProductName(productDTO.getProductName());
-                    product.setProductTotalItems(productDTO.getProductTotalItems());
-                    product.setProductPrice(productDTO.getProductPrice());
-                    product.setProductAmount(productDTO.getProductAmount());
-                    productList.add(product);
-                    product.setPayment(payment);
-
-                }
-
-                payment.setProducts(productList);
-                customer.setUser(user);
-                payment.setCustomer(customer);
-                customer.setPayments(payment);
-
-                customerRepository.save(customer);
-
+            List<Product> productList = new ArrayList<>();
+            for (ProductDTO productDTO : dto.getProductList()) {
+                Product product = new Product();
+                product.setProductName(productDTO.getProductName());
+                product.setProductTotalItems(productDTO.getProductTotalItems());
+                product.setProductPrice(productDTO.getProductPrice());
+                product.setProductAmount(productDTO.getProductAmount());
+                productList.add(product);
+                product.setPayment(payment);
             }
 
-        }
+            payment.setProducts(productList);
+            customer.setUser(user);
+            payment.setCustomer(customer);
+            customer.setPayments(payment);
 
+            customerRepository.save(customer);
+        }
+    }
 

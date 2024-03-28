@@ -23,8 +23,6 @@ public interface PaymentRepository extends JpaRepository<Payment,Long> {
 
     Page<Payment> findByPaymentTitleContainingAndPaymentDelYn(String keyword, char paymentDelYn, Pageable pageable);
 
-    Page<Payment> findByPaymentDelYn(char n, Pageable pageable);
-
     Page<Payment> findByPaymentTitleContainingAndPaymentDelYnNot(String keyword, char y, Pageable pageable);
 
     @Query("SELECT COUNT(p) FROM Payment p WHERE DATE(p.createTime) = :date")

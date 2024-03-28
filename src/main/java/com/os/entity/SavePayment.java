@@ -18,13 +18,12 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SavePayment {
 
     @Id
     @Column(nullable = false , name = "s_payment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;                       // 결제임시저장 IDX
+    private Long id;                                 // 결제임시저장 IDX
 
     private String s_paymentName;                    // 결제임시저장 고객명
 
@@ -41,30 +40,30 @@ public class SavePayment {
     private OrderType s_paymentType;                 // 결제임시저장 결제종류(자동결제 / 일반결제)
 
     @Column(nullable = false)
-    private int s_paymentFirstpay;                // 결제임시저장 처음결제금액
+    private int s_paymentFirstPay;                   // 결제임시저장 처음결제금액
 
     @Enumerated(EnumType.STRING)
-//    @Column(nullable = false)
+
     private BizTo s_paymentBizTo;                    // 결제임시저장 결제구분(BtoC / BtoB)
 
-    private int s_paymentCycle;                   // 결제임시저장 다음결제일(다음달 / 다다음달)
+    private int s_paymentCycle;                      // 결제임시저장 다음결제일(다음달 / 다다음달)
 
-    private int s_paymentDate;                   // 결제임시저장 마지막결제일(1 ~ 31)
+    private int s_paymentDate;                       // 결제임시저장 마지막결제일(1 ~ 31)
 
-    private int s_paymentPay;                     // 결제임시저장 결제금액
-
-
+    private int s_paymentPay;                        // 결제임시저장 결제금액
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id" , referencedColumnName = "user_id",nullable = false)
     private User user;
 
-
     @OneToMany(mappedBy = "savePayment", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
     private List<SaveProduct> saveProducts;
 
-
-
+    /*
+        @method : insertData
+        @desc : 받아온 결제등록정보들을 insert(임시저장) 하는 메서드
+        @author : 김성민
+    */
     public static SavePayment ToEntity(SavePaymentDTO dto, User user) {
 
         SavePayment savePayment = new SavePayment();
@@ -75,7 +74,7 @@ public class SavePayment {
         savePayment.setS_paymentAddress(dto.getS_paymentAddress());
         savePayment.setS_paymentTitle(dto.getS_paymentTitle());
         savePayment.setS_paymentType(dto.getS_paymentType());
-        savePayment.setS_paymentFirstpay(dto.getS_paymentFirstPay());
+        savePayment.setS_paymentFirstPay(dto.getS_paymentFirstPay());
         savePayment.setS_paymentBizTo(dto.getS_paymentBizTo());
         savePayment.setS_paymentCycle(dto.getS_paymentCycle());
         savePayment.setS_paymentDate(dto.getS_paymentDate());
@@ -91,7 +90,5 @@ public class SavePayment {
         savePayment.setUser(user);
         savePayment.setSaveProducts(saveProductList);
         return savePayment;
-
     }
-
 }
