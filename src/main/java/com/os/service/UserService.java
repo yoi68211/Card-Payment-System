@@ -12,22 +12,24 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
+
     public User getUserById(Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
         return userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found with ID: " + userId));
     }
+
 
     public void updatePassword(Long userId, String newPassword) {
         Optional<User> userOptional = userRepository.findById(userId);
@@ -60,15 +62,17 @@ public class UserService {
         }
     }
 
+    /*
+        @method : findId
+        @desc : 시큐리티에서 user 정보를 가져오는 메서드
+        @author : 김성민
+    */
     public User findId(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         Long userId = userDetails.getUserId();
-
         Optional<User> userOptional = userRepository.findById(userId);
+
         return userOptional.orElse(null);
-
     }
-
-
 }
