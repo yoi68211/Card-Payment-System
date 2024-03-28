@@ -1,11 +1,10 @@
 package com.os.entity;
 
+import com.os.dto.MemoDTO;
+import com.os.util.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -13,12 +12,13 @@ import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Memo {
+public class Memo extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,13 +30,6 @@ public class Memo {
     private String memoContents;
 
 
-    @CreationTimestamp
-    @Column(nullable = false)
-    private LocalDateTime memoCreateTime;
-
-    @UpdateTimestamp
-    private LocalDateTime memoModifiedAt;
-
     @Column(nullable = false)
     private String memoExposeYn;
 
@@ -47,4 +40,12 @@ public class Memo {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id",nullable = false)
     private User user;
 
+    public static Memo toEntity(MemoDTO memoDTO, User user) {
+        Memo memo = new Memo();
+        memo.setMemoContents(memoDTO.getMemoContents());
+        memo.setMemoDelYn("N");
+        memo.setMemoExposeYn(memoDTO.getMemoExposeYn());
+        memo.setUser(user);
+        return memo;
+    }
 }

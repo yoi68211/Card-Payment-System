@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상세 메모글 확인</title>
+    <link th:href="@{/css/memoDetail.css}" rel="stylesheet">
+
+    <!-- jquery cdn -->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="detail-container">
+    <div class="memoDetail-main">
+    <table>
+        <tr class="table-title">
+            <td>
+                <div>
+                    <span>No.</span>
+                    <span th:text="${Memo.id}"></span>
+                </div>
+                <div>
+                    <span>작성자</span>
+                    <span th:text="${Memo.userName}"></span>
+                </div>
+            </td>
+        <tr>
+        <tr>
+            <td colspan="2">
+                <span>작성일:</span>
+                <span th:text="${Memo.createTime}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" th:text="${Memo.memoContents}"></td>
+        </tr>
+    </table>
+    <div>
+        <button  onclick="listReq()">돌아가기</button>
+        <button  onclick="updateReq()">수정</button>
+    </div>
+    </div>
+</div>
+</body>
+
+<script th:inline="javascript">
+    let date = [[${Memo.createTime}]];
+
+    const listReq = () => {
+        const page = [[${page}]];
+        location.href = "/memo/memo/paging?page="+page;
+    }
+    const updateReq = () => {
+        const id = [[${Memo.id}]];
+        location.href = "/memo/memo/update/" + id;
+    }
+
+</script>
+</html>
