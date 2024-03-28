@@ -16,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/")
 @RequiredArgsConstructor
@@ -34,6 +36,13 @@ public class MainController {
 
     @GetMapping("dashboard")
     public String login(Model model) {
+
+
+        List<Long> monthChart = paymentService.getCountsByMonthRange();
+        List<Long> yearChart = paymentService.getCountsByYearRange();
+
+        model.addAttribute("monthChartList",monthChart);
+        model.addAttribute("yearChartList",yearChart);
         model.addAttribute("paymentSuccessCount", customerService.countByCustomersByPaid());
         model.addAttribute("paymentInsertThisMonth", customerService.thisMonthInsertCount());
 

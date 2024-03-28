@@ -5,6 +5,7 @@
     <title>Title</title>
     <link th:href="@{/css/pageSample.css}" rel="stylesheet">
     <link th:href="@{/css/dashboard.css}" rel="stylesheet">
+    <link th:href="@{/css/dashBoardChart.css}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/047f82d071.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> <!-- 차트 api -->
 </head>
@@ -160,10 +161,10 @@
 </aside>
 </body>
 <script th:inline="javascript">
-    let monthChartList = [[${monthChartList}]];
-
+    let monthData = [[${monthChartList}]]; // Month Chart Data
+    let yearData = [[${yearChartList}]]; // Year Chart Data
 </script>
 <script th:src="@{/js/pageSample.js}"></script>
-<script th:src="@{/js/dashboard.js}"></script>
+<script th:src="@{/js/dashBoardChart.js}"></script>
 
 </html>
