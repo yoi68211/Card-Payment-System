@@ -1,8 +1,8 @@
 package com.os.controller;
 
 import com.os.dto.AllPaymentListDto;
+import com.os.dto.DetailedSearchDTO;
 import com.os.dto.PaymentDetailsDTO;
-import com.os.entity.User;
 import com.os.service.AllPaymentListService;
 import com.os.service.CustomerService;
 import com.os.service.UserService;
@@ -13,11 +13,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -84,6 +81,7 @@ public class MainController {
     public String findAll(Model model, @PageableDefault(page = 0, size = 10, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword) {
         Page<AllPaymentListDto> allPaymentsPage;
 
+
         if (keyword != null && !keyword.isEmpty()) {
             allPaymentsPage = allPaymentListService.findByTitleContaining(keyword, pageable);
         } else {
@@ -96,5 +94,20 @@ public class MainController {
         model.addAttribute("keyword", keyword);
         return "list";
     }
+
+
+    @PostMapping("/search")
+    public String search(@ModelAttribute("form") DetailedSearchDTO searchDTO, Model model, @PageableDefault(page = 0, size = 10, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<AllPaymentListDto> allPaymentsPage = allPaymentListService.detailSearch(searchDTO, pageable);
+        long payCount = allPaymentsPage.getTotalElements();
+
+        model.addAttribute("payList", allPaymentsPage);
+        model.addAttribute("payCount", payCount);
+        return "list";
+    }
+
+
+
+
 
 }
