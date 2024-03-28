@@ -23,14 +23,14 @@
                 <span class="header-icon">
                     <a href="#"><img th:src="@{/img/help.png}" id="help_icon"></a>
                     <a href="#"><img th:src="@{/img/chart.png}" id="chart_icon"></a>
-                    <a href="#"><img th:src="@{/img/memo.png}" id="memo_icon"></a>
+                    <a href="/memo/paging"><img th:src="@{/img/memo.png}" id="memo_icon"></a>
                 </span>
                 <img th:src="@{/img/profileImg.png}" id="profile-img">
                 <span id="submenu-trigger">
                     <a href="#">Nacamora</a>
                     <div id="submenu">
                         <a href="#">정보 변경</a>
-                        <a href="#">비밀번호 변경</a>
+                        <a href="/user/update">비밀번호 변경</a>
                         <a href="/logout">로그아웃</a>
                     </div>
                 </span>
@@ -61,7 +61,7 @@
                         </span>
                         <i class="fa-solid fa-chevron-right"></i>
                     </li>
-                    <li onclick="location.href='#'">
+                    <li onclick="location.href='/list'">
                         <span class="nowPage">
                             <img th:src="@{/img/sidebar_payList.png}" id="sidebar_payList_icon">
                             <span class="sidebar-nav-text">결제목록</span>
