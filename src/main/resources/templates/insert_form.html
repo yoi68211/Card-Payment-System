@@ -144,9 +144,8 @@
                             <tbody>
                             <tr class="tHead">
                                 <th>
-                                    <label>
                                     <input type="checkbox" id="masterCheckbox">
-                                    </label>
+                                        <label for="masterCheckbox"></label>
                                 </th>
                                 <th>상품명</th>
                                 <th>수량</th>
@@ -155,23 +154,23 @@
                             </tr>
                             <tr>
                                 <th>
-                                    <label><input type="checkbox"></label>
+                                    <input type="checkbox" id="checkbox"><label for="checkbox"></label>
                                 </th>
                                 <th>
-                                    <label><input type=text id="productName" name="productName"></label>
+                                    <input type=text id="productName" name="productName"><label for="productName"></label>
                                 </th>
                                 <th>
-                                    <label><input type="text" id="productTotalItems" name="productTotalItems"
+                                    <input type="text" id="productTotalItems" name="productTotalItems"
                                            oninput="updateTotalItems(this.parentNode.parentNode)">
-                                    </label>
+                                    <label for="productTotalItems"></label>
                                 </th>
                                 <th>
-                                <label><input type="text" id="productPrice" name="productPrice"
+                                <input type="text" id="productPrice" name="productPrice"
                                            oninput="updatePrice(this.parentNode.parentNode)">
-                                </label>
+                                <label for="productPrice"></label>
                                 </th>
                                 <th>
-                                <label><input type="text" id="productAmount" name="productAmount" readonly></label>
+                                <input type="text" id="productAmount" name="productAmount" readonly><label for="productAmount"></label>
                                 </th>
                             </tr>
                             <tr>
@@ -238,5 +237,5 @@
 </aside>
 </body>
 <script th:src="@{/js/pageSample.js}"></script>
-<script th:src="@{/js/insert_form.js}"></script>
+<script src="/js/insert_form.js"></script>
 </html>
