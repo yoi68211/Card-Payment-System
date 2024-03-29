@@ -437,7 +437,7 @@
                 s_paymentBizTo: bizTo,
                 s_paymentCycle: month,
                 s_paymentDate: autoDate,
-                s_paymentPay: paymentFirstPay,
+                s_paymentFirstPay: paymentFirstPay,
                 productList: productList
             };
 
@@ -457,7 +457,7 @@
                     } else {
                         // 요청이 실패했을 때의 동작
                         console.error('Request failed');
-                        before.disabled = true;
+
                     }
                 }).catch(error => {
                     console.error('Error:', error);
