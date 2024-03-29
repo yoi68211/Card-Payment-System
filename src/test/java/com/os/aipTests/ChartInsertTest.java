@@ -47,9 +47,9 @@ public class ChartInsertTest {
     @Test
     void softDeleteTest(){
         //memoRepository.softDeleteById(1L);
-        List<Memo> memoList = memoRepository.findByMemoDelYn("Y");
-        for(Memo list : memoList){
-            System.out.println(list.getMemoContents());
+        List<Customer> entityList = customerRepository.findByPayments_PaymentDelYn('Y');
+        for(Customer list : entityList){
+            System.out.println(list.getPayments().getPaymentTitle());
         }
     }
 

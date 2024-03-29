@@ -1,6 +1,8 @@
 package com.os.config;
 
+import com.os.entity.Customer;
 import com.os.entity.Memo;
+import com.os.repository.CustomerRepository;
 import com.os.repository.MemoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -16,19 +18,30 @@ public class MemoCleanupScheduler {
 
     @Autowired
     private MemoRepository memoRepository;
-
+    @Autowired
+    private CustomerRepository customerRepository;
 
     // 스케줄링 작업 설정
     @Scheduled(fixedDelay = 300000) // 5분마다 실행
     public void permanentlyDeleteSoftDeletedMemo() {
         // 삭제된 메모 중에서 삭제 후 5분이 지난 메모를 조회하여 영구적으로 삭제
+
+        // soft delete payment list
+        List<Customer> softDeletePaymentList = customerRepository.findByPayments_PaymentDelYn('Y');
+
+        // soft delete memo List
         List<Memo> softDeletedMemoList = memoRepository.findByMemoDelYn("Y"); // 소프트 삭제된 메모 목록 조회
         LocalDateTime thresholdTime = LocalDateTime.now().minusMinutes(5); // 삭제 후 5분 후 시간
         for (Memo memo : softDeletedMemoList) {
             // 소프트 삭제된 후 5분이 경과한 메모를 영구적으로 삭제
-            System.out.println("5분경과");
+
             if (memo.getUpdateTime().isBefore(thresholdTime)) {
                 memoRepository.delete(memo);
+            }
+        }
+        for(Customer customer : softDeletePaymentList){
+            if (customer.getPayments().getUpdateTime().isBefore(thresholdTime)) {
+                customerRepository.delete(customer);
             }
         }
     }
