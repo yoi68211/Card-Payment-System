@@ -27,6 +27,7 @@ public class AllPaymentListService {
     private final PaymentRepository paymentRepository;
     private final EntityManager em;
 
+
     public Page<AllPaymentListDto> findAll(Pageable pageable) {
         Page<Payment> allPaymentsPage = paymentRepository.findByPaymentDelYn('n', pageable);
         return allPaymentsPage.map(AllPaymentListDto::toAllPaymentListDto);
@@ -35,6 +36,13 @@ public class AllPaymentListService {
     public Page<AllPaymentListDto> findByTitleContaining(String keyword, Pageable pageable) {
         Page<Payment> allPaymentsPage = paymentRepository.findByPaymentTitleContainingAndPaymentDelYnNot(keyword, 'Y', pageable);
         return allPaymentsPage.map(AllPaymentListDto::toAllPaymentListDto);
+    }
+
+    public void updatePaymentDelYnById(Long id) {
+        Payment payment = paymentRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 아이디가 없습니다 id : " + id));
+        payment.setPaymentDelYn('Y');
+        paymentRepository.save(payment);
     }
 
 
@@ -76,7 +84,7 @@ public class AllPaymentListService {
 
 
 
-         return new PageImpl<>(result,pageable,count);
+        return new PageImpl<>(result,pageable,count);
     }
 
 
@@ -100,7 +108,7 @@ public class AllPaymentListService {
 
     private BooleanExpression likeCustomerName(String name) {
         if (StringUtils.hasText(name)) {
-           return payment.paymentDelYn.eq('N').and(payment.customer.customerName.like("%" + name + "%"));
+            return payment.paymentDelYn.eq('N').and(payment.customer.customerName.like("%" + name + "%"));
         }
         return null;
     }

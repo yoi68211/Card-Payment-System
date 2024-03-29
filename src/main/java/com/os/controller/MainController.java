@@ -105,6 +105,13 @@ public class MainController {
         return "list";
     }
 
+    @PostMapping("/delete/{id}")
+    public String deletePayment(@PathVariable String id) {
+        Long paymentId = Long.parseLong(id);
+        allPaymentListService.updatePaymentDelYnById(paymentId);
+        return "redirect:/list";
+    }
+
 
     @GetMapping("/search")
     public String search(@ModelAttribute("form") DetailedSearchDTO searchDTO, Model model, @PageableDefault(page = 0, size = 10, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable) {

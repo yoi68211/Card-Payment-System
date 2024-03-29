@@ -1,0 +1,89 @@
+button {
+    cursor: pointer;
+}
+
+.main_cell {
+    overflow: hidden;
+    position: relative;
+}
+
+.title {
+    margin-top: 30px;
+    margin-left: 50px;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.right_button {
+    position: absolute;
+    right: 50px;
+    top: 25px;
+    background-color: white;
+    border: 1px solid blue;
+    color: #2D5CBE;
+    padding: 5px 13px;
+    border-radius: 3px;
+    font-size: 10px;
+}
+
+.line {
+    height: 1px;
+    background-color: #ADD8E6;
+    margin: 30px 50px 0 50px;
+    /* 버튼 위 여백 조정 */
+    transition: height 0.3s ease;
+    /* 선이 펼쳐지는 애니메이션 */
+}
+
+.expandableContent {
+    overflow: hidden;
+    /* 내용이 감추어짐 */
+    transition: max-height 0.3s ease;
+    /* 내용이 펼쳐지는 애니메이션 */
+    max-height: 0;
+    /* 초기에는 감추어진 상태 */
+}
+
+.expandableContent.active {
+    max-height: 1000px;
+    /* 적절한 최대 높이로 변경 */
+}
+
+.line2 {
+    height: 0;
+    background-color: #ADD8E6;
+    margin: 75px 50px 0 50px;
+    /* 선 간 간격 조정 */
+    transition: height 0.3s ease;
+    /* 선이 펼쳐지는 애니메이션 */
+}
+
+.expandableContent.active+.line2 {
+    height: 1px;
+    /* 확장될 때 선의 높이 조정 */
+}
+
+.date {
+    margin-top: 15px;
+    border-collapse: separate;
+    border-spacing: 10px;
+}
+
+.re_time {
+    font-size: 11px;
+    margin: 0px 30px 0px 40px;
+}
+
+.startDt, .endDt {
+    max-width: 150px;
+    min-width: 100px;
+    width: 50%;
+    height: 25px;
+    border-radius: 3px;
+    border: 1px solid #ADD8E6;
+}
+
+.status {
+    font-size: 11px;
+    margin: 0px 30px 0px 150px;
+}
