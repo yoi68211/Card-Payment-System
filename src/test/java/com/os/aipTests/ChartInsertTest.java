@@ -27,7 +27,7 @@ import java.util.Random;
 public class ChartInsertTest {
 
     @Autowired
-    private PaymentRepository paymentRepository;
+    public PaymentRepository paymentRepository;
     @Autowired
     private ProductRepository productRepository;
     @Autowired
@@ -39,25 +39,32 @@ public class ChartInsertTest {
     @Autowired
     private PaymentServiceC paymentService;
     @Autowired
-    private MemoService memoService;
+    public MemoService memoService;
     @Autowired
-    private MemoRepository memoRepository;
+    public MemoRepository memoRepository;
 
 
-
+    @Test
+    void softDeleteTest(){
+        //memoRepository.softDeleteById(1L);
+        List<Memo> memoList = memoRepository.findByMemoDelYn("Y");
+        for(Memo list : memoList){
+            System.out.println(list.getMemoContents());
+        }
+    }
 
     @Test
     void count(){
 
-
-        List<Long> countList = paymentService.getCountsByYearRange();
-        int i=0;
-        for(Long count : countList){
-            i++;
-            System.out.println("Date: " + count);
-
-        }
-        System.out.println("12 맞누? ==>"+i);
+        // 차트 data 불러오기
+//        List<Long> countList = paymentService.getCountsByYearRange();
+//        int i=0;
+//        for(Long count : countList){
+//            i++;
+//            System.out.println("Date: " + count);
+//
+//        }
+//        System.out.println("12 맞누? ==>"+i);
     }
 
     @Test

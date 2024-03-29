@@ -32,7 +32,5 @@ public interface PaymentRepository extends JpaRepository<Payment,Long> {
     Long countPaymentsYearByDateRange(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
 
-
-
-
+    Page<Payment> findByPaymentDelYn(char n, Pageable pageable);
 }
