@@ -21,28 +21,28 @@ $(function() {
 });
 
 function toggleContent() {
-    var content = document.getElementById("form");
-    if (content.hasAttribute("hidden")) {
-        content.removeAttribute("hidden"); // 펼쳐짐
-    } else {
-        content.setAttribute("hidden", true); // 접힘
-    }
+    var content = document.getElementById("expandableContent");
+    content.classList.toggle("active"); // 내용의 확장 여부를 토글
 }
 
 function setDateRange(months) {
     var endDate = new Date();
     var startDate = new Date();
-    startDate.setMonth(startDate.getMonth() + months);
+    startDate.setMonth(startDate.getMonth() - months);
 
     // 종료일을 계산된 값으로 설정
-    $('#endDt').datepicker('setDate', startDate);
+    $('#startDt').datepicker('setDate', startDate);
 
     // 시작일을 오늘 날짜로 설정
-    $('#startDt').datepicker('setDate', endDate);
+    $('#endDt').datepicker('setDate', endDate);
 }
 
 function resetForm() {
     document.getElementById("form").reset();
+}
+
+function setStatus(status) {
+    document.getElementById('status').setAttribute('value', status);
 }
 
 function toggleDeleteButton() {
@@ -94,10 +94,10 @@ function deleteSelectedPayments() {
     document.getElementById("deleteForm").submit();
 }
 
-        function submitForm() {
-            var form = document.getElementById("form");
-            form.submit();
-        }
+function submitForm() {
+    var form = document.getElementById("form");
+    form.submit();
+}
 
 function changePageSize() {
     var selectedSize = document.getElementById("pageSelect").value;

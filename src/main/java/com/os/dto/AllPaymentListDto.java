@@ -32,7 +32,7 @@ public class AllPaymentListDto {
 
         return AllPaymentListDto.builder()
                 .createTime(payment.getCreateTime())
-                .id(payment.getId())
+                .id(payment.getCustomer().getId())
                 .customerName(payment.getCustomer().getCustomerName())
                 .paymentTitle(payment.getPaymentTitle())
                 .totalAmount(totalAmount)
