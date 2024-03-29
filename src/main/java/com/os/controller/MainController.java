@@ -109,7 +109,7 @@ public class MainController {
     @GetMapping("/search")
     public String search(@ModelAttribute("form") DetailedSearchDTO searchDTO, Model model, @PageableDefault(page = 0, size = 10, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<AllPaymentListDto> allPaymentsPage = allPaymentListService.detailSearch(searchDTO, pageable);
-        int payCount = allPaymentsPage.getTotalPages();
+        long payCount = allPaymentsPage.getTotalElements();
 
         System.out.println("payCount = " + payCount);
 
