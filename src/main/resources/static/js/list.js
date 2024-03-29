@@ -134,3 +134,13 @@ document.getElementById("searchInput").addEventListener("keypress", function(eve
         document.getElementById("searchForm").submit(); // 폼을 제출합니다.
     }
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    var rows = document.querySelectorAll("tr[data-id]");
+    rows.forEach(function(row) {
+    row.addEventListener("click", function() {
+        var paymentId = row.getAttribute("data-id");
+        window.location.href = "/payinfoDetail?id=" + customerId;
+        });
+    });
+});

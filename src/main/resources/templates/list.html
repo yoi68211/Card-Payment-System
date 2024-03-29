@@ -121,7 +121,8 @@
             <tbody>
             <tr th:each="payment : ${payList}">
                 <td><label><input type="checkbox" name="selectedPayment" th:value="${payment.id}" onchange="toggleDeleteButton()" /></label></td>
-                <td th:text="${#temporals.format(payment.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+
+                <td th:onclick="|location.href='@{/payInfoDetail/(id=${payment.id})}'|" th:text="${#temporals.format(payment.createTime, 'yyyy-MM-dd / HH:mm:ss')}"></td>
                 <td th:text="${payment.id}"></td>
                 <td th:text="${payment.customerName}"></td>
                 <td th:text="${payment.paymentTitle}"></td>
