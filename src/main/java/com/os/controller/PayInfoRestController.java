@@ -17,7 +17,6 @@ import java.util.List;
 public class PayInfoRestController {
     private final UpdateService updateService;
 
-
     @PostMapping("/payDetailEdit")
     public void updateDetail(@RequestBody @Valid UpdateDTO updateDTO){
         boolean check = updateService.update(updateDTO);

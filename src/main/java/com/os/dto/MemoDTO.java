@@ -26,14 +26,19 @@ public class MemoDTO {
 
     private String memoDelYn;
 
+//    private String searchBoxValue;
+//    private String searchTypeValue;
+
+
     public static MemoDTO toMemoDTO(Memo Memo) {
         MemoDTO memoDTO = new MemoDTO();
         memoDTO.setId(Memo.getId());
+        memoDTO.setUserName(Memo.getUser().getUsername());
         memoDTO.setMemoContents(Memo.getMemoContents());
         memoDTO.setMemoExposeYn(Memo.getMemoExposeYn());
         memoDTO.setCreateTime(Memo.getCreateTime());
         memoDTO.setUpdateTime(Memo.getUpdateTime());
-        memoDTO.setUserName(Memo.getUser().getUsername());
+
         return memoDTO;
     }
 }

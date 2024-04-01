@@ -23,8 +23,6 @@ main-cell {
 
 }
 
-
-
 .countBox {
     width: 90%;
     height: 95%;
@@ -111,14 +109,14 @@ main-cell {
 
 }
 
-.dashboard-memoBoard {
+.dashboardMemoBoard {
     height: 100%;
     width: 100%;
     grid-area: memo;
     background-color: white;
     border: 1px solid grey;
     padding: 5px;
-
+    max-height: 318px;
 }
 
 .rectangle p {

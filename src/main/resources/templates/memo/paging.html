@@ -4,82 +4,192 @@
 <head>
     <meta charset="UTF-8">
     <title>메모 보드 목록</title>
+    <link th:href="@{/css/pageSample.css}" rel="stylesheet">
     <link th:href="@{/css/paging.css}" rel="stylesheet">
-
 </head>
 <body>
-<div class="searchBox">
-    <input  type="radio" name="memoSearch" value="Entire">전체
-    <input  type="radio" name="memoSearch" value="Yes">Y
-    <input  type="radio" name="memoSearch" value="No">N
+<header class="header-nav">
+        <span class="header-flex-box header-logo">
 
-    <select>
-        <option  value="entire">전체</option>
-        <option  value="contents">내용</option>
-        <option  value="writer">작성자</option>
-    </select>
+            <span class="sidebar-action-border">
+                <img th:src="@{/img/header_sidebar.png}" id="sidebar-action-icon">
+            </span>
+            <a href="/dashboard">AIP System</a>
+        </span>
 
-    <button  style="float:right" onclick="saveReq()">작성</button>
-    <button style="float:right" onclick="deleteReq()">삭제</button>
+    <span class="header-pageName header-flex-box" >메모 목록</span><!-- 현재 페이지 이름 -->
 
-    <input style="float:right" type="text" placeholder="검색어를 입력해 주세요">
-
-    <div class="memoListTable">
-    <table border="1">
-        <tr>
-            <th>
-                <input type="checkbox" id="allCheckBox" onclick="allChecked()">
-            </th>
-            <th>No.</th>
-            <th>내용</th>
-            <th>대시보드 노출</th>
-            <th>작성자</th>
-            <th>작성일</th>
-        </tr>
-        <tr style="text-align:center" th:each="memo: ${MemoList}">
-            <td>
-                <input type="checkbox" name="chk" class="chk" onclick="chkClicked()" th:value="${memo.id}">
-            </td>
-            <td> <a th:href="@{|/memo/${memo.id}|(page=${MemoList.number + 1})}" th:text="${memo.id}"></a></td>
-            <td> <a th:href="@{|/memo/${memo.id}|(page=${MemoList.number + 1})}" th:text="${memo.memoContents}" ></a></td>
-            <td> <a th:href="@{|/memo/${memo.id}|(page=${MemoList.number + 1})}" th:text="${memo.memoExposeYn}" ></a></td>
-            <td> <a th:href="@{|/memo/${memo.id}|(page=${MemoList.number + 1})}" th:text="${memo.userName}" ></a></td>
-            <td> <a th:href="@{|/memo/${memo.id}|(page=${MemoList.number + 1})}" th:text="${memo.createTime}"></a></td>
-        </tr>
-    </table>
-    </div>
-    <!-- 첫번째 페이지로 이동 -->
-    <!-- /Memo/paging?page=1 -->
-    <table>
-        <tr style="text-align:center">
-            <td><a th:href="@{/memo/paging(page=1)}"> << </a></td>
-
-            <!-- 이전 링크 활성화 비활성화 -->
-            <!-- MemoList.getNumber() 사용자:2페이지 getNumber()=1 -->
-            <td><a th:href="${MemoList.first} ? '#' : @{/memo/paging(page=${MemoList.number})}"> < </a></td>
-
-            <!-- 페이지 번호 링크(현재 페이지는 숫자만)
-                    for(int page=startPage; page<=endPage; page++)-->
-            <td>
+    <span class="header-flex-box">
+            <span class="header-flex-three">
+                <span class="header-icon">
+                    <a href="#"><img th:src="@{/img/help.png}" id="help_icon"></a>
+                    <a href="#" ><img th:src="@{/img/chart.png}" id="chart_icon"></a>
+                    <a href="#" class="nowPage"><img th:src="@{/img/memo.png}" id="memo_icon"></a>
+                </span>
+                <img th:src="@{/img/profileImg.png}" id="profile-img">
+                <span id="submenu-trigger">
+                    <a href="#">Nacamora</a>
+                    <div id="submenu">
+                        <a href="#">정보 변경</a>
+                        <a href="#">비밀번호 변경</a>
+                        <a href="/logout">로그아웃</a>
+                    </div>
+                </span>
+            </span>
+        </span>
+</header>
+<main>
+    <div>
+        <div class="searchBox">
+            <div>
+                <span><input  type="radio" name="dashboardFilter" value="all" checked>전체</span>
+                <span><input  type="radio" name="dashboardFilter" value="yes">Y</span>
+                <span><input  type="radio" name="dashboardFilter" value="no">N</span>
+            </div>
+            <div>
+                <span>
+                    <select id="type" name="searchType">
+                        <option  value="entire">전체</option>
+                        <option  value="contents">내용</option>
+                        <option  value="writer">작성자</option>
+                    </select>
+                </span>
+                <span><input type="text" id="search_box" value="" placeholder="검색어를 입력하세요"></span>
+                <span><button onclick="checkValues()">검색</button></span>
+            </div>
+        </div>
+        <div class="modify_button">
+            <div>
+                <div>(데이터 총<span th:text="${memoCount}"></span>건)</div>
+            </div>
+            <div>
+                <span><button onclick="deleteReq()">삭제</button></span>
+                <span><button onclick="saveReq()">작성</button></span>
+            </div>
+        </div>
+        <div class="memoListTable">
+            <table class="table" border="1">
+                <tr>
+                    <th>
+                        <input type="checkbox" id="allCheckBox" onclick="allChecked()">
+                    </th>
+                    <th>No.</th>
+                    <th>내용</th>
+                    <th>대시보드 노출</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                </tr>
+                <tr style="text-align:center"  th:each="memo: ${MemoList}" class="memo">
+                    <td>
+                        <input type="checkbox" name="chk" class="chk" onclick="chkClicked()" th:value="${memo.id}">
+                    </td>
+                    <td> <a th:href="@{|/memo/${memo.id}|(page=${MemoList.number + 1})}" th:text="${memo.id}"></a></td>
+                    <td> <a th:href="@{|/memo/${memo.id}|(page=${MemoList.number + 1})}" th:text="${memo.memoContents}" ></a></td>
+                    <td> <a th:href="@{|/memo/${memo.id}|(page=${MemoList.number + 1})}" th:text="${memo.memoExposeYn}" ></a></td>
+                    <td> <a th:href="@{|/memo/${memo.id}|(page=${MemoList.number + 1})}" th:text="${memo.userName}" ></a></td>
+                    <td> <a th:href="@{|/memo/${memo.id}|(page=${MemoList.number + 1})}" th:text="${memo.createTime}"></a></td>
+                </tr>
+            </table>
+        </div>
+            <!-- 첫번째 페이지로 이동 -->
+            <!-- /Memo/paging?page=1 -->
+        <div class = "pageButton">
+            <span>
+                <!-- 이전 링크 활성화 비활성화 -->
+                <a th:href="@{/memo/paging(page=1)}"> << </a>
+                <!-- MemoList.getNumber() 사용자:2페이지 getNumber()=1 -->
+                <a th:href="${MemoList.first} ? '#' : @{/memo/paging(page=${MemoList.number})}">&nbsp;<&nbsp;</a>
+                        <!-- 페이지 번호 링크(현재 페이지는 숫자만)
+                            for(int page=startPage; page<=endPage; page++)-->
+            </span>
             <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
-<!-- 현재페이지는 링크 없이 숫자만 -->
-    <span th:if="${page == MemoList.number + 1}" th:text="${page}"></span>
-                <!-- 현재페이지 번호가 아닌 다른 페이지번호에는 링크를 보여줌 -->
-    <span th:unless="${page == MemoList.number + 1}">
-        <a th:href="@{/memo/paging(page=${page})}" th:text="${page}"></a>
-    </span>
-    </span>
-            </td>
-            <!-- 다음 링크 활성화 비활성화
-                사용자: 2페이지, getNumber: 1, 3페이지-->
-            <td><a th:href="${MemoList.last} ? '#' : @{/memo/paging(page=${MemoList.number + 2})}"> > </a></td>
-            <!-- 마지막 페이지로 이동 -->
-            <td> <a th:href="@{/memo/paging(page=${MemoList.totalPages})}"> >> </a></td>
-        </tr>
-    </table>
-</div>
+            <!-- 현재페이지는 링크 없이 숫자만 -->
+                    <a th:if="${page == MemoList.number + 1}" th:text="${page}"></a>&nbsp;
+                     <!--  현재페이지 번호가 아닌 다른 페이지번호에는 링크를 보여줌 -->
+                <span th:unless="${page == MemoList.number + 1}">
+                    <a th:href="@{/memo/paging(page=${page})}" th:text="${page}"></a>
+                </span>
+            </span>
+            <span>
+                <!-- 다음 링크 활성화 비활성화 사용자: 2페이지, getNumber: 1, 3페이지-->
+                <a th:href="${MemoList.last} ? '#' : @{/memo/paging(page=${MemoList.number + 2})}">&nbsp;>&nbsp;</a>
+                <!-- 마지막 페이지로 이동 -->
+                <a th:href="@{/memo/paging(page=${MemoList.totalPages})}"> >> </a>
+            </span>
+        </div>
+
+    </div>
+</main>
+<aside>
+    <span id="sidebar">
+        <nav>
+            <ul class="sidebar-ul">
+                <li onclick="location.href='/dashboard'" > <!-- 현재 페이지 의 해당하는 span태그에 style="color: blue;" 써주세여  -->
+                    <span>
+                        <img th:src="@{/img/sidebar_dashboard.png}" id="sidebar_dashboard_icon">
+                        <span class="sidebar-nav-text">DashBoard</span>
+                    </span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </li>
+                <li onclick="location.href='/insert_form'">
+                    <span>
+                        <img th:src="@{/img/sidebar_card.png}" id="sidebar_card_icon">
+                        <span class="sidebar-nav-text">결제등록</span>
+                    </span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </li>
+                <li onclick="location.href='#'">
+                    <span>
+                        <img th:src="@{/img/sidebar_payList.png}" id="sidebar_payList_icon">
+                        <span class="sidebar-nav-text">결제목록</span>
+                    </span>
+                    <i class="fa-solid fa-chevron-down" id="payList-toggle"></i>
+                </li>
+                <li class="payList-nav" onclick="location.href='#'">
+                    <span class="payList">
+                        <i class="fa-solid fa-square fa-2xs"></i>
+                        <span class="sidebar-nav-text">전체 결제 목록</span>
+                    </span>
+                    <!-- <i class="fa-solid fa-chevron-right"></i> -->
+                </li>
+                <li class="payList-nav" onclick="location.href='#'">
+                    <span class="payList">
+                        <i class="fa-solid fa-square fa-2xs"></i>
+                        <span class="sidebar-nav-text" >자동 결제 목록</span>
+                    </span>
+                    <!-- <i class="fa-solid fa-chevron-right"></i> -->
+                </li>
+
+            </ul>
+        </nav>
+        </span>
+</aside>
 </body>
 <script>
+    function checkValues() {
+        var searchTypeValue = document.getElementById("type").value;
+        var searchKeyword = document.getElementById("search_box").value.toLowerCase();
+
+        var memos = document.querySelectorAll('.memo');
+
+        memos.forEach(function(memo) {
+            var memoId = memo.querySelector('td:nth-child(2)').textContent
+            var contents = memo.querySelector('td:nth-child(3)').textContent.toLowerCase();
+            var writer = memo.querySelector('td:nth-child(5)').textContent.toLowerCase();
+            var memoCreateTime = memo.querySelector('td:nth-child(6)').textContent
+
+
+            if ((searchTypeValue === 'contents' && contents.includes(searchKeyword)) ||
+                (searchTypeValue === 'writer' && writer.includes(searchKeyword)) ||
+                (searchTypeValue === 'entire' && (contents.includes(searchKeyword) || writer.includes(searchKeyword) || memoId.includes(searchKeyword) || memoCreateTime.includes(searchKeyword)))) {
+                memo.style.display = 'table-row';
+            } else {
+                memo.style.display = 'none';
+            }
+        });
+   }
+
+    // ------------
     function allChecked(target){
 
          //전체 체크박스 버튼
@@ -136,7 +246,15 @@
          })
      }
 
-   const saveReq = () => {
+<!--   function search(f){-->
+<!--        var type = f.type.value;-->
+
+<!--        f.action = "/memo/search";-->
+<!--        f.method = "post";-->
+<!--        f.submit();-->
+<!--   }-->
+
+    const saveReq = () => {
         location.href = "/memo/save";
     }
 
@@ -179,5 +297,56 @@
          });
    }
 
+    function filterMemoByDashboard() {
+    const dashboardFilterRadio = document.querySelector('input[name="dashboardFilter"]:checked');
+
+    if (!dashboardFilterRadio) return; // 체크된 라디오 버튼이 없을 경우 처리
+
+    const dashboardFilterValue = dashboardFilterRadio.value;
+    const memos = document.querySelectorAll('.memo');
+
+    memos.forEach(memo => {
+        const dashboardValue = memo.querySelector('td:nth-child(4)').textContent.trim();
+        const shouldDisplay = (dashboardFilterValue === 'all') ||
+                              (dashboardFilterValue === 'yes' && dashboardValue === 'Y') ||
+                              (dashboardFilterValue === 'no' && dashboardValue === 'N');
+
+        // 클래스를 토글하여 스타일 적용
+        memo.style.display = shouldDisplay ? '' : 'none';
+        });
+    }
+
+    // 라디오 버튼 변화에 따라 필터링된 결과를 업데이트
+    document.querySelectorAll('input[name="dashboardFilter"]').forEach(radio => {
+        radio.addEventListener('change', filterMemoByDashboard);
+    });
+
+    // 페이지 로드 시 초기 필터링 적용
+    document.addEventListener('DOMContentLoaded', filterMemoByDashboard);
+
+    function displayTotalPosts(totalPosts) {
+    var totalPostsDiv = document.getElementById("totalPosts");
+    totalPostsDiv.textContent = "(총 " + totalPosts + "건의 게시글)";
+}
+
+// MemoList를 가져오는 AJAX 요청
+function getTotalPosts() {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var totalPostsDiv = document.getElementById("totalPosts");
+                var totalPosts = xhr.responseText;
+                totalPostsDiv.textContent = "(총 " + totalPosts + "건의 게시글)";
+            } else {
+                console.error('Request failed');
+            }
+        }
+    };
+    xhr.open("GET", "/memo/totalPosts", true);
+    xhr.send();
+}
+
 </script>
+
 </html>

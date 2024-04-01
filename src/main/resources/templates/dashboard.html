@@ -80,19 +80,21 @@
             </div>
 
         </div>
-        <div class="dashboard-memoBoard" style="overflow-y:scroll">
+        <div  class="dashboardMemoBoard" style="overflow-y:scroll">
             Memo board<a href="/memo/paging" target="_blank"> > </a>
-            <table th:each="memo: ${MemoList}">
+
+            <table th:each="memo: ${MemoList}"  >
+               <div th:if="${memo.memoExposeYn} == 'Y'">
                 <tr>
-                    <td th:text="${memo.UserName}">
-                </tr>
-                <tr>
+<!--                    <th>aaa</th>-->
+                    <th style="text-align:left" th:text="${memo.UserName}"></th>
                     <th style="text-align:right" th:text="*{#temporals.format(memo.createTime, 'yyyy-MM-dd hh:mm')}"></th>
                 </tr>
                 <tr>
                     <td th:text="${memo.MemoContents}"></td>
                     <td></td>
                 </tr>
+               </div>
             </table>
         </div>
         <div class="dashboard-chart">
@@ -153,7 +155,6 @@
                         </span>
                         <!-- <i class="fa-solid fa-chevron-right"></i> -->
                     </li>
-
                 </ul>
             </nav>
             </span>

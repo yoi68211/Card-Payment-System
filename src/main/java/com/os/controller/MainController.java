@@ -2,11 +2,9 @@ package com.os.controller;
 
 import com.os.dto.AllPaymentListDto;
 import com.os.dto.DetailedSearchDTO;
+import com.os.dto.MemoDTO;
 import com.os.dto.PaymentDetailsDTO;
-import com.os.service.AllPaymentListService;
-import com.os.service.CustomerService;
-import com.os.service.PaymentServiceC;
-import com.os.service.UserService;
+import com.os.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,22 +27,27 @@ public class MainController {
     public final AllPaymentListService allPaymentListService;
     private final CustomerService customerService;
     private final PaymentServiceC paymentService;
+    private final MemoService memoService;
 
     @GetMapping
     public String index() {
         return "login";
     }
 
-
     @GetMapping("dashboard")
     public String login(Model model) {
         LocalDateTime currentTime = LocalDateTime.now();
         int month = currentTime.getMonthValue();
+
+
         List<Object[]> monthChart = paymentService.getCountByDateInMonth(month);
+        List<MemoDTO> memoList = memoService.findAll(); // MemoService를 사용하여 모든 메모를 가져옵니다.
+        model.addAttribute("MemoList", memoList);
 
         model.addAttribute("monthChartList",monthChart);
         model.addAttribute("paymentSuccessCount", customerService.countByCustomersByPaid());
         model.addAttribute("paymentInsertThisMonth", customerService.thisMonthInsertCount());
+
 
         return "dashboard";
     }
@@ -112,9 +115,4 @@ public class MainController {
         model.addAttribute("payCount", payCount);
         return "list";
     }
-
-
-
-
-
 }

@@ -1,6 +1,7 @@
+/*
 .searchBox{
     width: 1100px;
-    height: 500px;
+    height: 600px;
     background-color: white;
     border: 1px solid blue;
     padding: 5px;
@@ -9,13 +10,41 @@
 
 .memoListTable {
           max-width: 700px;
+          height: 500px;
           border: 1px solid #444444;
           border-collapse: collapse;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
 }
+*/
 
+.searchBox{
+    display: flex;
+    justify-content: space-between;
+    margin: 5px;
+}
+.modify_button{
+    display:flex;
+    justify-content: space-between;
+    margin: 5px;
+}
+.pageButton{
+    display:flex;
+    justify-content: center;
+    margin: 5px;
+}
+.memoListTable{
+    width: 100%;
+    margin-bottom: 30px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.table{
+    width: 100%;
+}
 
-
-
+th, td {
+    border: 1px solid #444444;
+}

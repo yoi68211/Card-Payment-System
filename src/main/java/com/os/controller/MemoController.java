@@ -1,11 +1,13 @@
 package com.os.controller;
 
+import com.os.dto.AllPaymentListDto;
 import com.os.dto.CustomerDTO;
 import com.os.dto.MemoDTO;
 import com.os.service.MemoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +39,7 @@ public class MemoController {
     public String save(@ModelAttribute MemoDTO memoDTO) throws IOException {
         System.out.println("memoDTO = " + memoDTO);
         memoService.save(memoDTO);
-        return "/dashboard";
+        return "redirect:/dashboard";
     }
 
     @GetMapping("/{id}")
@@ -61,10 +63,10 @@ public class MemoController {
 
     @PostMapping("/update")
     public String update(@ModelAttribute MemoDTO memoDTO, Model model) {
-       MemoDTO Memo =  memoService.update(memoDTO);
-       model.addAttribute("Memo", Memo);
-       return "/memo/detail";
-       // return "redirect:/Memo/" + MemoDTO.getId();
+        MemoDTO Memo =  memoService.update(memoDTO);
+        model.addAttribute("Memo", Memo);
+        return "/memo/detail";
+        // return "redirect:/Memo/" + MemoDTO.getId();
     }
 
     @PostMapping("/delete")
@@ -79,14 +81,20 @@ public class MemoController {
     }
     // /Memo/paging?page=1
     @GetMapping("/paging")
-    public String paging(@PageableDefault(page = 1) Pageable pageable, Model model) {
+    public String paging(@PageableDefault(page = 1) Pageable pageable, Model model ,@RequestParam(required = false, defaultValue = "") String searchBoxValue,
+                         @RequestParam(required = false, defaultValue = "entire") String searchTypeValue) {
 
-     //   pageable.getPageNumber();
-        Page<MemoDTO> MemoList = memoService.paging(pageable);
+        //   pageable.getPageNumber();
+//        searchBoxValue = request.getSearchBoxValue();
+//        searchTypeValue = request.getSearchTypeValue();
+
+        Page<MemoDTO> MemoList = memoService.paging(pageable,searchBoxValue, searchTypeValue);
 
         int blockLimit = 3;
         int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
-        int endPage = ((startPage + blockLimit - 1) < MemoList.getTotalPages()) ? startPage + blockLimit - 1 : MemoList.getTotalPages();
+        int endPage = Math.min((startPage + blockLimit - 1), MemoList.getTotalPages());
+
+        long memoCount = MemoList.getTotalElements();
 
         // page 갯수 20개
         // 현재 사용자가 3페이지
@@ -99,6 +107,8 @@ public class MemoController {
         model.addAttribute("MemoList", MemoList);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
+
+        model.addAttribute("memoCount", memoCount);
 
         return "/memo/paging";
     }
