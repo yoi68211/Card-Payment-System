@@ -39,6 +39,9 @@ public class MainController {
         List<Long> monthChart = paymentService.getCountsByMonthRange();
         List<Long> yearChart = paymentService.getCountsByYearRange();
 
+        List<MemoDTO> memoList = memoService.findAll(); // MemoService를 사용하여 모든 메모를 가져옵니다.
+        model.addAttribute("MemoList", memoList);
+
         model.addAttribute("monthChartList",monthChart);
         model.addAttribute("yearChartList",yearChart);
         model.addAttribute("paymentSuccessCount", customerService.countByCustomersByPaid());
