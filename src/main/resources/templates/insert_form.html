@@ -174,8 +174,8 @@
                                 <option>다다음달</option>
                             </select></label>
 
-                            <label><input type="text" id="autoDate" name="autoDate" disabled></label>
-                            <label><input type="text" id="paymentFirstPay" name="paymentFirstPay" disabled></label>
+                            <label><input type="text" id="autoDate" name="autoDate" disabled>&nbsp;일</label>
+                            <label><input type="text" id="paymentFirstPay" name="paymentFirstPay" disabled>&nbsp;엔</label>
                         </div>
                     </div>
                 </div>
@@ -244,28 +244,28 @@
         <span id="sidebar">
             <nav>
                 <ul class="sidebar-ul">
-                    <li onclick="location.href='/dashboard'" > <!-- 현재 페이지 의 해당하는 span 태그에 style="color: blue;" 써주세여  -->
-                        <span>
+                    <li onclick="location.href='/dashboard'" > <!-- 현재 페이지 의 해당하는 span태그에 style="color: blue;" 써주세여  -->
+                        <span class="nowPage">
                             <img th:src="@{/img/sidebar_dashboard.png}" id="sidebar_dashboard_icon">
                             <span class="sidebar-nav-text">DashBoard</span>
                         </span>
                         <i class="fa-solid fa-chevron-right"></i>
                     </li>
                     <li onclick="location.href='/insert_form'">
-                        <span class="nowPage">
+                        <span>
                             <img th:src="@{/img/sidebar_card.png}" id="sidebar_card_icon">
                             <span class="sidebar-nav-text">결제등록</span>
                         </span>
                         <i class="fa-solid fa-chevron-right"></i>
                     </li>
-                    <li onclick="location.href='#'">
+                    <li id="payList-toggle">
                         <span>
                             <img th:src="@{/img/sidebar_payList.png}" id="sidebar_payList_icon">
                             <span class="sidebar-nav-text">결제목록</span>
                         </span>
-                        <i class="fa-solid fa-chevron-down" id="payList-toggle"></i>
+                        <i class="fa-solid fa-chevron-down"></i>
                     </li>
-                    <li class="payList-nav" onclick="location.href='#'">
+                    <li class="payList-nav" onclick="location.href='/list'">
                         <span class="payList">
                             <i class="fa-solid fa-square fa-2xs"></i>
                             <span class="sidebar-nav-text">전체 결제 목록</span>
@@ -282,7 +282,7 @@
 
                 </ul>
             </nav>
-        </span>
+            </span>
 </aside>
 </body>
 <script th:src="@{/js/pageSample.js}"></script>
