@@ -13,10 +13,107 @@
     <title>Document</title>
 </head>
 <body>
-<button onclick="creditcard()">결제</button>
+<form action="" id="api" method="post">
+    <!--예: https://www.myservice.com/subscription/issue-billing-->
+    <div>
+        <label for="card_number">카드 번호 XXXX-XXXX-XXXX-XXXX</label>
+        <input id="card_number" type="text" name="card_number">
+    </div>
+    <div>
+        <label for="expiry">카드 유효기간 YYYY-MM</label>
+        <input id="expiry" type="text" name="expiry">
+    </div>
+    <div>
+        <label for="birth">생년월일 YYMMDD</label>
+        <input id="birth" type="text" name="birth">
+    </div>
+    <div>
+        <label for="pwd_2digit">카드 비밀번호 앞 두자리 XX</label>
+        <input id="pwd_2digit" type="text" name="pwd_2digit">
+    </div>
+    <input hidden type="text" value="gildong_0001_1234" name="customer_uid">
+    <input type="submit" value="결제하기">
+</form>
 </body>
-
-</html>
 <script>
+    app.post("/subscriptions/issue-billing", async (req, res) => {
+    let f = document.getElementById("api");
+    let cardNum = f.card_number.value;
+    let expiry = f.expiry.value;
+    let birth = f.birth.value;
+    let pwd_2digit = f.pwd_2digit.value;
+    let customer_uid = f.customer_uid.value;
 
+
+    try {
+        const {
+            card_number: cardNum, // 카드 번호
+            expiry: expiry, // 카드 유효기간
+            birth: birth, // 생년월일
+            pwd_2digit: pwd_2digit, // 카드 비밀번호 앞 두자리,
+            customer_uid: customer_uid, // 카드(빌링키)와 1:1로 대응하는 값
+        } = req.body; // req의 body에서 카드정보 추출
+
+        console.log("Request Body:", req.body); // 요청 바디 로깅
+
+
+        const getToken = await axios({
+            url: "https://api.iamport.kr/users/getToken",
+            method: "post", // POST method
+            headers: {
+                "Content-Type": "application/json"
+            },
+            data: {
+                imp_key: "2528718146126546", // REST API 키
+                imp_secret: "ADWV5AFbqwoAI6Hsqi9hqFW93ieT3rKZi260Z1k7lwxMDUoN5xNFSaOhCL5TcOX8oEDzPPRCe3EjLAHF"
+            }
+        });
+
+
+        const {
+            access_token
+        } = getToken.data; // 인증 토큰
+        console.log("access_token", access_token);
+
+        // 빌링키 발급 요청
+        const issueBilling = await axios({
+            url: `https://api.iamport.kr/subscribe/customers/${customer_uid}`,
+            method: "post",
+            // 인증 토큰 Authorization header에 추가
+            headers: {
+                "Authorization": access_token
+            },
+            data: {
+                card_number, // 카드 번호
+                expiry, // 카드 유효기간
+                birth, // 생년월일
+                pwd_2digit, // 카드 비밀번호 앞 두자리
+                pg: YOUR_PG_HERE, // 빌링키 발급에 사용할 PG
+            }
+        });
+
+        const {
+            code,
+            message
+        } = issueBilling.data;
+
+        console.log("빌링키", code);
+        console.log("빌링키 실패", message);
+
+        if (code === 0) { // 빌링키 발급 성공
+            res.send({
+                status: "success",
+                message: "Billing has successfully issued"
+            });
+        } else { // 빌링키 발급 실패
+            res.send({
+                status: "failed",
+                message
+            });
+        }
+    } catch (e) {
+        res.status(400).send(e);
+    }
+});
 </script>
+</html>
