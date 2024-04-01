@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link th:href="@{/css/pageSample.css}" rel="stylesheet">
+    <link th:href="@{/css/list.css}" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -37,24 +38,27 @@
     </span>
 </header>
 <main>
-    <div class="main-cell">
+    <div class="main_cell">
         <!-- 여기서 작업하시면 됩니다. -->
-        <button onclick="toggleContent()">상세 검색</button>
-        <div id="expandableContent">
-            <form id="form" th:action="@{/search}" th:object="${searchDTO}" th:hidden="${true}" method="post">
-                <table>
+        <div class="title">전체 결제 목록</div>
+        <button class="right_button" onclick="toggleContent()"><i class="fas fa-caret-down"></i>상세 검색</button>
+        <div class="line"></div> <!-- 버튼 아래에 위치한 첫 번째 선 -->
+        <div class="expandableContent" id="expandableContent">
+            <form id="form" th:action="@{/search}" th:object="${searchDTO}" method="get">
+                <table class="date">
                     <tr>
                         <td colspan="2">
-                            <label>조회기간</label>
-                            <input type="text" id="startDt" name="startDt" th:value="${startDt}" placeholder="yyyy-mm-dd"> ~
-                            <input type="text" id="endDt" name="endDt" th:value="${endDt}" placeholder="yyyy-mm-dd">
+                            <label class="re_time">조회기간</label>
+                            <input type="text" id="startDt" class="startDt" name="startDt" th:value="${startDt}" placeholder="yyyy-mm-dd"> ~
+                            <input type="text" id="endDt" class="endDt" name="endDt" th:value="${endDt}" placeholder="yyyy-mm-dd">
                         </td>
                         <td>
-                            <label>상태유형</label>
-                            <button type="button" onclick="setStatus('all')">전체</button>
+                            <label class="status">상태유형</label>
+                            <input type="hidden" id="status" name="status" th:value="${status}">
+                            <button type="button" onclick="setStatus('')">전체</button>
                             <button type="button" onclick="setStatus('paid')">결제</button>
                             <button type="button" onclick="setStatus('wait')">미결제</button>
-                            <button type="button" onclick="setStatus('환불')">환불</button>
+                            <button type="button" onclick="setStatus('refund')">환불</button>
                         </td>
                     </tr>
                     <tr>
@@ -88,6 +92,7 @@
                 </table>
             </form>
         </div>
+        <div class="line2"></div> <!-- 버튼 아래에 위치한 두 번째 선 -->
 
         <div>
             <form id="deleteForm" action="/delete/{id}" method="post">
@@ -116,7 +121,8 @@
             <tbody>
             <tr th:each="payment : ${payList}">
                 <td><label><input type="checkbox" name="selectedPayment" th:value="${payment.id}" onchange="toggleDeleteButton()" /></label></td>
-                <td th:text="${#temporals.format(payment.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+
+                <td th:onclick="|location.href='@{/payInfoDetail/(id=${payment.id})}'|" th:text="${#temporals.format(payment.createTime, 'yyyy-MM-dd / HH:mm:ss')}"></td>
                 <td th:text="${payment.id}"></td>
                 <td th:text="${payment.customerName}"></td>
                 <td th:text="${payment.paymentTitle}"></td>
@@ -142,8 +148,8 @@
                         </a>
                     </li>
                     <!-- 페이지 번호 -->
-                    <li th:each="page : ${#numbers.sequence(0, payList.totalPages - 1)}" th:class="${payList.number == page} ? 'page-item active' : 'page-item'">
-                        <a class="page-link" th:href="@{'/list?page=' + ${page} + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + ${keyword != null ? keyword : ''}}" th:text="${page + 1}"></a>
+                    <li th:each="i : ${#numbers.sequence((payList.number - 3) < 0 ? 0 : (payList.number - 3), (payList.number + 3) > (payList.totalPages - 1) ? (payList.totalPages - 1) : (payList.number + 3))}" th:class="${payList.number == i} ? 'page-item active' : 'page-item'">
+                        <a class="page-link" th:href="@{'/list?page=' + ${i} + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + ${keyword != null ? keyword : ''}}" th:text="${i + 1}"></a>
                     </li>
                     <!-- 다음 페이지 -->
                     <li th:if="${payList.hasNext()}" class="page-item">

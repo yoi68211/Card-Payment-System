@@ -18,12 +18,9 @@ public class SaveProduct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;                 // 상품임시저장 IDX
 
-
     private String s_productName;             // 상품임시저장 상품명
 
-
     private int s_productPrice;            // 상품임시저장 상품가격
-
 
     private int s_productTotalItem;        // 상품임시저장 상품수량
 

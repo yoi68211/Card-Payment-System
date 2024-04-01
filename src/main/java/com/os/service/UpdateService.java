@@ -51,7 +51,6 @@ public class UpdateService {
             if(paymentOptional.isPresent()){
                 Payment payment = paymentOptional.get();
                 payment.setPaymentTitle(updateDTO.getPaymentTitle());
-                payment.setPaymentStatus(OrderStatus.wait);
 
                 List<Product> productList = productRepository.findByPaymentId(payment.getId());
                 List<ProductDTO> updatedProductList = updateDTO.getProductList();
@@ -59,7 +58,7 @@ public class UpdateService {
                 for (ProductDTO productDTO : updatedProductList) {
 
                     if(productDTO.getId() == 0){
-                        System.out.println("********* update 71번줄=>" + productDTO.getProductName());
+
                         savePro(productDTO, payment);
                     }
 
@@ -89,7 +88,7 @@ public class UpdateService {
             customer.setPayments(payment);
 
             customerRepository.save(customer);
-                System.out.println("**************** save 완료");
+
             }
             return true;
         } else {
@@ -101,7 +100,7 @@ public class UpdateService {
     public void delete(Long id){
         System.out.println("deletePro" + id);
         productRepository.deleteById(id);
-        System.out.println("**************** delete 완료");
+
     }
 
     public void savePro(ProductDTO productDTO, Payment payment){
@@ -114,7 +113,7 @@ public class UpdateService {
                 .build();
 
         productRepository.save(product);
-        System.out.println("************** save 완료");
+
 
     }
 

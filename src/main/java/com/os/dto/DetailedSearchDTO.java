@@ -13,7 +13,6 @@ public class DetailedSearchDTO {
     private String startDt;
     private String endDt;
     private String status;
-    private int dateRange;
     private String docNumber;
     private String customerName;
     private String email;

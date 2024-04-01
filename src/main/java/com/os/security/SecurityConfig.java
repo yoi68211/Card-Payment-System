@@ -35,7 +35,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests((auth)->auth
                 .requestMatchers("/","/login","/pageSample",
-                        "/js/**","/css/**","/img/**","/join","/payInfoDetail/**").permitAll()
+                        "/js/**","/css/**","/img/**","/join","/payInfoDetail/**","/test").permitAll()
                 .anyRequest().authenticated()
 
         );

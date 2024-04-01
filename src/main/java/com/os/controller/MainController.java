@@ -14,9 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 @Controller
@@ -29,22 +26,21 @@ public class MainController {
     private final PaymentServiceC paymentService;
     private final MemoService memoService;
 
+
     @GetMapping
     public String index() {
         return "login";
     }
 
     @GetMapping("dashboard")
-    public String login(Model model) {
-        LocalDateTime currentTime = LocalDateTime.now();
-        int month = currentTime.getMonthValue();
+    public String mainPage(Model model) {
 
 
-        List<Object[]> monthChart = paymentService.getCountByDateInMonth(month);
-        List<MemoDTO> memoList = memoService.findAll(); // MemoService를 사용하여 모든 메모를 가져옵니다.
-        model.addAttribute("MemoList", memoList);
+        List<Long> monthChart = paymentService.getCountsByMonthRange();
+        List<Long> yearChart = paymentService.getCountsByYearRange();
 
         model.addAttribute("monthChartList",monthChart);
+        model.addAttribute("yearChartList",yearChart);
         model.addAttribute("paymentSuccessCount", customerService.countByCustomersByPaid());
         model.addAttribute("paymentInsertThisMonth", customerService.thisMonthInsertCount());
 
@@ -52,6 +48,15 @@ public class MainController {
         return "dashboard";
     }
 
+    @GetMapping("/chartDetail")
+    public String chartDetail(Model model){
+        List<Long> monthChart = paymentService.getCountsByMonthRange();
+        List<Long> yearChart = paymentService.getCountsByYearRange();
+
+        model.addAttribute("monthChartList",monthChart);
+        model.addAttribute("yearChartList",yearChart);
+        return "chartDetail";
+    }
     @GetMapping("/join")
     public String joinPage()   {
 
@@ -64,55 +69,68 @@ public class MainController {
     TODO: 2024-03-22 "paymentDetails.html" In the QR creation logic, I couldn't tell which code uses which code API, so I entered a random URL
           Please implement by adding payload to Payment Details DTO.
     */
+
+
     @GetMapping("/paymentDetails")
     public String paymentDetailsPage(@RequestParam Long id , Model model)   {
-
-
-
         PaymentDetailsDTO paymentDetailsDTO = customerService.getDetails(id);
         model.addAttribute("paymentDetailsDTO",paymentDetailsDTO);
-
 
         return "paymentDetails";
 
     }
+
 
     @GetMapping("pageSample")
     public String pageSample() {
         return "/pageSample";
     }
 
+    /*
+        @method : insert_form
+        @desc : /insert_form 으로 이동
+        @author : 김성민
+    */
     @GetMapping("insert_form")
     public String insert_form(){
         return "insert_form";
     }
 
+
     @GetMapping("/list")
     public String findAll(Model model, @PageableDefault(page = 0, size = 10, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword) {
         Page<AllPaymentListDto> allPaymentsPage;
-
-
         if (keyword != null && !keyword.isEmpty()) {
             allPaymentsPage = allPaymentListService.findByTitleContaining(keyword, pageable);
         } else {
             allPaymentsPage = allPaymentListService.findAll(pageable);
         }
-
         long payCount = allPaymentsPage.getTotalElements();
         model.addAttribute("payList", allPaymentsPage);
         model.addAttribute("payCount", payCount);
         model.addAttribute("keyword", keyword);
+
         return "list";
     }
 
+    @PostMapping("/delete/{id}")
+    public String deletePayment(@PathVariable String id) {
+        Long paymentId = Long.parseLong(id);
+        allPaymentListService.updatePaymentDelYnById(paymentId);
+        return "redirect:/list";
+    }
 
-    @PostMapping("/search")
+
+    @GetMapping("/search")
     public String search(@ModelAttribute("form") DetailedSearchDTO searchDTO, Model model, @PageableDefault(page = 0, size = 10, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<AllPaymentListDto> allPaymentsPage = allPaymentListService.detailSearch(searchDTO, pageable);
         long payCount = allPaymentsPage.getTotalElements();
 
+        System.out.println("payCount = " + payCount);
+
         model.addAttribute("payList", allPaymentsPage);
         model.addAttribute("payCount", payCount);
+
         return "list";
     }
 }

@@ -257,7 +257,7 @@ let productDelCheck = [];
                 if (response.ok) {
                 // 요청이 성공적으로 처리되었을 때의 동작
                     alert("삭제 되었습니다..");
-                    location.reload(true);
+                    location.href="/list"
                 } else {
                     // 요청이 실패했을 때의 동작
                     alert("실패했습니다.");

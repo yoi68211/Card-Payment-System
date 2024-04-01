@@ -24,6 +24,6 @@ public interface CustomerRepository extends JpaRepository<Customer,Long>  {
 
     long countByPayments_PaymentStatus(OrderStatus orderStatus);
 
-
+    List<Customer> findByPayments_PaymentDelYn(Character yn);
 
 }
