@@ -61,17 +61,28 @@
         }
 
         .basic-body{
-            height: 40%;
+            height: 45%;
             border-bottom: 1px solid gray;
             margin-top: 10px;
-            padding-bottom: 10px;
+            padding-top: 22px;
+            min-width: 780px;
+            min-height: 240px;
         }
-
         .basic-one{
             display: flex;
-            margin-bottom: 1%;
+            margin-bottom: 5px;
             height: 30px;
         }
+        @media screen and (min-width: 1400px) {
+            .basic-body{
+                padding-top: 35px;
+            }
+
+            .basic-one{
+                margin-bottom: 20px;
+            }
+        }
+
         .basic-title{
             width: 20%;
             text-align: left;
@@ -124,7 +135,7 @@
         }
 
         .basic-footer{
-            height: 50%;
+            height: 45%;
         }
 
         .basic-footer-header{
