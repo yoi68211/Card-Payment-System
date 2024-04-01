@@ -6,6 +6,7 @@ import com.os.dto.ProductDTOC;
 import com.os.service.CustomerServiceC;
 import com.os.service.PaymentServiceC;
 import com.os.service.ProductServiceC;
+import com.os.util.OrderType;
 import lombok.AllArgsConstructor;
 
 import org.springframework.stereotype.Controller;
@@ -37,7 +38,9 @@ public class PayInfoController {
         model.addAttribute("customerInfo", customerInfo);
         model.addAttribute("payInfo", payInfo);
         model.addAttribute("productInfo", productInfo);
-
+        if(payInfo.getPaymentType()== OrderType.auto){
+            return "paylist/autoPayInfoDetail";
+        }
         return "paylist/basicPayInfoDetail";
 
 

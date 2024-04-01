@@ -116,7 +116,7 @@ main-cell {
     width: 100%;
     grid-area: memo;
     background-color: white;
-    border: 1px solid grey;
+    border: 1px solid #E5E9F0;
     padding: 5px;
 
 }
