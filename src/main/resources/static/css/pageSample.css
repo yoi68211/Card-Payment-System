@@ -148,6 +148,7 @@
         #submenu-trigger{
             position: relative;
             display: inline-block;
+            z-index: 100;
         }
         #submenu {
             display: none;
