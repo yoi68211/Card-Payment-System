@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <title>Document</title>
+</head>
+<body>
+<button onclick="creditcard">결제</button>
+</body>
+<script>
+    const userCode = "imp14397622";
+    const IMP = window.IMP; // 생략 가능
+    IMP.init("imp14397622");
+    function creditcard() {
+        IMP.request_pay({
+            pg: "html5_inicis",
+            pay_method: "card",
+            merchant_uid: "test_llkfalzw",
+            name: "테스트 결제",
+            amount: 100,/* 가격 */
+            buyer_tel: "010-0000-0000",
+        });
+    }
+</script>
+</html>

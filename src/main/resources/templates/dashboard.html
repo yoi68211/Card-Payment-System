@@ -19,21 +19,21 @@
             <a href="/dashboard">AIP System</a>
         </span>
 
-    <span class="header-pageName header-flex-box" >현재 페이지</span><!-- 현재 페이지 이름 -->
+    <span class="header-pageName header-flex-box" >Dashboard</span><!-- 현재 페이지 이름 -->
 
     <span class="header-flex-box">
             <span class="header-flex-three">
                 <span class="header-icon">
                     <a href="#"><img th:src="@{/img/help.png}" id="help_icon"></a>
                     <a href="#"><img th:src="@{/img/chart.png}" id="chart_icon"></a>
-                    <a href="#"><img th:src="@{/img/memo.png}" id="memo_icon"></a>
+                    <a href="/memo/paging"><img th:src="@{/img/memo.png}" id="memo_icon"></a>
                 </span>
                 <img th:src="@{/img/profileImg.png}" id="profile-img">
                 <span id="submenu-trigger">
                     <a href="#">Nacamora</a>
                     <div id="submenu">
                         <a href="#">정보 변경</a>
-                        <a href="#">비밀번호 변경</a>
+                        <a href="/user/update">비밀번호 변경</a>
                         <a href="/logout">로그아웃</a>
                     </div>
                 </span>
@@ -133,14 +133,14 @@
                         </span>
                         <i class="fa-solid fa-chevron-right"></i>
                     </li>
-                    <li onclick="location.href='#'">
+                    <li id="payList-toggle">
                         <span>
                             <img th:src="@{/img/sidebar_payList.png}" id="sidebar_payList_icon">
                             <span class="sidebar-nav-text">결제목록</span>
                         </span>
-                        <i class="fa-solid fa-chevron-down" id="payList-toggle"></i>
+                        <i class="fa-solid fa-chevron-down"></i>
                     </li>
-                    <li class="payList-nav" onclick="location.href='#'">
+                    <li class="payList-nav" onclick="location.href='/list'">
                         <span class="payList">
                             <i class="fa-solid fa-square fa-2xs"></i>
                             <span class="sidebar-nav-text">전체 결제 목록</span>
@@ -166,5 +166,4 @@
 </script>
 <script th:src="@{/js/pageSample.js}"></script>
 <script th:src="@{/js/dashBoardChart.js}"></script>
-
 </html>

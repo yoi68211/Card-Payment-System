@@ -1,33 +1,22 @@
 package com.os.service;
-
 import com.os.dto.AllPaymentListDto;
 import com.os.dto.DetailedSearchDTO;
 import com.os.entity.Payment;
-import com.os.entity.QPayment;
 import com.os.repository.PaymentRepository;
 import com.os.util.OrderStatus;
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.engine.spi.ManagedEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import static com.os.entity.QPayment.payment;
 
 @Service
@@ -36,8 +25,7 @@ import static com.os.entity.QPayment.payment;
 public class AllPaymentListService {
 
     private final PaymentRepository paymentRepository;
-    private final JPAQueryFactory query;
-    private final EntityManager entityManager;
+    private final EntityManager em;
 
 
     public Page<AllPaymentListDto> findAll(Pageable pageable) {
@@ -50,6 +38,13 @@ public class AllPaymentListService {
         return allPaymentsPage.map(AllPaymentListDto::toAllPaymentListDto);
     }
 
+    public void updatePaymentDelYnById(Long id) {
+        Payment payment = paymentRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 아이디가 없습니다 id : " + id));
+        payment.setPaymentDelYn('Y');
+        paymentRepository.save(payment);
+    }
+
 
     /**
      * @auther : 김홍성
@@ -58,7 +53,6 @@ public class AllPaymentListService {
     public Page<AllPaymentListDto> detailSearch(DetailedSearchDTO searchDTO, Pageable pageable) {
 
         String status = searchDTO.getStatus();
-        int dateRange = searchDTO.getDateRange();
         String DocNumber = (searchDTO.getDocNumber());
         String name = searchDTO.getCustomerName();
         String startDt = searchDTO.getStartDt();
@@ -66,16 +60,14 @@ public class AllPaymentListService {
 
 
 
-        QPayment payment = QPayment.payment;
 
-        JPAQuery<Payment> query = new JPAQuery<>(entityManager);
+        JPAQuery<Payment> query = new JPAQuery<>(em);
 
         query.select(payment)
                 .from(payment)
                 .where(
                         eqDocNumber(DocNumber)
                         ,likeCustomerName(name)
-                        ,betweenDateRange(dateRange)
                         ,eqStatus(status)
                         ,betweenDt(startDt,endDt)
                 )
@@ -92,7 +84,7 @@ public class AllPaymentListService {
 
 
 
-         return new PageImpl<>(result,pageable,count);
+        return new PageImpl<>(result,pageable,count);
     }
 
 
@@ -116,22 +108,12 @@ public class AllPaymentListService {
 
     private BooleanExpression likeCustomerName(String name) {
         if (StringUtils.hasText(name)) {
-           return payment.paymentDelYn.eq('N').and(payment.customer.customerName.like("%" + name + "%"));
+            return payment.paymentDelYn.eq('N').and(payment.customer.customerName.like("%" + name + "%"));
         }
         return null;
     }
 
 
-    private BooleanExpression betweenDateRange(int dateRange) {
-
-        if (dateRange == 1 || dateRange == 3 || dateRange == 6 || dateRange == 12)  {
-            LocalDateTime startDate = LocalDateTime.now().minusMonths(dateRange);
-            LocalDateTime endDate = LocalDateTime.now();
-
-            return payment.paymentDelYn.eq('N').and(payment.createTime.between(startDate, endDate));
-        }
-        return null;
-    }
 
 
     private BooleanExpression eqStatus(String status) {
