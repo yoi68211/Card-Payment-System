@@ -53,8 +53,9 @@ public class SavePaymentService {
                 List<SaveProductDTO> newProducts = dto.getProductList();
 
                 int savedCount = savedProducts.size();
+                System.out.println("저장본 : " + savedCount);
                 int newCount = newProducts.size();
-
+                System.out.println("넣을거 : " + newCount);
                 if (savedCount > newCount) {
                     // 보낸 정보 개수만큼만 업데이트
                     for (int i = 0; i < newCount; i++) {

@@ -6,7 +6,52 @@
     <link th:href="@{/css/pageSample.css}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/047f82d071.js" crossorigin="anonymous"></script>
     <link th:href="@{/css/insert_form.css}" rel="stylesheet">
+    <script>
+        function sizze(){
+            var realSize = window.innerWidth;
+            alert(realSize);
+        }
+        let tooltipElem;
 
+        document.onmouseover = function(event) {
+          let target = event.target;
+
+          // data-tooltip 속성이 있는 요소
+          let tooltipHtml = target.dataset.tooltip;
+          if (!tooltipHtml) return;
+
+          // 툴팁 요소를 만듭니다.
+
+          tooltipElem = document.createElement('div');
+          tooltipElem.className = 'tooltip';
+          tooltipElem.innerHTML = tooltipHtml;
+          document.body.append(tooltipElem);
+
+          // 툴팁 요소를 data-tooltip 속성이 있는 요소 위, 가운데에 위치시킵니다.
+          let coords = target.getBoundingClientRect();
+
+          let left = coords.left + (target.offsetWidth - tooltipElem.offsetWidth) / 2;
+          if (left < 0) left = 0; // 툴팁이 창 왼쪽 가장자리를 넘지 않도록 합니다.
+
+          let top = coords.top - tooltipElem.offsetHeight - 5;
+          if (top < 0) { // 툴팁이 창 위로 넘치면 요소 아래에 보여줍니다.
+            top = coords.top + target.offsetHeight + 5;
+          }
+
+          tooltipElem.style.left = left + 'px';
+          tooltipElem.style.top = top + 'px';
+        };
+
+        document.onmouseout = function(e) {
+
+          if (tooltipElem) {
+            tooltipElem.remove();
+            tooltipElem = null;
+          }
+
+        };
+
+    </script>
 </head>
 <body>
 <header class="header-nav">
@@ -48,11 +93,14 @@
                         <span>결제등록</span>
                     </div>
                     <div>
-                        <button type="button" id="before" onclick="load()" disabled>이전저장글</button>
+                        <button type="button" id="before" onclick="load()">이전저장글</button>
                         <button type="button" onclick="save()">임시저장</button>
                     </div>
                 </div>
                 <div class="basic-body">
+                    <div class="basic-one">
+                        <div class="basic-title">기본정보 등록</div>
+                    </div>
                     <div class="basic-one">
                         <div class="basic-title">고객명</div>
                         <div class="basic-input-text">
@@ -88,14 +136,14 @@
                             </span>
                             자동결제
                             <span>
-                                <button type="button" class="helpBtn">!</button>
+                                <button data-tooltip="도움말어쩌구저쩌구" type="button" class="helpBtn">!</button>
                             </span>
                             <span>
                                 <label><input type="checkbox" id="firstPay_check" name="firstPay_check" disabled></label>
                             </span>
                             처음결제금액
                             <span>
-                                <label><button type="button" class="helpBtn">!</button></label>
+                                <label><button data-tooltip="도움말어쩌구저쩌구" type="button" class="helpBtn">!</button></label>
                             </span>
                         </div>
                         <div class="basic-title">결제구분</div>
@@ -186,6 +234,7 @@
                     <div class="basic-real-footer">
                         <button type="button" onclick="send()">등록</button>
                     </div>
+                    <input type="button" value="화면크기" onclick="sizze()">
                 </div>
             </div>
         </div>
