@@ -6,7 +6,10 @@
     <link th:href="@{/css/pageSample.css}" rel="stylesheet">
     <link th:href="@{/css/basicPayInfoDetail.css}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/047f82d071.js" crossorigin="anonymous"></script>
-
+    <!--  포트원  -->
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 </head>
 <body>
 <header class="header-nav">
@@ -55,9 +58,9 @@
                 </div>
                 <div>
 
-                    <button type="button" th:if="${!#strings.equals(payInfo.paymentStatus, 'wait')}" onclick="toggleEdit()">편집</button>
-                    <button type="button" th:if="${!#strings.equals(payInfo.paymentStatus, 'wait')}" onclick="fnDelPay()" >삭제</button>
-                    <button type="button" th:if="${#strings.equals(payInfo.paymentStatus, 'wait')}">신용 구매도표 보기</button>
+                    <button type="button" th:if="${#strings.equals(payInfo.paymentStatus, 'error')}" onclick="toggleEdit()">편집</button>
+                    <button type="button" th:if="${#strings.equals(payInfo.paymentStatus, 'error')}" onclick="fnDelPay()" >삭제</button>
+                    <button type="button" th:if="${!#strings.equals(payInfo.paymentStatus, 'error')}">신용 구매도표 보기</button>
                     <button type="button"><i class="fa-solid fa-chevron-left"></i>목록으로</button>
                 </div>
             </div>
@@ -75,6 +78,8 @@
                         <input type="text" id="customerName" name="customerName" class="editable" disabled th:value="${customerInfo.customerName}">
                         <input type="hidden" id="customerId" name="customerId" th:value="${customerInfo.id}">
                         <input type="hidden" id="paymentId" name="paymentId" th:value="${payInfo.id}">
+                        <input type="hidden" id="customerPhone" name="customerPhone" th:value="${customerInfo.customerPhone}">
+                        <input type="hidden" id="customerAddress" name="customerAddress" th:value="${customerInfo.customerAddress}">
                     </label>
                     <label>
                         <span>E-Mail</span>
@@ -158,7 +163,7 @@
                     </table>
                 </div>
                 <div class="basic-real-footer">
-                    <button type="button" onclick="test()">즉시 결제</button>
+                    <button type="button" onclick="fnBasicPay()">즉시 결제</button>
                     <button type="button" onclick="moveQrPay()">QR 결제</button>
                 </div>
             </div>
@@ -215,7 +220,9 @@
 </body>
 <script th:src="@{/js/pageSample.js}"></script>
 <script th:src="@{/js/basicPayInfoDetail.js}"></script>
+<script th:src="@{/js/basicPay.js}"></script>
 <script th:inline="javascript">
+
     let customerId = [[${customerInfo.id}]];
 
     let paymentType = [[${payInfo.paymentType}]]; // basic, auto, stop
@@ -278,7 +285,7 @@
         textColor = 'white';
     } else if (paymentStatus === 'paid') {
         payStatus = '결제완료';
-        backgroundColor = 'black';
+        backgroundColor = '#2D5CBE';
         textColor = 'white';
         // 다른 상태에 대한 스타일을 설정합니다.
     } else if (paymentStatus === 'stop') {
@@ -294,6 +301,7 @@
     payStatusElement.innerText = payStatus;
     payStatusElement.style.backgroundColor = backgroundColor;
     payStatusElement.style.color = textColor;
+
 
 
 

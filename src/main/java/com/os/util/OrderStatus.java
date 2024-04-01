@@ -1,5 +1,5 @@
 package com.os.util;
 
 public enum OrderStatus {
-    paid,wait,refund
+    paid,wait,refund,error
 }
