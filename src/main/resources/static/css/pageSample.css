@@ -16,6 +16,8 @@
                 'side main';
             transition: grid-template-columns 0.5s ease;
             font-size: 1vw;
+            min-width: 1070px;
+            min height: 730px;
         }
         a{
             text-decoration: none;
@@ -97,7 +99,7 @@
 
         main{
             grid-area: main;
-            border: 1px solid black;
+            border: 1px solid #E5E9F0;
             border-radius: 10px;
             background-color: white;
         }
@@ -119,7 +121,7 @@
 
         #sidebar{
             background-color: white;
-            border: 1px solid black;
+            border: 1px solid #E5E9F0;
             border-radius: 10px;
             width: 80%;
             display: inline-block;
@@ -146,6 +148,7 @@
         #submenu-trigger{
             position: relative;
             display: inline-block;
+            z-index: 100;
         }
         #submenu {
             display: none;

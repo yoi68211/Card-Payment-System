@@ -16,11 +16,11 @@ public class Product extends BaseEntity {
     @Id
     @Column(nullable = false, name = "product_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;                    // product IDX
+    private Long id;                                // product IDX
 
     @Column(nullable = false)
     @NotBlank(message = "상품명을 입력해주세요")
-    private String productName;                // 상품 명
+    private String productName;                     // 상품 명
 
     @Column(nullable = false)
     private int productTotalItems;                  // 상품 수량
@@ -29,17 +29,12 @@ public class Product extends BaseEntity {
     private int productPrice;                       // 상품 가격
 
     @Column(nullable = false)
-    private int productAmount;                       // 상품 총액
+    private int productAmount;                      // 상품 총액
 
     ///////////////////////////////////////////////////////
-    // 결제 IDX
 
+    // 결제 IDX
     @ManyToOne
     @JoinColumn(name = "payment_id", referencedColumnName = "payment_id",nullable = false)
     private Payment payment;
-
-
-
-
-
 }

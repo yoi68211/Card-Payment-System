@@ -6,7 +6,10 @@
     <link th:href="@{/css/pageSample.css}" rel="stylesheet">
     <link th:href="@{/css/basicPayInfoDetail.css}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/047f82d071.js" crossorigin="anonymous"></script>
-
+    <!--  포트원  -->
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 </head>
 <body>
 <header class="header-nav">
@@ -24,15 +27,15 @@
             <span class="header-flex-three">
                 <span class="header-icon">
                     <a href="#"><img th:src="@{/img/help.png}" id="help_icon"></a>
-                    <a href="#"><img th:src="@{/img/chart.png}" id="chart_icon"></a>
-                    <a href="#"><img th:src="@{/img/memo.png}" id="memo_icon"></a>
+                    <a href="/chartDetail"><img th:src="@{/img/chart.png}" id="chart_icon"></a>
+                    <a href="/memo/paging"><img th:src="@{/img/memo.png}" id="memo_icon"></a>
                 </span>
                 <img th:src="@{/img/profileImg.png}" id="profile-img">
                 <span id="submenu-trigger">
                     <a href="#">Nacamora</a>
                     <div id="submenu">
                         <a href="#">정보 변경</a>
-                        <a href="#">비밀번호 변경</a>
+                        <a href="/user/update">비밀번호 변경</a>
                         <a href="/logout">로그아웃</a>
                     </div>
                 </span>
@@ -55,10 +58,10 @@
                 </div>
                 <div>
 
-                    <button type="button" th:if="${!#strings.equals(payInfo.paymentStatus, 'wait')}" onclick="toggleEdit()">편집</button>
-                    <button type="button" th:if="${!#strings.equals(payInfo.paymentStatus, 'wait')}" onclick="fnDelPay()" >삭제</button>
-                    <button type="button" th:if="${#strings.equals(payInfo.paymentStatus, 'wait')}">신용 구매도표 보기</button>
-                    <button type="button"><i class="fa-solid fa-chevron-left"></i>목록으로</button>
+                    <button type="button" th:if="${#strings.equals(payInfo.paymentStatus, 'error')}" onclick="toggleEdit()">편집</button>
+                    <button type="button" th:if="${#strings.equals(payInfo.paymentStatus, 'error')}" onclick="fnDelPay()" >삭제</button>
+                    <button type="button" th:if="${!#strings.equals(payInfo.paymentStatus, 'error')}">신용 구매도표 보기</button>
+                    <button type="button" onclick="location.href='/list'"><i class="fa-solid fa-chevron-left"></i>목록으로</button>
                 </div>
             </div>
             <div class="basic-body">
@@ -75,6 +78,8 @@
                         <input type="text" id="customerName" name="customerName" class="editable" disabled th:value="${customerInfo.customerName}">
                         <input type="hidden" id="customerId" name="customerId" th:value="${customerInfo.id}">
                         <input type="hidden" id="paymentId" name="paymentId" th:value="${payInfo.id}">
+                        <input type="hidden" id="customerPhone" name="customerPhone" th:value="${customerInfo.customerPhone}">
+                        <input type="hidden" id="customerAddress" name="customerAddress" th:value="${customerInfo.customerAddress}">
                     </label>
                     <label>
                         <span>E-Mail</span>
@@ -158,7 +163,7 @@
                     </table>
                 </div>
                 <div class="basic-real-footer">
-                    <button type="button" onclick="test()">즉시 결제</button>
+                    <button type="button" onclick="fnBasicPay()">즉시 결제</button>
                     <button type="button" onclick="moveQrPay()">QR 결제</button>
                 </div>
             </div>
@@ -172,7 +177,7 @@
         <span id="sidebar">
             <nav>
                 <ul class="sidebar-ul">
-                    <li> <!-- 현재 페이지 의 해당하는 span태그에 style="color: blue;" 써주세여  -->
+                    <li onclick="location.href='/dashboard'" > <!-- 현재 페이지 의 해당하는 span태그에 style="color: blue;" 써주세여  -->
                         <span>
                             <img th:src="@{/img/sidebar_dashboard.png}" id="sidebar_dashboard_icon">
                             <span class="sidebar-nav-text">DashBoard</span>
@@ -186,24 +191,24 @@
                         </span>
                         <i class="fa-solid fa-chevron-right"></i>
                     </li>
-                    <li>
-                        <span style="color: blue;">
+                    <li id="payList-toggle">
+                        <span class="nowPage">
                             <img th:src="@{/img/sidebar_payList.png}" id="sidebar_payList_icon">
                             <span class="sidebar-nav-text">결제목록</span>
                         </span>
-                        <i class="fa-solid fa-chevron-down" id="payList-toggle"></i>
+                        <i class="fa-solid fa-chevron-down" ></i>
                     </li>
-                    <li class="payList-nav">
-                        <span class="payList" style="color: blue;">
+                    <li class="payList-nav" onclick="location.href='/list'">
+                        <span class="payList nowPage">
                             <i class="fa-solid fa-square fa-2xs"></i>
                             <span class="sidebar-nav-text">전체 결제 목록</span>
                         </span>
                         <!-- <i class="fa-solid fa-chevron-right"></i> -->
                     </li>
-                    <li class="payList-nav">
+                    <li class="payList-nav" onclick="location.href='#'">
                         <span class="payList">
                             <i class="fa-solid fa-square fa-2xs"></i>
-                            <span class="sidebar-nav-text" ><a href="#">자동 결제 목록</a></span>
+                            <span class="sidebar-nav-text" >자동 결제 목록</span>
                         </span>
                         <!-- <i class="fa-solid fa-chevron-right"></i> -->
                     </li>
@@ -215,7 +220,9 @@
 </body>
 <script th:src="@{/js/pageSample.js}"></script>
 <script th:src="@{/js/basicPayInfoDetail.js}"></script>
+<script th:src="@{/js/basicPay.js}"></script>
 <script th:inline="javascript">
+
     let customerId = [[${customerInfo.id}]];
 
     let paymentType = [[${payInfo.paymentType}]]; // basic, auto, stop
@@ -278,7 +285,7 @@
         textColor = 'white';
     } else if (paymentStatus === 'paid') {
         payStatus = '결제완료';
-        backgroundColor = 'black';
+        backgroundColor = '#2D5CBE';
         textColor = 'white';
         // 다른 상태에 대한 스타일을 설정합니다.
     } else if (paymentStatus === 'stop') {
@@ -294,6 +301,7 @@
     payStatusElement.innerText = payStatus;
     payStatusElement.style.backgroundColor = backgroundColor;
     payStatusElement.style.color = textColor;
+
 
 
 
