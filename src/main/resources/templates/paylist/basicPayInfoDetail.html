@@ -27,15 +27,15 @@
             <span class="header-flex-three">
                 <span class="header-icon">
                     <a href="#"><img th:src="@{/img/help.png}" id="help_icon"></a>
-                    <a href="#"><img th:src="@{/img/chart.png}" id="chart_icon"></a>
-                    <a href="#"><img th:src="@{/img/memo.png}" id="memo_icon"></a>
+                    <a href="/chartDetail"><img th:src="@{/img/chart.png}" id="chart_icon"></a>
+                    <a href="/memo/paging"><img th:src="@{/img/memo.png}" id="memo_icon"></a>
                 </span>
                 <img th:src="@{/img/profileImg.png}" id="profile-img">
                 <span id="submenu-trigger">
                     <a href="#">Nacamora</a>
                     <div id="submenu">
                         <a href="#">정보 변경</a>
-                        <a href="#">비밀번호 변경</a>
+                        <a href="/user/update">비밀번호 변경</a>
                         <a href="/logout">로그아웃</a>
                     </div>
                 </span>
@@ -61,7 +61,7 @@
                     <button type="button" th:if="${#strings.equals(payInfo.paymentStatus, 'error')}" onclick="toggleEdit()">편집</button>
                     <button type="button" th:if="${#strings.equals(payInfo.paymentStatus, 'error')}" onclick="fnDelPay()" >삭제</button>
                     <button type="button" th:if="${!#strings.equals(payInfo.paymentStatus, 'error')}">신용 구매도표 보기</button>
-                    <button type="button"><i class="fa-solid fa-chevron-left"></i>목록으로</button>
+                    <button type="button" onclick="location.href='/list'"><i class="fa-solid fa-chevron-left"></i>목록으로</button>
                 </div>
             </div>
             <div class="basic-body">
@@ -177,7 +177,7 @@
         <span id="sidebar">
             <nav>
                 <ul class="sidebar-ul">
-                    <li> <!-- 현재 페이지 의 해당하는 span태그에 style="color: blue;" 써주세여  -->
+                    <li onclick="location.href='/dashboard'" > <!-- 현재 페이지 의 해당하는 span태그에 style="color: blue;" 써주세여  -->
                         <span>
                             <img th:src="@{/img/sidebar_dashboard.png}" id="sidebar_dashboard_icon">
                             <span class="sidebar-nav-text">DashBoard</span>
@@ -191,24 +191,24 @@
                         </span>
                         <i class="fa-solid fa-chevron-right"></i>
                     </li>
-                    <li>
-                        <span style="color: blue;">
+                    <li id="payList-toggle">
+                        <span class="nowPage">
                             <img th:src="@{/img/sidebar_payList.png}" id="sidebar_payList_icon">
                             <span class="sidebar-nav-text">결제목록</span>
                         </span>
-                        <i class="fa-solid fa-chevron-down" id="payList-toggle"></i>
+                        <i class="fa-solid fa-chevron-down" ></i>
                     </li>
-                    <li class="payList-nav">
-                        <span class="payList" style="color: blue;">
+                    <li class="payList-nav" onclick="location.href='/list'">
+                        <span class="payList nowPage">
                             <i class="fa-solid fa-square fa-2xs"></i>
                             <span class="sidebar-nav-text">전체 결제 목록</span>
                         </span>
                         <!-- <i class="fa-solid fa-chevron-right"></i> -->
                     </li>
-                    <li class="payList-nav">
+                    <li class="payList-nav" onclick="location.href='#'">
                         <span class="payList">
                             <i class="fa-solid fa-square fa-2xs"></i>
-                            <span class="sidebar-nav-text" ><a href="#">자동 결제 목록</a></span>
+                            <span class="sidebar-nav-text" >자동 결제 목록</span>
                         </span>
                         <!-- <i class="fa-solid fa-chevron-right"></i> -->
                     </li>

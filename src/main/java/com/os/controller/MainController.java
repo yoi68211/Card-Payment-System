@@ -35,7 +35,7 @@ public class MainController {
 
 
     @GetMapping("dashboard")
-    public String login(Model model) {
+    public String mainPage(Model model) {
 
 
         List<Long> monthChart = paymentService.getCountsByMonthRange();
@@ -49,6 +49,15 @@ public class MainController {
         return "dashboard";
     }
 
+    @GetMapping("/chartDetail")
+    public String chartDetail(Model model){
+        List<Long> monthChart = paymentService.getCountsByMonthRange();
+        List<Long> yearChart = paymentService.getCountsByYearRange();
+
+        model.addAttribute("monthChartList",monthChart);
+        model.addAttribute("yearChartList",yearChart);
+        return "chartDetail";
+    }
     @GetMapping("/join")
     public String joinPage()   {
 

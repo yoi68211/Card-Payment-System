@@ -1,11 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
     <link th:href="@{/css/pageSample.css}" rel="stylesheet">
-    <link th:href="@{/css/autopayInfoDetail.css}" rel="stylesheet">
+    <link th:href="@{/css/chartDetail.css}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/047f82d071.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> <!-- 차트 api -->
 </head>
 <body>
 <header class="header-nav">
@@ -17,13 +21,13 @@
             <a href="/dashboard">AIP System</a>
         </span>
 
-    <span class="header-pageName header-flex-box" >결제 목록 / 자동 결제 목록</span><!-- 현재 페이지 이름 -->
+    <span class="header-pageName header-flex-box" >현재 페이지</span><!-- 현재 페이지 이름 -->
 
     <span class="header-flex-box">
             <span class="header-flex-three">
                 <span class="header-icon">
                     <a href="#"><img th:src="@{/img/help.png}" id="help_icon"></a>
-                    <a href="/chartDetail"><img th:src="@{/img/chart.png}" id="chart_icon"></a>
+                    <a href="/chartDetail" class="nowPage"><img th:src="@{/img/chart.png}" id="chart_icon"></a>
                     <a href="/memo/paging"><img th:src="@{/img/memo.png}" id="memo_icon"></a>
                 </span>
                 <img th:src="@{/img/profileImg.png}" id="profile-img">
@@ -40,87 +44,24 @@
 </header>
 <main>
     <div class="main-cell">
-        <div class="auto-main">
-            <div class="auto-header">
-                <div>
-                    <span>회원 ID : </span>
-                    <span>AUTO-<span class="customer-id">1313</span> 자동결제 상세내역</span>
+        <div class="dashboard-chart">
+            <div class="chart-box">
+                <div class="chart-title-box">
+                    <span id="chart-title">결제 처리 통계</span>
                 </div>
-                <div>
-                    <button>편집</button>
-                    <button onclick="location.href='/list'"><i class="fa-solid fa-chevron-left"></i>목록으로</button>
+                <div class="tab-bar">
+                    <span id="monthChart" class="tab-btn active" onclick="openTab('chartMonth')">Month</span>
+                    <span class="gap"></span> <!-- 간격을 위한 빈 span 요소 -->
+                    <span id="yearChart" class="tab-btn" onclick="openTab('chartYear')">Year</span>
                 </div>
-            </div>
-            <div class="auto-body">
-                <div class="auto-input-group">
-                    <label>
-                        <span>등록일시</span>
-                        <input type="date">
-                    </label>
-                    <label>
-                        <span>회원ID</span>
-                        <input type="text">
-                    </label>
-                    <label>
-                        <span>고객명</span>
-                        <input type="text">
-                    </label>
-                    <label>
-                        <span>E-Mail</span>
-                        <input type="email">
-                    </label>
-                    <label class="phone-inputs">
-                        <span>연락번호</span>
-                        <div class="phone-flex">
-                            <input type="tel" maxlength="3" placeholder="010" class="phone-part">
-                            -
-                            <input type="tel" maxlength="4" placeholder="1234" class="phone-part">
-                            -
-                            <input type="tel" maxlength="4" placeholder="5678" class="phone-part">
-                        </div>
-                    </label>
-                    <label>
-                        <span>주소</span>
-                        <input type="text">
-                    </label>
-                    <label class="auto-custom-input">
-                        <span>자동결제 금액</span>
-                        <input type="number">
-                    </label>
-                    <label class="auto-custom-input">
-                        <span>결제구분</span>
-                        <input type="text">
-                    </label>
-                    <label>
-                        <span>마지막 결제일</span>
-                        <input type="date">
-                    </label>
-                    <label class="auto-custom-input">
-                        <span>마지막 거래상태</span>
-                        <input type="text">
-                    </label>
-                    <label>
-                        <span>다음 결제일</span>
-                        <input type="date">
-                    </label>
-                    <label class="auto-custom-input">
-                        <span>결제 회차</span>
-                        <input type="text">
-                    </label>
-                    <label class="auto-memo">
-                        <span>메모</span>
-                        <input type="text">
-                    </label>
+                <div id="chartMonth" class="tab-content active">
+                    <apexchart type="line" height="200px" width="600px" :options="chartOptions" :series="series"></apexchart>
                 </div>
-            </div>
-            <div class="auto-footer">
-                <button>중지</button>
-                <button><i class="fa-solid fa-credit-card"></i>카드정보 변경 요청</button>
+                <div id="chartYear" class="tab-content">
+                    <apexchart type="line" height="200px" width="600px" :options="chartOptions" :series="series"></apexchart>
+                </div>
             </div>
         </div>
-
-
-
     </div>
 </main>
 <aside>
@@ -142,7 +83,7 @@
                         <i class="fa-solid fa-chevron-right"></i>
                     </li>
                     <li id="payList-toggle">
-                        <span class="nowPage">
+                        <span>
                             <img th:src="@{/img/sidebar_payList.png}" id="sidebar_payList_icon">
                             <span class="sidebar-nav-text">결제목록</span>
                         </span>
@@ -156,7 +97,7 @@
                         <!-- <i class="fa-solid fa-chevron-right"></i> -->
                     </li>
                     <li class="payList-nav" onclick="location.href='#'">
-                        <span class="payList nowPage">
+                        <span class="payList">
                             <i class="fa-solid fa-square fa-2xs"></i>
                             <span class="sidebar-nav-text" >자동 결제 목록</span>
                         </span>
@@ -168,5 +109,10 @@
             </span>
 </aside>
 </body>
+<script th:inline="javascript">
+    let monthData = [[${monthChartList}]]; // Month Chart Data
+    let yearData = [[${yearChartList}]]; // Year Chart Data
+</script>
+<script th:src="@{/js/chartDetail.js}"></script>
 <script th:src="@{/js/pageSample.js}"></script>
 </html>
