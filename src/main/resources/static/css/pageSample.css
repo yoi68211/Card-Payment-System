@@ -16,6 +16,8 @@
                 'side main';
             transition: grid-template-columns 0.5s ease;
             font-size: 1vw;
+            min-width: 1070px;
+            min height: 730px;
         }
         a{
             text-decoration: none;

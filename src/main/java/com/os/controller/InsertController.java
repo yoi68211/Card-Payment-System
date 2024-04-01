@@ -52,7 +52,7 @@ public class InsertController {
     @PostMapping("/save")
     public String save(@RequestBody SavePaymentDTO dto, RedirectAttributes redirectAttributes) {
         User user = userService.findId();
-
+        System.out.println("dto = " + dto.toString());
         if (user.getSavePayment() == null) {
             System.out.println("save");
             savePaymentService.save(dto, user);
