@@ -7,6 +7,7 @@
 <body>
 <form action="/memo/update" method="post" name="updateForm">
     <input type="hidden" name="id" th:value="${MemoUpdate.id}">
+    대시보드 노출유무 <input type="radio" name="memoExposeYn" value="Y">Y <input type="radio" name="memoExposeYn" value="N">N<br>
    <textarea name="MemoContents" cols="100" rows="30" th:text="${MemoUpdate.MemoContents}"></textarea> <br>
     <input type="button" value="수정하기" onclick="MemoUpdate()">
 </form>

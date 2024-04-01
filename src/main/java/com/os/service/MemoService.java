@@ -1,7 +1,9 @@
 package com.os.service;
 
+import com.os.dto.AllPaymentListDto;
 import com.os.dto.MemoDTO;
 import com.os.entity.Memo;
+import com.os.entity.Payment;
 import com.os.entity.User;
 import com.os.repository.MemoRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,21 +22,57 @@ import java.util.Optional;
 public class MemoService {
     private final MemoRepository memoRepository;
     private final UserService userService;
+
+
     public void save(MemoDTO memoDTO) {
         User user = userService.findId();
         Memo memo = Memo.toEntity(memoDTO, user);
         memoRepository.save(memo);
     }
 
-
     public List<MemoDTO> findAll() {
-        List<Memo> MemoList = memoRepository.findAll();
+        List<Memo> MemoList = memoRepository.findAll(Sort.by(Sort.Direction.DESC, "createTime"));
         List<MemoDTO> MemoDTOList = new ArrayList<>();
         for(Memo Memo : MemoList){
             MemoDTOList.add(MemoDTO.toMemoDTO(Memo));
         }
         return MemoDTOList;
     }
+
+    /*public List<MemoDTO> findbyall(String keyword) {
+        List<Memo> MemoList = memoRepository.findAll(keyword);
+        List<MemoDTO> MemoDTOList = new ArrayList<>();
+        for(Memo Memo : MemoList){
+            MemoDTOList.add(MemoDTO.toMemoDTO(Memo));
+        }
+        return MemoDTOList;
+    }
+    public Page<MemoDTO>findbycontent(String keyword,Pageable pageable) {
+        int page = pageable.getPageNumber() - 1;
+        int pageLimit = 15;
+        Page<Memo> MemoList = memoRepository.findByMemoContentsContains(keyword,PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+
+        return MemoList.map(memo -> new MemoDTO(memo.getId(),
+                memo.getUser().getUsername()
+                ,memo.getMemoContents()
+                ,memo.getCreateTime()
+                ,memo.getUpdateTime()
+                ,memo.getMemoExposeYn()
+                ,memo.getMemoDelYn()));
+    }public Page<MemoDTO> findbywriter(String keyword ,Pageable pageable) {
+        int page = pageable.getPageNumber() - 1;
+        int pageLimit = 15;
+        Page<Memo> MemoList = memoRepository.findAllByUser_UsernameContaining(keyword,PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+
+        return MemoList.map(memo -> new MemoDTO(memo.getId(),
+                memo.getUser().getUsername()
+                ,memo.getMemoContents()
+                ,memo.getCreateTime()
+                ,memo.getUpdateTime()
+                ,memo.getMemoExposeYn()
+                ,memo.getMemoDelYn()));
+    }
+    */
 
     public void deleteSelectedItems(List<Long> selectedIds) {
         memoRepository.deleteAllById(selectedIds);
@@ -51,32 +89,36 @@ public class MemoService {
     }
 
     public MemoDTO update(MemoDTO memoDTO) {
-//        Memo Memo = Memo.toEntity(memoDTO);
+        // Memo Memo = Memo.toEntity(memoDTO);
         User user = userService.findId();
         Memo memo  = Memo.toEntity(memoDTO, user);
         memoRepository.save(memo);
         return findById(memoDTO.getId());
     }
 
-    public Page<MemoDTO> paging(Pageable pageable) {
+    public Page<MemoDTO> paging(Pageable pageable, String searchBoxValue, String searchTypeValue) {
         int page = pageable.getPageNumber() - 1;
         int pageLimit = 15; // 한 페이지에 보여줄 글 갯수
-        // 한 페이지당 15개씩 글을 보여주고, 정렬 기준은 id 기준으로 내림차순 정렬
-        // page 위치에 있는 값은 0부터 시작
-        Page<Memo> memoEntities = memoRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
 
-        System.out.println("MemoEntities.getContent() = " + memoEntities.getContent()); // 요청 페이지에 해당하는 글
-        System.out.println("MemoEntities.getTotalElements() = " + memoEntities.getTotalElements()); // 전체 글갯수
-        System.out.println("MemoEntities.getNumber() = " + memoEntities.getNumber()); // DB로 요청한 페이지 번호
-        System.out.println("MemoEntities.getTotalPages() = " + memoEntities.getTotalPages()); // 전체 페이지 갯수
-        System.out.println("MemoEntities.getSize() = " + memoEntities.getSize()); // 한 페이지에 보여지는 글 갯수
-        System.out.println("MemoEntities.hasPrevious() = " + memoEntities.hasPrevious()); // 이전 페이지 존재 여부
-        System.out.println("MemoEntities.isFirst() = " + memoEntities.isFirst()); // 첫 페이지 여부
-        System.out.println("MemoEntities.isLast() = " + memoEntities.isLast()); // 마지막 페이지 여부
+        Page<Memo> memoEntities;
 
+        if ("entire".equals(searchTypeValue)) {
+            memoEntities = memoRepository.findByMemoContentsContains(searchBoxValue, PageRequest.of(page, pageLimit));
+        } else if ("writer".equals(searchTypeValue)) {
+            memoEntities = memoRepository.findAllByUser_UsernameContaining(searchBoxValue, PageRequest.of(page, pageLimit));
+        } else {
+            // 기타 검색 조건에 따른 처리
+            return null;
+        }
 
-        // 목록: id, writer, title, hits, createdTime
+        return memoEntities.map(memo -> new MemoDTO(memo.getId(),
+                memo.getUser().getUsername(),
+                memo.getMemoContents(),
+                memo.getCreateTime(),
+                memo.getUpdateTime(),
+                memo.getMemoExposeYn(),
+                memo.getMemoDelYn()
+                ));
 
-        return memoEntities.map(memo -> new MemoDTO(memo.getId(), memo.getUser().getUsername(), memo.getMemoContents(), memo.getCreateTime(),memo.getUpdateTime(), memo.getMemoDelYn(), memo.getMemoExposeYn()));
     }
 }
