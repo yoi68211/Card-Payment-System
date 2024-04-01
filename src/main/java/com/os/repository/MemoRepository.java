@@ -13,7 +13,7 @@ import java.util.List;
 
 @Transactional
 public interface MemoRepository extends JpaRepository<Memo,Long> {
-
+    List<Memo> findByMemoDelYn(String memoDelYn);
     Page<Memo> findByMemoContentsContains(String keyword, PageRequest id);
 
     Page<Memo> findAllByUser_UsernameContaining(String keyword, PageRequest id);
