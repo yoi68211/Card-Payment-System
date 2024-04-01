@@ -1,6 +1,8 @@
 package com.os.repository;
 
 import com.os.entity.Memo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -21,4 +23,8 @@ public interface MemoRepository extends JpaRepository<Memo,Long> {
 
     // 소프트 삭제된 메모 목록 조회
     List<Memo> findByMemoDelYn(String memoDelYn);
+
+    Page<Memo> findByMemoContentsContains(String keyword, PageRequest id);
+
+    Page<Memo> findAllByUser_UsernameContaining(String keyword, PageRequest id);
 }
