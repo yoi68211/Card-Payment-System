@@ -3,7 +3,7 @@ package com.os.service;
 import com.os.dto.PaymentDTOC;
 import com.os.entity.Payment;
 import com.os.repository.PaymentRepository;
-import lombok.AllArgsConstructor;
+import com.os.util.OrderStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -64,6 +64,29 @@ public class PaymentServiceC {
         }
 
         return monthCounts;
+    }
+
+
+    public boolean basicPayPaid(Long paymentId){
+        Optional<Payment> paymentOptional = paymentRepository.findById(paymentId);
+        if(paymentOptional.isPresent()){
+            Payment payment = paymentOptional.get();
+            payment.setPaymentStatus(OrderStatus.paid);
+            paymentRepository.save(payment);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean basicPayError(Long paymentId){
+        Optional<Payment> paymentOptional = paymentRepository.findById(paymentId);
+        if(paymentOptional.isPresent()){
+            Payment payment = paymentOptional.get();
+            payment.setPaymentStatus(OrderStatus.error);
+            paymentRepository.save(payment);
+            return true;
+        }
+        return false;
     }
 
 
