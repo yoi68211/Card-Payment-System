@@ -55,7 +55,7 @@
                     </select>
                 </span>
                 <span><input type="text" id="search_box" value="" placeholder="검색어를 입력하세요"></span>
-                <span><button onclick="checkValues()">검색</button></span>
+                <span><button onclick="searchMemo()">검색</button></span>
             </div>
         </div>
         <div class="modify_button">
@@ -94,28 +94,26 @@
             <!-- 첫번째 페이지로 이동 -->
             <!-- /Memo/paging?page=1 -->
         <div class = "pageButton">
-            <span>
-                <!-- 이전 링크 활성화 비활성화 -->
-                <a th:href="@{/memo/paging(page=1)}"> << </a>
-                <!-- MemoList.getNumber() 사용자:2페이지 getNumber()=1 -->
-                <a th:href="${MemoList.first} ? '#' : @{/memo/paging(page=${MemoList.number})}">&nbsp;<&nbsp;</a>
-                        <!-- 페이지 번호 링크(현재 페이지는 숫자만)
-                            for(int page=startPage; page<=endPage; page++)-->
-            </span>
-            <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
-            <!-- 현재페이지는 링크 없이 숫자만 -->
-                    <a th:if="${page == MemoList.number + 1}" th:text="${page}"></a>&nbsp;
-                     <!--  현재페이지 번호가 아닌 다른 페이지번호에는 링크를 보여줌 -->
-                <span th:unless="${page == MemoList.number + 1}">
-                    <a th:href="@{/memo/paging(page=${page})}" th:text="${page}"></a>
-                </span>
-            </span>
-            <span>
-                <!-- 다음 링크 활성화 비활성화 사용자: 2페이지, getNumber: 1, 3페이지-->
-                <a th:href="${MemoList.last} ? '#' : @{/memo/paging(page=${MemoList.number + 2})}">&nbsp;>&nbsp;</a>
-                <!-- 마지막 페이지로 이동 -->
-                <a th:href="@{/memo/paging(page=${MemoList.totalPages})}"> >> </a>
-            </span>
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <!-- 이전 페이지 -->
+                    <li th:if="${MemoList.hasPrevious()}" class="page-item">
+                        <a class="page-link" th:href="@{'/memo/paging?page=' + (${MemoList.getNumber()} - 1) + '&amp;size=' + ${MemoList.getSize()} + '&amp;keyword=' + ${keyword != null ? keyword : ''}}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <!-- 페이지 번호 -->
+                    <li th:each="i : ${#numbers.sequence((MemoList.number - 3) < 0 ? 0 : (MemoList.number - 3), (MemoList.number + 3) > (MemoList.totalPages - 1) ? (MemoList.totalPages - 1) : (MemoList.number + 3))}" th:class="${MemoList.number == i} ? 'page-item active' : 'page-item'">
+                        <a class="page-link" th:href="@{'/memo/paging?page=' + ${i} + '&amp;size=' + ${MemoList.getSize()} + '&amp;keyword=' + ${keyword != null ? keyword : ''}}" th:text="${i + 1}"></a>
+                    </li>
+                    <!-- 다음 페이지 -->
+                    <li th:if="${MemoList.hasNext()}" class="page-item">
+                        <a class="page-link" th:href="@{'/memo/paging?page=' + (${MemoList.getNumber()} + 1) + '&amp;size=' + ${MemoList.getSize()} + '&amp;keyword=' + ${keyword != null ? keyword : ''}}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
 
     </div>
@@ -166,28 +164,13 @@
 </aside>
 </body>
 <script>
-    function checkValues() {
-        var searchTypeValue = document.getElementById("type").value;
-        var searchKeyword = document.getElementById("search_box").value.toLowerCase();
+    function searchMemo() {
+        var keyword = document.getElementById("search_box").value.trim(); // 검색어 가져오기
+        var url = "/memo/paging?keyword=" + encodeURIComponent(keyword); // 검색 URL 구성
 
-        var memos = document.querySelectorAll('.memo');
-
-        memos.forEach(function(memo) {
-            var memoId = memo.querySelector('td:nth-child(2)').textContent
-            var contents = memo.querySelector('td:nth-child(3)').textContent.toLowerCase();
-            var writer = memo.querySelector('td:nth-child(5)').textContent.toLowerCase();
-            var memoCreateTime = memo.querySelector('td:nth-child(6)').textContent
-
-
-            if ((searchTypeValue === 'contents' && contents.includes(searchKeyword)) ||
-                (searchTypeValue === 'writer' && writer.includes(searchKeyword)) ||
-                (searchTypeValue === 'entire' && (contents.includes(searchKeyword) || writer.includes(searchKeyword) || memoId.includes(searchKeyword) || memoCreateTime.includes(searchKeyword)))) {
-                memo.style.display = 'table-row';
-            } else {
-                memo.style.display = 'none';
-            }
-        });
-   }
+        // 현재 페이지 유지하면서 검색
+        window.location.href = url;
+    }
 
     // ------------
     function allChecked(target){
