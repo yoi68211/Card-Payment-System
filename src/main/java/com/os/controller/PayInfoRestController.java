@@ -54,14 +54,14 @@ public class PayInfoRestController {
     }
 
 
-    @PostMapping("/issue-billing")
-    public BaseResponse<IssueBillingRes> issueBilling(@RequestBody IssueBillingReq issueBillingReq){
-        try{
-            //int customerIdx = jwtService.getUserIdx();
-            IssueBillingRes issueBillingRes = paymentService.issueBilling(issueBillingReq);
-            return new BaseResponse<>(issueBillingRes);
-        }catch (BaseException baseException){
-            return new BaseResponse<>(baseException.getStatus());
-        }
-    }
+//    @PostMapping("/issue-billing")
+//    public BaseResponse<IssueBillingRes> issueBilling(@RequestBody IssueBillingReq issueBillingReq){
+//        try{
+//            //int customerIdx = jwtService.getUserIdx();
+//            IssueBillingRes issueBillingRes = paymentService.issueBilling(issueBillingReq);
+//            return new BaseResponse<>(issueBillingRes);
+//        }catch (BaseException baseException){
+//            return new BaseResponse<>(baseException.getStatus());
+//        }
+//    }
 }

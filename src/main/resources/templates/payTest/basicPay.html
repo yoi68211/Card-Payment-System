@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+    <!-- iamport.payment.js -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+    <title>Document</title>
+</head>
+<body>
+<form id="api" method="post">
+    <!--예: https://www.myservice.com/subscription/issue-billing-->
+    <div>
+        <label for="card_number">카드 번호 XXXX-XXXX-XXXX-XXXX</label>
+        <input id="card_number" type="text" name="card_number">
+    </div>
+    <div>
+        <label for="expiry">카드 유효기간 YYYY-MM</label>
+        <input id="expiry" type="text" name="expiry">
+    </div>
+    <div>
+        <label for="birth">생년월일 YYMMDD</label>
+        <input id="birth" type="text" name="birth">
+    </div>
+    <div>
+        <label for="pwd_2digit">카드 비밀번호 앞 두자리 XX</label>
+        <input id="pwd_2digit" type="text" name="pwd_2digit">
+    </div>
+    <input hidden type="text" value="gildong_0001_1234" name="customer_uid">
+    <input type="submit" value="결제하기">
+</form>
+</body>
+<script>
+    const fetch = require('node-fetch');
+const merchant_uid = generateUniqueOrderNumber(); // 가맹점에서 주문번호를 생성하는 함수
+
+async function processPayment() {
+    const paymentRequest = {
+        merchant_uid: merchant_uid,
+        currency: 'KRW',
+        amount: 100, // 결제금액
+        card_number: '1234-1234-1234-1234',
+        expiry: '2024-12',
+        birth: 'YYMMDD', // 생년월일
+        card_quota: 0, // 일시불
+        buyer_name: '구매자명',
+        buyer_email: 'buyer@example.com',
+        buyer_tel: '010-1234-5678',
+        buyer_addr: '서울특별시 강남구',
+        buyer_postcode: '12345'
+    };
+
+    try {
+        const response = await fetch('https://api.example.com/subscribe/payments/onetime', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer YOUR_ACCESS_TOKEN' // 포트원 API 인증 토큰
+            },
+            body: JSON.stringify(paymentRequest)
+        });
+
+        if (!response.ok) {
+            throw new Error('Payment failed');
+        }
+
+        const responseData = await response.json();
+        console.log(responseData);
+    } catch (error) {
+        console.error('Error:', error.message);
+    }
+}
+
+// 함수 호출
+processPayment();
+
+</script>
+</html>
