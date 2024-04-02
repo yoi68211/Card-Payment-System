@@ -41,7 +41,7 @@ public class PaymentDTOC {
                 .paymentUpdateTime(payment.getUpdateTime())
                 .paymentDelYn(payment.getPaymentDelYn())
                 .paymentMonth(payment.getPaymentMonth())
-                .paymentNextTime(payment.getPaymentNextTime())
+//                .paymentNextTime(payment.getPaymentNextTime())
                 .paymentFirstPay(payment.getPaymentFirstPay())
                 .build();
 

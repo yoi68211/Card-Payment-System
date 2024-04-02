@@ -2,12 +2,11 @@ package com.os.service;
 
 import com.os.dto.InsertDTO;
 import com.os.dto.ProductDTO;
-import com.os.entity.Customer;
-import com.os.entity.Payment;
-import com.os.entity.Product;
-import com.os.entity.User;
+import com.os.entity.*;
 import com.os.repository.CustomerRepository;
+import com.os.util.AutoStatus;
 import com.os.util.OrderStatus;
+import com.os.util.OrderType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +43,10 @@ public class PaymentInsertService {
             payment.setPaymentStatus(OrderStatus.wait);
             payment.setPaymentDelYn('N');
 
+            payment.setPaymentFirstPay(dto.getPaymentFirstPay());
+            payment.setPaymentMonth(dto.getPaymentMonth());
+            payment.setPaymentAutoDate(dto.getAutoDate());
+
             List<Product> productList = new ArrayList<>();
             for (ProductDTO productDTO : dto.getProductList()) {
                 Product product = new Product();
@@ -55,12 +58,29 @@ public class PaymentInsertService {
                 product.setPayment(payment);
             }
 
+
+
             payment.setProducts(productList);
             customer.setUser(user);
             payment.setCustomer(customer);
             customer.setPayments(payment);
 
+//            if(dto.getPaymentType().equals(OrderType.auto)){
+//                System.out.println("이거도 됬따.");
+//                AutoPayment autoPayment = new AutoPayment();
+//                autoPayment.setAutoPayCount(0);
+//                autoPayment.setAutoStatus(AutoStatus.auto);
+//                autoPayment.setCustomer(customer);
+//
+//
+//
+//                customer.setAutoPayments(autoPayment);
+//
+//            }
+
             customerRepository.save(customer);
+
+
         }
     }
 

@@ -7,6 +7,9 @@ import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.List;
+
+
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Getter
@@ -47,6 +50,9 @@ public class Customer extends BaseEntity {
 
     @OneToOne(mappedBy= "customer" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Payment payments;
+
+//    @OneToOne(mappedBy = "customer", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
+//    private AutoPayment autoPayments;
 
 
 //    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)

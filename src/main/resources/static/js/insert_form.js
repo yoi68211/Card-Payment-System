@@ -250,12 +250,19 @@
             var month = f.paymentMonth.value == "다음달" ? 1 : 2;
             var autoDate = f.autoDate.value;
             var paymentFirstPay = f.paymentFirstPay.value;
+            alert(type);
+            alert(month);
+            alert(autoDate);
+            alert(paymentFirstPay);
             if (type == "basic") {
                 month = 0;
                 autoDate = 0;
                 paymentFirstPay = 0;
             }
-
+            alert(type);
+            alert(month);
+            alert(autoDate);
+            alert(paymentFirstPay);
             if (!nameR(name)) {
                 return;
             }
@@ -386,6 +393,7 @@
             var month = f.paymentMonth.value == "다음달" ? 1 : 2;
             var autoDate = f.autoDate.value;
             var paymentFirstPay = f.paymentFirstPay.value;
+
             if (type == "basic") {
                 month = 0;
                 autoDate = 0;

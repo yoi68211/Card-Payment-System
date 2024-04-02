@@ -51,7 +51,9 @@ public class Payment extends BaseEntity{
 
     private int paymentMonth;                                   // 자동결제 다음결제일
 
-    private LocalDateTime paymentNextTime;                      // 자동결제 마지막결제일
+    private int paymentAutoDate;
+
+
 
     private int paymentFirstPay;                                // 자동결제 금액
 
@@ -64,6 +66,9 @@ public class Payment extends BaseEntity{
 
     @OneToMany(mappedBy = "payment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Product> products;
+
+    @OneToOne(mappedBy = "payment", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
+    private AutoPayment autoPayments;
 
     public String calculateTotalAmount(List<Product> products){
         int totalAmount =  products.stream().mapToInt(Product::getProductAmount).sum();
