@@ -30,14 +30,14 @@ public class MemoDTO {
 //    private String searchTypeValue;
 
 
-    public static MemoDTO toMemoDTO(Memo Memo) {
+    public static MemoDTO toMemoDTO(Memo memo) {
         MemoDTO memoDTO = new MemoDTO();
-        memoDTO.setId(Memo.getId());
-        memoDTO.setUserName(Memo.getUser().getUsername());
-        memoDTO.setMemoContents(Memo.getMemoContents());
-        memoDTO.setMemoExposeYn(Memo.getMemoExposeYn());
-        memoDTO.setCreateTime(Memo.getCreateTime());
-        memoDTO.setUpdateTime(Memo.getUpdateTime());
+        memoDTO.setId(memo.getId());
+        memoDTO.setUserName(memo.getUser().getUsername());
+        memoDTO.setMemoContents(memo.getMemoContents());
+        memoDTO.setMemoExposeYn(memo.getMemoExposeYn());
+        memoDTO.setCreateTime(memo.getCreateTime());
+        memoDTO.setUpdateTime(memo.getUpdateTime());
 
         return memoDTO;
     }

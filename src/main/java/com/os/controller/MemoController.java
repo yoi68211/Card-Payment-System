@@ -84,51 +84,22 @@ public class MemoController {
     }
     // /Memo/paging?page=1
     @GetMapping("/paging")
-    public String paging(@PageableDefault(page = 1) Pageable pageable, Model model ,@RequestParam(required = false, defaultValue = "") String searchBoxValue,
-                         @RequestParam(required = false, defaultValue = "entire") String searchTypeValue) {
+    public String paging(Model model, @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword) {
 
-        //   pageable.getPageNumber();
-//        searchBoxValue = request.getSearchBoxValue();
-//        searchTypeValue = request.getSearchTypeValue();
+        Page<MemoDTO> allPaymentsPage;
+        if (keyword != null && !keyword.isEmpty()) {
+            allPaymentsPage = memoService.findByTitleContaining(keyword, pageable);
+        } else {
+            allPaymentsPage = memoService.findAllMemos(pageable);
+        }
 
-        Page<MemoDTO> MemoList = memoService.paging(pageable,searchBoxValue, searchTypeValue);
+        long memoCount = allPaymentsPage.getTotalElements();
 
-        int blockLimit = 3;
-        int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
-        int endPage = Math.min((startPage + blockLimit - 1), MemoList.getTotalPages());
-
-        long memoCount = MemoList.getTotalElements();
-
-        // page 갯수 20개
-        // 현재 사용자가 3페이지
-        // 1 2 3
-        // 현재 사용자가 7페이지
-        // 7 8 9
-        // 보여지는 페이지 갯수 3개
-        // 총 페이지 갯수 8개
-
-        model.addAttribute("MemoList", MemoList);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-
+        model.addAttribute("MemoList", allPaymentsPage);
         model.addAttribute("memoCount", memoCount);
+        model.addAttribute("keyword", keyword);
 
         return "/memo/paging";
     }
-//    public String findAll(Model model, @PageableDefault(page = 0, size = 10, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable/*, @RequestParam(value = "keyword", required = false) String keyword*/) {
-////        Page<AllPaymentListDto> allPaymentsPage;
-////        if (keyword != null && !keyword.isEmpty()) {
-////            allPaymentsPage = allPaymentListService.findByTitleContaining(keyword, pageable);
-////        } else {
-////            allPaymentsPage = allPaymentListService.findAll(pageable);
-////        }
-//        Page<MemoDTO> MemoList = memoService.findAll(pageable);
-////        long payCount = allPaymentsPage.getTotalElements();
-//        long memoCount = MemoList.getTotalElements();
-//        model.addAttribute("payList", allPaymentsPage);
-//        model.addAttribute("payCount", payCount);
-//        model.addAttribute("keyword", keyword);
-//
-//        return "list";
-//    }
+
 }
