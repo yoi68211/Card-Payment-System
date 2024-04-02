@@ -1,0 +1,19 @@
+.memoWriteMain{
+    width: 100%;
+}
+
+.memoModifyMain{
+    width: 100%;
+}
+
+.memoSaveRegister{
+    font-weight: bold;
+}
+textarea {
+      border: 1px solid blue;
+      width: 700px;
+      height: 300px;
+      margin-left: 50px;
+      margin-right: 50px;
+      padding: 5px;
+}

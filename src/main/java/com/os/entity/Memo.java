@@ -5,16 +5,14 @@ import com.os.util.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @SQLDelete(sql = "UPDATE memo SET memo_del_yn = 'Y' WHERE memo_id = ? ")
+@Where(clause = "memo_del_yn = 'N'")
 @Entity
 @Data
 @Builder
