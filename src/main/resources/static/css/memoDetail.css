@@ -1,20 +1,28 @@
-
-
-.memoDetail-main{
-    width: 50%;
-    height: 500px;
-    background-color: white;
-     border: 1px solid blue;
-     padding: 5px;
-
+.detailSection{
+    width: 100%;
 }
 
-.author{
-      position: relative;/* 작성자 정보를 절대 위치로 설정 */
-      left:210%;
+.detailId {
+     display:flex;
+     justify-content: right;
+     margin: 5px;
 }
 
-.date{
-      position: relative;/* 작성자 정보를 절대 위치로 설정 */
-      left:210%;
+.detailNameTime{
+     display:flex;
+     justify-content: space-between;
+     margin: 5px;
+}
+
+.detailContents{
+    border: 1px solid blue;
+    width: 100%;
+    height: 450px;
+    padding: 5px;
+}
+
+.modifyButtons{
+     display:flex;
+     justify-content: space-between;
+     margin: 5px;
 }

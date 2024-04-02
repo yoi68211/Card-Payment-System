@@ -1,15 +1,13 @@
 package com.os.controller;
 
+import com.os.dto.IssueBillingReq;
 import com.os.dto.PaymentDTOC;
 import com.os.dto.UpdateDTO;
 import com.os.service.PaymentServiceC;
 import com.os.service.UpdateService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -54,4 +52,16 @@ public class PayInfoRestController {
             System.out.println("수정실패");
         }
     }
+
+
+//    @PostMapping("/issue-billing")
+//    public BaseResponse<IssueBillingRes> issueBilling(@RequestBody IssueBillingReq issueBillingReq){
+//        try{
+//            //int customerIdx = jwtService.getUserIdx();
+//            IssueBillingRes issueBillingRes = paymentService.issueBilling(issueBillingReq);
+//            return new BaseResponse<>(issueBillingRes);
+//        }catch (BaseException baseException){
+//            return new BaseResponse<>(baseException.getStatus());
+//        }
+//    }
 }

@@ -6,6 +6,7 @@
     <link th:href="@{/css/pageSample.css}" rel="stylesheet">
     <link th:href="@{/css/dashboard.css}" rel="stylesheet">
     <link th:href="@{/css/dashBoardChart.css}" rel="stylesheet">
+    <link th:href="@{/css/dashBoardMemo.css}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/047f82d071.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> <!-- 차트 api -->
 </head>
@@ -81,22 +82,22 @@
             </div>
 
         </div>
-        <div  class="dashboardMemoBoard" style="overflow-y:scroll">
+        <div  class="dashboardMemoBoard" style="">
             Memo board<a href="/memo/paging" target="_blank"> > </a>
 
-            <table th:each="memo: ${MemoList}"  >
+            <div th:each="memo: ${MemoList}"  >
                <div th:if="${memo.memoExposeYn} == 'Y'">
-                <tr>
-<!--                    <th>aaa</th>-->
-                    <th style="text-align:left" th:text="${memo.UserName}"></th>
-                    <th style="text-align:right" th:text="*{#temporals.format(memo.createTime, 'yyyy-MM-dd hh:mm')}"></th>
-                </tr>
-                <tr>
-                    <td th:text="${memo.MemoContents}"></td>
-                    <td></td>
-                </tr>
+
+               <div class="dashMemoNameDate">
+                <span class="memoName" th:text="${memo.UserName}"></span>
+                <span  th:text="*{#temporals.format(memo.createTime, 'yyyy-MM-dd hh:mm')}"></span>
                </div>
-            </table>
+
+               <div class="dashMemoContents">
+                   <span th:text="${memo.MemoContents}"></span>
+               </div>
+               </div>
+            </div>
         </div>
         <div class="dashboard-chart">
             <div class="chart-box">
