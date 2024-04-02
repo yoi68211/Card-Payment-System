@@ -63,10 +63,13 @@ public class MemoController {
 
     @PostMapping("/update")
     public String update(@ModelAttribute MemoDTO memoDTO, Model model) {
-        MemoDTO Memo =  memoService.update(memoDTO);
-        model.addAttribute("Memo", Memo);
-        return "/memo/detail";
-        // return "redirect:/Memo/" + MemoDTO.getId();
+//        MemoDTO Memo =  memoService.update(memoDTO);
+//        model.addAttribute("Memo", Memo);
+        memoService.update(memoDTO);
+
+
+        return "redirect:/dashboard";
+
     }
 
     @PostMapping("/delete")
@@ -98,7 +101,7 @@ public class MemoController {
 
         // page 갯수 20개
         // 현재 사용자가 3페이지
-        // 1 2 3 
+        // 1 2 3
         // 현재 사용자가 7페이지
         // 7 8 9
         // 보여지는 페이지 갯수 3개
@@ -112,4 +115,20 @@ public class MemoController {
 
         return "/memo/paging";
     }
+//    public String findAll(Model model, @PageableDefault(page = 0, size = 10, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable/*, @RequestParam(value = "keyword", required = false) String keyword*/) {
+////        Page<AllPaymentListDto> allPaymentsPage;
+////        if (keyword != null && !keyword.isEmpty()) {
+////            allPaymentsPage = allPaymentListService.findByTitleContaining(keyword, pageable);
+////        } else {
+////            allPaymentsPage = allPaymentListService.findAll(pageable);
+////        }
+//        Page<MemoDTO> MemoList = memoService.findAll(pageable);
+////        long payCount = allPaymentsPage.getTotalElements();
+//        long memoCount = MemoList.getTotalElements();
+//        model.addAttribute("payList", allPaymentsPage);
+//        model.addAttribute("payCount", payCount);
+//        model.addAttribute("keyword", keyword);
+//
+//        return "list";
+//    }
 }

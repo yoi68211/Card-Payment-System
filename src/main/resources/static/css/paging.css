@@ -43,8 +43,13 @@
 }
 .table{
     width: 100%;
+    border-collapse: collapse;
 }
 
-th, td {
+th{
+    border: 1px solid #444444;
+    background-color: lightgrey;
+}
+td {
     border: 1px solid #444444;
 }
