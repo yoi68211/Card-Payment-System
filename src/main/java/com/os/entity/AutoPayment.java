@@ -37,10 +37,13 @@ public class AutoPayment {
     private int autoPayCount;                        // 자동결제 횟수
 
 
-
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id",nullable = false)
     private User user;
+
+//    @OneToOne
+//    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id",nullable = false)
+//    private Customer customer;
 
 //    public LocalDateTime calculateLocalDateTime(InsertDTO dto){
 //        return autoCreateTime.plusMonths(dto.getAutoMonth()).withDayOfMonth(dto.getAutoDate());

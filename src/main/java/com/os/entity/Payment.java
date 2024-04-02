@@ -51,6 +51,8 @@ public class Payment extends BaseEntity{
 
     private int paymentMonth;                                   // 자동결제 다음결제일
 
+    private int paymentAutoDate;
+
     private LocalDateTime paymentNextTime;                      // 자동결제 마지막결제일
 
     private int paymentFirstPay;                                // 자동결제 금액
