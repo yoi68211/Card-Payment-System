@@ -147,17 +147,17 @@
                 <ul class="pagination">
                     <!-- 이전 페이지 -->
                     <li th:if="${payList.hasPrevious()}" class="page-item">
-                        <a class="page-link" th:href="@{(${isListPage}? '/list' : '/search') + '?page=' + (${payList.getNumber()} - 1) + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + ${keyword != null ? keyword : ''}}" aria-label="Previous">
+                        <a class="page-link" th:href="@{(${isListPage} ? '/list' + '?page=' + (${payList.getNumber()} - 1) + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + ${keyword} : '/search' + '?page=' + (${payList.getNumber()} - 1) + '&amp;size=' + ${payList.getSize()} + '&amp;startDt=' + ${startDt} + '&amp;endDt=' + ${endDt} + '&amp;status=' + ${status} + '&amp;docNumber=' + ${docNumber} + '&amp;customerName=' + ${customerName} + '&amp;email=' + ${email})}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <!-- 페이지 번호 -->
                     <li th:each="i : ${#numbers.sequence((payList.number - 3) < 0 ? 0 : (payList.number - 3), (payList.number + 3) > (payList.totalPages - 1) ? (payList.totalPages - 1) : (payList.number + 3))}" th:class="${payList.number == i} ? 'page-item active' : 'page-item'">
-                        <a class="page-link" th:href="@{(${isListPage}? '/list' : '/search') + '?page=' + ${i} + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + ${keyword != null ? keyword : ''}}" th:text="${i + 1}"></a>
+                        <a class="page-link" th:href="@{(${isListPage} ? '/list' + '?page=' + ${i} + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + (${keyword} ?: '') : '/search' + '?page=' + ${i} + '&amp;size=' + ${payList.getSize()} + '&amp;startDt=' + (${startDt} ?: '') + '&amp;endDt=' + (${endDt} ?: '') + '&amp;status=' + (${status} ?: '') + '&amp;docNumber=' + (${docNumber} ?: '') + '&amp;customerName=' + (${customerName} ?: '') + '&amp;email=' + (${email} ?: ''))}" th:text="${i + 1}"></a>
                     </li>
                     <!-- 다음 페이지 -->
                     <li th:if="${payList.hasNext()}" class="page-item">
-                        <a class="page-link" th:href="@{(${isListPage}? '/list' : '/search') + '?page=' + (${payList.getNumber()} + 1) + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + ${keyword != null ? keyword : ''}}" aria-label="Next">
+                        <a class="page-link" th:href="@{(${isListPage} ? '/list' + '?page=' + (${payList.getNumber()} + 1) + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + ${keyword} : '/search' + '?page=' + (${payList.getNumber()} + 1) + '&amp;size=' + ${payList.getSize()} + '&amp;startDt=' + ${startDt} + '&amp;endDt=' + ${endDt} + '&amp;status=' + ${status} + '&amp;docNumber=' + ${docNumber} + '&amp;customerName=' + ${customerName} + '&amp;email=' + ${email})}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>

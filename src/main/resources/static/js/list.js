@@ -54,6 +54,12 @@ function setDateRange(months) {
 
 function resetForm() {
     document.getElementById("form").reset();
+
+    // 선택된 상태를 초기화하고 색상을 원래대로 변경합니다.
+    var buttons = document.querySelectorAll('.status-button');
+    buttons.forEach(function(button) {
+        button.classList.remove('active');
+    });
 }
 
 function setStatus(status) {

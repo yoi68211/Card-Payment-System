@@ -112,6 +112,7 @@ public class MainController {
         model.addAttribute("payList", allPaymentsPage);
         model.addAttribute("payCount", payCount);
         model.addAttribute("keyword", keyword);
+        model.addAttribute("isListPage", true); // 이 부분을 추가해주면 됩니다.
 
         return "list";
     }
@@ -125,16 +126,32 @@ public class MainController {
 
 
     @GetMapping("/search")
-    public String search(@ModelAttribute("form") DetailedSearchDTO searchDTO, Model model, @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String search(@ModelAttribute("form") DetailedSearchDTO searchDTO,
+                         @RequestParam(value = "startDt", required = false) String startDt,
+                         @RequestParam(value = "endDt", required = false) String endDt,
+                         @RequestParam(value = "status", required = false) String status,
+                         @RequestParam(value = "docNumber", required = false) String docNumber,
+                         @RequestParam(value = "customerName", required = false) String customerName,
+                         @RequestParam(value = "email", required = false) String email,
+                         Model model,
+                         @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable) {
+        // 검색 결과 가져오는 로직 구현
         Page<AllPaymentListDto> allPaymentsPage = allPaymentListService.detailSearch(searchDTO, pageable);
         long payCount = allPaymentsPage.getTotalElements();
 
         System.out.println("payCount = " + payCount);
 
+        // 검색에 사용된 파라미터들 모델에 추가
         model.addAttribute("payList", allPaymentsPage);
         model.addAttribute("payCount", payCount);
-        model.addAttribute("searchDTO",searchDTO);
+        model.addAttribute("startDt", startDt);
+        model.addAttribute("endDt", endDt);
+        model.addAttribute("status", status);
+        model.addAttribute("docNumber", docNumber);
+        model.addAttribute("customerName", customerName);
+        model.addAttribute("email", email);
+        model.addAttribute("isListPage", false);
 
-        return "search";
+        return "list";
     }
 }
