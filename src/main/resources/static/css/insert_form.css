@@ -64,16 +64,16 @@
             height: 45%;
             border-bottom: 1px solid gray;
             margin-top: 10px;
-            padding-top: 22px;
+            padding-top: 10px;
             min-width: 780px;
             min-height: 240px;
         }
         .basic-one{
             display: flex;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
             height: 30px;
         }
-        @media screen and (min-width: 1400px) {
+        @media screen and (min-width: 1600px) {
             .basic-body{
                 padding-top: 35px;
             }

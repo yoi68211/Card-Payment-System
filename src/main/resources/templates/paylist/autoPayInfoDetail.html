@@ -6,6 +6,7 @@
     <link th:href="@{/css/pageSample.css}" rel="stylesheet">
     <link th:href="@{/css/autopayInfoDetail.css}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/047f82d071.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 </head>
 <body>
 <header class="header-nav">
@@ -55,41 +56,44 @@
                 <div class="auto-input-group">
                     <label>
                         <span>등록일시</span>
-                        <input type="date">
+                        <input type="date" id="createDate">
                     </label>
                     <label>
                         <span>회원ID</span>
-                        <input type="text">
+                        <input type="text" id="customerId" name="customerId" th:value="${customerInfo.Id}">
                     </label>
                     <label>
                         <span>고객명</span>
-                        <input type="text">
+                        <input type="text" id="customerName" name="customerName" class="editable" disabled th:value="${customerInfo.customerName}">
                     </label>
                     <label>
                         <span>E-Mail</span>
-                        <input type="email">
+                        <input type="email" id="customerEmail" name="customerEmail" class="editable" disabled th:value="${customerInfo.customerEmail}">
                     </label>
                     <label class="phone-inputs">
                         <span>연락번호</span>
-                        <div class="phone-flex">
+                        <!--<div class="phone-flex">
+
                             <input type="tel" maxlength="3" placeholder="010" class="phone-part">
                             -
                             <input type="tel" maxlength="4" placeholder="1234" class="phone-part">
                             -
                             <input type="tel" maxlength="4" placeholder="5678" class="phone-part">
-                        </div>
+                            -->
+                            <input type="text" id="customerPhone" name="customerPhone" th:value="${customerInfo.customerPhone}">
+                        <!--</div>-->
                     </label>
                     <label>
                         <span>주소</span>
-                        <input type="text">
+                        <input type="text" id="customerAddress" name="customerAddress" th:value="${customerInfo.customerAddress}">
                     </label>
                     <label class="auto-custom-input">
                         <span>자동결제 금액</span>
-                        <input type="number">
+                        <input type="text" id="paymentFirstPay" name="paymentFirstPay" th:value="${payInfo.paymentFirstPay}">
                     </label>
                     <label class="auto-custom-input">
                         <span>결제구분</span>
-                        <input type="text">
+                        <input type="text" id="paymentBizTo" name="paymentBizTo" th:value="${payInfo.paymentBizTo}">
                     </label>
                     <label>
                         <span>마지막 결제일</span>
@@ -97,7 +101,7 @@
                     </label>
                     <label class="auto-custom-input">
                         <span>마지막 거래상태</span>
-                        <input type="text">
+                        <input type="text" id="paymentStatus" name="paymentStatus" th:value="${payInfo.paymentStatus}">
                     </label>
                     <label>
                         <span>다음 결제일</span>
@@ -105,11 +109,12 @@
                     </label>
                     <label class="auto-custom-input">
                         <span>결제 회차</span>
-                        <input type="text">
+                        <input type="text" id="autoPayCount" name="autoPayCount">
+
                     </label>
                     <label class="auto-memo">
                         <span>메모</span>
-                        <input type="text">
+                        <input type="text"  id="paymentMemo" name="paymentMemo" th:value="${payInfo.paymentMemo}">>
                     </label>
                 </div>
             </div>
@@ -169,4 +174,11 @@
 </aside>
 </body>
 <script th:src="@{/js/pageSample.js}"></script>
+<script th:inline="javascript">
+    //날짜 년월일 형식
+    let payCreate = [[${payInfo.paymentCreateTime}]];
+    let createDate = dateProcess(payCreate);
+    document.getElementById("createDate").value = createDate;
+    //날짜 년월일 형식 end
+</script>
 </html>

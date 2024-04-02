@@ -55,7 +55,7 @@ public class PaymentDetailsDTOTest {
                 .paymentStatus(OrderStatus.paid)
                 .paymentDelYn('N')
                 .paymentMonth(1)
-                .paymentNextTime(LocalDateTime.now().plusMonths(1))
+//                .paymentNextTime(LocalDateTime.now().plusMonths(1))
                 .paymentFirstPay(50)
                 .products(products)
                 .build();
