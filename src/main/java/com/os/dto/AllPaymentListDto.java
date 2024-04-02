@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class AllPaymentListDto {
-    private LocalDateTime createTime;
+    private LocalDateTime updateTime;
     private Long id;
     private String customerName;
     private String paymentTitle;
@@ -31,7 +31,7 @@ public class AllPaymentListDto {
         String totalAmount = payment.calculateTotalAmount(payment.getProducts());
 
         return AllPaymentListDto.builder()
-                .createTime(payment.getCreateTime())
+                .updateTime(payment.getUpdateTime())
                 .id(payment.getCustomer().getId())
                 .customerName(payment.getCustomer().getCustomerName())
                 .paymentTitle(payment.getPaymentTitle())

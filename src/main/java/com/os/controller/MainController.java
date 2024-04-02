@@ -101,7 +101,7 @@ public class MainController {
 
 
     @GetMapping("/list")
-    public String findAll(Model model, @PageableDefault(page = 0, size = 10, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword) {
+    public String findAll(Model model, @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword) {
         Page<AllPaymentListDto> allPaymentsPage;
         if (keyword != null && !keyword.isEmpty()) {
             allPaymentsPage = allPaymentListService.findByTitleContaining(keyword, pageable);
@@ -125,7 +125,7 @@ public class MainController {
 
 
     @GetMapping("/search")
-    public String search(@ModelAttribute("form") DetailedSearchDTO searchDTO, Model model, @PageableDefault(page = 0, size = 10, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String search(@ModelAttribute("form") DetailedSearchDTO searchDTO, Model model, @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<AllPaymentListDto> allPaymentsPage = allPaymentListService.detailSearch(searchDTO, pageable);
         long payCount = allPaymentsPage.getTotalElements();
 
@@ -133,7 +133,8 @@ public class MainController {
 
         model.addAttribute("payList", allPaymentsPage);
         model.addAttribute("payCount", payCount);
+        model.addAttribute("searchDTO",searchDTO);
 
-        return "list";
+        return "search";
     }
 }

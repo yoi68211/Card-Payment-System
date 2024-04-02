@@ -21,9 +21,6 @@ $(function() {
 });
 
 function toggleContent() {
-    var icon = document.querySelector('.fas');
-    icon.classList.toggle('rotate-up');
-
     var content = document.getElementById("expandableContent");
     content.classList.toggle("active"); // 내용의 확장 여부를 토글
 }
@@ -38,18 +35,6 @@ function setDateRange(months) {
 
     // 시작일을 오늘 날짜로 설정
     $('#endDt').datepicker('setDate', endDate);
-
-    // 모든 버튼에 대해 비활성화 클래스를 추가
-    var buttons = document.querySelectorAll('.date-range-button');
-    buttons.forEach(function(button) {
-        button.classList.remove('active');
-    });
-
-    // 선택된 기간에 해당하는 버튼에 active 클래스 추가
-    var activeButton = document.querySelector('.date-range-button[data-months="' + months + '"]');
-    if (activeButton) {
-        activeButton.classList.add('active');
-    }
 }
 
 function resetForm() {
@@ -109,9 +94,21 @@ function deleteSelectedPayments() {
     document.getElementById("deleteForm").submit();
 }
 
-function submitForm() {
-    var form = document.getElementById("form");
-    form.submit();
+function submitForm(pageNumber) {
+    var form = document.getElementById('form');
+    var keyword = document.getElementById('searchInput').value;
+    var url = '/search?page=' + pageNumber + '&size=' + '${payList.getSize()}' + '&startDt=' + '${startDt}' + '&endDt=' + '${endDt}' + '&status=' + '${status}' + '&docNumber=' + '${docNumber}' + '&customerName=' + '${customerName}' + '&email=' + '${email}' + '&keyword=' + keyword;
+    $.ajax({
+        type: 'GET',
+        url: url,
+        success: function(response) {
+            // AJAX를 통해 받아온 페이지 HTML을 해당 위치에 삽입
+            $('.main_cell').html($(response).find('.main_cell').html());
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
 }
 
 function changePageSize() {
@@ -129,7 +126,17 @@ function changePageSize() {
         url.searchParams.set('page', newPage);
     }
 
-    window.location.href = url.toString();
+    $.ajax({
+        type: 'GET',
+        url: url.toString(),
+        success: function(response) {
+            // AJAX를 통해 받아온 페이지 HTML을 해당 위치에 삽입
+            $('.main_cell').html($(response).find('.main_cell').html());
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
 }
 
 // URL에서 특정 파라미터 값을 가져오는 함수
@@ -151,18 +158,11 @@ document.getElementById("searchInput").addEventListener("keypress", function(eve
 });
 
 document.addEventListener("DOMContentLoaded", function() {
-    var buttons = document.querySelectorAll('.status-button');
-
-    buttons.forEach(function(button) {
-        button.addEventListener("click", function() {
-            var status = button.innerText;
-            console.log("상태:", status);
-
-            // 클릭된 버튼에만 .active 클래스 추가
-            buttons.forEach(function(btn) {
-                btn.classList.remove('active');
-            });
-            button.classList.add('active');
+    var rows = document.querySelectorAll("tr[data-id]");
+    rows.forEach(function(row) {
+    row.addEventListener("click", function() {
+        var paymentId = row.getAttribute("data-id");
+        window.location.href = "/payinfoDetail?id=" + customerId;
         });
     });
 });
