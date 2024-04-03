@@ -3,6 +3,9 @@ package com.os.controller;
 import com.os.dto.IssueBillingReq;
 import com.os.dto.PaymentDTOC;
 import com.os.dto.UpdateDTO;
+import com.os.entity.AutoPayment;
+import com.os.entity.Payment;
+import com.os.service.AutoPaymentService;
 import com.os.service.PaymentServiceC;
 import com.os.service.UpdateService;
 import jakarta.validation.Valid;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class PayInfoRestController {
     private final UpdateService updateService;
     private final PaymentServiceC paymentService;
+    private final AutoPaymentService autoPaymentService;
 
     @PostMapping("/payDetailEdit")
     public void updateDetail(@RequestBody @Valid UpdateDTO updateDTO){
@@ -32,8 +36,10 @@ public class PayInfoRestController {
     @PostMapping("/basicPayPaid")
     public void basicPayPaid(@RequestParam Long id){
         System.out.println("결제성공 => " + id);
-        boolean check = paymentService.basicPayPaid(id);
-
+        Payment payment = paymentService.basicPayPaid(id);
+        int month = payment.getPaymentMonth();
+        int date = payment.getPaymentAutoDate();
+        boolean check = autoPaymentService.autoTableInsert(payment, month, date);
         if(check){
             System.out.println("수정성공");
         } else{

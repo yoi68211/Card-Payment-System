@@ -67,17 +67,15 @@ public class PaymentServiceC {
     }
 
 
-    public boolean basicPayPaid(Long paymentId){
+    public Payment basicPayPaid(Long paymentId){
         Optional<Payment> paymentOptional = paymentRepository.findById(paymentId);
         if(paymentOptional.isPresent()){
             Payment payment = paymentOptional.get();
             payment.setPaymentStatus(OrderStatus.paid);
-            paymentRepository.save(payment);
 
-
-            return true;
+            return paymentRepository.save(payment);
         }
-        return false;
+        return null;
     }
 
     public boolean basicPayError(Long paymentId){
