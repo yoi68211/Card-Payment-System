@@ -4,8 +4,10 @@ import com.os.dto.InsertDTO;
 import com.os.dto.SavePaymentDTO;
 import com.os.dto.SavePaymentLoadDTO;
 import com.os.dto.SaveProductDTO;
+import com.os.entity.AutoPayment;
 import com.os.entity.SaveProduct;
 import com.os.entity.User;
+import com.os.service.AutoPaymentService;
 import com.os.service.PaymentInsertService;
 import com.os.service.SavePaymentService;
 import com.os.service.UserService;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +30,8 @@ public class InsertController {
     private final PaymentInsertService paymentService;
     private final SavePaymentService savePaymentService;
     private final UserService userService;
+
+    private final AutoPaymentService autoPaymentService;
 
     /*
         @method : insertData
@@ -99,4 +104,14 @@ public class InsertController {
 
         return saveProductDTO;
     }
+
+    //////////////////////////////
+    @GetMapping("/test_now")
+    public String test_now(){
+        LocalDateTime now = autoPaymentService.calculateLocalDateTime(1, 20);
+        System.out.println(now);
+        return null;
+    }
+
+    /////////////////////////////
 }

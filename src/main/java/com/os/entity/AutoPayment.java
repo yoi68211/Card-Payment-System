@@ -51,10 +51,7 @@ public class AutoPayment {
     @JoinColumn(name = "payment_id", referencedColumnName = "payment_id",nullable = false)
     private Payment payment;
 
-//    public LocalDateTime calculateLocalDateTime(InsertDTO dto){
-//        return autoCreateTime.plusMonths(dto.getAutoMonth()).withDayOfMonth(dto.getAutoDate());
-//
-//    }
+
 
 
 
