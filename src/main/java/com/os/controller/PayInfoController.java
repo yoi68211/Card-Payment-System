@@ -38,11 +38,29 @@ public class PayInfoController {
         model.addAttribute("customerInfo", customerInfo);
         model.addAttribute("payInfo", payInfo);
         model.addAttribute("productInfo", productInfo);
-        if(payInfo.getPaymentType()== OrderType.auto){
-            return "paylist/autoPayInfoDetail";
-        }
+//        if(payInfo.getPaymentType()== OrderType.auto){
+//            return "paylist/autoPayInfoDetail";
+//        }
         return "paylist/basicPayInfoDetail";
 
+
+    }
+
+    @GetMapping("/payAutoDetail/")
+    public String payAutoDetail(@RequestParam long id, Model model) {
+        System.out.println("받은 id =>" + id);
+        CustomerDTOC customerInfo = customerService.customerRoad(id);
+        PaymentDTOC payInfo = paymentService.paymentRoad(customerInfo.getId());
+        if(payInfo == null){
+            return "redirect:/dashboard";
+        }
+
+        List<ProductDTOC> productInfo = productService.productRoad(payInfo.getId());
+        model.addAttribute("customerInfo", customerInfo);
+        model.addAttribute("payInfo", payInfo);
+        model.addAttribute("productInfo", productInfo);
+
+        return "paylist/autoPayInfoDetail";
 
     }
 
