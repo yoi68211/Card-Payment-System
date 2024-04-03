@@ -3,35 +3,44 @@ package com.os.service;
 import com.os.entity.AutoPayment;
 import com.os.entity.Payment;
 import com.os.repository.AutoPaymentRepository;
+import com.os.repository.PaymentRepository;
 import com.os.util.AutoStatus;
+import com.os.util.OrderStatus;
+import com.os.util.OrderType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class AutoPaymentService {
     private final AutoPaymentRepository autoPaymentRepository;
+    private final PaymentRepository paymentRepository;
 
-    @Transactional
-    public boolean autoTableInsert(Payment payment, int month, int date){
-        LocalDateTime now = calculateLocalDateTime(month, date);
-        AutoPayment autoPayment = new AutoPayment();
-        autoPayment.setAutoStatus(AutoStatus.auto);
-        autoPayment.setAutoPayCount(1);
-        autoPayment.setPaymentNextTime(now);
-        autoPayment.setPayment(payment);
-        autoPaymentRepository.save(autoPayment);
-        return true;
-    }
+        public void UpdatePaid(Long id) {
+        Optional<Payment> paymentOptional = paymentRepository.findById(id);
 
-    public LocalDateTime calculateLocalDateTime(int month, int date){
-        LocalDate currentDate = LocalDate.now();
-        LocalDate calculateDate = currentDate.plusMonths(month).withDayOfMonth(date);
-        return LocalDateTime.of(calculateDate, LocalTime.MIN);
+        if (paymentOptional.isPresent()){
+
+            Payment payment = paymentOptional.get();
+            payment.setPaymentStatus(OrderStatus.paid);
+
+            if(payment.getPaymentType()== OrderType.auto) {
+
+                AutoPayment autoPayment = new AutoPayment();
+                autoPayment.setAutoStatus(AutoStatus.auto);
+                autoPayment.setAutoPayCount(1);
+                autoPayment.setPaymentNextTime(payment.calculateLocalDateTime(payment.getPaymentMonth(),payment.getPaymentAutoDate()));
+                autoPayment.setPayment(payment);
+
+                autoPaymentRepository.save(autoPayment);
+            }
+            paymentRepository.save(payment);
+        }
     }
 }
+
+

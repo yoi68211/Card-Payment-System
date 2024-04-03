@@ -1,16 +1,15 @@
 package com.os.controller;
 
 
-import com.os.dto.PaymentDTOC;
 import com.os.dto.UpdateDTO;
-import com.os.entity.AutoPayment;
-import com.os.entity.Payment;
 import com.os.service.AutoPaymentService;
 import com.os.service.PaymentServiceC;
 import com.os.service.UpdateService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
@@ -32,32 +31,17 @@ public class PayInfoRestController {
 
     }
 
-
-    @PostMapping("/basicPayPaid")
-    public void basicPayPaid(@RequestParam Long id){
-        System.out.println("결제성공 => " + id);
-        Payment payment = paymentService.basicPayPaid(id);
-        int month = payment.getPaymentMonth();
-        int date = payment.getPaymentAutoDate();
-        boolean check = autoPaymentService.autoTableInsert(payment, month, date);
-        if(check){
-            System.out.println("수정성공");
-        } else{
-            System.out.println("수정실패");
-        }
-    }
-
-    @PostMapping("/basicPayError")
-    public void basicPayError(@RequestParam Long id){
-        System.out.println("결제실패 => " + id);
-        boolean check = paymentService.basicPayError(id);
-
-        if(check){
-            System.out.println("수정성공");
-        } else{
-            System.out.println("수정실패");
-        }
-    }
+//    @PostMapping("/basicPayError")
+//    public void basicPayError(@RequestParam Long id){
+//        System.out.println("결제실패 => " + id);
+//        boolean check = paymentService.basicPayError(id);
+//
+//        if(check){
+//            System.out.println("수정성공");
+//        } else{
+//            System.out.println("수정실패");
+//        }
+//    }
 
 
 }

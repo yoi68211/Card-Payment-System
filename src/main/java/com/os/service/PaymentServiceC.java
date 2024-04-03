@@ -66,28 +66,16 @@ public class PaymentServiceC {
         return monthCounts;
     }
 
-
-    public Payment basicPayPaid(Long paymentId){
-        Optional<Payment> paymentOptional = paymentRepository.findById(paymentId);
-        if(paymentOptional.isPresent()){
-            Payment payment = paymentOptional.get();
-            payment.setPaymentStatus(OrderStatus.paid);
-
-            return paymentRepository.save(payment);
-        }
-        return null;
-    }
-
-    public boolean basicPayError(Long paymentId){
-        Optional<Payment> paymentOptional = paymentRepository.findById(paymentId);
-        if(paymentOptional.isPresent()){
-            Payment payment = paymentOptional.get();
-            payment.setPaymentStatus(OrderStatus.error);
-            paymentRepository.save(payment);
-            return true;
-        }
-        return false;
-    }
+//    public boolean basicPayError(Long paymentId){
+//        Optional<Payment> paymentOptional = paymentRepository.findById(paymentId);
+//        if(paymentOptional.isPresent()){
+//            Payment payment = paymentOptional.get();
+//            payment.setPaymentStatus(OrderStatus.error);
+//            paymentRepository.save(payment);
+//            return true;
+//        }
+//        return false;
+//    }
 
 
 }
