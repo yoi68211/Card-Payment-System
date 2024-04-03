@@ -60,25 +60,10 @@ public class PaymentInsertService {
                 product.setPayment(payment);
             }
 
-
-
             payment.setProducts(productList);
             customer.setUser(user);
             payment.setCustomer(customer);
             customer.setPayments(payment);
-
-//            if(dto.getPaymentType().equals(OrderType.auto)){
-//                System.out.println("이거도 됬따.");
-//                AutoPayment autoPayment = new AutoPayment();
-//                autoPayment.setAutoPayCount(0);
-//                autoPayment.setAutoStatus(AutoStatus.auto);
-//                autoPayment.setCustomer(customer);
-//
-//
-//
-//                customer.setAutoPayments(autoPayment);
-//
-//            }
 
             customerRepository.save(customer);
 
