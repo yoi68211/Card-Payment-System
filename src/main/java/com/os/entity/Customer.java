@@ -52,8 +52,8 @@ public class Customer extends BaseEntity {
     @OneToOne(mappedBy= "customer" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Payment payments;
 
-    @OneToOne(mappedBy= "customer" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private AutoPayment autoPayment;
+//    @OneToOne(mappedBy= "customer" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private AutoPayment autoPayment;
 
 
 //    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)

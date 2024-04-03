@@ -44,9 +44,13 @@ public class AutoPayment {
 //    @JoinColumn(name = "user_id", referencedColumnName = "user_id",nullable = false)
 //    private User user;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id",nullable = false)
-    private Customer customer;
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id",nullable = false)
+//    private Customer customer;
+
+    @OneToOne
+    @JoinColumn(name = "payment_id", referencedColumnName = "payment_id",nullable = false)
+    private Payment payment;
 
 //    public LocalDateTime calculateLocalDateTime(InsertDTO dto){
 //        return autoCreateTime.plusMonths(dto.getAutoMonth()).withDayOfMonth(dto.getAutoDate());

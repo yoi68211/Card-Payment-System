@@ -120,44 +120,44 @@ public class CustomerService {
         return customerDTOS;
     }
 
-    public void UpdatePaid(Long id) {
-
-        Optional<Customer> customerOptional = customerRepository.findById(id);
-
-        if (customerOptional.isPresent()){
-            Customer customer = customerOptional.get();
-
-
-           if (customer.getPayments().getPaymentType() == OrderType.auto){
-
-
-
-               customer.getPayments().setPaymentStatus(OrderStatus.paid);
-
-
-               AutoPayment autoPayment = new AutoPayment();
-               autoPayment.setCustomer(customer);
-               autoPayment.setAutoStatus(AutoStatus.auto);
-               autoPayment.setAutoPayCount(1);
-
-
-
-               customerRepository.save(customer);
-
-               paymentRepository.save(autoPayment);
-
-
-           }
-
-
-
-
-
-
-
-        }
-
-    }
+//    public void UpdatePaid(Long id) {
+//
+//        Optional<Customer> customerOptional = customerRepository.findById(id);
+//
+//        if (customerOptional.isPresent()){
+//            Customer customer = customerOptional.get();
+//
+//
+//           if (customer.getPayments().getPaymentType() == OrderType.auto){
+//
+//
+//
+//               customer.getPayments().setPaymentStatus(OrderStatus.paid);
+//
+//
+//               AutoPayment autoPayment = new AutoPayment();
+//               autoPayment.setCustomer(customer);
+//               autoPayment.setAutoStatus(AutoStatus.auto);
+//               autoPayment.setAutoPayCount(1);
+//
+//
+//
+//               customerRepository.save(customer);
+//
+//               paymentRepository.save(autoPayment);
+//
+//
+//           }
+//
+//
+//
+//
+//
+//
+//
+//        }
+//
+//    }
 
 
 //

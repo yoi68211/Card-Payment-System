@@ -84,7 +84,7 @@ public class WidgetController {
 
 
         Long id = Long.valueOf(orderId.replace("order_test", ""));
-        customerService.UpdatePaid(id);
+        //customerService.UpdatePaid(id);
 
 
 
