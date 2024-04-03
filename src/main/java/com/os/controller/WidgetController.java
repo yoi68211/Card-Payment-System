@@ -27,7 +27,7 @@ import java.util.Base64;
 public class WidgetController {
     private final CustomerService customerService;
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+//    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @PostMapping("/confirm")
     public ResponseEntity<org.json.simple.JSONObject> confirmPayment(@RequestBody String jsonBody) throws Exception {
