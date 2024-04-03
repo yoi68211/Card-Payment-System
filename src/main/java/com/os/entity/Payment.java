@@ -10,7 +10,9 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -76,4 +78,12 @@ public class Payment extends BaseEntity{
         return String.valueOf(totalAmount);
     }
 
+    public LocalDateTime calculateLocalDateTime(int month, int date){
+        LocalDate currentDate = LocalDate.now();
+        LocalDate calculateDate = currentDate.plusMonths(month).withDayOfMonth(date);
+        //
+
+        //
+        return LocalDateTime.of(calculateDate, LocalTime.MIN);
+    }
 }

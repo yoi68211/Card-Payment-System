@@ -1,6 +1,7 @@
 package com.os.controller;
 import com.os.dto.PaymentDetailsDTO;
 import com.os.dto.toss.PaymentRequest;
+import com.os.service.AutoPaymentService;
 import com.os.service.CustomerService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +27,9 @@ import java.util.Base64;
 @RequestMapping("/toss")
 public class WidgetController {
     private final CustomerService customerService;
+    private final AutoPaymentService autoPaymentService;
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+//    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @PostMapping("/confirm")
     public ResponseEntity<org.json.simple.JSONObject> confirmPayment(@RequestBody String jsonBody) throws Exception {
@@ -86,7 +88,7 @@ public class WidgetController {
         Long id = Long.valueOf(orderId.replace("order_test", ""));
         //customerService.UpdatePaid(id);
 
-
+        autoPaymentService.UpdatePaid(id);
 
 
 
