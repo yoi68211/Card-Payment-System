@@ -1,5 +1,6 @@
 package com.os.repository;
 
+import com.os.entity.AutoPayment;
 import com.os.entity.Payment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,5 +31,6 @@ public interface PaymentRepository extends JpaRepository<Payment,Long> {
 
     @Query("SELECT COUNT(p) FROM Payment p WHERE DATE(p.createTime) >= :startDate AND DATE(p.createTime) <= :endDate")
     Long countPaymentsYearByDateRange(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
-
+    @Query("SELECT p FROM Payment p JOIN FETCH p.autoPayments")
+    List<Payment> findAllPaymentsWithAutoPayments();
 }
