@@ -38,13 +38,20 @@
         </span>
 </header>
 <main>
-    <h3>Memo 수정보기</h3>
+    <span style="font-weight: bold; padding-bottom: 70px;">Memo 수정보기</span>
 <div class="memoModifyMain">
     <form action="/memo/update" method="post" name="updateForm">
         <input type="hidden" name="id" th:value="${MemoUpdate.id}">
-        대시보드 노출유무 <input type="radio" name="memoExposeYn" value="Y">Y <input type="radio" name="memoExposeYn" value="N">N<br>
-        <textarea name="MemoContents"  th:text="${MemoUpdate.MemoContents}"></textarea> <br>
-        <input type="button" style="float:right" value="수정하기" onclick="memoUpdate()">
+
+        <div class="updateRadio">
+            대시보드 노출유무 <input type="radio" name="memoExposeYn" value="Y">Y <input type="radio" name="memoExposeYn" value="N">N<br>
+        </div>
+            <textarea name="MemoContents"  th:text="${MemoUpdate.MemoContents}"></textarea> <br>
+
+        <div style="justify-content:space-between; ">
+            <button onclick="backToPaging()"> < 목록으로</button>
+             <input type="button" style="float:right" value="수정하기" onclick="memoUpdate()">
+        </div>
     </form>
 </div>
 </main>
@@ -96,4 +103,9 @@
     const memoUpdate = () => {
     document.updateForm.submit();
 }
+
+    const backToPaging = () => {
+      const page = [[${page}]];
+      location.href = "/memo/paging?page="+page;
+   }
 </script>
