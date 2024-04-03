@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -34,6 +35,7 @@ public class PaymentInsertService {
             customer.setCustomerEmail(dto.getCustomerEmail());
             customer.setCustomerPhone(dto.getCustomerPhone());
             customer.setCustomerAddress(dto.getCustomerAddress());
+            customer.setCustomerKey(UUID.randomUUID());
 
             Payment payment = new Payment();
             payment.setPaymentTitle(dto.getPaymentTitle());

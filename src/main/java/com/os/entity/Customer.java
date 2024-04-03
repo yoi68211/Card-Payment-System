@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.UUID;
+
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Getter
@@ -20,6 +22,8 @@ public class Customer extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name = "customer_id")
     private Long id;            // 고객 IDX
+
+    private UUID customerKey;
 
     @Column(nullable = false)
     @NotBlank(message = "이름을 입력 해주세요")
@@ -47,6 +51,9 @@ public class Customer extends BaseEntity {
 
     @OneToOne(mappedBy= "customer" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Payment payments;
+
+    @OneToOne(mappedBy= "customer" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private AutoPayment autoPayment;
 
 
 //    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)

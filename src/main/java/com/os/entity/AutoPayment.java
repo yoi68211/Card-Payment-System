@@ -28,6 +28,7 @@ public class AutoPayment {
 */
 
 
+    private String billingKey;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -38,9 +39,9 @@ public class AutoPayment {
 
 
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id",nullable = false)
-    private User user;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id",nullable = false)
+    private Customer customer;
 
 //    public LocalDateTime calculateLocalDateTime(InsertDTO dto){
 //        return autoCreateTime.plusMonths(dto.getAutoMonth()).withDayOfMonth(dto.getAutoDate());
