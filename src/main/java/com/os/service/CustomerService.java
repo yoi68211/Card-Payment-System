@@ -2,10 +2,15 @@ package com.os.service;
 
 import com.os.dto.CustomerDTO;
 import com.os.dto.PaymentDetailsDTO;
+import com.os.entity.AutoPayment;
 import com.os.entity.Customer;
+import com.os.repository.AutoPaymentRepository;
 import com.os.repository.CustomerRepository;
+import com.os.util.AutoStatus;
 import com.os.util.OrderStatus;
+import com.os.util.OrderType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +27,7 @@ import java.util.Optional;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
-
+    private final AutoPaymentRepository paymentRepository;
     public PaymentDetailsDTO getDetails(Long id) {
 
         Optional<Customer> customerOptional = customerRepository.findById(id);
@@ -114,6 +119,46 @@ public class CustomerService {
 
         return customerDTOS;
     }
+
+//    public void UpdatePaid(Long id) {
+//
+//        Optional<Customer> customerOptional = customerRepository.findById(id);
+//
+//        if (customerOptional.isPresent()){
+//            Customer customer = customerOptional.get();
+//
+//
+//           if (customer.getPayments().getPaymentType() == OrderType.auto){
+//
+//
+//
+//               customer.getPayments().setPaymentStatus(OrderStatus.paid);
+//
+//
+//               AutoPayment autoPayment = new AutoPayment();
+//               autoPayment.setCustomer(customer);
+//               autoPayment.setAutoStatus(AutoStatus.auto);
+//               autoPayment.setAutoPayCount(1);
+//
+//
+//
+//               customerRepository.save(customer);
+//
+//               paymentRepository.save(autoPayment);
+//
+//
+//           }
+//
+//
+//
+//
+//
+//
+//
+//        }
+//
+//    }
+
 
 //
 //    public List<AllPaymentListDto> DetailSearch(DetailedSearchDTO searchDTO) {

@@ -163,7 +163,7 @@
                     </table>
                 </div>
                 <div class="basic-real-footer">
-                    <button type="button" onclick="fnBasicPay()">즉시 결제</button>
+                    <button type="button" onclick="moveQrPay()">즉시 결제</button>
                     <button type="button" onclick="moveQrPay()">QR 결제</button>
                 </div>
             </div>
@@ -220,7 +220,6 @@
 </body>
 <script th:src="@{/js/pageSample.js}"></script>
 <script th:src="@{/js/basicPayInfoDetail.js}"></script>
-<script th:src="@{/js/basicPay.js}"></script>
 <script th:inline="javascript">
 
     let customerId = [[${customerInfo.id}]];

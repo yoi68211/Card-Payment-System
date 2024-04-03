@@ -115,6 +115,7 @@ public class ChartInsertTest {
                     product.setProductAmount(j*i);
                     productList.add(product);
                     product.setCreateTime(currentTime);
+                    product.setUpdateTime(currentTime);
                     product.setPayment(payment);
 
                 }

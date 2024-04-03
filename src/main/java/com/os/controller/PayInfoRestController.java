@@ -1,6 +1,6 @@
 package com.os.controller;
 
-import com.os.dto.IssueBillingReq;
+
 import com.os.dto.PaymentDTOC;
 import com.os.dto.UpdateDTO;
 import com.os.entity.AutoPayment;
@@ -60,14 +60,4 @@ public class PayInfoRestController {
     }
 
 
-//    @PostMapping("/issue-billing")
-//    public BaseResponse<IssueBillingRes> issueBilling(@RequestBody IssueBillingReq issueBillingReq){
-//        try{
-//            //int customerIdx = jwtService.getUserIdx();
-//            IssueBillingRes issueBillingRes = paymentService.issueBilling(issueBillingReq);
-//            return new BaseResponse<>(issueBillingRes);
-//        }catch (BaseException baseException){
-//            return new BaseResponse<>(baseException.getStatus());
-//        }
-//    }
 }
