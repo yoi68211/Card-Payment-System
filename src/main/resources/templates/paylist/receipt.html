@@ -1,15 +1,76 @@
 <!doctype html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link th:href="@{/css/receipt.css}" rel="stylesheet">
 </head>
 <body>
+<div class="receipt-container">
     <div class="receipt-box">
-        
+        <div>AIP System</div>
+        <div>제목</div>
+        <div>th:text="paymentTitle"</div>
+        <div>ㅁ가명점 정보ㅁ</div>
+        <table>
+            <tr>
+                <td>점포명</td>
+                <td>aip상점</td>
+            </tr>
+            <tr>
+                <td>주소</td>
+                <td>명동역 충무로역 사이 어딘가</td>
+            </tr>
+            <tr>
+                <td>연락처</td>
+                <td>02-1234-12314</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td>카드회사</td>
+                <td>
+                    <span>th:text="createTime"</span>
+                    <span>총결제금액</span>
+                </td>
+            </tr>
+        </table>
+        <div>ㅁ결제정보ㅁ</div>
+        <table>
+
+            <tr>
+                <td>고객명</td>
+                <td>th:text="customerName"</td>
+            </tr>
+            <tr>
+                <td>지불방법</td>
+                <td>뭐로 결제했을까</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <th>상품명</th>
+                <th>수량</th>
+                <th>단가</th>
+                <th>금액</th>
+            </tr>
+            <tr>
+                <td>반복문</td>
+                <td>반복문</td>
+                <td>반복문</td>
+                <td>반복문</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>합계</td>
+                <td></td>
+                <td>오백원</td>
+            </tr>
+        </table>
     </div>
+</div>
 </body>
 </html>
