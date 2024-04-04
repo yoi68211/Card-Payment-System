@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -20,7 +21,7 @@ public class AutoPaymentService {
     private final AutoPaymentRepository autoPaymentRepository;
     private final PaymentRepository paymentRepository;
 
-        public void UpdatePaid(Long id) {
+    public void UpdatePaid(Long id) {
         Optional<Payment> paymentOptional = paymentRepository.findById(id);
 
         if (paymentOptional.isPresent()){
@@ -40,6 +41,15 @@ public class AutoPaymentService {
             }
             paymentRepository.save(payment);
         }
+    }
+
+    public long autoSuccess(LocalDateTime startDate, LocalDateTime endDate){
+
+        return autoPaymentRepository.countByAutoStatusAndUpdateTimeBetween(AutoStatus.auto, startDate, endDate);
+    }
+    public long autoStop(LocalDateTime startDate, LocalDateTime endDate){
+
+        return autoPaymentRepository.countByAutoStatusAndUpdateTimeBetween(AutoStatus.stop, startDate, endDate);
     }
 }
 

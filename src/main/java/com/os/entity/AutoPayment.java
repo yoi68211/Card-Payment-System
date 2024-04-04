@@ -2,6 +2,7 @@ package com.os.entity;
 
 import com.os.dto.InsertDTO;
 import com.os.util.AutoStatus;
+import com.os.util.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AutoPayment {
+public class AutoPayment extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
