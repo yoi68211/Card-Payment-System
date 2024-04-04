@@ -84,20 +84,39 @@ public class MemoController {
     }
     // /Memo/paging?page=1
     @GetMapping("/paging")
-    public String paging(Model model, @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword) {
+    public String paging(Model model, @PageableDefault(page = 0, size = 10, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable,
+                         @RequestParam(value = "keyword", required = false) String keyword,
+                         @RequestParam(value = "columnName", required = false) String columnName) {
 
-        Page<MemoDTO> allPaymentsPage;
-        if (keyword != null && !keyword.isEmpty()) {
-            allPaymentsPage = memoService.findByTitleContaining(keyword, pageable);
+        Page<MemoDTO> allMemosPage;
+
+        // keyword와 columnName이 모두 제공되었는지 확인
+        if (keyword != null && !keyword.isEmpty() && columnName != null && !columnName.isEmpty()) {
+            if (columnName.equals("memoContents")) {
+                allMemosPage = memoService.findByMemoContentsContaining(keyword, pageable);
+            } else if (columnName.equals("userName")) {
+                allMemosPage = memoService.findByUserUsernameContaining(keyword, pageable);
+            } else if (columnName.equals("memoExposeYn")) {
+                // columnName이 memoExposeYn이면서 keyword가 Y 또는 N인 경우에만 처리
+                if (keyword.equals("Y") || keyword.equals("N")) {
+                    allMemosPage = memoService.findByMemoExposeYn(keyword, pageable);
+                } else {
+                    // 그 외의 경우에는 전체 메모 목록을 반환
+                    allMemosPage = memoService.findAllMemos(pageable);
+                }
+            } else {
+                allMemosPage = memoService.findAllMemos(pageable);
+            }
         } else {
-            allPaymentsPage = memoService.findAllMemos(pageable);
+            allMemosPage = memoService.findAllMemos(pageable);
         }
 
-        long memoCount = allPaymentsPage.getTotalElements();
+        long memoCount = allMemosPage.getTotalElements();
 
-        model.addAttribute("MemoList", allPaymentsPage);
+        model.addAttribute("MemoList", allMemosPage);
         model.addAttribute("memoCount", memoCount);
         model.addAttribute("keyword", keyword);
+        model.addAttribute("columnName", columnName); // 선택된 컬럼을 뷰로 전달
 
         return "/memo/paging";
     }
