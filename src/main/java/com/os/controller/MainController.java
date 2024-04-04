@@ -15,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -25,8 +27,8 @@ public class MainController {
     public final AllPaymentListService allPaymentListService;
     private final CustomerService customerService;
     private final PaymentServiceC paymentService;
+    private final AutoPaymentService autoPaymentService;
     private final MemoService memoService;
-
 
     @GetMapping
     public String index() {
@@ -35,19 +37,37 @@ public class MainController {
 
     @GetMapping("dashboard")
     public String mainPage(Model model) {
-
-
+        // 그래프
         List<Long> monthChart = paymentService.getCountsByMonthRange();
         List<Long> yearChart = paymentService.getCountsByYearRange();
 
-        List<MemoDTO> memoList = memoService.findAll(); // MemoService를 사용하여 모든 메모를 가져옵니다.
+        // 월별 통계
+        int year = LocalDate.now().getYear();
+        int month = LocalDate.now().getMonthValue();
+        LocalDateTime startDate = LocalDateTime.now().withYear(year).withMonth(month).withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0);
+        LocalDateTime endDate = startDate.withDayOfMonth(startDate.toLocalDate().lengthOfMonth()).withHour(23).withMinute(59).withSecond(59);
+
+        long autoError = paymentService.autoError(startDate, endDate);
+
+        long autoSuccess = autoPaymentService.autoSuccess(startDate, endDate);
+
+        long autoStop = autoPaymentService.autoStop(startDate, endDate);
+
+        long autoAll = paymentService.autoAll(startDate, endDate);
+
+        List<MemoDTO> memoList = memoService.findAll(); // MemoService 를 사용하여 모든 메모를 가져옵니다.
         model.addAttribute("MemoList", memoList);
+
+        model.addAttribute("month",month);
+        model.addAttribute("autoError",autoError);
+        model.addAttribute("autoSuccess",autoSuccess);
+        model.addAttribute("autoStop",autoStop);
+        model.addAttribute("autoAll",autoAll);
 
         model.addAttribute("monthChartList",monthChart);
         model.addAttribute("yearChartList",yearChart);
         model.addAttribute("paymentSuccessCount", customerService.countByCustomersByPaid());
         model.addAttribute("paymentInsertThisMonth", customerService.thisMonthInsertCount());
-
 
         return "dashboard";
     }
