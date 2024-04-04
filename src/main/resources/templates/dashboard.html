@@ -45,40 +45,40 @@
     <div class="dashboard-body">
         <div class="dashboard-count">
             <div class="countBox count-1">
-                <div>N월</div>
+                <div><span th:text="${month}"></span>월</div>
                 <div>자동 결제 오류</div>
-                <div>5</div>
+                <div th:text="${autoError}"></div>
                 <button>View All</button>
             </div>
             <div class="countBox count-2">
-                <div>N월</div>
+                <div><span th:text="${month}"></span>월</div>
                 <div>자동 결제 성공</div>
-                <div>60</div>
+                <div th:text="${autoSuccess}"></div>
                 <button>View All</button>
             </div>
             <div class="countBox count-3">
-                <div>N월</div>
+                <div><span th:text="${month}"></span>월</div>
                 <div>자동 결제 불가</div>
-                <div>0</div>
+                <div th:text="${autoStop}"></div>
                 <button>View All</button>
             </div>
             <div class="countBox count-4">
-                <div>N월</div>
+                <div><span th:text="${month}"></span>월</div>
                 <div>자동 결제 건 수</div>
-                <div>65</div>
+                <div th:text="${autoAll}"></div>
                 <button>View All</button>
             </div>
             <div class="countBox count-5">
-                <div>N월</div>
+                <div><span th:text="${month}"></span>월</div>
                 <div>결제 신규 등록</div>
                 <div th:text="${paymentInsertThisMonth}">13</div>
                 <button onclick="redirectToCurrentMonthLink()">View All</button>
             </div>
             <div class="countBox count-6">
-                <div>N월</div>
+                <div><span th:text="${month}"></span>월</div>
                 <div>결제 성공</div>
                 <div th:text="${paymentSuccessCount}"></div>
-                <button onclick="redirectToCurrentMonthSuccess()">View All</button>
+                <button onclick="paySuccess()">View All</button>
             </div>
 
         </div>
@@ -160,6 +160,7 @@
                 </ul>
             </nav>
             </span>
+
 </aside>
 </body>
 <script th:inline="javascript">
@@ -169,4 +170,5 @@
 <script th:src="@{/js/pageSample.js}"></script>
 <script th:src="@{/js/dashBoardChart.js}"></script>
 <script th:src="@{/js/dashBoardCount.js}"></script>
+
 </html>
