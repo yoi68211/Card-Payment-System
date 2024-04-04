@@ -4,8 +4,10 @@ import com.os.dto.PaymentDTOC;
 import com.os.entity.Payment;
 import com.os.repository.PaymentRepository;
 import com.os.util.OrderStatus;
+import com.os.util.OrderType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,6 +17,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class PaymentServiceC {
 
     private final PaymentRepository paymentRepository;
@@ -77,5 +80,13 @@ public class PaymentServiceC {
 //        return false;
 //    }
 
+    ////////////////////////
 
+    public long autoError(LocalDateTime startDate, LocalDateTime endDate){
+        return paymentRepository.countByPaymentStatusAndPaymentTypeAndUpdateTimeBetween(OrderStatus.error, OrderType.auto, startDate, endDate);
+    }
+    public long autoAll(LocalDateTime startDate, LocalDateTime endDate){
+
+        return paymentRepository.countByPaymentTypeAndUpdateTimeBetween(OrderType.auto, startDate, endDate);
+    }
 }
