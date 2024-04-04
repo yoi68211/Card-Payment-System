@@ -6,10 +6,7 @@
     <link th:href="@{/css/pageSample.css}" rel="stylesheet">
     <link th:href="@{/css/basicPayInfoDetail.css}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/047f82d071.js" crossorigin="anonymous"></script>
-    <!--  포트원  -->
-    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
-    <!-- jQuery -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+
 </head>
 <body>
 <header class="header-nav">
@@ -60,7 +57,7 @@
 
                     <button type="button" th:if="${#strings.equals(payInfo.paymentStatus, 'error')}" onclick="toggleEdit()">편집</button>
                     <button type="button" th:if="${#strings.equals(payInfo.paymentStatus, 'error')}" onclick="fnDelPay()" >삭제</button>
-                    <button type="button" th:if="${!#strings.equals(payInfo.paymentStatus, 'error')}" th:onclick="|location.href='@{/receipt/(id=${customerInfo.id})}'|">신용 구매도표 보기</button>
+                    <button type="button" th:if="${!#strings.equals(payInfo.paymentStatus, 'error')}" onclick="moveReceipt()">신용 구매도표 보기</button>
                     <button type="button" onclick="location.href='/list'"><i class="fa-solid fa-chevron-left"></i>목록으로</button>
                 </div>
             </div>
