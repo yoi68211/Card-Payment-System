@@ -1,25 +1,29 @@
 package com.os.config;
 
+import com.os.entity.AutoPayment;
 import com.os.entity.Customer;
 import com.os.entity.Memo;
+import com.os.entity.Payment;
 import com.os.repository.CustomerRepository;
 import com.os.repository.MemoRepository;
+import com.os.repository.PaymentRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
+@RequiredArgsConstructor
 @EnableScheduling
 @Configuration
-public class MemoCleanupScheduler {
+public class SoftDeleteScheduler {
 
-    @Autowired
-    private MemoRepository memoRepository;
-    @Autowired
-    private CustomerRepository customerRepository;
+
+    private final MemoRepository memoRepository;
+
+    private final CustomerRepository customerRepository;
 
     // 스케줄링 작업 설정
     @Scheduled(fixedDelay = 300000) // 5분마다 실행
