@@ -41,17 +41,17 @@
 <main>
     <div>
         <div class="searchBox">
-            <div>
-                <span><input  type="radio" name="dashboardFilter" value="all" checked>전체</span>
-                <span><input  type="radio" name="dashboardFilter" value="yes">Y</span>
-                <span><input  type="radio" name="dashboardFilter" value="no">N</span>
+            <div id="dashboardFilterRadioGroup">
+                <span><input type="radio" name="dashboardFilter" value="all" checked onclick="filterMemos()">전체</span>
+                <span><input type="radio" name="dashboardFilter" value="Y" onclick="filterMemos()">Y</span>
+                <span><input type="radio" name="dashboardFilter" value="N" onclick="filterMemos()">N</span>
             </div>
             <div>
                 <span>
                     <select id="type" name="searchType">
-                        <option  value="entire">전체</option>
-                        <option  value="contents">내용</option>
-                        <option  value="writer">작성자</option>
+                        <option value="entire">전체</option>
+                        <option value="contents">내용</option>
+                        <option value="writer">작성자</option>
                     </select>
                 </span>
                 <span><input type="text" id="search_box" value="" placeholder="검색어를 입력하세요"></span>
@@ -87,7 +87,7 @@
                     <td> <a th:href="@{|/memo/${memo.id}|(page=${MemoList.number + 1})}" th:text="${memo.memoContents}" ></a></td>
                     <td> <a th:href="@{|/memo/${memo.id}|(page=${MemoList.number + 1})}" th:text="${memo.memoExposeYn}" ></a></td>
                     <td> <a th:href="@{|/memo/${memo.id}|(page=${MemoList.number + 1})}" th:text="${memo.userName}" ></a></td>
-                    <td> <a th:href="@{|/memo/${memo.id}|(page=${MemoList.number + 1})}" th:text="${memo.createTime}"></a></td>
+                    <td> <a th:href="@{|/memo/${memo.id}|(page=${MemoList.number + 1})}" th:text="${#temporals.format(memo.createTime, 'yyyy-MM-dd / HH:mm:ss')}"></a></td>
                 </tr>
             </table>
         </div>
@@ -98,17 +98,17 @@
                 <ul class="pagination">
                     <!-- 이전 페이지 -->
                     <li th:if="${MemoList.hasPrevious()}" class="page-item">
-                        <a class="page-link" th:href="@{'/memo/paging?page=' + (${MemoList.getNumber()} - 1) + '&amp;size=' + ${MemoList.getSize()} + '&amp;keyword=' + ${keyword != null ? keyword : ''}}" aria-label="Previous">
+                        <a class="page-link" th:href="@{'/memo/paging?page=' + (${MemoList.getNumber()} - 1) + '&amp;size=' + ${MemoList.getSize()} + '&amp;keyword=' + ${keyword != null ? keyword : ''} + '&amp;columnName=' + ${columnName != null ? columnName : ''}}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <!-- 페이지 번호 -->
                     <li th:each="i : ${#numbers.sequence((MemoList.number - 3) < 0 ? 0 : (MemoList.number - 3), (MemoList.number + 3) > (MemoList.totalPages - 1) ? (MemoList.totalPages - 1) : (MemoList.number + 3))}" th:class="${MemoList.number == i} ? 'page-item active' : 'page-item'">
-                        <a class="page-link" th:href="@{'/memo/paging?page=' + ${i} + '&amp;size=' + ${MemoList.getSize()} + '&amp;keyword=' + ${keyword != null ? keyword : ''}}" th:text="${i + 1}"></a>
+                        <a class="page-link" th:href="@{'/memo/paging?page=' + ${i} + '&amp;size=' + ${MemoList.getSize()} + '&amp;keyword=' + ${keyword != null ? keyword : ''} + '&amp;columnName=' + ${columnName != null ? columnName : ''}}" th:text="${i + 1}"></a>
                     </li>
                     <!-- 다음 페이지 -->
                     <li th:if="${MemoList.hasNext()}" class="page-item">
-                        <a class="page-link" th:href="@{'/memo/paging?page=' + (${MemoList.getNumber()} + 1) + '&amp;size=' + ${MemoList.getSize()} + '&amp;keyword=' + ${keyword != null ? keyword : ''}}" aria-label="Next">
+                        <a class="page-link" th:href="@{'/memo/paging?page=' + (${MemoList.getNumber()} + 1) + '&amp;size=' + ${MemoList.getSize()} + '&amp;keyword=' + ${keyword != null ? keyword : ''} + '&amp;columnName=' + ${columnName != null ? columnName : ''}}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
@@ -165,10 +165,59 @@
 </body>
 <script>
     function searchMemo() {
-        var keyword = document.getElementById("search_box").value.trim(); // 검색어 가져오기
-        var url = "/memo/paging?keyword=" + encodeURIComponent(keyword); // 검색 URL 구성
+        var searchType = document.getElementById("type").value; // 선택된 검색 타입
+        var keyword = document.getElementById("search_box").value; // 검색어
 
-        // 현재 페이지 유지하면서 검색
+        // 선택된 검색 타입에 따라 컬럼 명을 설정
+        var columnName = ''; // 검색할 컬럼 명을 저장할 변수
+        if (searchType === 'contents') {
+            columnName = 'memoContents';
+        } else if (searchType === 'writer') {
+            columnName = 'userName';
+        }
+
+        // 선택된 검색 타입에 따라 다른 URL을 생성하여 페이지를 이동
+        var url = '/memo/paging?page=0&size=10&columnName=' + columnName + '&keyword=' + keyword;
+
+        // 페이지 이동
+        window.location.href = url;
+    }
+
+    // 페이지가 로드될 때 실행되는 함수
+    window.onload = function() {
+        // 이전에 선택된 라디오 버튼 값 가져오기
+        var selectedFilter = localStorage.getItem('selectedFilter');
+        if (selectedFilter) {
+            // 저장된 값이 있을 경우 해당 버튼 선택
+            document.querySelector('input[value="' + selectedFilter + '"]').checked = true;
+        }
+    };
+
+    function filterMemos() {
+        // 선택된 라디오 버튼의 값 가져오기
+        var dashboardFilterRadioGroup = document.getElementsByName("dashboardFilter");
+        var keyword;
+        for (var i = 0; i < dashboardFilterRadioGroup.length; i++) {
+            if (dashboardFilterRadioGroup[i].checked) {
+                keyword = dashboardFilterRadioGroup[i].value;
+                break;
+            }
+        }
+
+        // 선택된 검색 타입에 따라 컬럼 명 설정
+        var columnName = 'memoExposeYn';
+        // 선택된 검색 타입에 따라 컬럼 명 설정
+        if (keyword === 'Y' || keyword === 'N') {
+            columnName = 'memoExposeYn';
+        }
+
+        // 선택된 검색 타입에 따라 다른 URL을 생성하여 페이지를 이동
+        var url = '/memo/paging?page=0&size=10&columnName=' + columnName + '&keyword=' + keyword;
+
+        // 로컬 스토리지에 선택된 값을 저장
+        localStorage.setItem('selectedFilter', keyword);
+
+        // 페이지 이동
         window.location.href = url;
     }
 
@@ -279,38 +328,6 @@
              console.error('Error occurred while deleting selected items:', error);
          });
    }
-
-    function filterMemoByDashboard() {
-    const dashboardFilterRadio = document.querySelector('input[name="dashboardFilter"]:checked');
-
-    if (!dashboardFilterRadio) return; // 체크된 라디오 버튼이 없을 경우 처리
-
-    const dashboardFilterValue = dashboardFilterRadio.value;
-    const memos = document.querySelectorAll('.memo');
-
-    memos.forEach(memo => {
-        const dashboardValue = memo.querySelector('td:nth-child(4)').textContent.trim();
-        const shouldDisplay = (dashboardFilterValue === 'all') ||
-                              (dashboardFilterValue === 'yes' && dashboardValue === 'Y') ||
-                              (dashboardFilterValue === 'no' && dashboardValue === 'N');
-
-        // 클래스를 토글하여 스타일 적용
-        memo.style.display = shouldDisplay ? '' : 'none';
-        });
-    }
-
-    // 라디오 버튼 변화에 따라 필터링된 결과를 업데이트
-    document.querySelectorAll('input[name="dashboardFilter"]').forEach(radio => {
-        radio.addEventListener('change', filterMemoByDashboard);
-    });
-
-    // 페이지 로드 시 초기 필터링 적용
-    document.addEventListener('DOMContentLoaded', filterMemoByDashboard);
-
-    function displayTotalPosts(totalPosts) {
-    var totalPostsDiv = document.getElementById("totalPosts");
-    totalPostsDiv.textContent = "(총 " + totalPosts + "건의 게시글)";
-}
 
 // MemoList를 가져오는 AJAX 요청
 function getTotalPosts() {

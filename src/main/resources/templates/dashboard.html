@@ -72,13 +72,13 @@
                 <div>N월</div>
                 <div>결제 신규 등록</div>
                 <div th:text="${paymentInsertThisMonth}">13</div>
-                <button>View All</button>
+                <button onclick="redirectToCurrentMonthLink()">View All</button>
             </div>
             <div class="countBox count-6">
                 <div>N월</div>
                 <div>결제 성공</div>
                 <div th:text="${paymentSuccessCount}"></div>
-                <button>View All</button>
+                <button onclick="redirectToCurrentMonthSuccess()">View All</button>
             </div>
 
         </div>
@@ -168,4 +168,5 @@
 </script>
 <script th:src="@{/js/pageSample.js}"></script>
 <script th:src="@{/js/dashBoardChart.js}"></script>
+<script th:src="@{/js/dashBoardCount.js}"></script>
 </html>
