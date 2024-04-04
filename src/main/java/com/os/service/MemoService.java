@@ -37,10 +37,22 @@ public class MemoService {
         return memoPage.map(MemoDTO::toMemoDTO);
     }
 
-    public Page<MemoDTO> findByTitleContaining(String keyword, Pageable pageable) {
-        Page<Memo> allPaymentsPage = memoRepository.findByMemoContentsContains(keyword, pageable);
+    public Page<MemoDTO> findByMemoContentsContaining(String keyword, Pageable pageable) {
+        Page<Memo> allPaymentsPage = memoRepository.findByMemoContentsContaining(keyword, pageable);
         return allPaymentsPage.map(MemoDTO::toMemoDTO);
     }
+
+    // 작성자로 메모 검색
+    public Page<MemoDTO> findByUserUsernameContaining(String keyword, Pageable pageable) {
+        Page<Memo> allPaymentsPage = memoRepository.findByUserUsernameContaining(keyword, pageable);
+        return allPaymentsPage.map(MemoDTO::toMemoDTO);
+    }
+
+    public Page<MemoDTO> findByMemoExposeYn(String keyword, Pageable pageable) {
+        Page<Memo> allPaymentsPage = memoRepository.findByMemoExposeYn(keyword, pageable);
+        return allPaymentsPage.map(MemoDTO::toMemoDTO);
+    }
+
 
     public void save(MemoDTO memoDTO) {
         User user = userService.findId();
@@ -77,4 +89,5 @@ public class MemoService {
             }
         }
     }
+
 }
