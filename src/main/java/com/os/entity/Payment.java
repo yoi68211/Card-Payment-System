@@ -55,8 +55,6 @@ public class Payment extends BaseEntity{
 
     private int paymentAutoDate;
 
-
-
     private int paymentFirstPay;                                // 자동결제 금액
 
     //////////////////////////////////////////////////////////////////////////////////
