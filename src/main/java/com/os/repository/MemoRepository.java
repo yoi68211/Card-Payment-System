@@ -1,5 +1,6 @@
 package com.os.repository;
 
+import com.os.dto.MemoDTO;
 import com.os.entity.Memo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,7 +17,9 @@ import java.util.List;
 public interface MemoRepository extends JpaRepository<Memo,Long> {
     List<Memo> findByMemoDelYn(String memoDelYn);
 
-    Page<Memo> findByMemoContentsContains(String keyword, Pageable pageable);
+    Page<Memo> findByMemoContentsContaining(String keyword, Pageable pageable);
 
+    Page<Memo> findByUserUsernameContaining(String keyword, Pageable pageable);
 
+    Page<Memo> findByMemoExposeYn(String keyword, Pageable pageable);
 }

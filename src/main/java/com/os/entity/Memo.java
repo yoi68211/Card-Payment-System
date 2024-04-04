@@ -11,8 +11,6 @@ import org.hibernate.validator.constraints.Length;
 import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
-@SQLDelete(sql = "UPDATE memo SET memo_del_yn = 'Y' WHERE memo_id = ? ")
-@Where(clause = "memo_del_yn = 'N'")
 @Entity
 @Data
 @Builder

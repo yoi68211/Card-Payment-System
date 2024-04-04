@@ -60,7 +60,7 @@
 
                     <button type="button" th:if="${#strings.equals(payInfo.paymentStatus, 'error')}" onclick="toggleEdit()">편집</button>
                     <button type="button" th:if="${#strings.equals(payInfo.paymentStatus, 'error')}" onclick="fnDelPay()" >삭제</button>
-                    <button type="button" th:if="${!#strings.equals(payInfo.paymentStatus, 'error')}">신용 구매도표 보기</button>
+                    <button type="button" th:if="${!#strings.equals(payInfo.paymentStatus, 'error')}" th:onclick="|location.href='@{/receipt/(id=${customerInfo.id})}'|">신용 구매도표 보기</button>
                     <button type="button" onclick="location.href='/list'"><i class="fa-solid fa-chevron-left"></i>목록으로</button>
                 </div>
             </div>
