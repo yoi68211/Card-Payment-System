@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -30,7 +31,7 @@ public class AutoPayment extends BaseEntity {
 
 
     private String billingKey;
-
+    private LocalDate autoPayDate;               // 결제된 날짜
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private AutoStatus autoStatus;                          // 자동결제 상태
@@ -38,7 +39,7 @@ public class AutoPayment extends BaseEntity {
     @Column(nullable = false)
     private int autoPayCount;                        // 자동결제 횟수
 
-    @Column(nullable = false)
+
     private LocalDateTime paymentNextTime;                      // 자동결제 마지막결제일
 
 //    @ManyToOne

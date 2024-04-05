@@ -1,5 +1,5 @@
 package com.os.util;
 
 public enum AutoStatus {
-    auto, stop
+    paid, auto, stop, error
 }
