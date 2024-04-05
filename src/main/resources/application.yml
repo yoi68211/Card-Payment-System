@@ -31,8 +31,9 @@ spring:
 
 
 
-  api:
-    key: test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6
+  api-key:
+    clientKey: test_ck_6bJXmgo28eEX5LOZe16W8LAnGKWx
+    secretKey: test_sk_LkKEypNArW2PPmGx2XpQVlmeaxYG
 
   spring:
     devtools:
@@ -43,7 +44,7 @@ spring:
 
   logging:
     level:
-      root: info
+      root: debug
 
 
 
