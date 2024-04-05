@@ -69,10 +69,20 @@ function resetForm() {
 
     // 상태 값을 초기화합니다.
     document.getElementById("status").value = ""; // 상태 값을 빈 문자열로 설정
+    document.getElementById("transactionStatus").value = ""; // 상태 값을 빈 문자열로 설정
+    document.getElementById("payType").value = ""; // 상태 값을 빈 문자열로 설정
 }
 
 function setStatus(status) {
     document.getElementById('status').setAttribute('value', status);
+}
+
+function setTransactionStatus(status) {
+    document.getElementById('transactionStatus').setAttribute('value', status);
+}
+
+function setPayType(type) {
+    document.getElementById('payType').setAttribute('value', type);
 }
 
 function submitForm() {
