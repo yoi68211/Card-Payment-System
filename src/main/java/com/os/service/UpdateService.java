@@ -2,16 +2,20 @@ package com.os.service;
 
 import com.os.dto.ProductDTO;
 import com.os.dto.UpdateDTO;
+import com.os.entity.AutoPayment;
 import com.os.entity.Customer;
 import com.os.entity.Payment;
 import com.os.entity.Product;
+import com.os.repository.AutoPaymentRepository;
 import com.os.repository.CustomerRepository;
 import com.os.repository.PaymentRepository;
 import com.os.repository.ProductRepository;
+import com.os.util.AutoStatus;
 import com.os.util.OrderStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,8 +27,9 @@ public class UpdateService {
     private final CustomerRepository customerRepository;
     private final PaymentRepository paymentRepository;
     private final ProductRepository productRepository;
+    private final AutoPaymentRepository autoPaymentRepository;
 
-    public boolean update(UpdateDTO updateDTO){
+    public boolean updateBasic(UpdateDTO updateDTO){
 
         if(!updateDTO.getProductDelCheck().isEmpty()){
 
@@ -45,13 +50,14 @@ public class UpdateService {
 
             customer.setCustomerName(updateDTO.getCustomerName());
             customer.setCustomerEmail(updateDTO.getCustomerEmail());
-
+            customer.setCustomerAddress(updateDTO.getCustomerAddress());
+            customer.setCustomerPhone(updateDTO.getCustomerPhone());
             Optional<Payment> paymentOptional = paymentRepository.findByCustomerIdAndPaymentDelYn(customer.getId(), 'N');
 
             if(paymentOptional.isPresent()){
                 Payment payment = paymentOptional.get();
                 payment.setPaymentTitle(updateDTO.getPaymentTitle());
-
+                payment.setPaymentMemo(updateDTO.getPaymentMemo());
                 List<Product> productList = productRepository.findByPaymentId(payment.getId());
                 List<ProductDTO> updatedProductList = updateDTO.getProductList();
 
@@ -78,13 +84,20 @@ public class UpdateService {
                             product.setProductPrice(updatedProductDTO.getProductPrice());
                             product.setProductAmount(updatedProductDTO.getProductAmount());
                         }
-
-
+                    payment.setProducts(productList);
                 }
 
-            payment.setProducts(productList);
-            payment.setCustomer(customer);
+                Optional<AutoPayment> autoPaymentOptional = autoPaymentRepository.findByPaymentId(payment.getId());
+                if(autoPaymentOptional.isPresent()){
+                    AutoPayment autoPayment = autoPaymentOptional.get();
+                    autoPayment.setPaymentNextTime(LocalDateTime.parse(updateDTO.getPaymentNextTime()));
+                    payment.setAutoPayments(autoPayment);
+                }
 
+
+
+
+            payment.setCustomer(customer);
             customer.setPayments(payment);
 
             customerRepository.save(customer);
@@ -137,6 +150,60 @@ public class UpdateService {
 
             return false; // 엔티티가 존재하지 않을 경우 false 반환
 
+        }
+    }
+
+
+
+    public boolean updateAuto(UpdateDTO updateDTO){
+
+        Optional<Customer> customerOptional = customerRepository.findById(updateDTO.getCustomerId());
+
+
+        if (customerOptional.isPresent()) {
+
+            Customer customer= customerOptional.get();
+
+
+            customer.setCustomerName(updateDTO.getCustomerName());
+            customer.setCustomerEmail(updateDTO.getCustomerEmail());
+            customer.setCustomerAddress(updateDTO.getCustomerAddress());
+            customer.setCustomerPhone(updateDTO.getCustomerPhone());
+            Optional<Payment> paymentOptional = paymentRepository.findByCustomerIdAndPaymentDelYn(customer.getId(), 'N');
+
+            if(paymentOptional.isPresent()){
+                Payment payment = paymentOptional.get();
+                payment.setPaymentMemo(updateDTO.getPaymentMemo());
+
+                Optional<AutoPayment> autoPaymentOptional = autoPaymentRepository.findByPaymentId(payment.getId());
+                if(autoPaymentOptional.isPresent()){
+                    AutoPayment autoPayment = autoPaymentOptional.get();
+                    String dateString = updateDTO.getPaymentNextTime().replace(" ", "T");
+                    autoPayment.setPaymentNextTime(LocalDateTime.parse(dateString));
+
+
+                    payment.setAutoPayments(autoPayment);
+                    payment.setCustomer(customer);
+                    customer.setPayments(payment);
+
+                    customerRepository.save(customer);
+                }
+
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void autoPayStop(UpdateDTO updateDTO){
+        System.out.println("service 200줄"+updateDTO.getAutoPaymentId());
+        Optional<AutoPayment> autoPaymentOptional = autoPaymentRepository.findById(updateDTO.getAutoPaymentId());
+        if(autoPaymentOptional.isPresent()){
+            AutoPayment autoPayment = autoPaymentOptional.get();
+            autoPayment.setAutoStatus(AutoStatus.stop);
+            autoPayment.setPaymentNextTime(null);
+            autoPaymentRepository.save(autoPayment);
         }
     }
 }

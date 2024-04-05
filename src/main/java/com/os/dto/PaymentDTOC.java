@@ -28,8 +28,11 @@ public class PaymentDTOC {
     private int paymentMonth;                           // 자동결제 다음결제일
     private LocalDateTime paymentNextTime;                            // 자동결제 마지막결제일
     private int paymentFirstPay;
+    private String totalAmount;
 
     public static PaymentDTOC payInfoDTO(Payment payment){
+        String totalAmount = payment.calculateTotalAmount(payment.getProducts());
+
         PaymentDTOC paymentDTOC = PaymentDTOC.builder()
                 .id(payment.getId())
                 .paymentTitle(payment.getPaymentTitle())
@@ -41,6 +44,7 @@ public class PaymentDTOC {
                 .paymentUpdateTime(payment.getUpdateTime())
                 .paymentDelYn(payment.getPaymentDelYn())
                 .paymentMonth(payment.getPaymentMonth())
+                .totalAmount(totalAmount)
 //                .paymentNextTime(payment.getPaymentNextTime())
                 .paymentFirstPay(payment.getPaymentFirstPay())
                 .build();
