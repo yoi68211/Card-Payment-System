@@ -1,16 +1,15 @@
 package com.os.controller;
+
+//import com.os.config.ApiKeyProperties;
 import com.os.dto.PaymentDetailsDTO;
-import com.os.dto.toss.PaymentRequest;
 import com.os.service.AutoPaymentService;
 import com.os.service.CustomerService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +27,15 @@ import java.util.Base64;
 public class WidgetController {
     private final CustomerService customerService;
     private final AutoPaymentService autoPaymentService;
+    //private final ApiKeyProperties apiKeyProperties;
+
+
+
+
+
+
+
+
 
 //    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -54,7 +62,12 @@ public class WidgetController {
 
         // TODO: 개발자센터에 로그인해서 내 결제위젯 연동 키 > 시크릿 키를 입력하세요. 시크릿 키는 외부에 공개되면 안돼요.
         // @docs https://docs.tosspayments.com/reference/using-api/api-keys
-        String widgetSecretKey = "test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6";
+        String widgetSecretKey = "test_sk_LkKEypNArW2PPmGx2XpQVlmeaxYG";
+        System.out.println("시크릿키 ===> "+widgetSecretKey);
+//        String secretKeyFromYaml = apiKeyProperties.getSecretKey();
+//        System.out.println("YAML 변수값 ==> " + secretKeyFromYaml);
+
+
 
         // 토스페이먼츠 API는 시크릿 키를 사용자 ID로 사용하고, 비밀번호는 사용하지 않습니다.
         // 비밀번호가 없다는 것을 알리기 위해 시크릿 키 뒤에 콜론을 추가합니다.

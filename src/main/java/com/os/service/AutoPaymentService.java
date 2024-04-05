@@ -1,5 +1,6 @@
 package com.os.service;
 
+import com.os.dto.AutoPaymentDTOC;
 import com.os.entity.AutoPayment;
 import com.os.entity.Payment;
 import com.os.repository.AutoPaymentRepository;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -34,7 +36,8 @@ public class AutoPaymentService {
                 AutoPayment autoPayment = new AutoPayment();
                 autoPayment.setAutoStatus(AutoStatus.auto);
                 autoPayment.setAutoPayCount(1);
-                autoPayment.setPaymentNextTime(payment.calculateLocalDateTime(payment.getPaymentMonth(),payment.getPaymentAutoDate()));
+                autoPayment.setPaymentNextTime(Payment.calculateLocalDateTime(payment.getPaymentMonth(),payment.getPaymentAutoDate()));
+                autoPayment.setAutoPayDate(LocalDate.now());
                 autoPayment.setPayment(payment);
 
                 autoPaymentRepository.save(autoPayment);
@@ -51,6 +54,17 @@ public class AutoPaymentService {
 
         return autoPaymentRepository.countByAutoStatusAndUpdateTimeBetween(AutoStatus.stop, startDate, endDate);
     }
+
+    public AutoPaymentDTOC autoPayRoad(Long id){
+        Optional<AutoPayment> autoPaymentOptional = autoPaymentRepository.findByPaymentId(id);
+        if(autoPaymentOptional.isPresent()){
+            AutoPayment autoPayment = autoPaymentOptional.get();
+            AutoPaymentDTOC autoPayInfo = AutoPaymentDTOC.autoPaymentInfoDTO(autoPayment);
+            return autoPayInfo;
+        }
+        return null;
+    }
+
 }
 
 

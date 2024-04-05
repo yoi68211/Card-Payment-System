@@ -20,28 +20,26 @@ public class PayInfoRestController {
 
     @PostMapping("/payDetailEdit")
     public void updateDetail(@RequestBody @Valid UpdateDTO updateDTO){
-        boolean check = updateService.update(updateDTO);
+        if(updateDTO.isAutoOrBasic()){
+            boolean check = updateService.updateBasic(updateDTO);
+        } else{
+            boolean check = updateService.updateAuto(updateDTO);
+        }
+
     }
 
     @PostMapping("/payDetailDel")
     public void deleteDetail(@RequestBody @Valid UpdateDTO updateDTO){
-        System.out.println("삭제 실행 => " + updateDTO.getPaymentId());
 
         boolean check = updateService.delUpdate(updateDTO);
 
     }
 
-//    @PostMapping("/basicPayError")
-//    public void basicPayError(@RequestParam Long id){
-//        System.out.println("결제실패 => " + id);
-//        boolean check = paymentService.basicPayError(id);
-//
-//        if(check){
-//            System.out.println("수정성공");
-//        } else{
-//            System.out.println("수정실패");
-//        }
-//    }
+    @PostMapping("/autoPayStop")
+    public void autoPayStop(@RequestBody @Valid UpdateDTO updateDTO){
+        System.out.println("controller 40줄==> " + updateDTO.getAutoPaymentId());
+        updateService.autoPayStop(updateDTO);
+    }
 
 
 }

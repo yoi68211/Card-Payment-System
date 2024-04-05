@@ -23,7 +23,6 @@ public class AllPaymentListDto {
     private String customerName;
     private String paymentTitle;
     private String totalAmount;
-    @Enumerated(EnumType.STRING)
     private OrderStatus paymentStatus;
     private char paymentDelYn;
 

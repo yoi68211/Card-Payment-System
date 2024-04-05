@@ -121,7 +121,8 @@ function toggleEdit() {
             paymentTitle: f.paymentTitle.value,
             paymentId: f.paymentId.value,
             productDelCheck: productDelCheck,
-            productList: productList
+            productList: productList,
+            autoOrBasic: true
         }
         console.log("productList", param.productList);
         fetch('/payDetailEdit', {
