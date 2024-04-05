@@ -28,7 +28,7 @@ public class AutoPayScheduler {
     @Scheduled(fixedDelay = 300000) // 5분마다 실행
     public void autoPaymentUpdate() {
         // payment type == auto 인 payment 와 auto_payment 리스트 road
-        List<Payment> payments = paymentRepository.findAllPaymentsWithAutoPayments();
+        List<Payment> payments = paymentRepository.findAllPaymentsWithAutoPaymentsAndAutoStatusAuto();
         LocalDateTime currentDateTime = LocalDateTime.now(); // 현재 날짜
 
 

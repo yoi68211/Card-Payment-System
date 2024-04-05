@@ -15,33 +15,33 @@
             <div class="backIcon"><i onclick="history.back()" class="fa-solid fa-rotate-left fa-2x"></i></div>
             <div>AIP System</div>
             <div>제목</div>
-            <div th:text="${payInfo.paymentTitle}"></div>
+            <div id="paymentTitle" th:text="${payInfo.paymentTitle}"></div>
             <div>ㅁ가명점 정보ㅁ</div>
             <table>
                 <tr>
-                    <td>점포명</td>
+                    <td class="tdTitle">점포명</td>
                     <td>aip상점</td>
                 </tr>
                 <tr>
-                    <td>주소</td>
+                    <td class="tdTitle">주소</td>
                     <td>명동역 충무로역 사이 어딘가</td>
                 </tr>
                 <tr>
-                    <td>연락처</td>
+                    <td class="tdTitle">연락처</td>
                     <td>02-1234-12314</td>
                 </tr>
             </table>
             <table>
                 <tr>
-                    <td>카드사</td>
+                    <td class="tdTitle">카드사</td>
                     <td id="card-company"></td>
                 </tr>
                 <tr>
-                    <td>결제 날짜</td>
+                    <td class="tdTitle">결제 날짜</td>
                     <td id="card-requestedAt"></td>
                 </tr>
                 <tr>
-                    <td>결제 금액</td>
+                    <td class="tdTitle">결제 금액</td>
                     <td class="card-totalAmount"></td>
                 </tr>
 
@@ -50,11 +50,11 @@
             <table>
 
                 <tr>
-                    <td>고객명</td>
+                    <td class="tdTitle">고객명</td>
                     <td th:text="${customerInfo.customerName}"></td>
                 </tr>
                 <tr>
-                    <td>지불방법</td>
+                    <td class="tdTitle">지불방법</td>
                     <td id="card-method"></td>
                 </tr>
             </table>
