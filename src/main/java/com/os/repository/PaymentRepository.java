@@ -43,6 +43,6 @@ public interface PaymentRepository extends JpaRepository<Payment,Long> {
     long countByPaymentStatusAndPaymentDelYnAndPaymentTypeAndUpdateTimeBetween(OrderStatus paymentStatus, char delYn,OrderType paymentType, LocalDateTime startTime, LocalDateTime endTime);
 
     ///////////////////////////////////
-    long countByPaymentTypeAndUpdateTimeBetween(OrderType paymentType, LocalDateTime startTime, LocalDateTime endTime);
+    long countByPaymentTypeAndPaymentDelYnAndUpdateTimeBetween(OrderType paymentType, char delYn,LocalDateTime startTime, LocalDateTime endTime);
 
 }
