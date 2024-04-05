@@ -40,93 +40,94 @@
     </span>
 </header>
 <main>
-    <div class="main-cell">
-        <div class="auto-main">
-            <div class="auto-header">
-                <div>
-                    <span>회원 ID : </span>
-                    <span>AUTO-<span class="customer-id">1313</span> 자동결제 상세내역</span>
+    <form class="auto-form" id="auto-form">
+        <div class="main-cell">
+            <div class="auto-main">
+                <div class="auto-header">
+                    <div>
+                        <span>회원 ID : </span>
+                        <span>AUTO-<span class="customer-id">1313</span> 자동결제 상세내역</span>
+                    </div>
+                    <div>
+                        <button type="button" onclick="toggleEdit()">편집</button>
+                        <button type="button" onclick="location.href='/list'"><i class="fa-solid fa-chevron-left"></i>목록으로</button>
+                    </div>
                 </div>
-                <div>
-                    <button>편집</button>
-                    <button onclick="location.href='/list'"><i class="fa-solid fa-chevron-left"></i>목록으로</button>
-                </div>
-            </div>
-            <div class="auto-body">
-                <div class="auto-input-group">
-                    <label>
-                        <span>등록일시</span>
-                        <input type="date" id="createDate">
-                    </label>
-                    <label>
-                        <span>회원ID</span>
-                        <input type="text" id="customerId" name="customerId" th:value="${customerInfo.Id}">
-                    </label>
-                    <label>
-                        <span>고객명</span>
-                        <input type="text" id="customerName" name="customerName" class="editable" disabled th:value="${customerInfo.customerName}">
-                    </label>
-                    <label>
-                        <span>E-Mail</span>
-                        <input type="email" id="customerEmail" name="customerEmail" class="editable" disabled th:value="${customerInfo.customerEmail}">
-                    </label>
-                    <label class="phone-inputs">
-                        <span>연락번호</span>
-                        <!--<div class="phone-flex">
+                <div class="auto-body">
+                    <div class="auto-input-group">
+                        <label>
+                            <span>등록일시</span>
+                            <input readonly type="date" id="createDate">
+                        </label>
+                        <label>
+                            <span>고객명</span>
+                            <input type="text" id="customerName" name="customerName" class="editable" disabled th:value="${customerInfo.customerName}">
+                            <input type="hidden" name="customerId" th:value="${customerInfo.id}">
+                            <input type="hidden" name="paymentId" th:value="${payInfo.id}">
+                            <input type="hidden" id="autoPaymentId" name="autoPaymentId" th:value="${autoPayInfo.id}">
+                        </label>
+                        <label>
+                            <span>E-Mail</span>
+                            <input type="email" id="customerEmail" name="customerEmail" class="editable" disabled th:value="${customerInfo.customerEmail}">
+                        </label>
+                        <label class="phone-inputs">
+                            <span>연락번호</span>
+                            <!--<div class="phone-flex">
 
-                            <input type="tel" maxlength="3" placeholder="010" class="phone-part">
-                            -
-                            <input type="tel" maxlength="4" placeholder="1234" class="phone-part">
-                            -
-                            <input type="tel" maxlength="4" placeholder="5678" class="phone-part">
-                            -->
-                            <input type="text" id="customerPhone" name="customerPhone" th:value="${customerInfo.customerPhone}">
-                        <!--</div>-->
-                    </label>
-                    <label>
-                        <span>주소</span>
-                        <input type="text" id="customerAddress" name="customerAddress" th:value="${customerInfo.customerAddress}">
-                    </label>
-                    <label class="auto-custom-input">
-                        <span>자동결제 금액</span>
-                        <input type="text" id="paymentFirstPay" name="paymentFirstPay" th:value="${payInfo.paymentFirstPay}">
-                    </label>
-                    <label class="auto-custom-input">
-                        <span>결제구분</span>
-                        <input type="text" id="paymentBizTo" name="paymentBizTo" th:value="${payInfo.paymentBizTo}">
-                    </label>
-                    <label>
-                        <span>마지막 결제일</span>
-                        <input type="date">
-                    </label>
-                    <label class="auto-custom-input">
-                        <span>마지막 거래상태</span>
-                        <input type="text" id="paymentStatus" name="paymentStatus" th:value="${payInfo.paymentStatus}">
-                    </label>
-                    <label>
-                        <span>다음 결제일</span>
-                        <input type="date">
-                    </label>
-                    <label class="auto-custom-input">
-                        <span>결제 회차</span>
-                        <input type="text" id="autoPayCount" name="autoPayCount">
-
-                    </label>
-                    <label class="auto-memo">
-                        <span>메모</span>
-                        <input type="text"  id="paymentMemo" name="paymentMemo" th:value="${payInfo.paymentMemo}">>
-                    </label>
+                                <input type="tel" maxlength="3" placeholder="010" class="phone-part">
+                                -
+                                <input type="tel" maxlength="4" placeholder="1234" class="phone-part">
+                                -
+                                <input type="tel" maxlength="4" placeholder="5678" class="phone-part">
+                                -->
+                                <input type="text" class="editable" id="customerPhone" name="customerPhone" disabled th:value="${customerInfo.customerPhone}">
+                            <!--</div>-->
+                        </label>
+                        <label>
+                            <span>주소</span>
+                            <input type="text" id="customerAddress" class="editable" name="customerAddress" disabled th:value="${customerInfo.customerAddress}">
+                        </label>
+                        <label class="auto-custom-input">
+                            <span>자동결제 금액</span>
+                            <input type="text" id="paymentFirstPay" name="totalAmount" readonly th:value="${payInfo.totalAmount}">
+                        </label>
+                        <label class="auto-custom-input">
+                            <span>결제구분</span>
+                            <input type="text" id="paymentBizTo" name="paymentBizTo" readonly th:value="${payInfo.paymentBizTo}">
+                        </label>
+                        <label>
+                            <span>마지막 결제일</span>
+                            <input type="date" th:value="${autoPayInfo.autoPayDate}" readonly>
+                        </label>
+                        <label class="auto-custom-input">
+                            <span>마지막 거래상태</span>
+                            <input type="text" id="paymentStatus" name="paymentStatus" readonly th:value="${payInfo.paymentStatus}">
+                        </label>
+                        <label>
+                            <span>다음 결제일</span>
+                            <input type="text" readonly th:if="${#strings.equals(autoPayInfo.autoStatus, 'stop')}" value="거래 중지">
+                            <input type="date" th:if="${#strings.equals(autoPayInfo.autoStatus, 'auto')}" id="paymentNextTime" name="paymentNextTime" class="editable" disabled>
+                        </label>
+                        <label class="auto-custom-input">
+                            <span>결제 회차</span>
+                            <input type="text" id="autoPayCount" name="autoPayCount" readonly th:value="${autoPayInfo.autoPayCount + '회'}">
+                        </label>
+                        <label class="auto-memo">
+                            <span>메모</span>
+                            <input type="text"  id="paymentMemo" class="editable" name="paymentMemo" disabled th:value="${payInfo.paymentMemo}">
+                        </label>
+                    </div>
+                </div>
+                <div class="auto-footer">
+                    <button type="button" onclick="fnAutoPayStop()">중지</button>
+                    <button type="button"><i class="fa-solid fa-credit-card"></i>카드정보 변경 요청</button>
                 </div>
             </div>
-            <div class="auto-footer">
-                <button>중지</button>
-                <button><i class="fa-solid fa-credit-card"></i>카드정보 변경 요청</button>
-            </div>
+
+
+
         </div>
-
-
-
-    </div>
+    </form>
 </main>
 <aside>
         <span id="sidebar">
@@ -176,9 +177,20 @@
 <script th:src="@{/js/pageSample.js}"></script>
 <script th:inline="javascript">
     //날짜 년월일 형식
-    let payCreate = [[${payInfo.paymentCreateTime}]];
-    let createDate = dateProcess(payCreate);
+
+    let createTime = [[${payInfo.paymentCreateTime}]];
+    let createDate = dateProcess(createTime);
     document.getElementById("createDate").value = createDate;
+
+    let nextTime = [[${autoPayInfo.paymentNextTime}]];
+    let paymentNextTime;
+    if (nextTime) {
+        paymentNextTime = dateProcess(nextTime);
+        document.getElementById("paymentNextTime").value = paymentNextTime;
+    } else {
+        // nextTime이 빈 값인 경우에 대한 처리
+    }
     //날짜 년월일 형식 end
 </script>
+<script th:src="@{/js/autoPayInfoDetail.js}"></script>
 </html>
