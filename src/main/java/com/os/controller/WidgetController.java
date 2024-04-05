@@ -1,6 +1,7 @@
 package com.os.controller;
 
 //import com.os.config.ApiKeyProperties;
+import com.os.config.ApiKeyProperties;
 import com.os.dto.PaymentDetailsDTO;
 import com.os.service.AutoPaymentService;
 import com.os.service.CustomerService;
@@ -27,7 +28,12 @@ import java.util.Base64;
 public class WidgetController {
     private final CustomerService customerService;
     private final AutoPaymentService autoPaymentService;
-    //private final ApiKeyProperties apiKeyProperties;
+    private ApiKeyProperties apiKeyProperties;
+
+    @Autowired
+    public void ApiController(ApiKeyProperties apiKeyProperties) {
+        this.apiKeyProperties = apiKeyProperties;
+    }
 
 
 
@@ -41,7 +47,8 @@ public class WidgetController {
 
     @PostMapping("/confirm")
     public ResponseEntity<org.json.simple.JSONObject> confirmPayment(@RequestBody String jsonBody) throws Exception {
-
+        String secretKey = apiKeyProperties.getSecretKey();
+        
         JSONParser parser = new JSONParser();
         String orderId;
         String amount;
@@ -62,10 +69,9 @@ public class WidgetController {
 
         // TODO: 개발자센터에 로그인해서 내 결제위젯 연동 키 > 시크릿 키를 입력하세요. 시크릿 키는 외부에 공개되면 안돼요.
         // @docs https://docs.tosspayments.com/reference/using-api/api-keys
-        String widgetSecretKey = "test_sk_LkKEypNArW2PPmGx2XpQVlmeaxYG";
-        System.out.println("시크릿키 ===> "+widgetSecretKey);
-//        String secretKeyFromYaml = apiKeyProperties.getSecretKey();
-//        System.out.println("YAML 변수값 ==> " + secretKeyFromYaml);
+
+
+        System.out.println("YAML 변수값 ==> " + secretKey);
 
 
 
@@ -73,7 +79,7 @@ public class WidgetController {
         // 비밀번호가 없다는 것을 알리기 위해 시크릿 키 뒤에 콜론을 추가합니다.
         // @docs https://docs.tosspayments.com/reference/using-api/authorization#%EC%9D%B8%EC%A6%9D
         Base64.Encoder encoder = Base64.getEncoder();
-        byte[] encodedBytes = encoder.encode((widgetSecretKey + ":").getBytes(StandardCharsets.UTF_8));
+        byte[] encodedBytes = encoder.encode((secretKey + ":").getBytes(StandardCharsets.UTF_8));
         String authorizations = "Basic " + new String(encodedBytes);
 
         // 결제 승인 API를 호출하세요.
@@ -116,9 +122,10 @@ public class WidgetController {
     @GetMapping("/checkout")
     public String toss(@RequestParam Long id ,Model model) throws Exception {
 
-
+        String clientKey = apiKeyProperties.getClientKey();
         PaymentDetailsDTO paymentDetailsDTO = customerService.getDetails(id);
         model.addAttribute("paymentDetailsDTO",paymentDetailsDTO);
+        model.addAttribute("clientKey",clientKey);
 
         return "/toss/checkout";
     }
