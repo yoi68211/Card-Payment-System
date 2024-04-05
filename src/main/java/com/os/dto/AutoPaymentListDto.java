@@ -39,7 +39,6 @@ public class AutoPaymentListDto {
         String totalAmount = payment.calculateTotalAmount(payment.getProducts());
 
         return AutoPaymentListDto.builder()
-                .id(payment.getId())
                 .paymentBizTo(payment.getPaymentBizTo())
                 .autoStatus(payment.getAutoPayments().getAutoStatus())
                 .customerName(payment.getCustomer().getCustomerName())
@@ -49,6 +48,7 @@ public class AutoPaymentListDto {
                 .updateTime(payment.getAutoPayments().getUpdateTime())
                 .paymentStatus(payment.getPaymentStatus())
                 .id(payment.getAutoPayments().getId())
+                .id(payment.getCustomer().getId())
                 .paymentType(payment.getPaymentType())
                 .customerPhone(payment.getCustomer().getCustomerPhone())
                 .build();

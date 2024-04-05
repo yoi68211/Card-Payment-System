@@ -146,14 +146,14 @@
             </thead>
             <tbody>
             <tr th:each="payment : ${payList}">
-                <td class="doc-number-column" th:text="${payment.autoStatus}"></td>
-                <td class="customer-name-column" th:text="${payment.customerName}"></td>
-                <td class="customer-name-column" th:text="${payment.customerEmail}"></td>
-                <td class="customer-name-column" th:text="${payment.paymentBizTo}"></td>
-                <td class="amount-columns" th:text="${payment.totalAmount}"></td>
-                <td class="datetime-column" th:text="${#temporals.format(payment.paymentNextTime, 'yyyy-MM-dd / HH:mm:ss')}"></td>
-                <td class="datetime-column" th:text="${#temporals.format(payment.updateTime, 'yyyy-MM-dd / HH:mm:ss')}"></td>
-                <td class="status-column" th:text="${payment.paymentStatus}"></td>
+                <td class="doc-number-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${payment.autoStatus}"></td>
+                <td class="customer-name-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${payment.customerName}"></td>
+                <td class="customer-name-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${payment.customerEmail}"></td>
+                <td class="customer-name-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${payment.paymentBizTo}"></td>
+                <td class="amount-columns" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${payment.totalAmount}"></td>
+                <td class="datetime-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${#temporals.format(payment.paymentNextTime, 'yyyy-MM-dd / HH:mm:ss')}"></td>
+                <td class="datetime-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${#temporals.format(payment.updateTime, 'yyyy-MM-dd / HH:mm:ss')}"></td>
+                <td class="status-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${payment.paymentStatus}"></td>
             </tr>
             </tbody>
         </table>
@@ -169,17 +169,17 @@
                 <ul class="pagination">
                     <!-- 이전 페이지 -->
                     <li th:if="${payList.hasPrevious()}" class="page-item">
-                        <a class="page-link" th:href="@{(${isListPage} ? '/autoList' + '?page=' + (${payList.getNumber()} - 1) + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + ${keyword} : '/autoSearch' + '?page=' + (${payList.getNumber()} - 1) + '&amp;size=' + ${payList.getSize()} + '&amp;startDt=' + ${startDt} + '&amp;endDt=' + ${endDt} + '&amp;status=' + ${status} + '&amp;docNumber=' + ${docNumber} + '&amp;customerName=' + ${customerName} + '&amp;email=' + ${email})}" aria-label="Previous">
+                        <a class="page-link" th:href="@{(${isListPage} ? '/autoList' + '?page=' + (${payList.getNumber()} - 1) + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + ${keyword} : '/autoSearch' + '?page=' + (${payList.getNumber()} - 1) + '&amp;size=' + ${payList.getSize()} + '&amp;startDt=' + ${startDt} + '&amp;endDt=' + ${endDt} + '&amp;status=' + ${status} + '&amp;docNumber=' + ${docNumber} + '&amp;customerName=' + ${customerName} + '&amp;email=' + ${email} + '&amp;phoneNumber=' + ${phoneNumber} + '&amp;transactionStatus=' + ${transactionStatus} + '&amp;payType=' + ${payType})}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <!-- 페이지 번호 -->
                     <li th:each="i : ${#numbers.sequence((payList.number - 3) < 0 ? 0 : (payList.number - 3), (payList.number + 3) > (payList.totalPages - 1) ? (payList.totalPages - 1) : (payList.number + 3))}" th:class="${payList.number == i} ? 'page-item active' : 'page-item'">
-                        <a class="page-link" th:href="@{(${isListPage} ? '/autoList' + '?page=' + ${i} + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + (${keyword} ?: '') : '/autoSearch' + '?page=' + ${i} + '&amp;size=' + ${payList.getSize()} + '&amp;startDt=' + (${startDt} ?: '') + '&amp;endDt=' + (${endDt} ?: '') + '&amp;status=' + (${status} ?: '') + '&amp;docNumber=' + (${docNumber} ?: '') + '&amp;customerName=' + (${customerName} ?: '') + '&amp;email=' + (${email} ?: ''))}" th:text="${i + 1}"></a>
+                        <a class="page-link" th:href="@{(${isListPage} ? '/autoList' + '?page=' + ${i} + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + (${keyword} ?: '') : '/autoSearch' + '?page=' + ${i} + '&amp;size=' + ${payList.getSize()} + '&amp;startDt=' + (${startDt} ?: '') + '&amp;endDt=' + (${endDt} ?: '') + '&amp;status=' + (${status} ?: '') + '&amp;docNumber=' + (${docNumber} ?: '') + '&amp;customerName=' + (${customerName} ?: '') + '&amp;email=' + (${email} ?: '') + '&amp;phoneNumber=' + (${phoneNumber} ?: '') + '&amp;transactionStatus=' + (${transactionStatus} ?: '') + '&amp;payType=' + (${payType} ?: ''))}" th:text="${i + 1}"></a>
                     </li>
                     <!-- 다음 페이지 -->
                     <li th:if="${payList.hasNext()}" class="page-item">
-                        <a class="page-link" th:href="@{(${isListPage} ? '/autoList' + '?page=' + (${payList.getNumber()} + 1) + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + ${keyword} : '/autoSearch' + '?page=' + (${payList.getNumber()} + 1) + '&amp;size=' + ${payList.getSize()} + '&amp;startDt=' + ${startDt} + '&amp;endDt=' + ${endDt} + '&amp;status=' + ${status} + '&amp;docNumber=' + ${docNumber} + '&amp;customerName=' + ${customerName} + '&amp;email=' + ${email})}" aria-label="Next">
+                        <a class="page-link" th:href="@{(${isListPage} ? '/autoList' + '?page=' + (${payList.getNumber()} + 1) + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + ${keyword} : '/autoSearch' + '?page=' + (${payList.getNumber()} + 1) + '&amp;size=' + ${payList.getSize()} + '&amp;startDt=' + ${startDt} + '&amp;endDt=' + ${endDt} + '&amp;status=' + ${status} + '&amp;docNumber=' + ${docNumber} + '&amp;customerName=' + ${customerName} + '&amp;email=' + ${email} + '&amp;phoneNumber=' + ${phoneNumber} + '&amp;transactionStatus=' + ${transactionStatus} + '&amp;payType=' + ${payType})}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
