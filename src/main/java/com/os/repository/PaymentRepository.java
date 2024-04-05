@@ -1,8 +1,6 @@
 package com.os.repository;
 
-import com.os.entity.AutoPayment;
 import com.os.entity.Payment;
-import com.os.util.AutoOrderStatus;
 import com.os.util.OrderStatus;
 import com.os.util.OrderType;
 import org.springframework.data.domain.Page;
@@ -25,10 +23,13 @@ public interface PaymentRepository extends JpaRepository<Payment,Long> {
     // CustomerId와 delYn이 각각 주어진 값과 일치하는 Payment 엔티티를 찾습니다.
     Optional<Payment> findByCustomerIdAndPaymentDelYn(Long customerId, char paymentDelYn);
 
-
     Page<Payment> findByPaymentDelYn(char n, Pageable pageable);
 
     Page<Payment> findByPaymentTitleContainingAndPaymentDelYnNot(String keyword, char y, Pageable pageable);
+
+    Page<Payment> findByPaymentType(OrderType paymentType, Pageable pageable);
+
+    Page<Payment> findByCustomerCustomerNameContainingAndPaymentType(String keyword, OrderType paymentType, Pageable pageable);
 
     @Query("SELECT COUNT(p) FROM Payment p WHERE DATE(p.createTime) = :date")
     Long countPaymentsByDate(@Param("date") LocalDate date);
@@ -43,4 +44,5 @@ public interface PaymentRepository extends JpaRepository<Payment,Long> {
 
     ///////////////////////////////////
     long countByPaymentTypeAndUpdateTimeBetween(OrderType paymentType, LocalDateTime startTime, LocalDateTime endTime);
+
 }

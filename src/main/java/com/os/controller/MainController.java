@@ -1,9 +1,6 @@
 package com.os.controller;
 
-import com.os.dto.AllPaymentListDto;
-import com.os.dto.DetailedSearchDTO;
-import com.os.dto.MemoDTO;
-import com.os.dto.PaymentDetailsDTO;
+import com.os.dto.*;
 import com.os.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +22,7 @@ import java.util.List;
 public class MainController {
     public final UserService userService;
     public final AllPaymentListService allPaymentListService;
+    public final AutoPaymentListService autoPaymentListService;
     private final CustomerService customerService;
     private final PaymentServiceC paymentService;
     private final AutoPaymentService autoPaymentService;
@@ -177,6 +175,60 @@ public class MainController {
     }
 
 
+    @GetMapping("/autoList")
+    public String autoFindAll(Model model, @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword) {
+        Page<AutoPaymentListDto> allPaymentsPage;
+
+        if (keyword != null && !keyword.isEmpty()) {
+            allPaymentsPage = autoPaymentListService.findByNameContaining(keyword, pageable);
+        } else {
+            allPaymentsPage = autoPaymentListService.findAll(pageable);
+        }
+
+        long payCount = allPaymentsPage.getTotalElements();
+        model.addAttribute("payList", allPaymentsPage);
+        model.addAttribute("payCount", payCount);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("isListPage", true); // 이 부분을 추가해주면 됩니다.
+
+        return "autoList";
+    }
+
+    @GetMapping("/autoSearch")
+    public String autoSearch(@ModelAttribute("form") AutoDetailedSearchDTO searchDTO,
+                         @RequestParam(value = "startDt", required = false) String startDt,
+                         @RequestParam(value = "endDt", required = false) String endDt,
+                         @RequestParam(value = "status", required = false) String status,
+                         @RequestParam(value = "docNumber", required = false) String docNumber,
+                         @RequestParam(value = "customerName", required = false) String customerName,
+                         @RequestParam(value = "email", required = false) String email,
+                         @RequestParam(value = "phoneNumber", required = false) String phoneNumber,
+                         @RequestParam(value = "transactionStatus", required = false) String transactionStatus,
+                         @RequestParam(value = "payType", required = false) String payType,
+                         Model model,
+                         @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable) {
+        // 검색 결과 가져오는 로직 구현
+        Page<AutoPaymentListDto> allPaymentsPage = autoPaymentListService.detailSearch(searchDTO, pageable);
+        long payCount = allPaymentsPage.getTotalElements();
+
+        System.out.println("payCount = " + payCount);
+
+        // 검색에 사용된 파라미터들 모델에 추가
+        model.addAttribute("payList", allPaymentsPage);
+        model.addAttribute("payCount", payCount);
+        model.addAttribute("startDt", startDt);
+        model.addAttribute("endDt", endDt);
+        model.addAttribute("status", status);
+        model.addAttribute("docNumber", docNumber);
+        model.addAttribute("customerName", customerName);
+        model.addAttribute("email", email);
+        model.addAttribute("phoneNumber", phoneNumber);
+        model.addAttribute("transactionStatus", transactionStatus);
+        model.addAttribute("payType", payType);
+        model.addAttribute("isListPage", false);
+
+        return "autoList";
+    }
 
 
 }
