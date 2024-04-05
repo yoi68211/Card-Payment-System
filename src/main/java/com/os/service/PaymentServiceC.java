@@ -83,10 +83,11 @@ public class PaymentServiceC {
     ////////////////////////
 
     public long autoError(LocalDateTime startDate, LocalDateTime endDate){
-        return paymentRepository.countByPaymentStatusAndPaymentTypeAndUpdateTimeBetween(OrderStatus.error, OrderType.auto, startDate, endDate);
+        char delYn = 'N';
+        return paymentRepository.countByPaymentStatusAndPaymentDelYnAndPaymentTypeAndUpdateTimeBetween(OrderStatus.error,delYn,OrderType.auto, startDate, endDate);
     }
     public long autoAll(LocalDateTime startDate, LocalDateTime endDate){
-
-        return paymentRepository.countByPaymentTypeAndUpdateTimeBetween(OrderType.auto, startDate, endDate);
+        char delYn = 'N';
+        return paymentRepository.countByPaymentTypeAndPaymentDelYnAndUpdateTimeBetween(OrderType.auto, delYn,startDate, endDate);
     }
 }

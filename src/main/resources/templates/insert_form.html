@@ -6,53 +6,6 @@
     <link th:href="@{/css/pageSample.css}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/047f82d071.js" crossorigin="anonymous"></script>
     <link th:href="@{/css/insert_form.css}" rel="stylesheet">
-    <script>
-        function sizze(){
-            var realSize = window.innerWidth;
-            alert(realSize);
-            location.href = "/test_now";
-        }
-        let tooltipElem;
-
-        document.onmouseover = function(event) {
-          let target = event.target;
-
-          // data-tooltip 속성이 있는 요소
-          let tooltipHtml = target.dataset.tooltip;
-          if (!tooltipHtml) return;
-
-          // 툴팁 요소를 만듭니다.
-
-          tooltipElem = document.createElement('div');
-          tooltipElem.className = 'tooltip';
-          tooltipElem.innerHTML = tooltipHtml;
-          document.body.append(tooltipElem);
-
-          // 툴팁 요소를 data-tooltip 속성이 있는 요소 위, 가운데에 위치시킵니다.
-          let coords = target.getBoundingClientRect();
-
-          let left = coords.left + (target.offsetWidth - tooltipElem.offsetWidth) / 2;
-          if (left < 0) left = 0; // 툴팁이 창 왼쪽 가장자리를 넘지 않도록 합니다.
-
-          let top = coords.top - tooltipElem.offsetHeight - 5;
-          if (top < 0) { // 툴팁이 창 위로 넘치면 요소 아래에 보여줍니다.
-            top = coords.top + target.offsetHeight + 5;
-          }
-
-          tooltipElem.style.left = left + 'px';
-          tooltipElem.style.top = top + 'px';
-        };
-
-        document.onmouseout = function(e) {
-
-          if (tooltipElem) {
-            tooltipElem.remove();
-            tooltipElem = null;
-          }
-
-        };
-
-    </script>
 </head>
 <body>
 <header class="header-nav">
@@ -235,7 +188,6 @@
                     <div class="basic-real-footer">
                         <button type="button" onclick="send()">등록</button>
                     </div>
-                    <input type="button" value="화면크기" onclick="sizze()">
                 </div>
             </div>
         </div>
@@ -246,14 +198,14 @@
             <nav>
                 <ul class="sidebar-ul">
                     <li onclick="location.href='/dashboard'" > <!-- 현재 페이지 의 해당하는 span태그에 style="color: blue;" 써주세여  -->
-                        <span class="nowPage">
+                        <span>
                             <img th:src="@{/img/sidebar_dashboard.png}" id="sidebar_dashboard_icon">
                             <span class="sidebar-nav-text">DashBoard</span>
                         </span>
                         <i class="fa-solid fa-chevron-right"></i>
                     </li>
                     <li onclick="location.href='/insert_form'">
-                        <span>
+                        <span class="nowPage">
                             <img th:src="@{/img/sidebar_card.png}" id="sidebar_card_icon">
                             <span class="sidebar-nav-text">결제등록</span>
                         </span>
