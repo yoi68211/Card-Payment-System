@@ -20,9 +20,9 @@ public interface CustomerRepository extends JpaRepository<Customer,Long>  {
     //이번달 결제등록 목록
     List<Customer> findByAndPayments_CreateTimeBetween(LocalDateTime startOfMonth, LocalDateTime endOfMonth);
 
-    long countByPayments_CreateTimeBetween(LocalDateTime startOfMonth, LocalDateTime endOfMonth);
+    long countByPayments_PaymentDelYnAndCreateTimeBetween(char delYn,LocalDateTime startOfMonth, LocalDateTime endOfMonth);
 
-    long countByPayments_PaymentStatus(OrderStatus orderStatus);
+    long countByPayments_PaymentStatusAndPayments_PaymentDelYnAndUpdateTimeBetween(OrderStatus orderStatus,char delYn,LocalDateTime startDate, LocalDateTime endDate);
 
     List<Customer> findByPayments_PaymentDelYn(Character yn);
 

@@ -39,8 +39,8 @@ public interface PaymentRepository extends JpaRepository<Payment,Long> {
     List<Payment> findAllPaymentsWithAutoPayments();
 
     ///////////////////////////////////
-    long countByPaymentStatusAndPaymentTypeAndUpdateTimeBetween(OrderStatus paymentStatus, OrderType paymentType, LocalDateTime startTime, LocalDateTime endTime);
+    long countByPaymentStatusAndPaymentDelYnAndPaymentTypeAndUpdateTimeBetween(OrderStatus paymentStatus, char delYn,OrderType paymentType, LocalDateTime startTime, LocalDateTime endTime);
 
     ///////////////////////////////////
-    long countByPaymentTypeAndUpdateTimeBetween(OrderType paymentType, LocalDateTime startTime, LocalDateTime endTime);
+    long countByPaymentTypeAndPaymentDelYnAndUpdateTimeBetween(OrderType paymentType, char delYn,LocalDateTime startTime, LocalDateTime endTime);
 }

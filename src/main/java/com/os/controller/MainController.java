@@ -66,7 +66,7 @@ public class MainController {
 
         model.addAttribute("monthChartList",monthChart);
         model.addAttribute("yearChartList",yearChart);
-        model.addAttribute("paymentSuccessCount", customerService.countByCustomersByPaid());
+        model.addAttribute("paymentSuccessCount", customerService.countByCustomersByPaid(startDate, endDate));
         model.addAttribute("paymentInsertThisMonth", customerService.thisMonthInsertCount());
 
         return "dashboard";
