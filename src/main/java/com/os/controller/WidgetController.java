@@ -1,7 +1,6 @@
 package com.os.controller;
 
 //import com.os.config.ApiKeyProperties;
-import com.os.config.ApiKeyProperties;
 import com.os.dto.PaymentDetailsDTO;
 import com.os.service.AutoPaymentService;
 import com.os.service.CustomerService;
@@ -11,6 +10,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,32 +23,26 @@ import java.util.Base64;
 
 
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/toss")
 public class WidgetController {
     private final CustomerService customerService;
     private final AutoPaymentService autoPaymentService;
-    private ApiKeyProperties apiKeyProperties;
 
-    @Autowired
-    public void ApiController(ApiKeyProperties apiKeyProperties) {
-        this.apiKeyProperties = apiKeyProperties;
+    public WidgetController(CustomerService customerService, AutoPaymentService autoPaymentService,@Value("${api.toss.clientKey}") String clientKey,@Value("${api.toss.secretKey}") String secretKey) {
+        this.customerService = customerService;
+        this.autoPaymentService = autoPaymentService;
+        this.clientKey = clientKey;
+        this.secretKey = secretKey;
     }
 
+    private final String clientKey;
+    private final String secretKey;
 
 
-
-
-
-
-
-
-//    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @PostMapping("/confirm")
     public ResponseEntity<org.json.simple.JSONObject> confirmPayment(@RequestBody String jsonBody) throws Exception {
-        String secretKey = apiKeyProperties.getSecretKey();
-        
+
         JSONParser parser = new JSONParser();
         String orderId;
         String amount;
@@ -122,7 +116,6 @@ public class WidgetController {
     @GetMapping("/checkout")
     public String toss(@RequestParam Long id ,Model model) throws Exception {
 
-        String clientKey = apiKeyProperties.getClientKey();
         PaymentDetailsDTO paymentDetailsDTO = customerService.getDetails(id);
         model.addAttribute("paymentDetailsDTO",paymentDetailsDTO);
         model.addAttribute("clientKey",clientKey);
