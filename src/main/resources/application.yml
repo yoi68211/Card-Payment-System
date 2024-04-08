@@ -29,10 +29,6 @@ spring:
     suffix: .html
     enabled: true
 
-
-
-
-
   spring:
     devtools:
       livereload:
@@ -46,3 +42,7 @@ spring:
 
 
 
+
+api.toss.clientKey: test_ck_6bJXmgo28eEX5LOZe16W8LAnGKWx
+
+api.toss.secretKey: test_sk_LkKEypNArW2PPmGx2XpQVlmeaxYG

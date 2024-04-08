@@ -59,3 +59,8 @@ window.onload = function() {
              var link2 = "/search?startDt=" + dates.firstDay + "&endDt=" + dates.lastDay + "&status=paid&docNumber=&customerName=&email=&continue";
              location.href = link2; // 페이지 이동
         }
+        function autoError() {
+             var dates = getFirstAndLastDateOfMonth();
+             var link = "/autoSearch?startDt=" + dates.firstDay + "&endDt=" + dates.lastDay + "&status=auto&docNumber=&customerName=&email=&phoneNumber=&transactionStatus=error&payType=&continue";
+             location.href = link; // 페이지 이동
+        }

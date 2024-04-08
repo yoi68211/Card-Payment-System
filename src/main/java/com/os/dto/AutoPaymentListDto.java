@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class AutoPaymentListDto {
-    @Enumerated(EnumType.STRING)
+    //@Enumerated(EnumType.STRING)
     private AutoStatus autoStatus;
     private String customerName;
     private String customerEmail;
@@ -40,14 +40,14 @@ public class AutoPaymentListDto {
 
         return AutoPaymentListDto.builder()
                 .paymentBizTo(payment.getPaymentBizTo())
-                .autoStatus(payment.getAutoPayments().getAutoStatus())
+                .autoStatus(payment.getAutoPayments() != null ? payment.getAutoPayments().getAutoStatus() : null)
                 .customerName(payment.getCustomer().getCustomerName())
                 .customerEmail(payment.getCustomer().getCustomerEmail())
                 .totalAmount(totalAmount)
-                .paymentNextTime(payment.getAutoPayments().getPaymentNextTime())
-                .updateTime(payment.getAutoPayments().getUpdateTime())
+                .paymentNextTime(payment.getAutoPayments() != null ? payment.getAutoPayments().getPaymentNextTime() : null)
+                .updateTime(payment.getUpdateTime())
                 .paymentStatus(payment.getPaymentStatus())
-                .id(payment.getAutoPayments().getId())
+                .id(payment.getAutoPayments() != null ? payment.getAutoPayments().getId() : null)
                 .id(payment.getCustomer().getId())
                 .paymentType(payment.getPaymentType())
                 .customerPhone(payment.getCustomer().getCustomerPhone())

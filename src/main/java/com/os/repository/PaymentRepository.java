@@ -36,13 +36,13 @@ public interface PaymentRepository extends JpaRepository<Payment,Long> {
 
     @Query("SELECT COUNT(p) FROM Payment p WHERE DATE(p.createTime) >= :startDate AND DATE(p.createTime) <= :endDate")
     Long countPaymentsYearByDateRange(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
-    @Query("SELECT p FROM Payment p JOIN FETCH p.autoPayments")
-    List<Payment> findAllPaymentsWithAutoPayments();
+    @Query("SELECT p FROM Payment p JOIN FETCH p.autoPayments a WHERE a.autoStatus = 'auto'")
+    List<Payment> findAllPaymentsWithAutoPaymentsAndAutoStatusAuto();
 
     ///////////////////////////////////
-    long countByPaymentStatusAndPaymentTypeAndUpdateTimeBetween(OrderStatus paymentStatus, OrderType paymentType, LocalDateTime startTime, LocalDateTime endTime);
+    long countByPaymentStatusAndPaymentDelYnAndPaymentTypeAndUpdateTimeBetween(OrderStatus paymentStatus, char delYn,OrderType paymentType, LocalDateTime startTime, LocalDateTime endTime);
 
     ///////////////////////////////////
-    long countByPaymentTypeAndUpdateTimeBetween(OrderType paymentType, LocalDateTime startTime, LocalDateTime endTime);
+    long countByPaymentTypeAndPaymentDelYnAndUpdateTimeBetween(OrderType paymentType, char delYn,LocalDateTime startTime, LocalDateTime endTime);
 
 }

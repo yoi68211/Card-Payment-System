@@ -48,7 +48,7 @@
                 <div><span th:text="${month}"></span>월</div>
                 <div>자동 결제 오류</div>
                 <div th:text="${autoError}"></div>
-                <button>View All</button>
+                <button onclick="autoError()">View All</button>
             </div>
             <div class="countBox count-2">
                 <div><span th:text="${month}"></span>월</div>
@@ -71,14 +71,14 @@
             <div class="countBox count-5">
                 <div><span th:text="${month}"></span>월</div>
                 <div>결제 신규 등록</div>
-                <div th:text="${paymentInsertThisMonth}">13</div>
+                <div th:text="${paymentInsertThisMonth}"></div>
                 <button onclick="redirectToCurrentMonthLink()">View All</button>
             </div>
             <div class="countBox count-6">
                 <div><span th:text="${month}"></span>월</div>
                 <div>결제 성공</div>
                 <div th:text="${paymentSuccessCount}"></div>
-                <button onclick="paySuccess()">View All</button>
+                <button onclick="redirectToCurrentMonthSuccess()">View All</button>
             </div>
 
         </div>
