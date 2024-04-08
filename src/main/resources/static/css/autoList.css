@@ -90,14 +90,14 @@ button {
 
 .status {
     font-size: 11px;
-    margin: 0px 40px 0px 215px;
+    margin: 0px 40px 0px 210px;
 }
 
 .status-button {
     background-color: #DDDDDD;
     border: 2px solid #CCCCCC;
     color: #888888;
-    width: 80px;
+    width: 106px;
     height: 30px;
     font-size: 11px;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -131,7 +131,7 @@ button {
 
 .docNumberName {
     font-size: 11px;
-    margin: 0px 40px 0px 215px;
+    margin: 0px 40px 0px 210px;
 }
 
 .docNumber {
@@ -167,7 +167,7 @@ button {
 
 .emailName {
     font-size: 11px;
-    margin: 0px 40px 0px 215px;
+    margin: 0px 40px 0px 210px;
 }
 
 .email {
@@ -181,6 +181,66 @@ button {
 
 .email::placeholder {
     font-size: 11px;
+}
+
+.phoneNumberName {
+    font-size: 11px;
+    margin: 0px 40px 0px 40px;
+}
+
+.phoneNumber {
+    max-width: 350px;
+    min-width: 150px;
+    width: 318px;
+    height: 30px;
+    border-radius: 3px;
+    border: 1px solid #DDDDDD;
+}
+
+.phoneNumber::placeholder {
+    font-size: 11px;
+}
+
+.transactionStatus {
+    font-size: 11px;
+    margin: 0px 40px 0px 210px;
+}
+
+.transaction-button {
+    background-color: #DDDDDD;
+    border: 2px solid #CCCCCC;
+    color: #888888;
+    width: 80px;
+    height: 30px;
+    font-size: 11px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-right: -6px;
+}
+
+.transaction-button.active {
+    background-color: white;
+    color: black;
+}
+
+.payType {
+    font-size: 11px;
+    margin: 0px 40px 0px 40px;
+}
+
+.PayType-button {
+    background-color: #DDDDDD;
+    border: 2px solid #CCCCCC;
+    color: #888888;
+    width: 80px;
+    height: 30px;
+    font-size: 11px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-right: -6px;
+}
+
+.PayType-button.active {
+    background-color: white;
+    color: black;
 }
 
 .buttonName {
@@ -292,40 +352,48 @@ button {
     height: 25px;
 }
 
-.selection-column {
-    width: 50px;
-}
-
-.datetime-column {
-    width: 150px;
-    text-align: center;
-}
-
-.doc-number-column {
-    width: 140px;
+.status-column {
+    width: 90px;
     text-align: center;
 }
 
 .customer-name-column {
-    width: 130px;
+    width: 160px;
     text-align: center;
 }
 
-.title-column {
-    width: 290px;
+.email-column {
+    width: 200px;
+    text-align: center;
+}
+
+.payment-type-column {
+    width: 90px;
+    text-align: center;
 }
 
 .amount-column {
-    width: 120px;
+    width: 140px;
+    text-align: center;
 }
 
-.amount-columns {
+.amounts-column {
     width: 140px;
     text-align: right;
 }
 
-.status-column {
+.next-payment-date-column {
     width: 140px;
+    text-align: center;
+}
+
+.last-payment-date-column {
+    width: 140px;
+    text-align: center;
+}
+
+.transaction-status-column {
+    width: 90px;
     text-align: center;
 }
 
