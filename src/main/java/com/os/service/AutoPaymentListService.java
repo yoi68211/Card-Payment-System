@@ -39,12 +39,14 @@ public class AutoPaymentListService {
 
 
     public Page<AutoPaymentListDto> findAll(Pageable pageable) {
-        Page<Payment> allPaymentsPage = paymentRepository.findByPaymentType(OrderType.auto, pageable);
+        Page<Payment> allPaymentsPage = paymentRepository.findByPaymentTypeAndAutoPayments_AutoStatusNotNull(OrderType.auto, pageable);
+
         return allPaymentsPage.map(AutoPaymentListDto::toAutoPaymentListDto);
     }
 
     public Page<AutoPaymentListDto> findByNameContaining(String keyword, Pageable pageable) {
-        Page<Payment> allPaymentsPage = paymentRepository.findByCustomerCustomerNameContainingAndPaymentType(keyword, OrderType.auto, pageable);
+        Page<Payment> allPaymentsPage = paymentRepository.findByCustomerCustomerNameContainingAndPaymentTypeAndAutoPayments_AutoStatusNotNull(keyword, OrderType.auto, pageable);
+
         return allPaymentsPage.map(AutoPaymentListDto::toAutoPaymentListDto);
     }
 
@@ -102,7 +104,7 @@ public class AutoPaymentListService {
     //querydsl where 절 BooleanExpression
     private BooleanExpression eqDocNumber(String DocNumber){
         if (StringUtils.hasText(DocNumber)){
-            return payment.paymentDelYn.eq('N').and(payment.id.eq(Long.valueOf(DocNumber)));
+            return payment.paymentDelYn.eq('N').and(payment.autoPayments.id.eq(Long.valueOf(DocNumber)));
         }
         return null;
     }

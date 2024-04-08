@@ -27,9 +27,9 @@ public interface PaymentRepository extends JpaRepository<Payment,Long> {
 
     Page<Payment> findByPaymentTitleContainingAndPaymentDelYnNot(String keyword, char y, Pageable pageable);
 
-    Page<Payment> findByPaymentType(OrderType paymentType, Pageable pageable);
+    Page<Payment> findByPaymentTypeAndAutoPayments_AutoStatusNotNull(OrderType orderType, Pageable pageable);
 
-    Page<Payment> findByCustomerCustomerNameContainingAndPaymentType(String keyword, OrderType paymentType, Pageable pageable);
+    Page<Payment> findByCustomerCustomerNameContainingAndPaymentTypeAndAutoPayments_AutoStatusNotNull(String keyword, OrderType orderType, Pageable pageable);
 
     @Query("SELECT COUNT(p) FROM Payment p WHERE DATE(p.createTime) = :date")
     Long countPaymentsByDate(@Param("date") LocalDate date);
