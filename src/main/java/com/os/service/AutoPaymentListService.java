@@ -1,16 +1,12 @@
 package com.os.service;
 
-import com.os.dto.AllPaymentListDto;
 import com.os.dto.AutoDetailedSearchDTO;
 import com.os.dto.AutoPaymentListDto;
-import com.os.dto.DetailedSearchDTO;
-import com.os.entity.Payment;
+import com.os.entity.AutoPayment;
 import com.os.repository.AutoPaymentRepository;
-import com.os.repository.PaymentRepository;
+import com.os.util.AutoOrderStatus;
 import com.os.util.AutoStatus;
 import com.os.util.BizTo;
-import com.os.util.OrderStatus;
-import com.os.util.OrderType;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.persistence.EntityManager;
@@ -26,44 +22,43 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.os.entity.QPayment.payment;
-import static com.os.util.OrderType.auto;
+import static com.os.entity.QAutoPayment.autoPayment;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class AutoPaymentListService {
 
-    private final PaymentRepository paymentRepository;
+    private final AutoPaymentRepository autoPaymentRepository;
     private final EntityManager em;
 
-
     public Page<AutoPaymentListDto> findAll(Pageable pageable) {
-        Page<Payment> allPaymentsPage = paymentRepository.findByPaymentType(OrderType.auto, pageable);
+        Page<AutoPayment> allPaymentsPage = autoPaymentRepository.findAll(pageable);
         return allPaymentsPage.map(AutoPaymentListDto::toAutoPaymentListDto);
     }
-
     public Page<AutoPaymentListDto> findByNameContaining(String keyword, Pageable pageable) {
-        Page<Payment> allPaymentsPage = paymentRepository.findByCustomerCustomerNameContainingAndPaymentType(keyword, OrderType.auto, pageable);
+        Page<AutoPayment> allPaymentsPage = autoPaymentRepository.findByPayment_Customer_CustomerNameAndAutoOrderStatus(keyword, AutoOrderStatus.paid, pageable);
         return allPaymentsPage.map(AutoPaymentListDto::toAutoPaymentListDto);
     }
 
     public Page<AutoPaymentListDto> detailSearch(AutoDetailedSearchDTO searchDTO, Pageable pageable) {
 
-        String status = searchDTO.getStatus();
-        String DocNumber = (searchDTO.getDocNumber());
+        String status = searchDTO.getStatus();                          // autoOrderStatus
+        String DocNumber = searchDTO.getDocNumber();
         String name = searchDTO.getCustomerName();
         String startDt = searchDTO.getStartDt();
         String endDt = searchDTO.getEndDt();
         String phoneNumber = searchDTO.getPhoneNumber();
-        String transactionStatus = searchDTO.getTransactionStatus();
-        String payType = searchDTO.getPayType();
+        String transactionStatus = searchDTO.getTransactionStatus();    // autoStatus
+        String payType = searchDTO.getPayType();                        // paymentBizTo
 
 
-        JPAQuery<Payment> query = new JPAQuery<>(em);
 
-        query.select(payment)
-                .from(payment)
+
+        JPAQuery<AutoPayment> query = new JPAQuery<>(em);
+
+        query.select(autoPayment)
+                .from(autoPayment)
                 .where(
                         eqDocNumber(DocNumber)
                         ,likeCustomerName(name)
@@ -77,7 +72,7 @@ public class AutoPaymentListService {
 
         long count = query.stream().count();
 
-        List<Payment> resultList = query.offset(pageable.getOffset())
+        List<AutoPayment> resultList = query.offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
 
@@ -90,8 +85,8 @@ public class AutoPaymentListService {
     }
 
 
-    private List<AutoPaymentListDto> convertToAllPaymentListDto(List<Payment> paymentList) {
-        return paymentList.stream()
+    private List<AutoPaymentListDto> convertToAllPaymentListDto(List<AutoPayment> autoPaymentList) {
+        return autoPaymentList.stream()
                 .map(AutoPaymentListDto::toAutoPaymentListDto)
                 .collect(Collectors.toList());
     }
@@ -102,7 +97,7 @@ public class AutoPaymentListService {
     //querydsl where 절 BooleanExpression
     private BooleanExpression eqDocNumber(String DocNumber){
         if (StringUtils.hasText(DocNumber)){
-            return payment.paymentDelYn.eq('N').and(payment.id.eq(Long.valueOf(DocNumber)));
+            return autoPayment.payment.paymentDelYn.eq('N').and(autoPayment.payment.id.eq(Long.valueOf(DocNumber)));
         }
         return null;
     }
@@ -110,7 +105,7 @@ public class AutoPaymentListService {
 
     private BooleanExpression likeCustomerName(String name) {
         if (StringUtils.hasText(name)) {
-            return payment.paymentDelYn.eq('N').and(payment.customer.customerName.like("%" + name + "%"));
+            return autoPayment.payment.paymentDelYn.eq('N').and(autoPayment.payment.customer.customerName.like("%" + name + "%"));
         }
         return null;
     }
@@ -120,7 +115,7 @@ public class AutoPaymentListService {
 
     private BooleanExpression eqStatus(String status) {
         if (StringUtils.hasText(status)) {
-            return payment.paymentDelYn.eq('N').and(payment.autoPayments.autoStatus.eq(AutoStatus.valueOf(status)));
+            return autoPayment.payment.paymentDelYn.eq('N').and(autoPayment.autoOrderStatus.eq(AutoOrderStatus.valueOf(status)));
         }
         return null;
     }
@@ -130,7 +125,7 @@ public class AutoPaymentListService {
         if (StringUtils.hasText(startDt) && StringUtils.hasText(endDt)) {
             LocalDateTime startDate = LocalDateTime.parse(startDt + "T00:00:00");
             LocalDateTime endDate = LocalDateTime.parse(endDt + "T23:59:59");
-            return payment.paymentDelYn.eq('N').and(payment.createTime.between(startDate, endDate));
+            return autoPayment.payment.paymentDelYn.eq('N').and(autoPayment.payment.autoPayments.updateTime.between(startDate, endDate));
         }
         return null;
     }
@@ -138,7 +133,7 @@ public class AutoPaymentListService {
 
     private BooleanExpression likePhoneNumber(String phoneNumber) {
         if (StringUtils.hasText(phoneNumber)) {
-            return payment.paymentDelYn.eq('N').and(payment.customer.customerPhone.like("%" + phoneNumber + "%"));
+            return autoPayment.payment.paymentDelYn.eq('N').and(autoPayment.payment.customer.customerPhone.like("%" + phoneNumber + "%"));
         }
         return null;
     }
@@ -146,14 +141,14 @@ public class AutoPaymentListService {
 
     private BooleanExpression eqTransactionStatus(String transactionStatus) {
         if (StringUtils.hasText(transactionStatus)) {
-            return payment.paymentDelYn.eq('N').and(payment.paymentStatus.eq(OrderStatus.valueOf(transactionStatus)));
+            return autoPayment.payment.paymentDelYn.eq('N').and(autoPayment.autoStatus.eq(AutoStatus.valueOf(transactionStatus)));
         }
         return null;
     }
 
     private BooleanExpression eqPayType(String payType) {
         if (StringUtils.hasText(payType)) {
-            return payment.paymentDelYn.eq('N').and(payment.paymentBizTo.eq(BizTo.valueOf(payType)));
+            return autoPayment.payment.paymentDelYn.eq('N').and(autoPayment.payment.paymentBizTo.eq(BizTo.valueOf(payType)));
         }
         return null;
     }

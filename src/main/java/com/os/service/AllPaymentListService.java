@@ -1,4 +1,5 @@
 package com.os.service;
+
 import com.os.dto.AllPaymentListDto;
 import com.os.dto.DetailedSearchDTO;
 import com.os.entity.Payment;
@@ -14,9 +15,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import static com.os.entity.QPayment.payment;
 
 @Service
@@ -128,7 +131,7 @@ public class AllPaymentListService {
         if (StringUtils.hasText(startDt) && StringUtils.hasText(endDt)) {
             LocalDateTime startDate = LocalDateTime.parse(startDt + "T00:00:00");
             LocalDateTime endDate = LocalDateTime.parse(endDt + "T23:59:59");
-            return payment.paymentDelYn.eq('N').and(payment.createTime.between(startDate, endDate));
+            return payment.paymentDelYn.eq('N').and(payment.updateTime.between(startDate, endDate));
         }
         return null;
     }

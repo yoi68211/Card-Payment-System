@@ -1,10 +1,7 @@
 package com.os.dto;
 
-import com.os.entity.Payment;
-import com.os.util.AutoStatus;
-import com.os.util.BizTo;
-import com.os.util.OrderStatus;
-import com.os.util.OrderType;
+import com.os.entity.AutoPayment;
+import com.os.util.*;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
@@ -19,8 +16,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class AutoPaymentListDto {
+
     //@Enumerated(EnumType.STRING)
     private AutoStatus autoStatus;
+    private AutoOrderStatus autoOrderStatus;
     private String customerName;
     private String customerEmail;
     @Enumerated(EnumType.STRING)
@@ -35,22 +34,21 @@ public class AutoPaymentListDto {
     private OrderType paymentType;
     private String customerPhone;
 
-    public static AutoPaymentListDto toAutoPaymentListDto(Payment payment) {
-        String totalAmount = payment.calculateTotalAmount(payment.getProducts());
-
+    public static AutoPaymentListDto toAutoPaymentListDto(AutoPayment autoPayment) {
+        String totalAmount = autoPayment.getPayment().calculateTotalAmount(autoPayment.getPayment().getProducts());
         return AutoPaymentListDto.builder()
-                .paymentBizTo(payment.getPaymentBizTo())
-                .autoStatus(payment.getAutoPayments() != null ? payment.getAutoPayments().getAutoStatus() : null)
-                .customerName(payment.getCustomer().getCustomerName())
-                .customerEmail(payment.getCustomer().getCustomerEmail())
+                .paymentBizTo(autoPayment.getPayment().getPaymentBizTo())
+                .autoStatus(autoPayment.getAutoStatus())
+                .customerName(autoPayment.getPayment().getCustomer().getCustomerName())
+                .customerEmail(autoPayment.getPayment().getCustomer().getCustomerEmail())
                 .totalAmount(totalAmount)
-                .paymentNextTime(payment.getAutoPayments() != null ? payment.getAutoPayments().getPaymentNextTime() : null)
-                .updateTime(payment.getUpdateTime())
-                .paymentStatus(payment.getPaymentStatus())
-                .id(payment.getAutoPayments() != null ? payment.getAutoPayments().getId() : null)
-                .id(payment.getCustomer().getId())
-                .paymentType(payment.getPaymentType())
-                .customerPhone(payment.getCustomer().getCustomerPhone())
+                .paymentNextTime(autoPayment.getPaymentNextTime())
+                .updateTime(autoPayment.getUpdateTime())
+                .autoOrderStatus(autoPayment.getAutoOrderStatus())
+                .id(autoPayment.getId())
+                .id(autoPayment.getPayment().getCustomer().getId())
+                .paymentType(autoPayment.getPayment().getPaymentType())
+                .customerPhone(autoPayment.getPayment().getCustomer().getCustomerPhone())
                 .build();
     }
 }

@@ -2,7 +2,6 @@ package com.os.controller;
 
 import com.os.dto.*;
 import com.os.service.*;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -45,14 +44,16 @@ public class MainController {
         LocalDateTime startDate = LocalDateTime.now().withYear(year).withMonth(month).withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0);
         LocalDateTime endDate = startDate.withDayOfMonth(startDate.toLocalDate().lengthOfMonth()).withHour(23).withMinute(59).withSecond(59);
 
-        long autoError = paymentService.autoError(startDate, endDate);
+//long autoError = paymentService.autoError(startDate, endDate);
+        long autoError = autoPaymentService.autoError(startDate, endDate);
+
 
         long autoSuccess = autoPaymentService.autoSuccess(startDate, endDate);
 
         long autoStop = autoPaymentService.autoStop(startDate, endDate);
 
-        long autoAll = paymentService.autoAll(startDate, endDate);
 
+        long autoAll = autoPaymentService.autoAll(startDate, endDate);
         List<MemoDTO> memoList = memoService.findAll(); // MemoService 를 사용하여 모든 메모를 가져옵니다.
         model.addAttribute("MemoList", memoList);
 
@@ -193,6 +194,9 @@ public class MainController {
 
         return "autoList";
     }
+    // 새로 복사해서 만드는게 나을듯
+
+
 
     @GetMapping("/autoSearch")
     public String autoSearch(@ModelAttribute("form") AutoDetailedSearchDTO searchDTO,
