@@ -74,10 +74,12 @@ function resetForm() {
     });
 
     // 선택된 상태를 초기화하고 색상을 원래대로 변경합니다.
-    var buttons = document.querySelectorAll('.PayType-button');
+    var buttons = document.querySelectorAll('.status-button');
     buttons.forEach(function(button) {
         button.classList.remove('active');
     });
+
+
 
     // 상태 값을 초기화합니다.
     document.getElementById("status").value = ""; // 상태 값을 빈 문자열로 설정
@@ -98,23 +100,7 @@ function setPayType(type) {
 }
 
 function submitForm() {
-    // 폼 요소 가져오기
     var form = document.getElementById("form");
-
-    // 상세유형 입력 필드 가져오기
-    var detailTypeInput = document.getElementById('status');
-
-    // 상세유형 입력 값 가져오기
-    var detailTypeValue = detailTypeInput.value.trim();
-
-    // 상세유형이 비어있는지 확인
-    if (detailTypeValue === '') {
-        // 상세유형이 비어있으면 알림을 표시하고 제출을 중지
-        alert("상세유형을 입력하세요.");
-        return;
-    }
-
-    // 상세유형이 입력되었으면 폼 제출
     form.submit();
 }
 
@@ -155,75 +141,18 @@ document.getElementById("searchInput").addEventListener("keypress", function(eve
 });
 
 document.addEventListener("DOMContentLoaded", function() {
-    // 상태 버튼 그룹
-    var statusButtons = document.querySelectorAll('.status-button');
-    statusButtons.forEach(function(button) {
+    var buttons = document.querySelectorAll('.status-button');
+
+    buttons.forEach(function(button) {
         button.addEventListener("click", function() {
             var status = button.innerText;
             console.log("상태:", status);
+
             // 클릭된 버튼에만 .active 클래스 추가
-            statusButtons.forEach(function(btn) {
+            buttons.forEach(function(btn) {
                 btn.classList.remove('active');
             });
             button.classList.add('active');
         });
-    });
-
-    // 거래상태 버튼 그룹
-    var transactionButtons = document.querySelectorAll('.transaction-button');
-    transactionButtons.forEach(function(button) {
-        button.addEventListener("click", function() {
-            var status = button.innerText;
-            console.log("거래상태:", status);
-            // 클릭된 버튼에만 .active 클래스 추가
-            transactionButtons.forEach(function(btn) {
-                btn.classList.remove('active');
-            });
-            button.classList.add('active');
-        });
-    });
-
-    // 결제구분 버튼 그룹
-    var payTypeButtons = document.querySelectorAll('.PayType-button');
-    payTypeButtons.forEach(function(button) {
-        button.addEventListener("click", function() {
-            var status = button.innerText;
-            console.log("결제구분:", status);
-            // 클릭된 버튼에만 .active 클래스 추가
-            payTypeButtons.forEach(function(btn) {
-                btn.classList.remove('active');
-            });
-            button.classList.add('active');
-        });
-    });
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    var autoStatusCheckbox = document.getElementById('autoStatusOnly');
-
-    // 로컬 스토리지에서 자동결제 상태 체크 여부 가져오기
-    var autoStatusChecked = localStorage.getItem('autoStatusChecked');
-
-    // 로컬 스토리지에 자동결제 상태 체크 여부가 저장되어 있다면 체크박스 상태 업데이트
-    if (autoStatusChecked !== null) {
-        autoStatusCheckbox.checked = autoStatusChecked === 'true';
-    }
-
-    // 자동결제 상태만 보기 체크박스의 상태 변화를 감지하여 폼을 제출하는 함수
-    function submitFormOnChange() {
-        var autoStatusForm = document.getElementById('autoStatusForm');
-        autoStatusForm.submit(); // 폼 제출
-    }
-
-    // 자동결제 상태만 보기 체크박스의 상태 변화 이벤트 핸들러 등록
-    autoStatusCheckbox.addEventListener('change', function() {
-        // 체크박스가 체크되어 있는지 확인하여 true 또는 false로 변환
-        var autoStatusChecked = autoStatusCheckbox.checked;
-
-        // 로컬 스토리지에 자동결제 상태 체크 여부 저장
-        localStorage.setItem('autoStatusChecked', autoStatusChecked);
-
-        // 폼을 제출
-        submitFormOnChange();
     });
 });
