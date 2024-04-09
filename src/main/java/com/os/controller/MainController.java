@@ -177,10 +177,12 @@ public class MainController {
 
 
     @GetMapping("/autoList")
-    public String autoFindAll(Model model, @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword) {
+    public String autoFindAll(Model model, @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword, @RequestParam(value = "autoStatusOnly", required = false, defaultValue = "false") boolean autoStatusOnly) {
         Page<AutoPaymentListDto> allPaymentsPage;
 
-        if (keyword != null && !keyword.isEmpty()) {
+        if (autoStatusOnly) {
+            allPaymentsPage = autoPaymentListService.findByAutoStatus(pageable);
+        } else if (keyword != null && !keyword.isEmpty()) {
             allPaymentsPage = autoPaymentListService.findByNameContaining(keyword, pageable);
         } else {
             allPaymentsPage = autoPaymentListService.findAll(pageable);
@@ -190,7 +192,8 @@ public class MainController {
         model.addAttribute("payList", allPaymentsPage);
         model.addAttribute("payCount", payCount);
         model.addAttribute("keyword", keyword);
-        model.addAttribute("isListPage", true); // 이 부분을 추가해주면 됩니다.
+        model.addAttribute("autoStatusOnly", autoStatusOnly);
+        model.addAttribute("isListPage", true);
 
         return "autoList";
     }

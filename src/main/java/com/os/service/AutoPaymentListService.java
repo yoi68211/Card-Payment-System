@@ -3,6 +3,7 @@ package com.os.service;
 import com.os.dto.AutoDetailedSearchDTO;
 import com.os.dto.AutoPaymentListDto;
 import com.os.entity.AutoPayment;
+import com.os.entity.Payment;
 import com.os.repository.AutoPaymentRepository;
 import com.os.util.AutoOrderStatus;
 import com.os.util.AutoStatus;
@@ -38,6 +39,11 @@ public class AutoPaymentListService {
     }
     public Page<AutoPaymentListDto> findByNameContaining(String keyword, Pageable pageable) {
         Page<AutoPayment> allPaymentsPage = autoPaymentRepository.findByPayment_Customer_CustomerNameAndAutoOrderStatus(keyword, AutoOrderStatus.paid, pageable);
+        return allPaymentsPage.map(AutoPaymentListDto::toAutoPaymentListDto);
+    }
+
+    public Page<AutoPaymentListDto> findByAutoStatus(Pageable pageable) {
+        Page<AutoPayment> allPaymentsPage = autoPaymentRepository.findByAutoStatus(AutoStatus.paid, pageable);
         return allPaymentsPage.map(AutoPaymentListDto::toAutoPaymentListDto);
     }
 

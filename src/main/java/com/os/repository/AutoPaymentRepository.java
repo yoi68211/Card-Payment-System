@@ -21,4 +21,6 @@ public interface AutoPaymentRepository extends JpaRepository<AutoPayment,Long> {
     Optional<AutoPayment> findByPaymentId(Long id);
     Page<AutoPayment> findAll(Pageable pageable);
     Page<AutoPayment> findByPayment_Customer_CustomerNameAndAutoOrderStatus(String keyword, AutoOrderStatus autoOrderStatus, Pageable pageable);
+
+    Page<AutoPayment> findByAutoStatus(AutoStatus autoStatus, Pageable pageable);
 }
