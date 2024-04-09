@@ -67,6 +67,20 @@ function resetForm() {
         button.classList.remove('active');
     });
 
+    // 선택된 상태를 초기화하고 색상을 원래대로 변경합니다.
+    var buttons = document.querySelectorAll('.transaction-button');
+    buttons.forEach(function(button) {
+        button.classList.remove('active');
+    });
+
+    // 선택된 상태를 초기화하고 색상을 원래대로 변경합니다.
+    var buttons = document.querySelectorAll('.status-button');
+    buttons.forEach(function(button) {
+        button.classList.remove('active');
+    });
+
+
+
     // 상태 값을 초기화합니다.
     document.getElementById("status").value = ""; // 상태 값을 빈 문자열로 설정
     document.getElementById("transactionStatus").value = ""; // 상태 값을 빈 문자열로 설정

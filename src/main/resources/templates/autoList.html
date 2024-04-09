@@ -51,7 +51,7 @@
             <form id="form" th:action="@{/autoSearch}" th:object="${searchDTO}" method="get">
                 <table class="date">
                     <tr>
-                        <td colspan="2">
+                        <td colspan="1">
                             <label class="re_time">조회기간</label>
                             <input type="text" id="startDt" class="startDt" name="startDt" th:value="${startDt}" placeholder="yyyy-mm-dd"> ~
                             <input type="text" id="endDt" class="endDt" name="endDt" th:value="${endDt}" placeholder="yyyy-mm-dd">
@@ -65,7 +65,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">
+                        <td colspan="1">
                             <label class="right-drb"></label>
                             <button type="button" class="date-range-button" data-months="1" onclick="setDateRange(1)">1개월</button>
                             <button type="button" class="date-range-button" data-months="3" onclick="setDateRange(3)">3개월</button>
@@ -78,7 +78,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">
+                        <td colspan="1">
                             <label for="customerName" class="customer">고객이름</label>
                             <input type="text" id="customerName" class="customerName" name="customerName" th:value="${customerName}" placeholder="이름을 입력해주세요.">
                         </td>
@@ -88,7 +88,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td colspan="1">
                             <label for="phoneNumber" class="phoneNumberName">연락번호</label>
                             <input type="text" id="phoneNumber" class="phoneNumber" name="phoneNumber" th:value="${phoneNumber}" placeholder="연락처를 입력해주세요.(숫자만 입력)">
                         </td>
@@ -102,7 +102,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td colspan="1">
                             <label class="payType">결제구분</label>
                             <input type="hidden" id="payType" name="payType" th:value="${payType}">
                             <button type="button" class="PayType-button" onclick="setPayType('')">전체</button>
@@ -111,7 +111,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="3" class="buttonName">
+                        <td colspan="2" class="buttonName">
                             <button type="button" class="reset" onclick="resetForm()">초기화</button>
                             <button type="button" class="submit" onclick="submitForm()">조회</button>
                         </td>
@@ -122,10 +122,10 @@
         <div class="line2"></div> <!-- 버튼 아래에 위치한 두 번째 선 -->
 
         <div class="delSearch">
-            <div>
+           <!-- <div>
                 <input type="checkbox" id="autoStatusOnly" name="autoStatusOnly">
                 <label for="autoStatusOnly">자동결제 상태만 보기</label>
-            </div>
+            </div>-->
             <form th:action="@{/autoList}" method="get" id="searchForm">
                 <input type="text" class="searchInput" id="searchInput" name="keyword" placeholder="검색어를 입력해 주세요">
             </form>
@@ -142,6 +142,13 @@
                 <th class="title-column">다음 결제일</th>
                 <th class="amount-column">마지막 결제일</th>
                 <th class="status-column">상태</th>
+                <th class="customer-name-column">고객명</th>
+                <th class="email-column">메일주소</th>
+                <th class="payment-type-column">결제구분</th>
+                <th class="amount-column">금액</th>
+                <th class="next-payment-date-column">다음 결제일</th>
+                <th class="last-payment-date-column">마지막 결제일</th>
+                <th class="transaction-status-column">거래 상태</th>
             </tr>
             </thead>
             <tbody>
@@ -218,14 +225,14 @@
                         <i class="fa-solid fa-chevron-down" ></i>
                     </li>
                     <li class="payList-nav" onclick="location.href='/list'">
-                        <span class="payList nowPage">
+                        <span class="payList">
                             <i class="fa-solid fa-square fa-2xs"></i>
                             <span class="sidebar-nav-text">전체 결제 목록</span>
                         </span>
                         <!-- <i class="fa-solid fa-chevron-right"></i> -->
                     </li>
-                    <li class="payList-nav" onclick="location.href='#'">
-                        <span class="payList">
+                    <li class="payList-nav" onclick="location.href='/autoList'">
+                        <span class="payList  nowPage">
                             <i class="fa-solid fa-square fa-2xs"></i>
                             <span class="sidebar-nav-text" >자동 결제 목록</span>
                         </span>
