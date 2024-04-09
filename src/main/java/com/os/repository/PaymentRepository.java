@@ -1,6 +1,7 @@
 package com.os.repository;
 
 import com.os.entity.Payment;
+import com.os.util.AutoStatus;
 import com.os.util.OrderStatus;
 import com.os.util.OrderType;
 import org.springframework.data.domain.Page;
@@ -27,9 +28,11 @@ public interface PaymentRepository extends JpaRepository<Payment,Long> {
 
     Page<Payment> findByPaymentTitleContainingAndPaymentDelYnNot(String keyword, char y, Pageable pageable);
 
-    Page<Payment> findByPaymentTypeAndAutoPayments_AutoStatusNotNull(OrderType orderType, Pageable pageable);
+    Page<Payment> findByCustomerCustomerNameContainingAndPaymentTypeAndPaymentStatusNot(String keyword, OrderType paymentType, OrderStatus paymentStatus, Pageable pageable);
 
-    Page<Payment> findByCustomerCustomerNameContainingAndPaymentTypeAndAutoPayments_AutoStatusNotNull(String keyword, OrderType orderType, Pageable pageable);
+    Page<Payment> findByPaymentTypeAndPaymentStatusNot(OrderType paymentType, OrderStatus paymentStatus, Pageable pageable);
+
+    Page<Payment> findByAutoPaymentsAutoStatus(AutoStatus autoStatus, Pageable pageable);
 
     @Query("SELECT COUNT(p) FROM Payment p WHERE DATE(p.createTime) = :date")
     Long countPaymentsByDate(@Param("date") LocalDate date);
@@ -44,5 +47,7 @@ public interface PaymentRepository extends JpaRepository<Payment,Long> {
 
     ///////////////////////////////////
     long countByPaymentTypeAndPaymentDelYnAndUpdateTimeBetween(OrderType paymentType, char delYn,LocalDateTime startTime, LocalDateTime endTime);
+
+
 
 }

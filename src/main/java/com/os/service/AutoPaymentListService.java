@@ -39,14 +39,17 @@ public class AutoPaymentListService {
 
 
     public Page<AutoPaymentListDto> findAll(Pageable pageable) {
-        Page<Payment> allPaymentsPage = paymentRepository.findByPaymentTypeAndAutoPayments_AutoStatusNotNull(OrderType.auto, pageable);
-
+        Page<Payment> allPaymentsPage = paymentRepository.findByPaymentTypeAndPaymentStatusNot(OrderType.auto, OrderStatus.wait, pageable);
         return allPaymentsPage.map(AutoPaymentListDto::toAutoPaymentListDto);
     }
 
     public Page<AutoPaymentListDto> findByNameContaining(String keyword, Pageable pageable) {
-        Page<Payment> allPaymentsPage = paymentRepository.findByCustomerCustomerNameContainingAndPaymentTypeAndAutoPayments_AutoStatusNotNull(keyword, OrderType.auto, pageable);
+        Page<Payment> allPaymentsPage = paymentRepository.findByCustomerCustomerNameContainingAndPaymentTypeAndPaymentStatusNot(keyword, OrderType.auto, OrderStatus.wait, pageable);
+        return allPaymentsPage.map(AutoPaymentListDto::toAutoPaymentListDto);
+    }
 
+    public Page<AutoPaymentListDto> findAllByAutoPaymentStatusAuto(Pageable pageable) {
+        Page<Payment> allPaymentsPage = paymentRepository.findByAutoPaymentsAutoStatus(AutoStatus.auto, pageable);
         return allPaymentsPage.map(AutoPaymentListDto::toAutoPaymentListDto);
     }
 

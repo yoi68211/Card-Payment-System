@@ -291,36 +291,17 @@ button {
     display: flex;
 }
 
-.deleteButton {
-    margin: 15px 0px 0px 50px;
-    background-color: white;
-    border: 1px solid blue;
-    color: #2D5CBE;
-    padding: 5px 15px;
-    border-radius: 3px;
-    font-size: 10px;
+.autoStatusOnly {
+    margin: 15px 10px 0px 50px;
 }
 
-.deleteButton:hover {
-    background-color: #2D5CBE;
-    color: white;
-}
-
-.deleteButton:active {
-    background-color: #4E8DF5;
-    color: white;
-}
-
-.deleteButton:disabled {
-    background-color: #DDDDDD;
-    border: 2px solid #CCCCCC;
-    color: #888888;
-    opacity: 0.5; /* 예시: 투명도 조절 */
-    cursor: not-allowed; /* 예시: 커서 스타일 변경 */
+.autoStatusOnlyName {
+    font-size: 11px;
+    font-weight: bold;
 }
 
 .searchInput {
-    margin: 15px 0px 0px 750px;
+    margin: 15px 0px 0px 665px;
     max-width: 350px;
     min-width: 150px;
     width: 250px;
