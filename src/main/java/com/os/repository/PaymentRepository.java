@@ -1,21 +1,14 @@
 package com.os.repository;
 
 import com.os.entity.Payment;
-import com.os.util.AutoStatus;
-import com.os.util.OrderStatus;
-import com.os.util.OrderType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import org.springframework.transaction.annotation.Transactional;
-
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 @Transactional
@@ -28,12 +21,6 @@ public interface PaymentRepository extends JpaRepository<Payment,Long> {
 
     Page<Payment> findByPaymentTitleContainingAndPaymentDelYnNot(String keyword, char y, Pageable pageable);
 
-    Page<Payment> findByCustomerCustomerNameContainingAndPaymentTypeAndPaymentStatusNot(String keyword, OrderType paymentType, OrderStatus paymentStatus, Pageable pageable);
-
-    Page<Payment> findByPaymentTypeAndPaymentStatusNot(OrderType paymentType, OrderStatus paymentStatus, Pageable pageable);
-
-    Page<Payment> findByAutoPaymentsAutoStatus(AutoStatus autoStatus, Pageable pageable);
-
     @Query("SELECT COUNT(p) FROM Payment p WHERE DATE(p.createTime) = :date")
     Long countPaymentsByDate(@Param("date") LocalDate date);
 
@@ -41,13 +28,5 @@ public interface PaymentRepository extends JpaRepository<Payment,Long> {
     Long countPaymentsYearByDateRange(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
     @Query("SELECT p FROM Payment p JOIN FETCH p.autoPayments a WHERE a.autoStatus = 'auto'")
     List<Payment> findAllPaymentsWithAutoPaymentsAndAutoStatusAuto();
-
-    ///////////////////////////////////
-    long countByPaymentStatusAndPaymentDelYnAndPaymentTypeAndUpdateTimeBetween(OrderStatus paymentStatus, char delYn,OrderType paymentType, LocalDateTime startTime, LocalDateTime endTime);
-
-    ///////////////////////////////////
-    long countByPaymentTypeAndPaymentDelYnAndUpdateTimeBetween(OrderType paymentType, char delYn,LocalDateTime startTime, LocalDateTime endTime);
-
-
 
 }
