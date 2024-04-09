@@ -129,7 +129,7 @@
                 <td class="datetime-column" th:onclick="|location.href='@{/payInfoDetail/(id=${payment.id})}'|" th:text="${#temporals.format(payment.updateTime, 'yyyy-MM-dd / HH:mm:ss')}"></td>
                 <td class="doc-number-column" th:onclick="|location.href='@{/payInfoDetail/(id=${payment.id})}'|" th:text="${payment.id}"></td>
                 <td class="customer-name-column" th:onclick="|location.href='@{/payInfoDetail/(id=${payment.id})}'|" th:text="${payment.customerName}"></td>
-                <td class="title-column" th:onclick="|location.href='@{/payInfoDetail/(id=${payment.id})}'|" th:text="${payment.paymentTitle}"></td>
+                <td class="title-column" th:onclick="|location.href='@{/payInfoDetail/(id=${payment.id})}'|" th:text="${#strings.length(payment.paymentTitle) &gt; 20} ? ${#strings.substring(payment.paymentTitle, 0, 20)} + '...' : ${payment.paymentTitle}"></td>
                 <td class="amount-columns" th:onclick="|location.href='@{/payInfoDetail/(id=${payment.id})}'|" th:text="${payment.totalAmount}"></td>
                 <td class="status-column" th:onclick="|location.href='@{/payInfoDetail/(id=${payment.id})}'|" th:text="${payment.paymentStatus}"></td>
             </tr>
