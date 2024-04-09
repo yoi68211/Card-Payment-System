@@ -42,6 +42,7 @@
         </span>
 </header>
 <main>
+
     <div class="main-cell">
         <!-- 여기서 작업하시면 됩니다. -->
         <div class="title">자동 결제 목록</div>
@@ -122,10 +123,10 @@
         <div class="line2"></div> <!-- 버튼 아래에 위치한 두 번째 선 -->
 
         <div class="delSearch">
-            <form th:action="@{/autoList}" method="get" id="autoStatusForm">
-                <input type="checkbox" class="autoStatusOnly" id="autoStatusOnly" name="autoStatusOnly">
-                <label for="autoStatusOnly" class="autoStatusOnlyName">자동결제 상태만 보기</label>
-            </form>
+           <!-- <div>
+                <input type="checkbox" id="autoStatusOnly" name="autoStatusOnly">
+                <label for="autoStatusOnly">자동결제 상태만 보기</label>
+            </div>-->
             <form th:action="@{/autoList}" method="get" id="searchForm">
                 <input type="text" class="searchInput" id="searchInput" name="keyword" placeholder="검색어를 입력해 주세요">
             </form>
@@ -177,17 +178,17 @@
                 <ul class="pagination">
                     <!-- 이전 페이지 -->
                     <li th:if="${payList.hasPrevious()}" class="page-item">
-                        <a class="page-link" th:href="@{(${isListPage} ? '/autoList' + '?page=' + (${payList.getNumber()} - 1) + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + ${keyword} + '&amp;autoStatusOnly=' + ${autoStatusOnly} : '/autoSearch' + '?page=' + (${payList.getNumber()} - 1) + '&amp;size=' + ${payList.getSize()} + '&amp;startDt=' + ${startDt} + '&amp;endDt=' + ${endDt} + '&amp;status=' + ${status} + '&amp;docNumber=' + ${docNumber} + '&amp;customerName=' + ${customerName} + '&amp;email=' + ${email} + '&amp;phoneNumber=' + ${phoneNumber} + '&amp;transactionStatus=' + ${transactionStatus} + '&amp;payType=' + ${payType})}" aria-label="Previous">
+                        <a class="page-link" th:href="@{(${isListPage} ? '/autoList' + '?page=' + (${payList.getNumber()} - 1) + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + ${keyword} : '/autoSearch' + '?page=' + (${payList.getNumber()} - 1) + '&amp;size=' + ${payList.getSize()} + '&amp;startDt=' + ${startDt} + '&amp;endDt=' + ${endDt} + '&amp;status=' + ${status} + '&amp;docNumber=' + ${docNumber} + '&amp;customerName=' + ${customerName} + '&amp;email=' + ${email} + '&amp;phoneNumber=' + ${phoneNumber} + '&amp;transactionStatus=' + ${transactionStatus} + '&amp;payType=' + ${payType})}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <!-- 페이지 번호 -->
                     <li th:each="i : ${#numbers.sequence((payList.number - 3) < 0 ? 0 : (payList.number - 3), (payList.number + 3) > (payList.totalPages - 1) ? (payList.totalPages - 1) : (payList.number + 3))}" th:class="${payList.number == i} ? 'page-item active' : 'page-item'">
-                        <a class="page-link" th:href="@{(${isListPage} ? '/autoList' + '?page=' + ${i} + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + (${keyword} ?: '') + '&amp;autoStatusOnly=' + (${autoStatusOnly} ?: '') : '/autoSearch' + '?page=' + ${i} + '&amp;size=' + ${payList.getSize()} + '&amp;startDt=' + (${startDt} ?: '') + '&amp;endDt=' + (${endDt} ?: '') + '&amp;status=' + (${status} ?: '') + '&amp;docNumber=' + (${docNumber} ?: '') + '&amp;customerName=' + (${customerName} ?: '') + '&amp;email=' + (${email} ?: '') + '&amp;phoneNumber=' + (${phoneNumber} ?: '') + '&amp;transactionStatus=' + (${transactionStatus} ?: '') + '&amp;payType=' + (${payType} ?: ''))}" th:text="${i + 1}"></a>
+                        <a class="page-link" th:href="@{(${isListPage} ? '/autoList' + '?page=' + ${i} + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + (${keyword} ?: '') : '/autoSearch' + '?page=' + ${i} + '&amp;size=' + ${payList.getSize()} + '&amp;startDt=' + (${startDt} ?: '') + '&amp;endDt=' + (${endDt} ?: '') + '&amp;status=' + (${status} ?: '') + '&amp;docNumber=' + (${docNumber} ?: '') + '&amp;customerName=' + (${customerName} ?: '') + '&amp;email=' + (${email} ?: '') + '&amp;phoneNumber=' + (${phoneNumber} ?: '') + '&amp;transactionStatus=' + (${transactionStatus} ?: '') + '&amp;payType=' + (${payType} ?: ''))}" th:text="${i + 1}"></a>
                     </li>
                     <!-- 다음 페이지 -->
                     <li th:if="${payList.hasNext()}" class="page-item">
-                        <a class="page-link" th:href="@{(${isListPage} ? '/autoList' + '?page=' + (${payList.getNumber()} + 1) + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + ${keyword} + '&amp;autoStatusOnly=' + ${autoStatusOnly} : '/autoSearch' + '?page=' + (${payList.getNumber()} + 1) + '&amp;size=' + ${payList.getSize()} + '&amp;startDt=' + ${startDt} + '&amp;endDt=' + ${endDt} + '&amp;status=' + ${status} + '&amp;docNumber=' + ${docNumber} + '&amp;customerName=' + ${customerName} + '&amp;email=' + ${email} + '&amp;phoneNumber=' + ${phoneNumber} + '&amp;transactionStatus=' + ${transactionStatus} + '&amp;payType=' + ${payType})}" aria-label="Next">
+                        <a class="page-link" th:href="@{(${isListPage} ? '/autoList' + '?page=' + (${payList.getNumber()} + 1) + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + ${keyword} : '/autoSearch' + '?page=' + (${payList.getNumber()} + 1) + '&amp;size=' + ${payList.getSize()} + '&amp;startDt=' + ${startDt} + '&amp;endDt=' + ${endDt} + '&amp;status=' + ${status} + '&amp;docNumber=' + ${docNumber} + '&amp;customerName=' + ${customerName} + '&amp;email=' + ${email} + '&amp;phoneNumber=' + ${phoneNumber} + '&amp;transactionStatus=' + ${transactionStatus} + '&amp;payType=' + ${payType})}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>

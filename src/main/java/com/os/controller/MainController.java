@@ -44,6 +44,7 @@ public class MainController {
         LocalDateTime startDate = LocalDateTime.now().withYear(year).withMonth(month).withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0);
         LocalDateTime endDate = startDate.withDayOfMonth(startDate.toLocalDate().lengthOfMonth()).withHour(23).withMinute(59).withSecond(59);
 
+//long autoError = paymentService.autoError(startDate, endDate);
         long autoError = autoPaymentService.autoError(startDate, endDate);
 
 
@@ -176,12 +177,10 @@ public class MainController {
 
 
     @GetMapping("/autoList")
-    public String autoFindAll(Model model, @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword, @RequestParam(value = "autoStatusOnly", required = false, defaultValue = "false") boolean autoStatusOnly) {
+    public String autoFindAll(Model model, @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword) {
         Page<AutoPaymentListDto> allPaymentsPage;
 
-        if (autoStatusOnly) {
-            allPaymentsPage = autoPaymentListService.findAllByAutoPaymentStatusAuto(pageable);
-        } else if (keyword != null && !keyword.isEmpty()) {
+        if (keyword != null && !keyword.isEmpty()) {
             allPaymentsPage = autoPaymentListService.findByNameContaining(keyword, pageable);
         } else {
             allPaymentsPage = autoPaymentListService.findAll(pageable);
@@ -191,13 +190,11 @@ public class MainController {
         model.addAttribute("payList", allPaymentsPage);
         model.addAttribute("payCount", payCount);
         model.addAttribute("keyword", keyword);
-        model.addAttribute("autoStatusOnly", autoStatusOnly);
-        model.addAttribute("isListPage", true);
+        model.addAttribute("isListPage", true); // 이 부분을 추가해주면 됩니다.
 
         return "autoList";
     }
     // 새로 복사해서 만드는게 나을듯
-
 
 
 
