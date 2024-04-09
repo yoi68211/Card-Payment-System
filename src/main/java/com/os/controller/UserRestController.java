@@ -22,7 +22,7 @@ public class UserRestController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping("/api/user/password/update")
+    @PostMapping("/user/update")
     public ResponseEntity<?> updatePassword(@RequestBody UpdateUserRequest request) {
         CustomUserDetails currentUser = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long userId = currentUser.getUserId();
