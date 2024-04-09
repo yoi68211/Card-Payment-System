@@ -44,7 +44,6 @@ public class MainController {
         LocalDateTime startDate = LocalDateTime.now().withYear(year).withMonth(month).withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0);
         LocalDateTime endDate = startDate.withDayOfMonth(startDate.toLocalDate().lengthOfMonth()).withHour(23).withMinute(59).withSecond(59);
 
-//long autoError = paymentService.autoError(startDate, endDate);
         long autoError = autoPaymentService.autoError(startDate, endDate);
 
 
