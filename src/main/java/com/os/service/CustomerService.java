@@ -80,13 +80,13 @@ public class CustomerService {
         YearMonth thisMonth = YearMonth.from(now);
         LocalDateTime startOfMonth = thisMonth.atDay(1).atStartOfDay();
         LocalDateTime endOfMonth = thisMonth.atEndOfMonth().atTime(23, 59, 59);
-
-        return customerRepository.countByPayments_CreateTimeBetween(startOfMonth, endOfMonth);
+        char delYn = 'N';
+        return customerRepository.countByPayments_PaymentDelYnAndCreateTimeBetween(delYn,startOfMonth, endOfMonth);
     }
 
-    public long countByCustomersByPaid() {
-
-        return customerRepository.countByPayments_PaymentStatus(OrderStatus.paid);
+    public long countByCustomersByPaid(LocalDateTime startDate, LocalDateTime endDate){
+        char delYn = 'N';
+        return customerRepository.countByPayments_PaymentStatusAndPayments_PaymentDelYnAndUpdateTimeBetween(OrderStatus.paid,delYn,startDate, endDate);
     }
 
     public List<CustomerDTO> getAllCustomersByPaid() {

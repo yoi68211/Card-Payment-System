@@ -9,6 +9,14 @@ body {
     align-items: center;
     min-height: 100vh;
 }
+#paymentTitle{
+    width: 100%;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0px;
+}
 
 .receipt-box {
     border: 2px solid #E5E9F0;
@@ -39,6 +47,12 @@ th, td {
 
 th {
     background-color: #f2f2f2;
+}
+
+.tdTitle{
+    background-color: #f2f2f2;
+    font-weight: bold;
+    width: 30%;
 }
 
 .card-totalAmount {

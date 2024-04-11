@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link th:href="@{/css/pageSample.css}" rel="stylesheet">
-    <link th:href="@{/css/list.css}" rel="stylesheet">
+    <link th:href="@{/css/autoList.css}" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -20,7 +20,7 @@
             <a href="/dashboard">AIP System</a>
         </span>
 
-    <span class="header-pageName header-flex-box" >결제목록 / 전체 결제 목록</span><!-- 현재 페이지 이름 -->
+    <span class="header-pageName header-flex-box" >결제목록 / 자동결제 목록</span><!-- 현재 페이지 이름 -->
 
     <span class="header-flex-box">
             <span class="header-flex-three">
@@ -42,16 +42,17 @@
         </span>
 </header>
 <main>
+
     <div class="main-cell">
         <!-- 여기서 작업하시면 됩니다. -->
-        <div class="title">전체 결제 목록</div>
+        <div class="title">자동 결제 목록</div>
         <button class="right_button" onclick="toggleContent()"><i class="fas fa-chevron-down"></i>상세 검색</button>
         <div class="line"></div> <!-- 버튼 아래에 위치한 첫 번째 선 -->
         <div class="expandableContent" id="expandableContent">
-            <form id="form" th:action="@{/search}" th:object="${searchDTO}" method="get">
+            <form id="form" th:action="@{/autoSearch}" th:object="${searchDTO}" method="get">
                 <table class="date">
                     <tr>
-                        <td colspan="2">
+                        <td colspan="1">
                             <label class="re_time">조회기간</label>
                             <input type="text" id="startDt" class="startDt" name="startDt" th:value="${startDt}" placeholder="yyyy-mm-dd"> ~
                             <input type="text" id="endDt" class="endDt" name="endDt" th:value="${endDt}" placeholder="yyyy-mm-dd">
@@ -60,13 +61,12 @@
                             <label class="status">상태유형</label>
                             <input type="hidden" id="status" name="status" th:value="${status}">
                             <button type="button" class="status-button" onclick="setStatus('')">전체</button>
-                            <button type="button" class="status-button" onclick="setStatus('paid')">결제</button>
-                            <button type="button" class="status-button" onclick="setStatus('wait')">미결제</button>
-                            <button type="button" class="status-button" onclick="setStatus('refund')">환불</button>
+                            <button type="button" class="status-button" onclick="setStatus('paid')">자동 결제</button>
+                            <button type="button" class="status-button" onclick="setStatus('stop')">정지</button>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">
+                        <td colspan="1">
                             <label class="right-drb"></label>
                             <button type="button" class="date-range-button" data-months="1" onclick="setDateRange(1)">1개월</button>
                             <button type="button" class="date-range-button" data-months="3" onclick="setDateRange(3)">3개월</button>
@@ -79,7 +79,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">
+                        <td colspan="1">
                             <label for="customerName" class="customer">고객이름</label>
                             <input type="text" id="customerName" class="customerName" name="customerName" th:value="${customerName}" placeholder="이름을 입력해주세요.">
                         </td>
@@ -89,7 +89,30 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="3" class="buttonName">
+                        <td colspan="1">
+                            <label for="phoneNumber" class="phoneNumberName">연락번호</label>
+                            <input type="text" id="phoneNumber" class="phoneNumber" name="phoneNumber" th:value="${phoneNumber}" placeholder="연락처를 입력해주세요.(숫자만 입력)">
+                        </td>
+                        <td>
+                            <label class="transactionStatus">거래상태</label>
+                            <input type="hidden" id="transactionStatus" name="transactionStatus" th:value="${transactionStatus}">
+                            <button type="button" class="transaction-button" onclick="setTransactionStatus('')">전체</button>
+                            <button type="button" class="transaction-button" onclick="setTransactionStatus('paid')">결제 성공</button>
+                            <button type="button" class="transaction-button" onclick="setTransactionStatus('error')">결제 오류</button>
+                            <button type="button" class="transaction-button" onclick="setTransactionStatus('stop')">결제 불가</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">
+                            <label class="payType">결제구분</label>
+                            <input type="hidden" id="payType" name="payType" th:value="${payType}">
+                            <button type="button" class="PayType-button" onclick="setPayType('')">전체</button>
+                            <button type="button" class="PayType-button" onclick="setPayType('BtoB')">B to B</button>
+                            <button type="button" class="PayType-button" onclick="setPayType('BtoC')">B to C</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="buttonName">
                             <button type="button" class="reset" onclick="resetForm()">초기화</button>
                             <button type="button" class="submit" onclick="submitForm()">조회</button>
                         </td>
@@ -100,13 +123,11 @@
         <div class="line2"></div> <!-- 버튼 아래에 위치한 두 번째 선 -->
 
         <div class="delSearch">
-            <form id="deleteForm" action="/delete/{id}" method="post">
-                <!-- 선택된 결제 ID를 서버로 전송하기 위한 폼 -->
-                <input type="hidden" id="paymentIds" name="paymentIds">
-                <!-- 삭제 버튼 클릭 시 서버로 전송하도록 type을 submit으로 변경 -->
-                <button id="deleteButton" class="deleteButton" type="submit" onclick="deleteSelectedPayments()" disabled>삭제</button>
-            </form>
-            <form th:action="@{/list}" method="get" id="searchForm">
+           <!-- <div>
+                <input type="checkbox" id="autoStatusOnly" name="autoStatusOnly">
+                <label for="autoStatusOnly">자동결제 상태만 보기</label>
+            </div>-->
+            <form th:action="@{/autoList}" method="get" id="searchForm">
                 <input type="text" class="searchInput" id="searchInput" name="keyword" placeholder="검색어를 입력해 주세요">
             </form>
         </div>
@@ -114,24 +135,27 @@
         <table class="custom-table" border="1">
             <thead>
             <tr>
-                <th class="selection-column">선택</th>
-                <th class="datetime-column">등록일시</th>
-                <th class="doc-number-column">문서번호</th>
-                <th class="customer-name-column">고객명</th>
-                <th class="title-column">제목</th>
-                <th class="amount-column">금액</th>
+                <th class="selection-column">결제상태</th>
+                <th class="datetime-column">고객명</th>
+                <th class="doc-number-column">메일주소</th>
+                <th class="customer-name-column">결제구분</th>
+                <th class="customer-name-column">금액</th>
+                <th class="title-column">다음 결제일</th>
+                <th class="amount-column">마지막 결제일</th>
                 <th class="status-column">상태</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="payment : ${payList}">
-                <td><label><input type="checkbox" class="selection-column" name="selectedPayment" th:value="${payment.id}" onchange="toggleDeleteButton()" /></label></td>
-                <td class="datetime-column" th:onclick="|location.href='@{/payInfoDetail/(id=${payment.id})}'|" th:text="${#temporals.format(payment.updateTime, 'yyyy-MM-dd / HH:mm:ss')}"></td>
-                <td class="doc-number-column" th:onclick="|location.href='@{/payInfoDetail/(id=${payment.id})}'|" th:text="${payment.id}"></td>
-                <td class="customer-name-column" th:onclick="|location.href='@{/payInfoDetail/(id=${payment.id})}'|" th:text="${payment.customerName}"></td>
-                <td class="title-column" th:onclick="|location.href='@{/payInfoDetail/(id=${payment.id})}'|" th:text="${payment.paymentTitle}"></td>
-                <td class="amount-columns" th:onclick="|location.href='@{/payInfoDetail/(id=${payment.id})}'|" th:text="${payment.totalAmount}"></td>
-                <td class="status-column" th:onclick="|location.href='@{/payInfoDetail/(id=${payment.id})}'|" th:text="${payment.paymentStatus}"></td>
+                <td class="status-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${payment.autoOrderStatus}"></td>    <!--0409-->
+                <td class="customer-name-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${payment.customerName}"></td>
+                <td class="customer-name-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${payment.customerEmail}"></td>
+                <td class="customer-name-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${payment.paymentBizTo}"></td>
+                <td class="amount-columns" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${payment.totalAmount}"></td>
+                <td class="datetime-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${#temporals.format(payment.paymentNextTime, 'yyyy-MM-dd / HH:mm:ss')}"></td>
+                <td class="datetime-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${#temporals.format(payment.updateTime, 'yyyy-MM-dd / HH:mm:ss')}"></td>
+                <td class="doc-number-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${payment.autoStatus}"></td>
+
             </tr>
             </tbody>
         </table>
@@ -147,17 +171,17 @@
                 <ul class="pagination">
                     <!-- 이전 페이지 -->
                     <li th:if="${payList.hasPrevious()}" class="page-item">
-                        <a class="page-link" th:href="@{(${isListPage} ? '/list' + '?page=' + (${payList.getNumber()} - 1) + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + ${keyword} : '/search' + '?page=' + (${payList.getNumber()} - 1) + '&amp;size=' + ${payList.getSize()} + '&amp;startDt=' + ${startDt} + '&amp;endDt=' + ${endDt} + '&amp;status=' + ${status} + '&amp;docNumber=' + ${docNumber} + '&amp;customerName=' + ${customerName} + '&amp;email=' + ${email})}" aria-label="Previous">
+                        <a class="page-link" th:href="@{(${isListPage} ? '/autoList' + '?page=' + (${payList.getNumber()} - 1) + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + ${keyword} : '/autoSearch' + '?page=' + (${payList.getNumber()} - 1) + '&amp;size=' + ${payList.getSize()} + '&amp;startDt=' + ${startDt} + '&amp;endDt=' + ${endDt} + '&amp;status=' + ${status} + '&amp;docNumber=' + ${docNumber} + '&amp;customerName=' + ${customerName} + '&amp;email=' + ${email} + '&amp;phoneNumber=' + ${phoneNumber} + '&amp;transactionStatus=' + ${transactionStatus} + '&amp;payType=' + ${payType})}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <!-- 페이지 번호 -->
                     <li th:each="i : ${#numbers.sequence((payList.number - 3) < 0 ? 0 : (payList.number - 3), (payList.number + 3) > (payList.totalPages - 1) ? (payList.totalPages - 1) : (payList.number + 3))}" th:class="${payList.number == i} ? 'page-item active' : 'page-item'">
-                        <a class="page-link" th:href="@{(${isListPage} ? '/list' + '?page=' + ${i} + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + (${keyword} ?: '') : '/search' + '?page=' + ${i} + '&amp;size=' + ${payList.getSize()} + '&amp;startDt=' + (${startDt} ?: '') + '&amp;endDt=' + (${endDt} ?: '') + '&amp;status=' + (${status} ?: '') + '&amp;docNumber=' + (${docNumber} ?: '') + '&amp;customerName=' + (${customerName} ?: '') + '&amp;email=' + (${email} ?: ''))}" th:text="${i + 1}"></a>
+                        <a class="page-link" th:href="@{(${isListPage} ? '/autoList' + '?page=' + ${i} + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + (${keyword} ?: '') : '/autoSearch' + '?page=' + ${i} + '&amp;size=' + ${payList.getSize()} + '&amp;startDt=' + (${startDt} ?: '') + '&amp;endDt=' + (${endDt} ?: '') + '&amp;status=' + (${status} ?: '') + '&amp;docNumber=' + (${docNumber} ?: '') + '&amp;customerName=' + (${customerName} ?: '') + '&amp;email=' + (${email} ?: '') + '&amp;phoneNumber=' + (${phoneNumber} ?: '') + '&amp;transactionStatus=' + (${transactionStatus} ?: '') + '&amp;payType=' + (${payType} ?: ''))}" th:text="${i + 1}"></a>
                     </li>
                     <!-- 다음 페이지 -->
                     <li th:if="${payList.hasNext()}" class="page-item">
-                        <a class="page-link" th:href="@{(${isListPage} ? '/list' + '?page=' + (${payList.getNumber()} + 1) + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + ${keyword} : '/search' + '?page=' + (${payList.getNumber()} + 1) + '&amp;size=' + ${payList.getSize()} + '&amp;startDt=' + ${startDt} + '&amp;endDt=' + ${endDt} + '&amp;status=' + ${status} + '&amp;docNumber=' + ${docNumber} + '&amp;customerName=' + ${customerName} + '&amp;email=' + ${email})}" aria-label="Next">
+                        <a class="page-link" th:href="@{(${isListPage} ? '/autoList' + '?page=' + (${payList.getNumber()} + 1) + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + ${keyword} : '/autoSearch' + '?page=' + (${payList.getNumber()} + 1) + '&amp;size=' + ${payList.getSize()} + '&amp;startDt=' + ${startDt} + '&amp;endDt=' + ${endDt} + '&amp;status=' + ${status} + '&amp;docNumber=' + ${docNumber} + '&amp;customerName=' + ${customerName} + '&amp;email=' + ${email} + '&amp;phoneNumber=' + ${phoneNumber} + '&amp;transactionStatus=' + ${transactionStatus} + '&amp;payType=' + ${payType})}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
@@ -165,7 +189,7 @@
             </nav>
         </div>
 
-        <script th:src="@{/js/list.js}"></script>
+        <script th:src="@{/js/autoList.js}"></script>
 
     </div>
 </main>
@@ -195,14 +219,14 @@
                         <i class="fa-solid fa-chevron-down" ></i>
                     </li>
                     <li class="payList-nav" onclick="location.href='/list'">
-                        <span class="payList nowPage">
+                        <span class="payList">
                             <i class="fa-solid fa-square fa-2xs"></i>
                             <span class="sidebar-nav-text">전체 결제 목록</span>
                         </span>
                         <!-- <i class="fa-solid fa-chevron-right"></i> -->
                     </li>
                     <li class="payList-nav" onclick="location.href='/autoList'">
-                        <span class="payList">
+                        <span class="payList  nowPage">
                             <i class="fa-solid fa-square fa-2xs"></i>
                             <span class="sidebar-nav-text" >자동 결제 목록</span>
                         </span>

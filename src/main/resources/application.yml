@@ -29,11 +29,6 @@ spring:
     suffix: .html
     enabled: true
 
-
-
-  api:
-    key: test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6
-
   spring:
     devtools:
       livereload:
@@ -43,7 +38,11 @@ spring:
 
   logging:
     level:
-      root: info
+      root: debug
 
 
 
+
+api.toss.clientKey: test_ck_6bJXmgo28eEX5LOZe16W8LAnGKWx
+
+api.toss.secretKey: test_sk_LkKEypNArW2PPmGx2XpQVlmeaxYG

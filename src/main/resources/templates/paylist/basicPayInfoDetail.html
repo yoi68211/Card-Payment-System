@@ -55,9 +55,9 @@
                 </div>
                 <div>
 
-                    <button type="button" th:if="${#strings.equals(payInfo.paymentStatus, 'error')}" onclick="toggleEdit()">편집</button>
-                    <button type="button" th:if="${#strings.equals(payInfo.paymentStatus, 'error')}" onclick="fnDelPay()" >삭제</button>
-                    <button type="button" th:if="${!#strings.equals(payInfo.paymentStatus, 'error')}" onclick="moveReceipt()">신용 구매도표 보기</button>
+                    <button type="button" th:if="${!#strings.equals(payInfo.paymentStatus, 'paid')}" onclick="toggleEdit()">편집</button>
+                    <button type="button" th:if="${!#strings.equals(payInfo.paymentStatus, 'paid')}" onclick="fnDelPay()" >삭제</button>
+                    <button type="button" th:if="${#strings.equals(payInfo.paymentStatus, 'paid')}" onclick="moveReceipt()">신용 구매도표 보기</button>
                     <button type="button" onclick="location.href='/list'"><i class="fa-solid fa-chevron-left"></i>목록으로</button>
                 </div>
             </div>
@@ -202,7 +202,7 @@
                         </span>
                         <!-- <i class="fa-solid fa-chevron-right"></i> -->
                     </li>
-                    <li class="payList-nav" onclick="location.href='#'">
+                    <li class="payList-nav" onclick="location.href='/autoList'">
                         <span class="payList">
                             <i class="fa-solid fa-square fa-2xs"></i>
                             <span class="sidebar-nav-text" >자동 결제 목록</span>
@@ -276,8 +276,8 @@
     let textColor = '';
 
     if (paymentStatus === 'wait') {
-        payStatus = '결제대기';
-        backgroundColor = 'black';
+        payStatus = '미결제';
+        backgroundColor = 'orange';
         textColor = 'white';
     } else if (paymentStatus === 'paid') {
         payStatus = '결제완료';
@@ -287,9 +287,9 @@
     } else if (paymentStatus === 'stop') {
         payStatus = '결제중지';
         // 다른 상태에 대한 스타일을 설정합니다.
-    } else if (paymentStatus === 'error') {
-        payStatus = '미결제';
-        backgroundColor = 'orange';
+    } else {
+        payStatus = '에러';
+        backgroundColor = 'red';
         textColor = 'white';
     }
 

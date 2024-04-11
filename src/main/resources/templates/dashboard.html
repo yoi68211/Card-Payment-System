@@ -48,30 +48,33 @@
                 <div><span th:text="${month}"></span>월</div>
                 <div>자동 결제 오류</div>
                 <div th:text="${autoError}"></div>
-                <button>View All</button>
+                <button onclick="autoError()">View All</button>
             </div>
+
             <div class="countBox count-2">
                 <div><span th:text="${month}"></span>월</div>
                 <div>자동 결제 성공</div>
                 <div th:text="${autoSuccess}"></div>
-                <button>View All</button>
+                <button onclick="autoSuccess()">View All</button>
             </div>
+
             <div class="countBox count-3">
                 <div><span th:text="${month}"></span>월</div>
                 <div>자동 결제 불가</div>
                 <div th:text="${autoStop}"></div>
-                <button>View All</button>
+                <button onclick="autoStop()">View All</button>
             </div>
+
             <div class="countBox count-4">
                 <div><span th:text="${month}"></span>월</div>
                 <div>자동 결제 건 수</div>
                 <div th:text="${autoAll}"></div>
-                <button>View All</button>
+                <button onclick="autoAll()">View All</button>
             </div>
             <div class="countBox count-5">
                 <div><span th:text="${month}"></span>월</div>
                 <div>결제 신규 등록</div>
-                <div th:text="${paymentInsertThisMonth}">13</div>
+                <div th:text="${paymentInsertThisMonth}"></div>
                 <button onclick="redirectToCurrentMonthLink()">View All</button>
             </div>
             <div class="countBox count-6">
@@ -150,7 +153,7 @@
                         </span>
                         <!-- <i class="fa-solid fa-chevron-right"></i> -->
                     </li>
-                    <li class="payList-nav" onclick="location.href='#'">
+                    <li class="payList-nav" onclick="location.href='/autoList'">
                         <span class="payList">
                             <i class="fa-solid fa-square fa-2xs"></i>
                             <span class="sidebar-nav-text" >자동 결제 목록</span>

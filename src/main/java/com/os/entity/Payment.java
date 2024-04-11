@@ -76,7 +76,7 @@ public class Payment extends BaseEntity{
         return String.valueOf(totalAmount);
     }
 
-    public LocalDateTime calculateLocalDateTime(int month, int date){
+    public static LocalDateTime calculateLocalDateTime(int month, int date){
         LocalDate currentDate = LocalDate.now();
         LocalDate calculateDate = currentDate.plusMonths(month).withDayOfMonth(date);
         //
