@@ -26,6 +26,8 @@ public class MemoDTO {
 
     private String memoDelYn;
 
+    private Long userId;
+
 //    private String searchBoxValue;
 //    private String searchTypeValue;
 
@@ -33,6 +35,7 @@ public class MemoDTO {
     public static MemoDTO toMemoDTO(Memo memo) {
         MemoDTO memoDTO = new MemoDTO();
         memoDTO.setId(memo.getId());
+        memoDTO.setUserId(memoDTO.getUserId());
         memoDTO.setUserName(memo.getUser().getUsername());
         memoDTO.setMemoContents(memo.getMemoContents());
         memoDTO.setMemoExposeYn(memo.getMemoExposeYn());

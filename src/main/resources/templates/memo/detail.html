@@ -39,23 +39,27 @@
             </span>
         </span>
 </header>
-<main>  <div class="detailSection">
+
+<main>
+    <div class="allDetailSec">
+        <div class="detailSection">
                 <div class = detailId>
                     No.<span th:text="${Memo.id}"></span>
                 </div>
                 <div class = detailNameTime>
                     <div>작성자: <span th:text="${Memo.userName}"></span></div>
-                    <div>작성일: <span th:text="${Memo.createTime}"></span></div>
+                    <div>작성일: <span th:text="${#temporals.format(Memo.createTime, 'yyyy-MM-dd / HH:mm:ss')}"></span></div>
                 </div>
                 </div>
                 <div class="detailContents">
                     <span th:text="${Memo.memoContents}"></span>
                 </div>
                 <div class="modifyButtons">
-                    <button  onclick="listReq()">돌아가기</button>
-                    <button  onclick="updateReq()">수정</button>
+                    <button  class = "backButton" onclick="listReq()">< 목록으로</button>
+                    <button th:unless="${#strings.equals(sessionId, Memo.userId)}"  hidden class = "modifyButton" onclick="updateReq()">수정</button>
                 </div>
-        </div>
+    </div>
+
 </main>
 <aside>
     <span id="sidebar">
@@ -96,7 +100,6 @@
                     </span>
                     <!-- <i class="fa-solid fa-chevron-right"></i> -->
                 </li>
-
             </ul>
         </nav>
         </span>
@@ -107,8 +110,7 @@
     let date = [[${Memo.createTime}]];
 
     const listReq = () => {
-        const page = [[${page}]];
-        location.href = "/memo/paging?page="+page;
+        location.href = "/memo/paging";
     }
 
     const updateReq = () => {
