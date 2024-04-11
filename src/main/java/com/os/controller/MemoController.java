@@ -3,7 +3,9 @@ package com.os.controller;
 import com.os.dto.AllPaymentListDto;
 import com.os.dto.CustomerDTO;
 import com.os.dto.MemoDTO;
+import com.os.entity.User;
 import com.os.service.MemoService;
+import com.os.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +25,7 @@ import java.util.List;
 @RequestMapping("/memo")
 public class MemoController {
     private final MemoService memoService;
+    private final UserService userService;
 
 //    @GetMapping("/index_memo")
 //    public String index() {
@@ -48,7 +51,10 @@ public class MemoController {
             게시글 데이터를 가져와서 detail.html에 출력
         */
         MemoDTO memoDTO = memoService.findById(id);
+        User session = userService.findId();
+        Long sessionId = session.getId();
 
+        model.addAttribute("sessionId", sessionId);
         model.addAttribute("Memo", memoDTO);
         model.addAttribute("page", pageable.getPageNumber());
         return "/memo/detail";
