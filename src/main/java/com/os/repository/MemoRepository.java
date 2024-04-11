@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Transactional
@@ -22,4 +23,6 @@ public interface MemoRepository extends JpaRepository<Memo,Long> {
     Page<Memo> findByUserUsernameContaining(String keyword, Pageable pageable);
 
     Page<Memo> findByMemoExposeYn(String keyword, Pageable pageable);
+
+    List<Memo> findAllByCreateTimeAfterOrderByCreateTimeDesc(LocalDateTime week);
 }
