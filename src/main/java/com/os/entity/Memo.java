@@ -23,11 +23,12 @@ public class Memo extends BaseEntity {
     @Column(nullable = false, name = "memo_id")
     private Long id;
 
-    @Column(nullable = false,length = 300)
+    @Column(nullable = false)
     @Length(min = 1 , max = 300 , message = "내용을 최소 1글자부터 300글자 사이로 입력해주세요.")
     private String memoContents;
 
     @Column(nullable = false)
+    @Length(min = 1 , max = 1 , message = "게시글 노출여부를 반드시 선택해 주셔야 합니다.")
     private String memoExposeYn;
 
     @Column(nullable = false)

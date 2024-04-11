@@ -1,27 +1,4 @@
-// 현재 월을 가져오는 함수
-function getCurrentMonth() {
-    var today = new Date();
-    var currentMonth = today.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해줌
-    return currentMonth;
-}
-
-// N월 값을 업데이트하는 함수
-function updateMonthText() {
-    var currentMonth = getCurrentMonth();
-    var nMonthDivs = document.querySelectorAll('.n-month'); // N월을 표시하는 div 요소들을 선택
-
-    // 각 N월 div에 현재 월 값을 반영
-    nMonthDivs.forEach(function(div) {
-        div.textContent = currentMonth + "월";
-    });
-}
-
-// 페이지가 로드될 때 N월 값을 업데이트
-window.onload = function() {
-    updateMonthText();
-};
-
-   function getFirstAndLastDateOfMonth() {
+function getFirstAndLastDateOfMonth() {
             var today = new Date();
             var year = today.getFullYear();
             var month = today.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해줌
