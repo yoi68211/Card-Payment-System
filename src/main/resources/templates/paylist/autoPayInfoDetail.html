@@ -103,10 +103,10 @@
                             <span>마지막 거래상태</span>
                             <input type="text" id="paymentStatus" name="paymentStatus" readonly th:value="${payInfo.paymentStatus}">
                         </label>
-                        <label>
+                        <label class="auto-custom-input">
                             <span>다음 결제일</span>
                             <input type="text" readonly th:if="${#strings.equals(autoPayInfo.autoStatus, 'stop')}" value="거래 중지">
-                            <input type="date" th:if="${#strings.equals(autoPayInfo.autoStatus, 'auto')}" id="paymentNextTime" name="paymentNextTime" class="editable" disabled>
+                            <input type="date" th:if="${#strings.equals(autoPayInfo.autoStatus, 'paid')}" id="paymentNextTime" name="paymentNextTime" class="editable" disabled>
                         </label>
                         <label class="auto-custom-input">
                             <span>결제 회차</span>
@@ -123,9 +123,6 @@
                     <button type="button"><i class="fa-solid fa-credit-card"></i>카드정보 변경 요청</button>
                 </div>
             </div>
-
-
-
         </div>
     </form>
 </main>

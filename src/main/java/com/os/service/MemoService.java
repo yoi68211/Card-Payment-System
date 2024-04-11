@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +25,9 @@ public class MemoService {
     private final UserService userService;
 
     public List<MemoDTO> findAll() {
-        List<Memo> MemoList = memoRepository.findAll(Sort.by(Sort.Direction.DESC, "createTime"));
+        LocalDateTime week = LocalDateTime.now().minusWeeks(1);
+//        List<Memo> MemoList = memoRepository.findAll(Sort.by(Sort.Direction.DESC, "createTime"));
+        List<Memo> MemoList = memoRepository.findAllByCreateTimeAfterOrderByCreateTimeDesc(week);
         List<MemoDTO> MemoDTOList = new ArrayList<>();
         for(Memo Memo : MemoList){
             MemoDTOList.add(MemoDTO.toMemoDTO(Memo));
