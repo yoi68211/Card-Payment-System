@@ -42,13 +42,13 @@
 
 .memoListTable {
     width: 100%;
-    height: 62%;
+    height: 50%;
     table-layout:fixed;
 }
 
 .memoListTable2{
     width:inherit;
-    height: inherit;
+    height: 4%;
     border: 1px solid black;
     border-collapse: collapse;
     table-layout:fixed;
@@ -56,9 +56,10 @@
 
 th {
     background-color: lightgrey;
+    height:4%;
 }
 
-.memoListTable2 th,  .memoListTable2 td {
+.memoListTable2 th, .memoListTable2 td {
   border: 1px solid black;
   border-collapse:collapse;
 }

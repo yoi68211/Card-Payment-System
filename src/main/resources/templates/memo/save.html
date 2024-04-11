@@ -43,21 +43,24 @@
         <div class="memoWriteText">
             <span>Memo 등록하기</span>
         </div>
-        <form action="/memo/save" method="post">
-            <div class="memoExposeRadio">
-                대시보드 노출<input type="radio" name="memoExposeYn" value="Y">Y <input type="radio" name="memoExposeYn" value="N">N<br>
-            </div>
-            <div class = "contentText">
-                <span>내용</span>
-            </div>
-            <div>
-                <textarea  name="MemoContents"></textarea>
-            </div>
-            <div class="listAndSubmit">
-                <button class = "listButton" onclick="backToPaging()"> < 목록으로</button>
-                <input class = "saveButton"  type="submit" value="저장하기">
-            </div>
-        </form>
+
+    <form action="/memo/save" method="post">
+        <div class="memoExposeRadio">
+            대시보드 노출<input type="radio" name="memoExposeYn" value="Y">Y <input type="radio" name="memoExposeYn" value="N">N<br>
+        </div>
+        <div class = "contentText">
+            <span>내용</span>
+        </div>
+        <div>
+            <textarea  name="MemoContents"></textarea>
+        </div>
+    </form>
+        
+        <div class="listAndSubmit">
+            <button class = "listButton" onclick="backToPaging()"> < 목록으로</button>
+            <input class = "saveButton"  type="submit" value="저장하기">
+        </div>
+
     </div>
 </main>
 <aside>
