@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>메모 보드 목록</title>
-    <link th:href="@{/css/pageSample.css}" rel="stylesheet">
-    <link th:href="@{/css/paging.css}" rel="stylesheet">
+    <link th:href="@{/css/pageSample.css?ver=1}" rel="stylesheet">
+    <link th:href="@{/css/paging.css?ver=1}" rel="stylesheet">
 </head>
 <body>
 <header class="header-nav">
@@ -39,36 +39,34 @@
         </span>
 </header>
 <main>
-    <div>
-        <div class="searchBox">
-            <div id="dashboardFilterRadioGroup">
-                <span><input type="radio" name="dashboardFilter" value="all" checked onclick="filterMemos()">전체</span>
-                <span><input type="radio" name="dashboardFilter" value="Y" onclick="filterMemos()">Y</span>
-                <span><input type="radio" name="dashboardFilter" value="N" onclick="filterMemos()">N</span>
+    <div class="mainPaging">
+        <div class="memoListText">
+            Memo 목록
+        </div>
+        <div class="searchAndFilter">
+            <div class= "radioGroup" id="dashboardFilterRadioGroup">
+                <input type="radio" name="dashboardFilter" value="all" checked onclick="filterMemos()">전체
+                <input type="radio" name="dashboardFilter" value="Y" onclick="filterMemos()">Y
+                <input type="radio" name="dashboardFilter" value="N" onclick="filterMemos()">N
             </div>
-            <div>
-                <span>
+            <div class="searchGroup">
                     <select id="type" name="searchType">
                         <option value="entire">전체</option>
                         <option value="contents">내용</option>
                         <option value="writer">작성자</option>
                     </select>
-                </span>
-                <span><input type="text" id="search_box" value="" placeholder="검색어를 입력하세요"></span>
-                <span><button onclick="searchMemo()">검색</button></span>
+                    <input type="text" id="search_box" value="" placeholder="🔍︎  검색어를 입력해 주세요">
+                    <button class="searchButton" onclick="searchMemo()">검색</button>
             </div>
         </div>
-        <div class="modify_button">
-            <div>
-                <div>(데이터 총<span th:text="${memoCount}"></span>건)</div>
-            </div>
-            <div>
-                <span><button onclick="deleteReq()">삭제</button></span>
-                <span><button onclick="saveReq()">작성</button></span>
-            </div>
+        <div class="modify_buttons">
+            <button class="writeButton" onclick="saveReq()">작성</button>
+            <span>&nbsp;&nbsp;</span>
+            <button class="deleteButton" onclick="deleteReq()">삭제</button>
         </div>
         <div class="memoListTable">
-            <table class="table" border="1">
+            <table class="memoListTable2">
+                <tbody>
                 <tr>
                     <th>
                         <input type="checkbox" id="allCheckBox" onclick="allChecked()">
@@ -89,17 +87,20 @@
                     <td> <a th:href="@{|/memo/${memo.id}|(page=${MemoList.number + 1})}" th:text="${memo.userName}" ></a></td>
                     <td> <a th:href="@{|/memo/${memo.id}|(page=${MemoList.number + 1})}" th:text="${#temporals.format(memo.createTime, 'yyyy-MM-dd / HH:mm:ss')}"></a></td>
                 </tr>
+                </tbody>
             </table>
         </div>
-            <!-- 첫번째 페이지로 이동 -->
-            <!-- /Memo/paging?page=1 -->
-        <div class = "pageButton">
+    <div class="count">
+     (데이터 총<span th:text="${memoCount}"></span>건)
+    </div>
+
+    <div class="pageButtons">
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <!-- 이전 페이지 -->
                     <li th:if="${MemoList.hasPrevious()}" class="page-item">
                         <a class="page-link" th:href="@{'/memo/paging?page=' + (${MemoList.getNumber()} - 1) + '&amp;size=' + ${MemoList.getSize()} + '&amp;keyword=' + ${keyword != null ? keyword : ''} + '&amp;columnName=' + ${columnName != null ? columnName : ''}}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
+                            <span aria-hidden="true"> << </span>
                         </a>
                     </li>
                     <!-- 페이지 번호 -->
@@ -109,13 +110,12 @@
                     <!-- 다음 페이지 -->
                     <li th:if="${MemoList.hasNext()}" class="page-item">
                         <a class="page-link" th:href="@{'/memo/paging?page=' + (${MemoList.getNumber()} + 1) + '&amp;size=' + ${MemoList.getSize()} + '&amp;keyword=' + ${keyword != null ? keyword : ''} + '&amp;columnName=' + ${columnName != null ? columnName : ''}}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
+                            <span aria-hidden="true"> >> </span>
                         </a>
                     </li>
                 </ul>
             </nav>
-        </div>
-
+    </div>
     </div>
 </main>
 <aside>
