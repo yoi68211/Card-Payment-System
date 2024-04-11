@@ -90,9 +90,9 @@ textarea {
      padding-bottom: 3%;
 }
 
-.listAndModify{
+.modify{
      width: 90%;
      display:flex;
-     justify-content: space-between;
+     justify-content: right;
      padding-top: 3%;
 }
