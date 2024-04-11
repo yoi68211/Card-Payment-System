@@ -1,6 +1,8 @@
 .allDetailSec{
-    width: 90%;
-    margin-left: 5%;
+    width: 100%;
+    padding-left: 5%;
+    padding-right: 5%;
+
 }
 
 .detailSection{
@@ -10,9 +12,7 @@
 
 .detailId {
      display:flex;
-     justify-content: right;
      margin-top: 1.5%;
-     margin-right: 15%;
      padding-bottom: 1%;
      font-weight: bolder;
 }
@@ -20,7 +20,7 @@
 .detailNameTime{
      display:flex;
      justify-content: space-between;
-     padding-bottom: 10%;
+     padding-bottom: 8%;
      font-weight: bolder;
 }
 
@@ -34,11 +34,10 @@
 }
 
 .modifyButtons{
-     width: 90%;
-     display:flex;
-     justify-content: space-between;
-     margin: 15px;
-     margin-left: 5%;
+    width: 100%;
+    display:flex;
+    justify-content: space-between;
+    margin-top: 1%;
 }
 
 .backButton {

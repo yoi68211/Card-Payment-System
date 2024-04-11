@@ -1,5 +1,8 @@
 .mainPaging {
     height:100%;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 5%;
 }
 
 .memoListText {
@@ -42,7 +45,7 @@
 
 .memoListTable {
     width: 100%;
-    height: 50%;
+
     table-layout:fixed;
 }
 

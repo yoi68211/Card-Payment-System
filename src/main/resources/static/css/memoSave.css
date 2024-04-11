@@ -1,6 +1,8 @@
 .memoWriteMain{
-    width: 90%;
-    margin-left:9%
+    width: 100%;
+    padding-left: 5%;
+    padding-right: 5%;
+
 }
 
 .memoWrite {
@@ -13,18 +15,18 @@
      font-weight: bolder;
      margin-top: 1.5%;
      border-bottom: 1px solid lightgrey;
-    padding-bottom: 5%;
+    padding-bottom: 4%;
 }
 
 .memoExposeRadio{
     font-weight: bolder;
     margin-left: inherit;
-    padding-bottom: 5%;
+    padding-bottom: 4%;
 }
 
 textarea {
       border: 1px solid blue;
-      width: 90%;
+      width: 100%;
       height: 50vh;
       margin-left: inherit;
       padding: 10px;
@@ -34,8 +36,6 @@ textarea {
      width: inherit;
      display:flex;
      justify-content: space-between;
-     margin-left:9%
-     padding-top: 3%;
 }
 
 .listButton {
@@ -69,8 +69,10 @@ textarea {
 }
 
 .memoModMain{
-     width: 90%;
-     margin-left:9%
+     width: 100%;
+     padding-left:5%;
+     padding-right:5%;
+
 }
 
 .memoModText{
