@@ -51,12 +51,15 @@ public class    AutoPaymentService {
     public long autoSuccess(LocalDateTime startDate, LocalDateTime endDate){
         return autoPaymentRepository.countByAutoStatusAndUpdateTimeBetween(AutoStatus.paid, startDate, endDate);
     }
+
     public long autoStop(LocalDateTime startDate, LocalDateTime endDate){
         return autoPaymentRepository.countByAutoStatusAndUpdateTimeBetween(AutoStatus.stop, startDate, endDate);
     }
+
     public long autoError(LocalDateTime startDate, LocalDateTime endDate){
         return autoPaymentRepository.countByAutoStatusAndUpdateTimeBetween(AutoStatus.error, startDate, endDate);
     }
+
     public long autoAll(LocalDateTime startDate, LocalDateTime endDate){
         return autoPaymentRepository.countByUpdateTimeBetween(startDate, endDate);
     }
@@ -70,9 +73,6 @@ public class    AutoPaymentService {
         }
         return null;
     }
-
-
-
 }
 
 

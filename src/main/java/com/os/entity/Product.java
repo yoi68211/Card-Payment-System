@@ -12,7 +12,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product extends BaseEntity {
-
     @Id
     @Column(nullable = false, name = "product_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,4 +36,5 @@ public class Product extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "payment_id", referencedColumnName = "payment_id",nullable = false)
     private Payment payment;
+
 }

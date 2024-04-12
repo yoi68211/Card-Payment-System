@@ -1,6 +1,5 @@
 package com.os.config;
 
-import com.os.entity.AutoPayment;
 import com.os.entity.Payment;
 import com.os.repository.AutoPaymentRepository;
 import com.os.repository.PaymentRepository;
@@ -20,7 +19,6 @@ import java.util.List;
 @EnableScheduling
 @Configuration
 public class AutoPayScheduler {
-
     private final PaymentRepository paymentRepository;
     private final AutoPaymentRepository autoPaymentRepository;
 
@@ -30,7 +28,6 @@ public class AutoPayScheduler {
         // payment type == auto 인 payment 와 auto_payment 리스트 road
         List<Payment> payments = paymentRepository.findAllPaymentsWithAutoPaymentsAndAutoStatusAuto();
         LocalDateTime currentDateTime = LocalDateTime.now(); // 현재 날짜
-
 
         for(Payment payment : payments){
 
@@ -44,13 +41,10 @@ public class AutoPayScheduler {
                 payment.getAutoPayments().setAutoPayDate(LocalDate.now()); // 결제 날짜
                 payment.getAutoPayments().setPaymentNextTime(Payment.calculateLocalDateTime(payment.getPaymentMonth(),payment.getPaymentAutoDate()));
                 payment.setPaymentStatus(OrderStatus.paid);
+
                 paymentRepository.save(payment);
 
             }
         }
-
-
-
-
     }
 }

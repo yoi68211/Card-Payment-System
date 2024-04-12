@@ -2,15 +2,11 @@ package com.os.service;
 
 import com.os.dto.CustomerDTO;
 import com.os.dto.PaymentDetailsDTO;
-import com.os.entity.AutoPayment;
 import com.os.entity.Customer;
 import com.os.repository.AutoPaymentRepository;
 import com.os.repository.CustomerRepository;
-import com.os.util.AutoStatus;
 import com.os.util.OrderStatus;
-import com.os.util.OrderType;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,16 +21,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class CustomerService {
-
     private final CustomerRepository customerRepository;
     private final AutoPaymentRepository paymentRepository;
     public PaymentDetailsDTO getDetails(Long id) {
-
         Optional<Customer> customerOptional = customerRepository.findById(id);
         if (customerOptional.isPresent()) {
 
             Customer customer = customerOptional.get();
-
 
             return PaymentDetailsDTO.builder()
                     .customer(customer)
@@ -43,7 +36,6 @@ public class CustomerService {
         }
         throw new NoSuchElementException("객체가 null 이에요!");
     }
-
 
     // 이번달 paid상태인 customer 조회 메서드 쿼리 입니다
     public List<CustomerDTO> thisMonthPaidAll(){
@@ -56,9 +48,7 @@ public class CustomerService {
 
         List<CustomerDTO> customerDtoList = new ArrayList<>(); // Initialize the list
 
-
         for (Customer customer : customers) {
-
             CustomerDTO customerDTO = new CustomerDTO();
             customerDTO.setName(customer.getCustomerName());
             customerDTO.setEmail(customer.getCustomerEmail());
@@ -68,9 +58,6 @@ public class CustomerService {
             customerDtoList.add(customerDTO);
         }
 
-//        long count = customerRepository.countByPayments_CreateTimeBetween(startOfMonth, endOfMonth);
-//        System.out.println("Count: " + count);
-//
         return customerDtoList;
 
     }
@@ -81,16 +68,17 @@ public class CustomerService {
         LocalDateTime startOfMonth = thisMonth.atDay(1).atStartOfDay();
         LocalDateTime endOfMonth = thisMonth.atEndOfMonth().atTime(23, 59, 59);
         char delYn = 'N';
+
         return customerRepository.countByPayments_PaymentDelYnAndCreateTimeBetween(delYn,startOfMonth, endOfMonth);
     }
 
     public long countByCustomersByPaid(LocalDateTime startDate, LocalDateTime endDate){
         char delYn = 'N';
+
         return customerRepository.countByPayments_PaymentStatusAndPayments_PaymentDelYnAndUpdateTimeBetween(OrderStatus.paid,delYn,startDate, endDate);
     }
 
     public List<CustomerDTO> getAllCustomersByPaid() {
-
         List<Customer> paidCustomers = customerRepository.findByPayments_PaymentStatus(OrderStatus.paid);
 
         List<CustomerDTO> customerDTOS =new ArrayList<>();

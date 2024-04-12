@@ -9,7 +9,6 @@ import java.util.List;
 @Data
 public class InsertDTO {
 
-//    private String documentNo;
     private LocalDateTime paymentCreateTime;
 
     private String customerName;

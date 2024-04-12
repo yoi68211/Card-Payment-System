@@ -15,13 +15,11 @@ public class SavePaymentLoadDTO {
     private String s_paymentAddress;
     private String s_paymentTitle;
     private OrderType s_paymentType;
-
     private int s_paymentFirstPay;
-
     private BizTo s_paymentBizTo;
     private int s_paymentCycle;
     private int s_paymentDate;
     private int s_paymentPay;
-
     private List<SaveProductDTO> productList;
+
 }

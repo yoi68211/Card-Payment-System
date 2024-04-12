@@ -35,8 +35,4 @@ public class UpdateDTO {
 
     private boolean autoOrBasic;
 
-
-
-
-
 }

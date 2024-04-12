@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SaveProductDTO {
-
     private String s_productName;
     private int s_productTotalItems;
     private int s_productPrice;
+
 }

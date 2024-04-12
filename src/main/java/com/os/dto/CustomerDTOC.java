@@ -13,7 +13,6 @@ import lombok.*;
 @Setter
 @Getter
 public class CustomerDTOC {
-
     private Long id;            // 고객 IDX
     private String customerName;               // 고객 이름
     private String customerEmail;              // 고객 이메일
@@ -28,6 +27,7 @@ public class CustomerDTOC {
                 .customerPhone(customer.getCustomerPhone())
                 .customerAddress(customer.getCustomerAddress())
                 .build();
+
         return  customerDTOC;
     }
 }

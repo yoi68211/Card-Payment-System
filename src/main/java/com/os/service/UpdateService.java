@@ -10,27 +10,24 @@ import com.os.repository.AutoPaymentRepository;
 import com.os.repository.CustomerRepository;
 import com.os.repository.PaymentRepository;
 import com.os.repository.ProductRepository;
+import com.os.util.AutoOrderStatus;
 import com.os.util.AutoStatus;
-import com.os.util.OrderStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class UpdateService {
-
     private final CustomerRepository customerRepository;
     private final PaymentRepository paymentRepository;
     private final ProductRepository productRepository;
     private final AutoPaymentRepository autoPaymentRepository;
 
     public boolean updateBasic(UpdateDTO updateDTO){
-
         if(!updateDTO.getProductDelCheck().isEmpty()){
 
             for(Long id : updateDTO.getProductDelCheck()){
@@ -38,15 +35,11 @@ public class UpdateService {
             }
         }
 
-
-
         Optional<Customer> customerOptional = customerRepository.findById(updateDTO.getCustomerId());
-
 
         if (customerOptional.isPresent()) {
 
             Customer customer= customerOptional.get();
-
 
             customer.setCustomerName(updateDTO.getCustomerName());
             customer.setCustomerEmail(updateDTO.getCustomerEmail());
@@ -67,11 +60,9 @@ public class UpdateService {
 
                         savePro(productDTO, payment);
                     }
-
                 }
                 // 제품 목록을 반복하며 업데이트 수행
                 for (Product product : productList) {
-
                         // 업데이트할 제품을 찾습니다.
                         Optional<ProductDTO> updatedProductDTOOptional = updatedProductList.stream()
                                 .filter(dto -> dto.getId().equals(product.getId()))
@@ -94,13 +85,10 @@ public class UpdateService {
                     payment.setAutoPayments(autoPayment);
                 }
 
+                payment.setCustomer(customer);
+                customer.setPayments(payment);
 
-
-
-            payment.setCustomer(customer);
-            customer.setPayments(payment);
-
-            customerRepository.save(customer);
+                customerRepository.save(customer);
 
             }
             return true;
@@ -109,11 +97,10 @@ public class UpdateService {
         }
     }
 
-
     public void delete(Long id){
         System.out.println("deletePro" + id);
-        productRepository.deleteById(id);
 
+        productRepository.deleteById(id);
     }
 
     public void savePro(ProductDTO productDTO, Payment payment){
@@ -127,11 +114,9 @@ public class UpdateService {
 
         productRepository.save(product);
 
-
     }
 
     public boolean delUpdate(UpdateDTO updateDTO) {
-
         Long paymentId = updateDTO.getPaymentId();
 
         // paymentId를 이용하여 엔티티를 조회합니다.
@@ -159,11 +144,9 @@ public class UpdateService {
 
         Optional<Customer> customerOptional = customerRepository.findById(updateDTO.getCustomerId());
 
-
         if (customerOptional.isPresent()) {
 
             Customer customer= customerOptional.get();
-
 
             customer.setCustomerName(updateDTO.getCustomerName());
             customer.setCustomerEmail(updateDTO.getCustomerEmail());
@@ -180,7 +163,6 @@ public class UpdateService {
                     AutoPayment autoPayment = autoPaymentOptional.get();
                     String dateString = updateDTO.getPaymentNextTime().replace(" ", "T");
                     autoPayment.setPaymentNextTime(LocalDateTime.parse(dateString));
-
 
                     payment.setAutoPayments(autoPayment);
                     payment.setCustomer(customer);
@@ -202,6 +184,7 @@ public class UpdateService {
         if(autoPaymentOptional.isPresent()){
             AutoPayment autoPayment = autoPaymentOptional.get();
             autoPayment.setAutoStatus(AutoStatus.stop);
+            autoPayment.setAutoOrderStatus(AutoOrderStatus.stop);
             autoPayment.setPaymentNextTime(null);
             autoPaymentRepository.save(autoPayment);
         }
