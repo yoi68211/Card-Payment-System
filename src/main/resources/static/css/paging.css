@@ -138,6 +138,12 @@ th {
     text-overflow: ellipsis;
 }
 
+.count {
+    display:flex;
+    justify-content:left;
+    padding-top:2%;
+}
+
  <!-- 여기서부터 페이징 번호버튼 -->
 .pageButtons{
     display: flex;
