@@ -6,7 +6,6 @@ import com.os.dto.SavePaymentLoadDTO;
 import com.os.dto.SaveProductDTO;
 import com.os.entity.SaveProduct;
 import com.os.entity.User;
-import com.os.service.AutoPaymentService;
 import com.os.service.PaymentInsertService;
 import com.os.service.SavePaymentService;
 import com.os.service.UserService;
@@ -28,8 +27,6 @@ public class InsertController {
     private final PaymentInsertService paymentService;
     private final SavePaymentService savePaymentService;
     private final UserService userService;
-
-    private final AutoPaymentService autoPaymentService;
 
     /*
         @method : insertData

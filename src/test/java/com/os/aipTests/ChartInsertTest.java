@@ -1,23 +1,17 @@
 package com.os.aipTests;
 
-import com.os.dto.MemoDTO;
-import com.os.dto.ProductDTO;
 import com.os.entity.*;
 import com.os.repository.*;
 import com.os.service.MemoService;
 import com.os.service.PaymentServiceC;
 import com.os.service.UserService;
-import com.os.util.BizTo;
-import com.os.util.OrderStatus;
-import com.os.util.OrderType;
-import com.os.util.UserRole;
+import com.os.util.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +36,6 @@ public class ChartInsertTest {
     public MemoService memoService;
     @Autowired
     public MemoRepository memoRepository;
-
 
     @Test
     void softDeleteTest(){
@@ -75,7 +68,7 @@ public class ChartInsertTest {
             User user = userOp.get();
 
             Random random = new Random();
-            for (int i = 1; i < 500; i++) {
+            for (int i = 1; i < 70; i++) {
                 // 월은 1부터 12까지의 랜덤한 값 설정
                 int month = random.nextInt(12) + 1;
                 // 일은 1부터 28까지의 랜덤한 값 설정 (월에 따라서 최대 일수가 달라질 수 있으니 적절히 수정하세요)
@@ -91,23 +84,55 @@ public class ChartInsertTest {
                 customer.setUpdateTime(createTime);
 
                 Payment payment = new Payment();
-                payment.setPaymentTitle("테스트제목"+i);
-                payment.setPaymentType(OrderType.basic);
+                payment.setPaymentTitle("테스트제목" + i);
                 payment.setPaymentBizTo(BizTo.BtoB);
                 payment.setPaymentDelYn('N');
-                payment.setPaymentStatus(OrderStatus.wait);
 
+                if(i<31){
+                    payment.setPaymentType(OrderType.basic);
+                    if(i<10){
+                        payment.setPaymentStatus(OrderStatus.wait);
+                    }else if(i<20){
+                        payment.setPaymentStatus(OrderStatus.paid);
+                    }else{
+                        payment.setPaymentStatus(OrderStatus.error);
+                    }
+                }else{
+                    payment.setPaymentType(OrderType.auto);
+                    if(i<43){
+                        payment.setPaymentStatus(OrderStatus.wait);
+                    }else if(i<56){
+                        payment.setPaymentStatus(OrderStatus.paid);
 
-
-                // LocalDateTime으로 현재 시간을 가져옴
-// 시간 설정
+                        AutoPayment autoPayment = new AutoPayment();
+                        autoPayment.setCreateTime(createTime);
+                        autoPayment.setUpdateTime(createTime);
+                        autoPayment.setAutoPayDate(createTime.toLocalDate());
+                        autoPayment.setAutoPayCount(1);
+                        autoPayment.setPayment(payment);
+                        if(i<47){
+                            autoPayment.setAutoStatus(AutoStatus.stop);
+                            autoPayment.setAutoOrderStatus(AutoOrderStatus.stop);
+                        }else {
+                            autoPayment.setAutoOrderStatus(AutoOrderStatus.paid);
+                            autoPayment.setPaymentNextTime(createTime.plusMonths(1).withDayOfMonth(5));
+                            if(i<51){
+                                autoPayment.setAutoStatus(AutoStatus.error);
+                            }else{
+                                autoPayment.setAutoStatus(AutoStatus.paid);
+                            }
+                        }
+                    }else{
+                        payment.setPaymentStatus(OrderStatus.error);
+                    }
+                }
 
                 payment.setCreateTime(createTime);
                 payment.setUpdateTime(createTime);
 
-
                 List<Product> productList = new ArrayList<>();
-                for (int j = 1; j <= 3; j++) {
+                int productNum = random.nextInt(5)+1;
+                for (int j = 1; j <= productNum; j++) {
                     Product product = new Product();
                     product.setProductName("상품"+j);
                     product.setProductTotalItems(i);
