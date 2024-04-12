@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class AutoDetailedSearchDTO {
-
     private String startDt;
     private String endDt;
     private String status;
@@ -14,8 +13,5 @@ public class AutoDetailedSearchDTO {
     private String phoneNumber;
     private String transactionStatus;
     private String payType;
-
-
-
 
 }

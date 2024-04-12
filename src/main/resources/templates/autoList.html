@@ -144,14 +144,14 @@
             </thead>
             <tbody>
             <tr th:each="payment : ${payList}">
-                <td class="transaction-status-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${payment.autoOrderStatus}"></td>    <!--0409-->
+                <td class="transaction-status-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${payment.autoOrderStatus}" th:style="${#strings.equals(payment.autoStatus, 'error')} ? 'color: red;' : ''"></td>    <!--0409-->
                 <td class="customer-name-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${payment.customerName}"></td>
                 <td class="email-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${payment.customerEmail}"></td>
                 <td class="payment-type-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${payment.paymentBizTo}"></td>
                 <td class="amount-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${payment.totalAmount}"></td>
-                <td class="next-payment-date-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${#temporals.format(payment.paymentNextTime, 'yyyy-MM-dd / HH:mm:ss')}"></td>
+                <td class="next-payment-date-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${payment.paymentNextTime != null ? #temporals.format(payment.paymentNextTime, 'yyyy-MM-dd / HH:mm:ss') : '-'}"></td>
                 <td class="last-payment-date-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${#temporals.format(payment.updateTime, 'yyyy-MM-dd / HH:mm:ss')}"></td>
-                <td class="status-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${payment.autoStatus}"></td>
+                <td class="status-column" th:onclick="|location.href='@{/payAutoDetail/(id=${payment.id})}'|" th:text="${payment.autoStatus}" th:style="${#strings.equals(payment.autoStatus, 'error')} ? 'color: red;' : ''"></td>
 
             </tr>
             </tbody>

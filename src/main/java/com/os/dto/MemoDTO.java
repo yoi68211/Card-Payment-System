@@ -28,10 +28,6 @@ public class MemoDTO {
 
     private Long userId;
 
-//    private String searchBoxValue;
-//    private String searchTypeValue;
-
-
     public static MemoDTO toMemoDTO(Memo memo) {
         MemoDTO memoDTO = new MemoDTO();
         memoDTO.setId(memo.getId());

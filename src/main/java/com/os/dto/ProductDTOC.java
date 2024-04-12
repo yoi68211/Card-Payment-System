@@ -13,12 +13,11 @@ import lombok.*;
 @Setter
 @Getter
 public class ProductDTOC {
-
-    private Long id;                    // product IDX
-    private String productName;                // 상품 명
-    private int productTotalItems;                  // 상품 수량
-    private int productPrice;                       // 상품 가격
-    private int productAmount;                       // 상품 총액
+    private Long id;                            // product IDX
+    private String productName;                 // 상품 명
+    private int productTotalItems;              // 상품 수량
+    private int productPrice;                   // 상품 가격
+    private int productAmount;                  // 상품 총액
 
     public static ProductDTOC productInfoDTO(Product product){
         ProductDTOC productDTOC = ProductDTOC.builder()
@@ -30,6 +29,5 @@ public class ProductDTOC {
                 .build();
 
         return productDTOC;
-
     }
 }

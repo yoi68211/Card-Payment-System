@@ -19,7 +19,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SavePayment {
-
     @Id
     @Column(nullable = false , name = "s_payment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -86,7 +85,7 @@ public class SavePayment {
             saveProduct.setS_productPrice(productDTO.getS_productPrice());
             saveProductList.add(saveProduct);
         }
-        // 이런식으로 매핑 따로 빼주세요!
+
         savePayment.setUser(user);
         savePayment.setSaveProducts(saveProductList);
         return savePayment;

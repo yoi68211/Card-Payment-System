@@ -1,6 +1,5 @@
 package com.os.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.os.dto.AutoPaymentDTOC;
 import com.os.dto.CustomerDTOC;
 import com.os.dto.PaymentDTOC;
@@ -9,20 +8,16 @@ import com.os.service.AutoPaymentService;
 import com.os.service.CustomerServiceC;
 import com.os.service.PaymentServiceC;
 import com.os.service.ProductServiceC;
-import com.os.util.OrderType;
 import lombok.AllArgsConstructor;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -39,7 +34,6 @@ public class PayInfoController {
 
     @GetMapping("/payInfoDetail/")
     public String payInfoDetail(@RequestParam long id, Model model) {
-
         CustomerDTOC customerInfo = customerService.customerRoad(id);
         PaymentDTOC payInfo = paymentService.paymentRoad(customerInfo.getId());
         if(payInfo == null){
@@ -52,13 +46,10 @@ public class PayInfoController {
         model.addAttribute("productInfo", productInfo);
 
         return "paylist/basicPayInfoDetail";
-
-
     }
 
     @GetMapping("/payAutoDetail/")
     public String payAutoDetail(@RequestParam long id, Model model) {
-
         CustomerDTOC customerInfo = customerService.customerRoad(id);
         PaymentDTOC payInfo = paymentService.paymentRoad(customerInfo.getId());
         AutoPaymentDTOC autoPayInfo = autoPaymentService.autoPayRoad(payInfo.getId());
@@ -73,7 +64,6 @@ public class PayInfoController {
         model.addAttribute("autoPayInfo", autoPayInfo);
 
         return "paylist/autoPayInfoDetail";
-
     }
 
     @GetMapping("/receipt/")
@@ -113,22 +103,17 @@ public class PayInfoController {
         }
         reader.close();
 
-
-
 // 모델에 추가
-
-
 
         CustomerDTOC customerInfo = customerService.customerRoad(customerId);
         PaymentDTOC payInfo = paymentService.paymentRoad(customerInfo.getId());
         List<ProductDTOC> productInfo = productService.productRoad(payInfo.getId());
 
-
         model.addAttribute("cardInfo", jsonResponse);
         model.addAttribute("customerInfo", customerInfo);
         model.addAttribute("payInfo", payInfo);
         model.addAttribute("productInfo", productInfo);
+
         return "paylist/receipt";
     }
-
 }

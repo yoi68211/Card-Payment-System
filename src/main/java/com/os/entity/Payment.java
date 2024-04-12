@@ -1,6 +1,5 @@
 package com.os.entity;
 
-import com.os.dto.InsertDTO;
 import com.os.util.BaseEntity;
 import com.os.util.BizTo;
 import com.os.util.OrderStatus;
@@ -23,7 +22,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Payment extends BaseEntity{
-
     @Id
     @Column(nullable = false, name = "payment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -79,9 +77,7 @@ public class Payment extends BaseEntity{
     public static LocalDateTime calculateLocalDateTime(int month, int date){
         LocalDate currentDate = LocalDate.now();
         LocalDate calculateDate = currentDate.plusMonths(month).withDayOfMonth(date);
-        //
 
-        //
         return LocalDateTime.of(calculateDate, LocalTime.MIN);
     }
 }

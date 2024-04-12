@@ -26,18 +26,18 @@ import static com.os.entity.QPayment.payment;
 @RequiredArgsConstructor
 @Transactional
 public class AllPaymentListService {
-
     private final PaymentRepository paymentRepository;
     private final EntityManager em;
 
-
     public Page<AllPaymentListDto> findAll(Pageable pageable) {
         Page<Payment> allPaymentsPage = paymentRepository.findByPaymentDelYn('n', pageable);
+
         return allPaymentsPage.map(AllPaymentListDto::toAllPaymentListDto);
     }
 
     public Page<AllPaymentListDto> findByTitleContaining(String keyword, Pageable pageable) {
         Page<Payment> allPaymentsPage = paymentRepository.findByPaymentTitleContainingAndPaymentDelYnNot(keyword, 'Y', pageable);
+
         return allPaymentsPage.map(AllPaymentListDto::toAllPaymentListDto);
     }
 
@@ -45,24 +45,19 @@ public class AllPaymentListService {
         Payment payment = paymentRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 아이디가 없습니다 id : " + id));
         payment.setPaymentDelYn('Y');
+
         paymentRepository.save(payment);
     }
-
 
     /**
      * @auther : 김홍성
      */
-
     public Page<AllPaymentListDto> detailSearch(DetailedSearchDTO searchDTO, Pageable pageable) {
-
         String status = searchDTO.getStatus();
         String DocNumber = (searchDTO.getDocNumber());
         String name = searchDTO.getCustomerName();
         String startDt = searchDTO.getStartDt();
         String endDt = searchDTO.getEndDt();
-
-
-
 
         JPAQuery<Payment> query = new JPAQuery<>(em);
 
@@ -82,23 +77,16 @@ public class AllPaymentListService {
                 .limit(pageable.getPageSize())
                 .fetch();
 
-
         List<AllPaymentListDto> result = convertToAllPaymentListDto(resultList);
-
-
 
         return new PageImpl<>(result,pageable,count);
     }
-
 
     private List<AllPaymentListDto> convertToAllPaymentListDto(List<Payment> paymentList) {
         return paymentList.stream()
                 .map(AllPaymentListDto::toAllPaymentListDto)
                 .collect(Collectors.toList());
     }
-
-
-
 
     //querydsl where 절 BooleanExpression
     private BooleanExpression eqDocNumber(String DocNumber){
@@ -108,7 +96,6 @@ public class AllPaymentListService {
         return null;
     }
 
-
     private BooleanExpression likeCustomerName(String name) {
         if (StringUtils.hasText(name)) {
             return payment.paymentDelYn.eq('N').and(payment.customer.customerName.like("%" + name + "%"));
@@ -116,16 +103,12 @@ public class AllPaymentListService {
         return null;
     }
 
-
-
-
     private BooleanExpression eqStatus(String status) {
         if (StringUtils.hasText(status)) {
             return payment.paymentDelYn.eq('N').and(payment.paymentStatus.eq(OrderStatus.valueOf(status)));
         }
         return null;
     }
-
 
     private BooleanExpression betweenDt(String startDt ,String endDt) {
         if (StringUtils.hasText(startDt) && StringUtils.hasText(endDt)) {
@@ -135,7 +118,4 @@ public class AllPaymentListService {
         }
         return null;
     }
-
-
-
 }

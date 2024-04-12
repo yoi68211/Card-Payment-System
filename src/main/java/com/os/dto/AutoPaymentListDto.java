@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 @Builder
 public class AutoPaymentListDto {
 
-    //@Enumerated(EnumType.STRING)
     private AutoStatus autoStatus;
     private AutoOrderStatus autoOrderStatus;
     private String customerName;

@@ -10,21 +10,15 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-
     private final UserService userService;
-
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
-
     @GetMapping("/update")
     public String updateUser(Model model) {
-
-
         CustomUserDetails currentUser = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long userId = currentUser.getUserId();
-
 
         UserResponse userResponse = userService.getUserResponseById(userId);
 
@@ -32,6 +26,4 @@ public class UserController {
 
         return "/user/update";
     }
-
-
 }

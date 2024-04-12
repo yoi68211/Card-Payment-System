@@ -13,4 +13,5 @@ public class ProductDTO {
     private int productTotalItems;
     private int productPrice;
     private int productAmount;
+
 }

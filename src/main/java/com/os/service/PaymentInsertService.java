@@ -2,11 +2,12 @@ package com.os.service;
 
 import com.os.dto.InsertDTO;
 import com.os.dto.ProductDTO;
-import com.os.entity.*;
+import com.os.entity.Customer;
+import com.os.entity.Payment;
+import com.os.entity.Product;
+import com.os.entity.User;
 import com.os.repository.CustomerRepository;
-import com.os.util.AutoStatus;
 import com.os.util.OrderStatus;
-import com.os.util.OrderType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,7 @@ public class PaymentInsertService {
         @desc : 받아온 정보를 db에 insert 하는 메서드
         @author : 김성민
     */
+
     @Transactional
     public void insert_basic(InsertDTO dto, User user) {
 
@@ -66,7 +68,6 @@ public class PaymentInsertService {
             customer.setPayments(payment);
 
             customerRepository.save(customer);
-
 
         }
     }

@@ -1,26 +1,26 @@
 package com.os.controller;
 
-//import com.os.config.ApiKeyProperties;
 import com.os.dto.PaymentDetailsDTO;
 import com.os.service.AutoPaymentService;
 import com.os.service.CustomerService;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import java.io.*;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-
 
 @Controller
 @RequestMapping("/toss")
@@ -38,11 +38,8 @@ public class WidgetController {
     private final String clientKey;
     private final String secretKey;
 
-
-
     @PostMapping("/confirm")
     public ResponseEntity<org.json.simple.JSONObject> confirmPayment(@RequestBody String jsonBody) throws Exception {
-
         JSONParser parser = new JSONParser();
         String orderId;
         String amount;
@@ -64,10 +61,7 @@ public class WidgetController {
         // TODO: 개발자센터에 로그인해서 내 결제위젯 연동 키 > 시크릿 키를 입력하세요. 시크릿 키는 외부에 공개되면 안돼요.
         // @docs https://docs.tosspayments.com/reference/using-api/api-keys
 
-
         System.out.println("YAML 변수값 ==> " + secretKey);
-
-
 
         // 토스페이먼츠 API는 시크릿 키를 사용자 ID로 사용하고, 비밀번호는 사용하지 않습니다.
         // 비밀번호가 없다는 것을 알리기 위해 시크릿 키 뒤에 콜론을 추가합니다.
@@ -86,7 +80,6 @@ public class WidgetController {
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);
 
-
         OutputStream outputStream = connection.getOutputStream();
         outputStream.write(obj.toString().getBytes("UTF-8"));
 
@@ -97,13 +90,10 @@ public class WidgetController {
 
         // TODO: 결제 성공 및 실패 비즈니스 로직을 구현하세요.
 
-
         Long id = Long.valueOf(orderId.replace("order_test", ""));
         //customerService.UpdatePaid(id);
 
         autoPaymentService.UpdatePaid(id);
-
-
 
         Reader reader = new InputStreamReader(responseStream, StandardCharsets.UTF_8);
         org.json.simple.JSONObject jsonObject = (JSONObject) parser.parse(reader);
@@ -115,7 +105,6 @@ public class WidgetController {
 
     @GetMapping("/checkout")
     public String toss(@RequestParam Long id ,Model model) throws Exception {
-
         PaymentDetailsDTO paymentDetailsDTO = customerService.getDetails(id);
         model.addAttribute("paymentDetailsDTO",paymentDetailsDTO);
         model.addAttribute("clientKey",clientKey);
@@ -139,8 +128,4 @@ public class WidgetController {
 
         return "/toss/fail";
     }
-
-
-
-
 }

@@ -3,12 +3,8 @@ package com.os.entity;
 import com.os.dto.MemoDTO;
 import com.os.util.BaseEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-import org.hibernate.annotations.*;
 import org.hibernate.validator.constraints.Length;
-
-import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -17,7 +13,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Memo extends BaseEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name = "memo_id")

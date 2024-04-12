@@ -17,7 +17,6 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true)
 public class PaymentServiceC {
-
     private final PaymentRepository paymentRepository;
 
     public PaymentDTOC paymentRoad(Long id){

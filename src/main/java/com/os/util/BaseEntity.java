@@ -12,14 +12,12 @@ import java.time.LocalDateTime;
 @Data
 public class BaseEntity {
 
-
     @Column(nullable = false)
     @CreationTimestamp
-    private LocalDateTime createTime;                      // 결제 생성시간
+    private LocalDateTime createTime;                // 결제 생성시간
 
     @Column(nullable = false)
     @UpdateTimestamp
     private LocalDateTime updateTime;               // 수정시간
-
 
 }

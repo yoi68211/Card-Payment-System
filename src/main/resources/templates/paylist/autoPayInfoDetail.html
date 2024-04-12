@@ -118,7 +118,7 @@
                         </label>
                     </div>
                 </div>
-                <div class="auto-footer">
+                <div class="auto-footer" th:if="${#strings.equals(autoPayInfo.autoStatus, 'paid')}">
                     <button type="button" onclick="fnAutoPayStop()">중지</button>
                     <button type="button"><i class="fa-solid fa-credit-card"></i>카드정보 변경 요청</button>
                 </div>

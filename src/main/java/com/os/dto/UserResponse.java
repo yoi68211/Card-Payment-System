@@ -1,8 +1,10 @@
 package com.os.dto;
 
 import com.os.util.UserRole;
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor

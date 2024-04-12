@@ -3,7 +3,6 @@ package com.os.service;
 import com.os.dto.AutoDetailedSearchDTO;
 import com.os.dto.AutoPaymentListDto;
 import com.os.entity.AutoPayment;
-import com.os.entity.Payment;
 import com.os.repository.AutoPaymentRepository;
 import com.os.util.AutoOrderStatus;
 import com.os.util.AutoStatus;
@@ -29,26 +28,28 @@ import static com.os.entity.QAutoPayment.autoPayment;
 @RequiredArgsConstructor
 @Transactional
 public class AutoPaymentListService {
-
     private final AutoPaymentRepository autoPaymentRepository;
     private final EntityManager em;
 
     public Page<AutoPaymentListDto> findAll(Pageable pageable) {
         Page<AutoPayment> allPaymentsPage = autoPaymentRepository.findAll(pageable);
+
         return allPaymentsPage.map(AutoPaymentListDto::toAutoPaymentListDto);
     }
+
     public Page<AutoPaymentListDto> findByNameContaining(String keyword, Pageable pageable) {
         Page<AutoPayment> allPaymentsPage = autoPaymentRepository.findByPayment_Customer_CustomerNameAndAutoOrderStatus(keyword, AutoOrderStatus.paid, pageable);
+
         return allPaymentsPage.map(AutoPaymentListDto::toAutoPaymentListDto);
     }
 
     public Page<AutoPaymentListDto> findByAutoStatus(Pageable pageable) {
         Page<AutoPayment> allPaymentsPage = autoPaymentRepository.findByAutoStatus(AutoStatus.paid, pageable);
+
         return allPaymentsPage.map(AutoPaymentListDto::toAutoPaymentListDto);
     }
 
     public Page<AutoPaymentListDto> detailSearch(AutoDetailedSearchDTO searchDTO, Pageable pageable) {
-
         String status = searchDTO.getStatus();                          // autoOrderStatus
         String DocNumber = searchDTO.getDocNumber();
         String name = searchDTO.getCustomerName();
@@ -57,9 +58,6 @@ public class AutoPaymentListService {
         String phoneNumber = searchDTO.getPhoneNumber();
         String transactionStatus = searchDTO.getTransactionStatus();    // autoStatus
         String payType = searchDTO.getPayType();                        // paymentBizTo
-
-
-
 
         JPAQuery<AutoPayment> query = new JPAQuery<>(em);
 
@@ -82,23 +80,16 @@ public class AutoPaymentListService {
                 .limit(pageable.getPageSize())
                 .fetch();
 
-
         List<AutoPaymentListDto> result = convertToAllPaymentListDto(resultList);
-
-
 
         return new PageImpl<>(result,pageable,count);
     }
-
 
     private List<AutoPaymentListDto> convertToAllPaymentListDto(List<AutoPayment> autoPaymentList) {
         return autoPaymentList.stream()
                 .map(AutoPaymentListDto::toAutoPaymentListDto)
                 .collect(Collectors.toList());
     }
-
-
-
 
     //querydsl where 절 BooleanExpression
     private BooleanExpression eqDocNumber(String DocNumber){
@@ -108,7 +99,6 @@ public class AutoPaymentListService {
         return null;
     }
 
-
     private BooleanExpression likeCustomerName(String name) {
         if (StringUtils.hasText(name)) {
             return autoPayment.payment.paymentDelYn.eq('N').and(autoPayment.payment.customer.customerName.like("%" + name + "%"));
@@ -116,16 +106,12 @@ public class AutoPaymentListService {
         return null;
     }
 
-
-
-
     private BooleanExpression eqStatus(String status) {
         if (StringUtils.hasText(status)) {
             return autoPayment.payment.paymentDelYn.eq('N').and(autoPayment.autoOrderStatus.eq(AutoOrderStatus.valueOf(status)));
         }
         return null;
     }
-
 
     private BooleanExpression betweenDt(String startDt ,String endDt) {
         if (StringUtils.hasText(startDt) && StringUtils.hasText(endDt)) {
@@ -135,7 +121,6 @@ public class AutoPaymentListService {
         }
         return null;
     }
-
 
     private BooleanExpression likePhoneNumber(String phoneNumber) {
         if (StringUtils.hasText(phoneNumber)) {
@@ -158,5 +143,4 @@ public class AutoPaymentListService {
         }
         return null;
     }
-
 }

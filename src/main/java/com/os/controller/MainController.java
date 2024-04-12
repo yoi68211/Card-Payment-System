@@ -46,11 +46,9 @@ public class MainController {
 
         long autoError = autoPaymentService.autoError(startDate, endDate);
 
-
         long autoSuccess = autoPaymentService.autoSuccess(startDate, endDate);
 
         long autoStop = autoPaymentService.autoStop(startDate, endDate);
-
 
         long autoAll = autoPaymentService.autoAll(startDate, endDate);
         List<MemoDTO> memoList = memoService.findAll(); // MemoService 를 사용하여 모든 메모를 가져옵니다.
@@ -80,18 +78,12 @@ public class MainController {
         return "chartDetail";
     }
     @GetMapping("/join")
-    public String joinPage()   {
-
-        return "join";
-
-    }
-
+    public String joinPage() { return "join"; }
 
     /*
     TODO: 2024-03-22 "paymentDetails.html" In the QR creation logic, I couldn't tell which code uses which code API, so I entered a random URL
           Please implement by adding payload to Payment Details DTO.
     */
-
 
     @GetMapping("/paymentDetails")
     public String paymentDetailsPage(@RequestParam Long id , Model model)   {
@@ -99,9 +91,7 @@ public class MainController {
         model.addAttribute("paymentDetailsDTO",paymentDetailsDTO);
 
         return "paymentDetails";
-
     }
-
 
     @GetMapping("pageSample")
     public String pageSample() {
@@ -118,7 +108,6 @@ public class MainController {
         return "insert_form";
     }
 
-
     @GetMapping("/list")
     public String findAll(Model model, @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword) {
         Page<AllPaymentListDto> allPaymentsPage;
@@ -131,7 +120,7 @@ public class MainController {
         model.addAttribute("payList", allPaymentsPage);
         model.addAttribute("payCount", payCount);
         model.addAttribute("keyword", keyword);
-        model.addAttribute("isListPage", true); // 이 부분을 추가해주면 됩니다.
+        model.addAttribute("isListPage", true);
 
         return "list";
     }
@@ -140,6 +129,7 @@ public class MainController {
     public String deletePayment(@PathVariable String id) {
         Long paymentId = Long.parseLong(id);
         allPaymentListService.updatePaymentDelYnById(paymentId);
+
         return "redirect:/list";
     }
 
@@ -196,9 +186,6 @@ public class MainController {
 
         return "autoList";
     }
-    // 새로 복사해서 만드는게 나을듯
-
-
 
     @GetMapping("/autoSearch")
     public String autoSearch(@ModelAttribute("form") AutoDetailedSearchDTO searchDTO,
@@ -235,6 +222,4 @@ public class MainController {
 
         return "autoList";
     }
-
-
 }

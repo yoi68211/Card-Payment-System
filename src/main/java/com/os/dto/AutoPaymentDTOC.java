@@ -19,7 +19,6 @@ public class AutoPaymentDTOC {
     private AutoStatus autoStatus;
     private LocalDate autoPayDate;
 
-
     public static AutoPaymentDTOC autoPaymentInfoDTO(AutoPayment autoPayment){
         AutoPaymentDTOC autoPaymentDTO = AutoPaymentDTOC.builder()
                 .id(autoPayment.getId())
@@ -30,6 +29,5 @@ public class AutoPaymentDTOC {
                 .build();
 
         return autoPaymentDTO;
-
     }
 }
