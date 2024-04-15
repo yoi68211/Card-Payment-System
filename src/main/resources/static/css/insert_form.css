@@ -244,17 +244,30 @@
             color: white;
         }
 
-        .tooltip {
-          position: fixed;
-          padding: 10px 20px;
-          border: 1px solid #b3c9ce;
-          border-radius: 4px;
-          text-align: center;
-          font: italic 14px/1.3 sans-serif;
-          color: #333;
-          background: #fff;
-          box-shadow: 3px 3px 3px rgba(0, 0, 0, .3);
+        .helpBtn{
+            position: relative;
+            background-color: #aad;
+            border-radius: 10px;
+            border: 3px solid #eee;
+            box-sizing: border-box;
         }
-
+        .helpBtn::before {
+            content: attr(data-tooltip); /*툴팁 표시 내용은 버튼의 "data-tooltip" 속성값으로 */
+            position: absolute;
+            background-color: rgba(0,0,0,0.5);
+            color: #fff;
+            padding: 10px 7px;
+            border-radius: 10px;
+            max-width: 300px;
+            width: 500%; /* 버튼 너비 250% 크기만큼 툴팁 크기 설정 */
+            left: 25%; /* 버튼 왼쪽에서 부터 버튼 너비 25% 이동한 위치에 툴팁 왼쪽이 오게 */
+            bottom: 120%; /* 버튼 밑에서 부터 버튼 높이 120% 높이에 툴팁 밑부분이 오게 */
+            opacity: 0; /* 기본 상태는 안보이게 */
+            transition: all 0.5s linear; /* 나타났다 사라지는 애니메이션 */
+            height: 500%;
+        }
+        .helpBtn:hover::before {
+            opacity: 1;
+        }
 
 

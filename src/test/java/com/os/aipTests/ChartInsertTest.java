@@ -40,8 +40,6 @@ public class ChartInsertTest {
     @Autowired
     public AutoPaymentRepository autoPaymentRepository;
 
-    @Autowired
-    public AutoPaymentRepository autoPaymentRepository;
 
 
 
