@@ -53,7 +53,7 @@
 
         }
         #sidebar-action-icon{
-
+            cursor: pointer;
             padding: 10px;
             object-fit: cover;
 
@@ -140,6 +140,7 @@
             justify-content: space-between;
             width: 80%;
             margin: 20px 0px;
+            cursor: pointer;
         }
         #sidebar_dashboard_icon{
             filter: grayscale(100%);

@@ -53,14 +53,22 @@ function toggleEdit() {
             autoPaymentId: f.autoPaymentId.value,
             autoOrBasic: false
         }
-        console.log(param.customerId);
-        console.log(param.customerName);
-        console.log(param.customerEmail);
-        console.log(param.customerPhone);
-        console.log(param.customerAddress);
-        console.log(param.paymentId);
-        console.log(param.paymentMemo);
-        console.log(param.paymentNextTime);
+
+        if(!nameR(param.customerName)){
+            return;
+        }
+        if(!emailR(param.customerEmail)){
+            return;
+        }
+        if(!phoneR(param.customerPhone)){
+            return;
+        }
+        if(!addressR(param.customerAddress)){
+            return;
+        }
+        if(!memoR(param.paymentMemo)){
+            return;
+        }
 
 
         fetch('/payDetailEdit', {

@@ -89,13 +89,15 @@
 
    const totalItemsRex2 = /^[0-9]*$/; // 수량 정규식 숫자만 입력 null 가능
    const priceRex2= /^[0-9]*$/; // 금액 정규식 숫자만 입력 null 가능
-   const nameRex = /^.{0,16}$/; // 이름 정규식 최대 16글자 not null
+   // 이름 정규식 최대 16글자, 특수문자 및 숫자 입력 불가
+   const nameRex = /^[^\d!@#$%^&*()\-_=+\\|[\]{};:'",.<>/?]{0,16}$/;
    // 이메일 정규식 이메일 형식만 가능 not null
-   const emailRex = /^[a-zA-Z0-9._%+-]{1,64}@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+   //const emailRex = /^[a-zA-Z0-9._%+-]{1,64}@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+   const emailRex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
    const emailRex2 = /^[\s\S]{0,100}$/; // 100자 이내의 모든것
    // 비밀번호 정규식 13글자 영어+숫자+대문자+특수문자 not null
    const pwdRex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*()\-_=+\\|[\]{};:'",.<>/?]).{13,}$/;
-   const phoneRex = /^[0-9]{10,13}$/; // 연락처 정규식 숫자만 10 ~ 13 글자 가능
+   const phoneRex = /^[0-9]{11}$/; // 연락처 정규식 숫자만 11 글자만 가능
    const phoneRex2 = /^[\s\S]{0,100}$/; // 100자 이내의 모든것
    const proNameRex = /^[\p{L}\d\s]{0,100}$/u; // 상품명 정규식 특수기호 없이 최대 100글자
    const proNameRex2 = /^[\s\S]{0,100}$/;
@@ -168,7 +170,7 @@
             return false;
         }
         if (!nameRex.test(text)) {
-            alert("이름은 16자만 입력 가능합니다.");
+            alert("이름은 16자만 입력 가능합니다.\n ※숫자,특수문자 미포함");
             return false;
         }
         return true;
@@ -204,7 +206,7 @@
             return false;
         }
         if (!phoneRex.test(text)) {
-            alert("연락처는 10~13자의 숫자만 입력 가능합니다.");
+            alert("연락처는 11자의 숫자만 입력 가능합니다.");
             return false;
         }
         return true;

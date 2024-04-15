@@ -43,14 +43,11 @@ public class UpdateService {
 
             customer.setCustomerName(updateDTO.getCustomerName());
             customer.setCustomerEmail(updateDTO.getCustomerEmail());
-            customer.setCustomerAddress(updateDTO.getCustomerAddress());
-            customer.setCustomerPhone(updateDTO.getCustomerPhone());
             Optional<Payment> paymentOptional = paymentRepository.findByCustomerIdAndPaymentDelYn(customer.getId(), 'N');
 
             if(paymentOptional.isPresent()){
                 Payment payment = paymentOptional.get();
                 payment.setPaymentTitle(updateDTO.getPaymentTitle());
-                payment.setPaymentMemo(updateDTO.getPaymentMemo());
                 List<Product> productList = productRepository.findByPaymentId(payment.getId());
                 List<ProductDTO> updatedProductList = updateDTO.getProductList();
 

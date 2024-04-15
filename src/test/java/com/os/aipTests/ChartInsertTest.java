@@ -37,6 +37,8 @@ public class ChartInsertTest {
     public MemoService memoService;
     @Autowired
     public MemoRepository memoRepository;
+    @Autowired
+    public AutoPaymentRepository autoPaymentRepository;
 
     @Autowired
     public AutoPaymentRepository autoPaymentRepository;
@@ -138,7 +140,7 @@ public class ChartInsertTest {
                 customerRepository.save(customer);
 
                 if (i > 42 && i < 56) {
-                    // i가 43 이상이고 56 미만인 경우 AutoPayment를 생성하고 저장
+                    // i가 31 이상이고 56 미만인 경우 AutoPayment를 생성하고 저장
                     AutoPayment autoPayment = new AutoPayment();
                     autoPayment.setCreateTime(createTime);
                     autoPayment.setUpdateTime(createTime);
