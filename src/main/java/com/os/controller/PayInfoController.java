@@ -4,11 +4,9 @@ import com.os.dto.AutoPaymentDTOC;
 import com.os.dto.CustomerDTOC;
 import com.os.dto.PaymentDTOC;
 import com.os.dto.ProductDTOC;
-import com.os.service.AutoPaymentService;
-import com.os.service.CustomerServiceC;
-import com.os.service.PaymentServiceC;
-import com.os.service.ProductServiceC;
+import com.os.service.*;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
 
-@AllArgsConstructor
+
 @Controller
 public class PayInfoController {
 
@@ -32,6 +30,15 @@ public class PayInfoController {
     private final ProductServiceC productService;
     private final AutoPaymentService autoPaymentService;
 
+    public PayInfoController(CustomerServiceC customerService, AutoPaymentService autoPaymentService, PaymentServiceC paymentService, @Value("${api.toss.clientKey}") String clientKey, @Value("${api.toss.secretKey}") String secretKey, PaymentServiceC paymentService1, ProductServiceC productService) {
+        this.customerService = customerService;
+        this.autoPaymentService = autoPaymentService;
+        this.paymentService = paymentService1;
+        this.productService = productService;
+        this.secretKey = secretKey;
+    }
+
+    private final String secretKey;
     @GetMapping("/payInfoDetail/")
     public String payInfoDetail(@RequestParam long id, Model model) {
         CustomerDTOC customerInfo = customerService.customerRoad(id);
@@ -70,16 +77,16 @@ public class PayInfoController {
     public String receipt(@RequestParam("paymentId") Long paymentId,
                           @RequestParam("customerId") Long customerId,
                           Model model) throws IOException {
-        String orderId = "order_test"+paymentId;
+        String orderId = "order_aip"+paymentId;
 
-        String widgetSecretKey = "test_sk_LkKEypNArW2PPmGx2XpQVlmeaxYG";
+
 
         // 토스페이먼츠 API는 시크릿 키를 사용자 ID로 사용하고, 비밀번호는 사용하지 않습니다.
         // 비밀번호가 없다는 것을 알리기 위해 시크릿 키 뒤에 콜론을 추가합니다.
         // 시크릿키 encoding
         // @docs https://docs.tosspayments.com/reference/using-api/authorization#%EC%9D%B8%EC%A6%9D
         Base64.Encoder encoder = Base64.getEncoder();
-        byte[] encodedBytes = encoder.encode((widgetSecretKey + ":").getBytes(StandardCharsets.UTF_8));
+        byte[] encodedBytes = encoder.encode((secretKey + ":").getBytes(StandardCharsets.UTF_8));
         String authorizations = "Basic " + new String(encodedBytes);
 
         // 결제 승인 API를 호출하세요.

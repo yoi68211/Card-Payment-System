@@ -99,7 +99,16 @@ function toggleEdit() {
                 var id = 0;
             }
 
-
+            // 상품정보 정규식 처리
+            if(!proNameR(productName)){
+                return;
+            }
+            if(!totalItemsR(totalItems)){
+                return;
+            }
+            if(!priceR(price)){
+                return;
+            }
             productList.push({
                 productName: productName,
                 productTotalItems: totalItems,
@@ -114,6 +123,7 @@ function toggleEdit() {
         }
 
         let f = document.getElementById("basic-form");
+
         let param = {
             customerId: f.customerId.value,
             customerName: f.customerName.value,
@@ -123,6 +133,15 @@ function toggleEdit() {
             productDelCheck: productDelCheck,
             productList: productList,
             autoOrBasic: true
+        }
+        if(!titleR(param.paymentTitle)){
+            return;
+        }
+        if(!nameR(param.customerName)){
+            return;
+        }
+        if(!emailR(param.customerEmail)){
+            return;
         }
         console.log("productList", param.productList);
         fetch('/payDetailEdit', {
