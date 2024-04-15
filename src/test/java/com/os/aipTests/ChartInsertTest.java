@@ -9,6 +9,7 @@ import com.os.util.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -37,6 +38,11 @@ public class ChartInsertTest {
     @Autowired
     public MemoRepository memoRepository;
 
+    @Autowired
+    public AutoPaymentRepository autoPaymentRepository;
+
+
+
     @Test
     void softDeleteTest(){
         //memoRepository.softDeleteById(1L);
@@ -64,7 +70,7 @@ public class ChartInsertTest {
     void chart() {
         Optional<User> userOp = userRepository.findById(1L);
         LocalDateTime currentTime = LocalDateTime.now();
-        if(userOp.isPresent()) {
+        if (userOp.isPresent()) {
             User user = userOp.get();
 
             Random random = new Random();
@@ -76,10 +82,10 @@ public class ChartInsertTest {
                 LocalDateTime createTime = LocalDateTime.of(currentTime.getYear(), month, day, currentTime.getHour(), currentTime.getMinute(), currentTime.getSecond());
                 // Customer 생성
                 Customer customer = new Customer();
-                customer.setCustomerName(i+"찬신");
-                customer.setCustomerEmail("test"+i+"@naver.com");
-                customer.setCustomerPhone("0101111"+i);
-                customer.setCustomerAddress("숭의"+i+"동");
+                customer.setCustomerName(i + "찬신");
+                customer.setCustomerEmail("test" + i + "@naver.com");
+                customer.setCustomerPhone("0101111" + i);
+                customer.setCustomerAddress("숭의" + i + "동");
                 customer.setCreateTime(createTime);
                 customer.setUpdateTime(createTime);
 
@@ -87,73 +93,81 @@ public class ChartInsertTest {
                 payment.setPaymentTitle("테스트제목" + i);
                 payment.setPaymentBizTo(BizTo.BtoB);
                 payment.setPaymentDelYn('N');
-
-                if(i<31){
-                    payment.setPaymentType(OrderType.basic);
-                    if(i<10){
-                        payment.setPaymentStatus(OrderStatus.wait);
-                    }else if(i<20){
-                        payment.setPaymentStatus(OrderStatus.paid);
-                    }else{
-                        payment.setPaymentStatus(OrderStatus.error);
-                    }
-                }else{
-                    payment.setPaymentType(OrderType.auto);
-                    if(i<43){
-                        payment.setPaymentStatus(OrderStatus.wait);
-                    }else if(i<56){
-                        payment.setPaymentStatus(OrderStatus.paid);
-
-                        AutoPayment autoPayment = new AutoPayment();
-                        autoPayment.setCreateTime(createTime);
-                        autoPayment.setUpdateTime(createTime);
-                        autoPayment.setAutoPayDate(createTime.toLocalDate());
-                        autoPayment.setAutoPayCount(1);
-                        autoPayment.setPayment(payment);
-                        if(i<47){
-                            autoPayment.setAutoStatus(AutoStatus.stop);
-                            autoPayment.setAutoOrderStatus(AutoOrderStatus.stop);
-                        }else {
-                            autoPayment.setAutoOrderStatus(AutoOrderStatus.paid);
-                            autoPayment.setPaymentNextTime(createTime.plusMonths(1).withDayOfMonth(5));
-                            if(i<51){
-                                autoPayment.setAutoStatus(AutoStatus.error);
-                            }else{
-                                autoPayment.setAutoStatus(AutoStatus.paid);
-                            }
-                        }
-                    }else{
-                        payment.setPaymentStatus(OrderStatus.error);
-                    }
-                }
-
                 payment.setCreateTime(createTime);
                 payment.setUpdateTime(createTime);
 
+                if (i < 31) {
+                    payment.setPaymentType(OrderType.basic);
+                    if (i < 10) {
+                        payment.setPaymentStatus(OrderStatus.wait);
+                    } else if (i < 20) {
+                        payment.setPaymentStatus(OrderStatus.paid);
+                    } else {
+                        payment.setPaymentStatus(OrderStatus.error);
+                    }
+                } else {
+                    payment.setPaymentType(OrderType.auto);
+                    if (i < 43) {
+                        payment.setPaymentStatus(OrderStatus.wait);
+                    } else if (i < 56) {
+                        payment.setPaymentStatus(OrderStatus.paid);
+                    } else {
+                        payment.setPaymentStatus(OrderStatus.error);
+                    }
+                }
+
                 List<Product> productList = new ArrayList<>();
-                int productNum = random.nextInt(5)+1;
+                int productNum = random.nextInt(5) + 1;
                 for (int j = 1; j <= productNum; j++) {
                     Product product = new Product();
-                    product.setProductName("상품"+j);
+                    product.setProductName("상품" + j);
                     product.setProductTotalItems(i);
                     product.setProductPrice(j);
-                    product.setProductAmount(j*i);
+                    product.setProductAmount(j * i);
                     productList.add(product);
                     product.setCreateTime(currentTime);
                     product.setUpdateTime(currentTime);
-                    product.setPayment(payment);
-
+                    product.setPayment(payment); // payment 설정
                 }
-
                 payment.setProducts(productList);
                 customer.setUser(user);
                 payment.setCustomer(customer);
                 customer.setPayments(payment);
 
+                // payment 저장
                 customerRepository.save(customer);
+
+                if (i > 42 && i < 56) {
+                    // i가 43 이상이고 56 미만인 경우 AutoPayment를 생성하고 저장
+                    AutoPayment autoPayment = new AutoPayment();
+                    autoPayment.setCreateTime(createTime);
+                    autoPayment.setUpdateTime(createTime);
+                    autoPayment.setAutoPayDate(createTime.toLocalDate());
+                    autoPayment.setAutoPayCount(1);
+
+                    // 저장된 payment 설정
+                    autoPayment.setPayment(payment);
+
+                    if (i < 47) {
+                        autoPayment.setAutoStatus(AutoStatus.stop);
+                        autoPayment.setAutoOrderStatus(AutoOrderStatus.stop);
+                    } else {
+                        autoPayment.setAutoOrderStatus(AutoOrderStatus.paid);
+                        autoPayment.setPaymentNextTime(createTime.plusMonths(1).withDayOfMonth(5));
+                        if (i < 51) {
+                            autoPayment.setAutoStatus(AutoStatus.error);
+                        } else {
+                            autoPayment.setAutoStatus(AutoStatus.paid);
+                        }
+                    }
+                    paymentRepository.save(payment);
+                    // AutoPayment 저장
+                    autoPaymentRepository.save(autoPayment);
+                }
             }
         }
     }
+
     @Test
     void insertMemo() {
         Optional<User> userOp = userRepository.findById(1L);
