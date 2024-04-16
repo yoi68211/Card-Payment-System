@@ -227,6 +227,8 @@
                 paymentMonth.disabled = true;
                 autoDate.disabled = true;
                 paymentFirstPay.disabled = true;
+                document.getElementById("paymentFirstPay").value = 0;
+                document.getElementById("autoDate").value = 0;
             }
         }
 
@@ -393,7 +395,8 @@
             var month = f.paymentMonth.value == "다음달" ? 1 : 2;
             var autoDate = f.autoDate.value;
             var paymentFirstPay = f.paymentFirstPay.value;
-
+            alert("여기");
+            alert(firstPayCheck);
             if (type == "basic") {
                 month = 0;
                 autoDate = 0;
@@ -445,7 +448,7 @@
                 s_paymentBizTo: bizTo,
                 s_paymentCycle: month,
                 s_paymentDate: autoDate,
-                s_paymentFirstPay: paymentFirstPay,
+                s_paymentPay: paymentFirstPay,
                 productList: productList
             };
 
@@ -501,10 +504,16 @@
                         document.getElementById('customerAddress').value = s_paymentAddress;
                         document.getElementById('paymentTitle').value = s_paymentTitle;
                         if (s_paymentType == 'auto') {
-                            document.getElementById('paymentType').value = s_paymentType;
+                            document.getElementById('paymentType').checked = true;
+                            cycle();
+                        }else{
+                            document.getElementById('paymentType').checked = false;
+                            cycle();
                         }
-                        if (s_paymentType == 1) {
-                            document.getElementById('firstPay_check').value = s_paymentFirstPay;
+                        if (s_paymentFirstPay == 1) {
+                            document.getElementById('firstPay_check').checked = true;
+                        }else{
+                            document.getElementById('firstPay_check').checked = false;
                         }
                         const bizTo = document.getElementsByName('paymentBizTo');
                         for (let i = 0; i < bizTo.length; i++) {
