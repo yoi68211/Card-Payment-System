@@ -1,8 +1,8 @@
 package com.os.controller;
 
-import com.os.dto.PaymentDetailsDTO;
-import com.os.service.AutoPaymentService;
-import com.os.service.CustomerService;
+import com.os.payment.dto.PaymentDetailsDTO;
+import com.os.autoPayment.service.AutoPaymentService;
+import com.os.customer.service.CustomerService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

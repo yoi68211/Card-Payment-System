@@ -1,9 +1,9 @@
 package com.os.controller;
 
-import com.os.dto.MemoDTO;
-import com.os.entity.User;
-import com.os.service.MemoService;
-import com.os.service.UserService;
+import com.os.memo.dto.MemoDTO;
+import com.os.user.entity.User;
+import com.os.memo.service.MemoService;
+import com.os.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,6 +1,6 @@
 package com.os.repository;
 
-import com.os.entity.Customer;
+import com.os.customer.entity.Customer;
 import com.os.util.OrderStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

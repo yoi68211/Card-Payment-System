@@ -1,7 +1,18 @@
 package com.os.controller;
 
-import com.os.dto.*;
-import com.os.service.*;
+import com.os.autoPayment.dto.AutoDetailedSearchDTO;
+import com.os.autoPayment.dto.AutoPaymentListDTO;
+import com.os.autoPayment.service.AutoPaymentListService;
+import com.os.autoPayment.service.AutoPaymentService;
+import com.os.customer.service.CustomerService;
+import com.os.memo.dto.MemoDTO;
+import com.os.memo.service.MemoService;
+import com.os.payment.dto.AllPaymentListDTO;
+import com.os.payment.dto.DetailedSearchDTO;
+import com.os.payment.dto.PaymentDetailsDTO;
+import com.os.payment.service.AllPaymentListService;
+import com.os.payment.service.PaymentService;
+import com.os.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -110,7 +121,7 @@ public class MainController {
 
     @GetMapping("/list")
     public String findAll(Model model, @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword) {
-        Page<AllPaymentListDto> allPaymentsPage;
+        Page<AllPaymentListDTO> allPaymentsPage;
         if (keyword != null && !keyword.isEmpty()) {
             allPaymentsPage = allPaymentListService.findByTitleContaining(keyword, pageable);
         } else {
@@ -145,7 +156,7 @@ public class MainController {
                          Model model,
                          @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable) {
         // 검색 결과 가져오는 로직 구현
-        Page<AllPaymentListDto> allPaymentsPage = allPaymentListService.detailSearch(searchDTO, pageable);
+        Page<AllPaymentListDTO> allPaymentsPage = allPaymentListService.detailSearch(searchDTO, pageable);
         long payCount = allPaymentsPage.getTotalElements();
 
         System.out.println("payCount = " + payCount);
@@ -167,7 +178,7 @@ public class MainController {
 
     @GetMapping("/autoList")
     public String autoFindAll(Model model, @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword, @RequestParam(value = "autoStatusOnly", required = false, defaultValue = "false") boolean autoStatusOnly) {
-        Page<AutoPaymentListDto> allPaymentsPage;
+        Page<AutoPaymentListDTO> allPaymentsPage;
 
         if (autoStatusOnly) {
             allPaymentsPage = autoPaymentListService.findByAutoStatus(pageable);
@@ -201,7 +212,7 @@ public class MainController {
                          Model model,
                          @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable) {
         // 검색 결과 가져오는 로직 구현
-        Page<AutoPaymentListDto> allPaymentsPage = autoPaymentListService.detailSearch(searchDTO, pageable);
+        Page<AutoPaymentListDTO> allPaymentsPage = autoPaymentListService.detailSearch(searchDTO, pageable);
         long payCount = allPaymentsPage.getTotalElements();
 
         System.out.println("payCount = " + payCount);

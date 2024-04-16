@@ -1,6 +1,6 @@
 package com.os.repository;
 
-import com.os.entity.SavePayment;
+import com.os.save.entity.SavePayment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 

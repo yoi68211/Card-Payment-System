@@ -1,14 +1,14 @@
 package com.os.controller;
 
-import com.os.dto.InsertDTO;
-import com.os.dto.SavePaymentDTO;
-import com.os.dto.SavePaymentLoadDTO;
-import com.os.dto.SaveProductDTO;
-import com.os.entity.SaveProduct;
-import com.os.entity.User;
-import com.os.service.PaymentInsertService;
-import com.os.service.SavePaymentService;
-import com.os.service.UserService;
+import com.os.customer.dto.InsertDTO;
+import com.os.customer.service.InsertService;
+import com.os.save.dto.SavePaymentDTO;
+import com.os.save.dto.SavePaymentLoadDTO;
+import com.os.save.dto.SaveProductDTO;
+import com.os.save.entity.SaveProduct;
+import com.os.user.entity.User;
+import com.os.save.service.SavePaymentService;
+import com.os.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class InsertController {
 
-    private final PaymentInsertService paymentService;
+    private final InsertService paymentService;
     private final SavePaymentService savePaymentService;
     private final UserService userService;
 
@@ -81,7 +81,6 @@ public class InsertController {
         List<SaveProductDTO> productDTOList = saveProduct.stream()
                 .map(this::convertToDTO) // 변환 메서드 호출
                 .collect(Collectors.toList());
-
         savePaymentLoad.setProductList(productDTOList);
         return savePaymentLoad;
     }
@@ -96,7 +95,6 @@ public class InsertController {
         saveProductDTO.setS_productName(saveProduct.getS_productName());
         saveProductDTO.setS_productPrice(saveProduct.getS_productPrice());
         saveProductDTO.setS_productTotalItems(saveProduct.getS_productTotalItem());
-
         return saveProductDTO;
     }
 }

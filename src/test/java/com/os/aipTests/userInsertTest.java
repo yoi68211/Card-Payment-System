@@ -1,9 +1,8 @@
 package com.os.aipTests;
 
-import com.os.entity.User;
+import com.os.user.entity.User;
 import com.os.repository.UserRepository;
 import com.os.util.UserRole;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
