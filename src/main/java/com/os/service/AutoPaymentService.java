@@ -1,6 +1,6 @@
 package com.os.service;
 
-import com.os.dto.AutoPaymentDTOC;
+import com.os.dto.AutoPaymentDTO;
 import com.os.entity.AutoPayment;
 import com.os.entity.Payment;
 import com.os.repository.AutoPaymentRepository;
@@ -64,11 +64,11 @@ public class    AutoPaymentService {
         return autoPaymentRepository.countByUpdateTimeBetween(startDate, endDate);
     }
 
-    public AutoPaymentDTOC autoPayRoad(Long id){
+    public AutoPaymentDTO autoPayRoad(Long id){
         Optional<AutoPayment> autoPaymentOptional = autoPaymentRepository.findByPaymentId(id);
         if(autoPaymentOptional.isPresent()){
             AutoPayment autoPayment = autoPaymentOptional.get();
-            AutoPaymentDTOC autoPayInfo = AutoPaymentDTOC.autoPaymentInfoDTO(autoPayment);
+            AutoPaymentDTO autoPayInfo = AutoPaymentDTO.autoPaymentInfoDTO(autoPayment);
             return autoPayInfo;
         }
         return null;

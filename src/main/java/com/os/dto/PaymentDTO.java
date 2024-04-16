@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Setter
 @Getter
-public class PaymentDTOC {
+public class PaymentDTO {
     private Long id;                                // 결제 IDX
     private String paymentTitle;                    // 결제 제목
     private OrderType paymentType;                  // 결제 종류(자동결제 / 일반결제)
@@ -27,10 +27,10 @@ public class PaymentDTOC {
     private int paymentFirstPay;
     private String totalAmount;
 
-    public static PaymentDTOC payInfoDTO(Payment payment){
+    public static PaymentDTO payInfoDTO(Payment payment){
         String totalAmount = payment.calculateTotalAmount(payment.getProducts());
 
-        PaymentDTOC paymentDTOC = PaymentDTOC.builder()
+        PaymentDTO paymentDTOC = PaymentDTO.builder()
                 .id(payment.getId())
                 .paymentTitle(payment.getPaymentTitle())
                 .paymentType(payment.getPaymentType())

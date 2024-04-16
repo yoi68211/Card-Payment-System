@@ -23,7 +23,7 @@ public class MainController {
     public final AllPaymentListService allPaymentListService;
     public final AutoPaymentListService autoPaymentListService;
     private final CustomerService customerService;
-    private final PaymentServiceC paymentService;
+    private final PaymentService paymentService;
     private final AutoPaymentService autoPaymentService;
     private final MemoService memoService;
 

@@ -1,6 +1,7 @@
 package com.os.service;
 
 import com.os.dto.CustomerDTO;
+import com.os.dto.CustomerDTOC;
 import com.os.dto.PaymentDetailsDTO;
 import com.os.entity.Customer;
 import com.os.repository.AutoPaymentRepository;
@@ -94,5 +95,17 @@ public class CustomerService {
         }
 
         return customerDTOS;
+    }
+
+    public CustomerDTOC customerRoad(Long id){
+        Optional<Customer> customerOptional = customerRepository.findById(id);
+
+        if(customerOptional.isPresent()){
+            Customer customer = customerOptional.get();
+
+            return CustomerDTOC.CustomerInfoDTO(customer);
+        } else{
+            return null;
+        }
     }
 }

@@ -30,7 +30,6 @@ public class PayInfoRestController {
 
     @PostMapping("/autoPayStop")
     public void autoPayStop(@RequestBody @Valid UpdateDTO updateDTO){
-        System.out.println("controller 40줄==> " + updateDTO.getAutoPaymentId());
 
         updateService.autoPayStop(updateDTO);
     }

@@ -1,12 +1,13 @@
 package com.os.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.os.entity.Product;
+import lombok.*;
 
-@Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
 public class ProductDTO {
     private Long id;
     private String productName;
@@ -14,4 +15,15 @@ public class ProductDTO {
     private int productPrice;
     private int productAmount;
 
+    public static ProductDTO productInfoDTO(Product product){
+        ProductDTO productDTO = ProductDTO.builder()
+                .id(product.getId())
+                .productName(product.getProductName())
+                .productPrice(product.getProductPrice())
+                .productTotalItems(product.getProductTotalItems())
+                .productAmount(product.getProductAmount())
+                .build();
+
+        return productDTO;
+    }
 }
