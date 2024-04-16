@@ -1,4 +1,4 @@
-package com.os.config;
+package com.os.scheduler;
 
 import com.os.entity.Customer;
 import com.os.entity.Memo;

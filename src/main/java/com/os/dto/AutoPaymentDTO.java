@@ -12,15 +12,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Setter
 @Getter
-public class AutoPaymentDTOC {
+public class AutoPaymentDTO {
     private Long id;
     private LocalDateTime paymentNextTime;
     private int autoPayCount;
     private AutoStatus autoStatus;
     private LocalDate autoPayDate;
 
-    public static AutoPaymentDTOC autoPaymentInfoDTO(AutoPayment autoPayment){
-        AutoPaymentDTOC autoPaymentDTO = AutoPaymentDTOC.builder()
+    public static AutoPaymentDTO autoPaymentInfoDTO(AutoPayment autoPayment){
+        AutoPaymentDTO autoPaymentDTO = AutoPaymentDTO.builder()
                 .id(autoPayment.getId())
                 .paymentNextTime(autoPayment.getPaymentNextTime())
                 .autoPayCount(autoPayment.getAutoPayCount())

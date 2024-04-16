@@ -1,6 +1,6 @@
 package com.os.service;
 
-import com.os.dto.PaymentDTOC;
+import com.os.dto.PaymentDTO;
 import com.os.entity.Payment;
 import com.os.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,16 +16,16 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
-public class PaymentServiceC {
+public class PaymentService {
     private final PaymentRepository paymentRepository;
 
-    public PaymentDTOC paymentRoad(Long id){
+    public PaymentDTO paymentRoad(Long id){
         Optional<Payment> paymentOptional = paymentRepository.findByCustomerIdAndPaymentDelYn(id, 'N');
 
         if(paymentOptional.isPresent()){
             Payment payment = paymentOptional.get();
 
-            return PaymentDTOC.payInfoDTO(payment);
+            return PaymentDTO.payInfoDTO(payment);
         } else{
             return null;
         }

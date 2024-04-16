@@ -3,15 +3,13 @@ package com.os.aipTests;
 import com.os.entity.*;
 import com.os.repository.*;
 import com.os.service.MemoService;
-import com.os.service.PaymentServiceC;
+import com.os.service.PaymentService;
 import com.os.service.UserService;
 import com.os.util.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +30,7 @@ public class ChartInsertTest {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private PaymentServiceC paymentService;
+    private PaymentService paymentService;
     @Autowired
     public MemoService memoService;
     @Autowired

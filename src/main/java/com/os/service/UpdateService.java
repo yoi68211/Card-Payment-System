@@ -95,7 +95,6 @@ public class UpdateService {
     }
 
     public void delete(Long id){
-        System.out.println("deletePro" + id);
 
         productRepository.deleteById(id);
     }
@@ -176,7 +175,7 @@ public class UpdateService {
     }
 
     public void autoPayStop(UpdateDTO updateDTO){
-        System.out.println("service 200줄"+updateDTO.getAutoPaymentId());
+
         Optional<AutoPayment> autoPaymentOptional = autoPaymentRepository.findById(updateDTO.getAutoPaymentId());
         if(autoPaymentOptional.isPresent()){
             AutoPayment autoPayment = autoPaymentOptional.get();

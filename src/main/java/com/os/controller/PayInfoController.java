@@ -1,11 +1,7 @@
 package com.os.controller;
 
-import com.os.dto.AutoPaymentDTOC;
-import com.os.dto.CustomerDTOC;
-import com.os.dto.PaymentDTOC;
-import com.os.dto.ProductDTOC;
+import com.os.dto.*;
 import com.os.service.*;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,12 +21,12 @@ import java.util.List;
 @Controller
 public class PayInfoController {
 
-    private final CustomerServiceC customerService;
-    private final PaymentServiceC paymentService;
-    private final ProductServiceC productService;
+    private final CustomerService customerService;
+    private final PaymentService paymentService;
+    private final ProductService productService;
     private final AutoPaymentService autoPaymentService;
 
-    public PayInfoController(CustomerServiceC customerService, AutoPaymentService autoPaymentService, PaymentServiceC paymentService, @Value("${api.toss.clientKey}") String clientKey, @Value("${api.toss.secretKey}") String secretKey, PaymentServiceC paymentService1, ProductServiceC productService) {
+    public PayInfoController(CustomerService customerService, AutoPaymentService autoPaymentService, PaymentService paymentService, @Value("${api.toss.clientKey}") String clientKey, @Value("${api.toss.secretKey}") String secretKey, PaymentService paymentService1, ProductService productService) {
         this.customerService = customerService;
         this.autoPaymentService = autoPaymentService;
         this.paymentService = paymentService1;
@@ -42,12 +38,12 @@ public class PayInfoController {
     @GetMapping("/payInfoDetail/")
     public String payInfoDetail(@RequestParam long id, Model model) {
         CustomerDTOC customerInfo = customerService.customerRoad(id);
-        PaymentDTOC payInfo = paymentService.paymentRoad(customerInfo.getId());
+        PaymentDTO payInfo = paymentService.paymentRoad(customerInfo.getId());
         if(payInfo == null){
             return "redirect:/dashboard";
         }
 
-        List<ProductDTOC> productInfo = productService.productRoad(payInfo.getId());
+        List<ProductDTO> productInfo = productService.productRoad(payInfo.getId());
         model.addAttribute("customerInfo", customerInfo);
         model.addAttribute("payInfo", payInfo);
         model.addAttribute("productInfo", productInfo);
@@ -58,13 +54,13 @@ public class PayInfoController {
     @GetMapping("/payAutoDetail/")
     public String payAutoDetail(@RequestParam long id, Model model) {
         CustomerDTOC customerInfo = customerService.customerRoad(id);
-        PaymentDTOC payInfo = paymentService.paymentRoad(customerInfo.getId());
-        AutoPaymentDTOC autoPayInfo = autoPaymentService.autoPayRoad(payInfo.getId());
+        PaymentDTO payInfo = paymentService.paymentRoad(customerInfo.getId());
+        AutoPaymentDTO autoPayInfo = autoPaymentService.autoPayRoad(payInfo.getId());
         if(autoPayInfo == null){
             return "redirect:/dashboard";
         }
 
-        List<ProductDTOC> productInfo = productService.productRoad(payInfo.getId());
+        List<ProductDTO> productInfo = productService.productRoad(payInfo.getId());
         model.addAttribute("customerInfo", customerInfo);
         model.addAttribute("payInfo", payInfo);
         model.addAttribute("productInfo", productInfo);
@@ -113,8 +109,8 @@ public class PayInfoController {
 // 모델에 추가
 
         CustomerDTOC customerInfo = customerService.customerRoad(customerId);
-        PaymentDTOC payInfo = paymentService.paymentRoad(customerInfo.getId());
-        List<ProductDTOC> productInfo = productService.productRoad(payInfo.getId());
+        PaymentDTO payInfo = paymentService.paymentRoad(customerInfo.getId());
+        List<ProductDTO> productInfo = productService.productRoad(payInfo.getId());
 
         model.addAttribute("cardInfo", jsonResponse);
         model.addAttribute("customerInfo", customerInfo);
