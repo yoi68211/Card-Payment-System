@@ -1,8 +1,8 @@
 package com.os.controller;
 import com.os.security.CustomUserDetails;
-import com.os.dto.UpdateUserRequest;
-import com.os.entity.User;
-import com.os.service.UserService;
+import com.os.user.dto.UpdateUserRequest;
+import com.os.user.entity.User;
+import com.os.user.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;

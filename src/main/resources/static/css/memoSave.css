@@ -106,3 +106,9 @@ textarea {
      display:flex;
      justify-content: right;
 }
+
+.listAndSubmit{
+    display:flex;
+    justify-content : space-between;
+
+}

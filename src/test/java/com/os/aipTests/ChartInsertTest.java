@@ -1,10 +1,15 @@
 package com.os.aipTests;
 
-import com.os.entity.*;
+import com.os.autoPayment.entity.AutoPayment;
+import com.os.customer.entity.Customer;
+import com.os.memo.entity.Memo;
+import com.os.payment.entity.Payment;
+import com.os.product.entity.Product;
 import com.os.repository.*;
-import com.os.service.MemoService;
-import com.os.service.PaymentService;
-import com.os.service.UserService;
+import com.os.memo.service.MemoService;
+import com.os.payment.service.PaymentService;
+import com.os.user.entity.User;
+import com.os.user.service.UserService;
 import com.os.util.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

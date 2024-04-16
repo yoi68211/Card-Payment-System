@@ -1,6 +1,6 @@
 package com.os.repository;
 
-import com.os.entity.AutoPayment;
+import com.os.autoPayment.entity.AutoPayment;
 import com.os.util.AutoOrderStatus;
 import com.os.util.AutoStatus;
 import org.springframework.data.domain.Page;

@@ -1,15 +1,14 @@
 package com.os.aipTests;
 
-import com.os.entity.Customer;
-import com.os.entity.Payment;
-import com.os.entity.Product;
-import com.os.dto.PaymentDetailsDTO;
+import com.os.customer.entity.Customer;
+import com.os.payment.entity.Payment;
+import com.os.product.entity.Product;
+import com.os.payment.dto.PaymentDetailsDTO;
 import com.os.util.BizTo;
 import com.os.util.OrderStatus;
 import com.os.util.OrderType;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

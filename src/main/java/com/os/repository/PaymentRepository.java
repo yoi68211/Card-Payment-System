@@ -1,6 +1,6 @@
 package com.os.repository;
 
-import com.os.entity.Payment;
+import com.os.payment.entity.Payment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

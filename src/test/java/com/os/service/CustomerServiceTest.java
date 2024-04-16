@@ -1,5 +1,5 @@
 //package com.os.service;
-//import com.os.entity.Customer;
+//import com.os.customer.entity.Customer;
 //import com.os.repository.CustomerRepository;
 //import com.os.util.OrderStatus;
 //import org.junit.jupiter.api.DisplayName;

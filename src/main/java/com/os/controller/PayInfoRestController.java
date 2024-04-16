@@ -1,7 +1,7 @@
 package com.os.controller;
 
-import com.os.dto.UpdateDTO;
-import com.os.service.UpdateService;
+import com.os.customer.dto.UpdateDTO;
+import com.os.customer.service.UpdateService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,7 +1,13 @@
 package com.os.controller;
 
-import com.os.dto.*;
-import com.os.service.*;
+import com.os.autoPayment.dto.AutoPaymentDTO;
+import com.os.autoPayment.service.AutoPaymentService;
+import com.os.customer.dto.CustomerLoadDTO;
+import com.os.customer.service.CustomerService;
+import com.os.payment.dto.PaymentDTO;
+import com.os.payment.service.PaymentService;
+import com.os.product.dto.ProductDTO;
+import com.os.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,7 +43,7 @@ public class PayInfoController {
     private final String secretKey;
     @GetMapping("/payInfoDetail/")
     public String payInfoDetail(@RequestParam long id, Model model) {
-        CustomerDTOC customerInfo = customerService.customerRoad(id);
+        CustomerLoadDTO customerInfo = customerService.customerRoad(id);
         PaymentDTO payInfo = paymentService.paymentRoad(customerInfo.getId());
         if(payInfo == null){
             return "redirect:/dashboard";
@@ -53,7 +59,7 @@ public class PayInfoController {
 
     @GetMapping("/payAutoDetail/")
     public String payAutoDetail(@RequestParam long id, Model model) {
-        CustomerDTOC customerInfo = customerService.customerRoad(id);
+        CustomerLoadDTO customerInfo = customerService.customerRoad(id);
         PaymentDTO payInfo = paymentService.paymentRoad(customerInfo.getId());
         AutoPaymentDTO autoPayInfo = autoPaymentService.autoPayRoad(payInfo.getId());
         if(autoPayInfo == null){
@@ -108,7 +114,7 @@ public class PayInfoController {
 
 // 모델에 추가
 
-        CustomerDTOC customerInfo = customerService.customerRoad(customerId);
+        CustomerLoadDTO customerInfo = customerService.customerRoad(customerId);
         PaymentDTO payInfo = paymentService.paymentRoad(customerInfo.getId());
         List<ProductDTO> productInfo = productService.productRoad(payInfo.getId());
 
