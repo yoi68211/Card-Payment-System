@@ -30,7 +30,7 @@ public class PaymentDTO {
     public static PaymentDTO payInfoDTO(Payment payment){
         String totalAmount = payment.calculateTotalAmount(payment.getProducts());
 
-        PaymentDTO paymentDTOC = PaymentDTO.builder()
+        return PaymentDTO.builder()
                 .id(payment.getId())
                 .paymentTitle(payment.getPaymentTitle())
                 .paymentType(payment.getPaymentType())
@@ -45,6 +45,5 @@ public class PaymentDTO {
                 .paymentFirstPay(payment.getPaymentFirstPay())
                 .build();
 
-        return  paymentDTOC;
     }
 }

@@ -34,5 +34,6 @@ public class AllPaymentListDTO {
                 .paymentStatus(payment.getPaymentStatus())
                 .paymentDelYn(payment.getPaymentDelYn())
                 .build();
+
     }
 }

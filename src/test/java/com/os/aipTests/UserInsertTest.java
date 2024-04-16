@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 @SpringBootTest
-public class userInsertTest {
+public class UserInsertTest {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	@Autowired

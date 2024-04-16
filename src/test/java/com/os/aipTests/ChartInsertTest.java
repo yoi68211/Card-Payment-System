@@ -6,10 +6,7 @@ import com.os.memo.entity.Memo;
 import com.os.payment.entity.Payment;
 import com.os.product.entity.Product;
 import com.os.repository.*;
-import com.os.memo.service.MemoService;
-import com.os.payment.service.PaymentService;
 import com.os.user.entity.User;
-import com.os.user.service.UserService;
 import com.os.util.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,18 +23,12 @@ public class ChartInsertTest {
 
     @Autowired
     public PaymentRepository paymentRepository;
-    @Autowired
-    private ProductRepository productRepository;
+
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
-    private UserService userService;
-    @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private PaymentService paymentService;
-    @Autowired
-    public MemoService memoService;
+
     @Autowired
     public MemoRepository memoRepository;
     @Autowired
@@ -53,20 +44,6 @@ public class ChartInsertTest {
         for(Customer list : entityList){
             System.out.println(list.getPayments().getPaymentTitle());
         }
-    }
-
-    @Test
-    void count(){
-
-        // 차트 data 불러오기
-//        List<Long> countList = paymentService.getCountsByYearRange();
-//        int i=0;
-//        for(Long count : countList){
-//            i++;
-//            System.out.println("Date: " + count);
-//
-//        }
-//        System.out.println("12 맞누? ==>"+i);
     }
 
     @Test
@@ -141,7 +118,7 @@ public class ChartInsertTest {
                 customerRepository.save(customer);
 
                 if (i > 42 && i < 56) {
-                    // i가 31 이상이고 56 미만인 경우 AutoPayment를 생성하고 저장
+                    // i가 31 이상이고 56 미만인 경우 AutoPayment 를 생성하고 저장
                     AutoPayment autoPayment = new AutoPayment();
                     autoPayment.setCreateTime(createTime);
                     autoPayment.setUpdateTime(createTime);

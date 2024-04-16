@@ -120,7 +120,7 @@ public class MainController {
     }
 
     @GetMapping("/list")
-    public String findAll(Model model, @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword) {
+    public String findAll(Model model, @PageableDefault(sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword) {
         Page<AllPaymentListDTO> allPaymentsPage;
         if (keyword != null && !keyword.isEmpty()) {
             allPaymentsPage = allPaymentListService.findByTitleContaining(keyword, pageable);
@@ -154,7 +154,7 @@ public class MainController {
                          @RequestParam(value = "customerName", required = false) String customerName,
                          @RequestParam(value = "email", required = false) String email,
                          Model model,
-                         @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable) {
+                         @PageableDefault(sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable) {
         // 검색 결과 가져오는 로직 구현
         Page<AllPaymentListDTO> allPaymentsPage = allPaymentListService.detailSearch(searchDTO, pageable);
         long payCount = allPaymentsPage.getTotalElements();
@@ -177,7 +177,7 @@ public class MainController {
 
 
     @GetMapping("/autoList")
-    public String autoFindAll(Model model, @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword, @RequestParam(value = "autoStatusOnly", required = false, defaultValue = "false") boolean autoStatusOnly) {
+    public String autoFindAll(Model model, @PageableDefault(sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword, @RequestParam(value = "autoStatusOnly", required = false, defaultValue = "false") boolean autoStatusOnly) {
         Page<AutoPaymentListDTO> allPaymentsPage;
 
         if (autoStatusOnly) {
@@ -210,7 +210,7 @@ public class MainController {
                          @RequestParam(value = "transactionStatus", required = false) String transactionStatus,
                          @RequestParam(value = "payType", required = false) String payType,
                          Model model,
-                         @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable) {
+                         @PageableDefault(sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable) {
         // 검색 결과 가져오는 로직 구현
         Page<AutoPaymentListDTO> allPaymentsPage = autoPaymentListService.detailSearch(searchDTO, pageable);
         long payCount = allPaymentsPage.getTotalElements();

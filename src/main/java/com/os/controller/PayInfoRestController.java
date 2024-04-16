@@ -16,16 +16,16 @@ public class PayInfoRestController {
     @PostMapping("/payDetailEdit")
     public void updateDetail(@RequestBody @Valid UpdateDTO updateDTO){
         if(updateDTO.isAutoOrBasic()){
-            boolean check = updateService.updateBasic(updateDTO);
+            updateService.updateBasic(updateDTO);
         } else{
-            boolean check = updateService.updateAuto(updateDTO);
+            updateService.updateAuto(updateDTO);
         }
     }
 
     @PostMapping("/payDetailDel")
     public void deleteDetail(@RequestBody @Valid UpdateDTO updateDTO){
 
-        boolean check = updateService.delUpdate(updateDTO);
+        updateService.delUpdate(updateDTO);
     }
 
     @PostMapping("/autoPayStop")

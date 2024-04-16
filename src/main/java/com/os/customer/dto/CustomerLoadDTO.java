@@ -16,7 +16,7 @@ public class CustomerLoadDTO {
     private String customerAddress;
 
     public static CustomerLoadDTO CustomerInfoDTO(Customer customer){
-        CustomerLoadDTO customerDTOC = CustomerLoadDTO.builder()
+        return CustomerLoadDTO.builder()
                 .id(customer.getId())
                 .customerName(customer.getCustomerName())
                 .customerEmail(customer.getCustomerEmail())
@@ -24,6 +24,5 @@ public class CustomerLoadDTO {
                 .customerAddress(customer.getCustomerAddress())
                 .build();
 
-        return  customerDTOC;
     }
 }

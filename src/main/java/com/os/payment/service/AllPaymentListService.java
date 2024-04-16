@@ -50,7 +50,7 @@ public class AllPaymentListService {
     }
 
     /**
-     * @auther : 김홍성
+     * @author : 김홍성
      */
     public Page<AllPaymentListDTO> detailSearch(DetailedSearchDTO searchDTO, Pageable pageable) {
         String status = searchDTO.getStatus();

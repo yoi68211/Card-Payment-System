@@ -39,6 +39,7 @@ public class WidgetController {
     private final String secretKey;
 
     @PostMapping("/confirm")
+    @SuppressWarnings("unchecked")
     public ResponseEntity<org.json.simple.JSONObject> confirmPayment(@RequestBody String jsonBody) throws Exception {
         JSONParser parser = new JSONParser();
         String orderId;
@@ -52,7 +53,8 @@ public class WidgetController {
             amount = (String) requestData.get("amount");
         } catch (ParseException e) {
             throw new RuntimeException(e);
-        };
+        }
+
         org.json.simple.JSONObject obj = new org.json.simple.JSONObject();
         obj.put("orderId", orderId);
         obj.put("amount", amount);
@@ -63,14 +65,14 @@ public class WidgetController {
 
         System.out.println("YAML 변수값 ==> " + secretKey);
 
-        // 토스페이먼츠 API는 시크릿 키를 사용자 ID로 사용하고, 비밀번호는 사용하지 않습니다.
+        // 토스페이먼츠 API 는 시크릿 키를 사용자 ID로 사용하고, 비밀번호는 사용하지 않습니다.
         // 비밀번호가 없다는 것을 알리기 위해 시크릿 키 뒤에 콜론을 추가합니다.
         // @docs https://docs.tosspayments.com/reference/using-api/authorization#%EC%9D%B8%EC%A6%9D
         Base64.Encoder encoder = Base64.getEncoder();
         byte[] encodedBytes = encoder.encode((secretKey + ":").getBytes(StandardCharsets.UTF_8));
         String authorizations = "Basic " + new String(encodedBytes);
 
-        // 결제 승인 API를 호출하세요.
+        // 결제 승인 API 를 호출하세요.
         // 결제를 승인하면 결제수단에서 금액이 차감돼요.
         // @docs https://docs.tosspayments.com/guides/payment-widget/integration#3-결제-승인하기
         URL url = new URL("https://api.tosspayments.com/v1/payments/confirm");
@@ -81,7 +83,7 @@ public class WidgetController {
         connection.setDoOutput(true);
 
         OutputStream outputStream = connection.getOutputStream();
-        outputStream.write(obj.toString().getBytes("UTF-8"));
+        outputStream.write(obj.toString().getBytes(StandardCharsets.UTF_8));
 
         int code = connection.getResponseCode();
         boolean isSuccess = code == 200;
@@ -104,7 +106,7 @@ public class WidgetController {
 
 
     @GetMapping("/checkout")
-    public String toss(@RequestParam Long id ,Model model) throws Exception {
+    public String toss(@RequestParam Long id ,Model model) {
         PaymentDetailsDTO paymentDetailsDTO = customerService.getDetails(id);
         model.addAttribute("paymentDetailsDTO",paymentDetailsDTO);
         model.addAttribute("clientKey",clientKey);
@@ -114,12 +116,12 @@ public class WidgetController {
 
 
     @GetMapping("/success")
-    public String paymentRequest(HttpServletRequest request, Model model) throws Exception {
+    public String paymentRequest(HttpServletRequest request, Model model) {
 
         return "/toss/success";
     }
     @GetMapping("/fail")
-    public String failPayment(HttpServletRequest request, Model model) throws Exception {
+    public String failPayment(HttpServletRequest request, Model model) {
         String failCode = request.getParameter("code");
         String failMessage = request.getParameter("message");
 
