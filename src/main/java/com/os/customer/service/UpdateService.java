@@ -27,7 +27,7 @@ public class UpdateService {
     private final ProductRepository productRepository;
     private final AutoPaymentRepository autoPaymentRepository;
 
-    public boolean updateBasic(UpdateDTO updateDTO){
+    public void updateBasic(UpdateDTO updateDTO){
         if(!updateDTO.getProductDelCheck().isEmpty()){
 
             for(Long id : updateDTO.getProductDelCheck()){
@@ -88,9 +88,6 @@ public class UpdateService {
                 customerRepository.save(customer);
 
             }
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -112,7 +109,7 @@ public class UpdateService {
 
     }
 
-    public boolean delUpdate(UpdateDTO updateDTO) {
+    public void delUpdate(UpdateDTO updateDTO) {
         Long paymentId = updateDTO.getPaymentId();
 
         // paymentId를 이용하여 엔티티를 조회합니다.
@@ -126,17 +123,12 @@ public class UpdateService {
             // 업데이트된 엔티티를 저장합니다.
             paymentRepository.save(payment);
 
-            return true; // 업데이트 성공 시 true 반환
-        } else {
-
-            return false; // 엔티티가 존재하지 않을 경우 false 반환
-
         }
     }
 
 
 
-    public boolean updateAuto(UpdateDTO updateDTO){
+    public void updateAuto(UpdateDTO updateDTO){
 
         Optional<Customer> customerOptional = customerRepository.findById(updateDTO.getCustomerId());
 
@@ -168,9 +160,6 @@ public class UpdateService {
                 }
 
             }
-            return true;
-        } else {
-            return false;
         }
     }
 

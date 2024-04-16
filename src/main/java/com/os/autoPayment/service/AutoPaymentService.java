@@ -68,8 +68,7 @@ public class    AutoPaymentService {
         Optional<AutoPayment> autoPaymentOptional = autoPaymentRepository.findByPaymentId(id);
         if(autoPaymentOptional.isPresent()){
             AutoPayment autoPayment = autoPaymentOptional.get();
-            AutoPaymentDTO autoPayInfo = AutoPaymentDTO.autoPaymentInfoDTO(autoPayment);
-            return autoPayInfo;
+            return AutoPaymentDTO.autoPaymentInfoDTO(autoPayment);
         }
         return null;
     }

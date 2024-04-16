@@ -31,7 +31,6 @@ public class PaymentDetailsDTO {
         this.id = customer.getPayments().getId();
         this.customerName = customer.getCustomerName();
         this.customerEmail = customer.getCustomerEmail();
-
         Payment payment = customer.getPayments();
         this.updateTime = customer.getUpdateTime();
         this.orderName = customer.getPayments().getPaymentTitle();

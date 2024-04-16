@@ -16,7 +16,7 @@ public class ProductDTO {
     private int productAmount;
 
     public static ProductDTO productInfoDTO(Product product){
-        ProductDTO productDTO = ProductDTO.builder()
+        return ProductDTO.builder()
                 .id(product.getId())
                 .productName(product.getProductName())
                 .productPrice(product.getProductPrice())
@@ -24,6 +24,5 @@ public class ProductDTO {
                 .productAmount(product.getProductAmount())
                 .build();
 
-        return productDTO;
     }
 }

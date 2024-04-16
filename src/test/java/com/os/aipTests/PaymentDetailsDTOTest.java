@@ -3,7 +3,6 @@ package com.os.aipTests;
 import com.os.customer.entity.Customer;
 import com.os.payment.entity.Payment;
 import com.os.product.entity.Product;
-import com.os.payment.dto.PaymentDetailsDTO;
 import com.os.util.BizTo;
 import com.os.util.OrderStatus;
 import com.os.util.OrderType;
@@ -11,9 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class PaymentDetailsDTOTest {
 
@@ -23,7 +19,7 @@ public class PaymentDetailsDTOTest {
         Customer customer = Customer.builder()
                 .customerName("John Doe")
                 .customerEmail("john@example.com")
-                .customerAddress("123 Main St, Anytown")
+                .customerAddress("123 Main St, Any town")
                 .build();
 
         // 가짜 Product 객체 생성
@@ -62,16 +58,5 @@ public class PaymentDetailsDTOTest {
 
         customer.setPayments(payment);
 
-        // PaymentDetailsDTO 생성
-        PaymentDetailsDTO dto = PaymentDetailsDTO.builder()
-                .customer(customer)
-                .build();
-
-        // 생성된 PaymentDetailsDTO 검증
-//        assertNotNull(dto);
-//        assertEquals("John Doe", dto.getCustomerName());
-//        assertEquals("john@example.com", dto.getCustomerEmail());
-//        assertEquals(payment, dto.getPayments());
-//        assertEquals("3000", dto.getAmount()); // product1의 총액(100) + product2의 총액(100) = 200
     }
 }

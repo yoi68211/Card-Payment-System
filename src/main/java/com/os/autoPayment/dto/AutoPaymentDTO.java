@@ -20,7 +20,7 @@ public class AutoPaymentDTO {
     private LocalDate autoPayDate;
 
     public static AutoPaymentDTO autoPaymentInfoDTO(AutoPayment autoPayment){
-        AutoPaymentDTO autoPaymentDTO = AutoPaymentDTO.builder()
+        return AutoPaymentDTO.builder()
                 .id(autoPayment.getId())
                 .paymentNextTime(autoPayment.getPaymentNextTime())
                 .autoPayCount(autoPayment.getAutoPayCount())
@@ -28,6 +28,5 @@ public class AutoPaymentDTO {
                 .autoStatus(autoPayment.getAutoStatus())
                 .build();
 
-        return autoPaymentDTO;
     }
 }

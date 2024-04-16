@@ -28,6 +28,7 @@ public class MemoService {
         for(Memo Memo : MemoList){
             MemoDTOList.add(MemoDTO.toMemoDTO(Memo));
         }
+
         return MemoDTOList;
     }
 

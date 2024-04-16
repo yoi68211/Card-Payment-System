@@ -54,14 +54,17 @@ public class InsertController {
     public String save(@RequestBody SavePaymentDTO dto, RedirectAttributes redirectAttributes) {
         User user = userService.findId();
         System.out.println("dto = " + dto.toString());
+        boolean res;
         if (user.getSavePayment() == null) {
-            System.out.println("save");
-            savePaymentService.save(dto, user);
+            res = savePaymentService.save(dto, user);
         } else {
-            savePaymentService.save_update(dto);
+            res = savePaymentService.save_update(dto);
         }
-        redirectAttributes.addFlashAttribute("message", "저장이 완료되었습니다.");
-        return "redirect:/insert_form";
+        if(res) {
+            redirectAttributes.addFlashAttribute("message", "저장이 완료되었습니다.");
+            return "redirect:/insert_form";
+        }
+        return null;
     }
 
     /*
