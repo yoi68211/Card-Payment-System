@@ -395,8 +395,7 @@
             var month = f.paymentMonth.value == "다음달" ? 1 : 2;
             var autoDate = f.autoDate.value;
             var paymentFirstPay = f.paymentFirstPay.value;
-            alert("여기");
-            alert(firstPayCheck);
+            
             if (type == "basic") {
                 month = 0;
                 autoDate = 0;
