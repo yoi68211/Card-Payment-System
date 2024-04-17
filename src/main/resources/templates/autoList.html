@@ -178,7 +178,7 @@
                     </li>
                     <!-- 다음 페이지 -->
                     <li th:if="${payList.hasNext()}" class="page-item">
-                        <a class="page-link" th:href="@{(${isListPage} ? '/autoList' + '?page=' + (${payList.getNumber()} + 1) + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + ${keyword} + '&amp;autoStatusOnly=' + ${autoStatusOnly} : '/autoSearch' + '?page=' + (${payList.getNumber()} + 1) + '&amp;size=' + ${payList.getSize()} + '&amp;startDt=' + ${startDt} + '&amp;endDt=' + ${endDt} + '&amp;status=' + ${status} + '&amp;docNumber=' + ${docNumber} + '&amp;customerName=' + ${customerName} + '&amp;email=' + ${email} + '&amp;phoneNumber=' + ${phoneNumber} + '&amp;transactionStatus=' + ${transactionStatus} + '&amp;payType=' + ${payType})}" aria-label="Next">
+                        <a class="page-link" th:href="@{(${isListPage} ? '/autoList' + '?page=' + (${payList.getNumber()} + 1) + '&amp;size=' + ${payList.getSize()} + '&amp;keyword=' + (${keyword} ?: '') + '&amp;autoStatusOnly=' + ${autoStatusOnly} : '/autoSearch' + '?page=' + (${payList.getNumber()} + 1) + '&amp;size=' + ${payList.getSize()} + '&amp;startDt=' + ${startDt} + '&amp;endDt=' + ${endDt} + '&amp;status=' + ${status} + '&amp;docNumber=' + ${docNumber} + '&amp;customerName=' + ${customerName} + '&amp;email=' + ${email} + '&amp;phoneNumber=' + ${phoneNumber} + '&amp;transactionStatus=' + ${transactionStatus} + '&amp;payType=' + ${payType})}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
