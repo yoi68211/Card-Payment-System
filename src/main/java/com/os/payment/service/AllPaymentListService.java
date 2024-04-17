@@ -49,7 +49,7 @@ public class AllPaymentListService {
         paymentRepository.save(payment);
     }
 
-    /**
+    /***
      * @author : 김홍성
      */
     public Page<AllPaymentListDTO> detailSearch(DetailedSearchDTO searchDTO, Pageable pageable) {

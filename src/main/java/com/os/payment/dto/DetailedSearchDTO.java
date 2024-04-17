@@ -2,7 +2,7 @@ package com.os.payment.dto;
 
 import lombok.Data;
 
-/**
+/***
  * @author : 김홍성 작성자
  */
 @Data

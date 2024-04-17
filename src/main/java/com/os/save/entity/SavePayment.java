@@ -59,7 +59,7 @@ public class SavePayment {
     @OneToMany(mappedBy = "savePayment", fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
     private List<SaveProduct> saveProducts;
 
-    /*
+    /**
         @method : insertData
         @desc : 받아온 결제등록정보들을 insert(임시저장) 하는 메서드
         @author : 김성민

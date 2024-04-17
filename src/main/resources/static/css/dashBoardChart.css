@@ -1,4 +1,4 @@
-/* 차트 상단 */
+/** 차트 상단 */
 .chart-header{
     display: grid;
     grid-template-columns: 30% 20% 30%;
@@ -15,7 +15,7 @@
     cursor: pointer;
 }
 
-/* 차트 css */
+/** 차트 css */
 .custom-tooltip{
     background-color: #2D5CBE;
     color: white;

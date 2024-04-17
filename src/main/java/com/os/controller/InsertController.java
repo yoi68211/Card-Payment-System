@@ -28,7 +28,7 @@ public class InsertController {
     private final SavePaymentService savePaymentService;
     private final UserService userService;
 
-    /*
+    /**
         @method : insertData
         @desc : 받아온 정보를 db에 insert 하는 메서드
         @author : 김성민
@@ -45,7 +45,7 @@ public class InsertController {
         }
     }
 
-    /*
+    /**
         @method : save
         @desc : 받아온 정보를 db에 insert(임시저장) 하는 메서드
         @author : 김성민
@@ -67,7 +67,7 @@ public class InsertController {
         return null;
     }
 
-    /*
+    /**
         @method : load
         @desc : 임시저장한 정보들을 select 해주는 메서드
         @author : 김성민
@@ -88,7 +88,7 @@ public class InsertController {
         return savePaymentLoad;
     }
 
-    /*
+    /**
         @method : load
         @desc : 임시저장한 결제물품정보들을 변환해주는 메서드
         @author : 김성민

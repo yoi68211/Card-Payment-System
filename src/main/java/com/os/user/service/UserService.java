@@ -60,7 +60,7 @@ public class UserService {
         }
     }
 
-    /*
+    /**
         @method : findId
         @desc : 시큐리티에서 user 정보를 가져오는 메서드
         @author : 김성민
