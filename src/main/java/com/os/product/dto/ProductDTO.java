@@ -18,7 +18,7 @@ public class ProductDTO {
     /**
      * @method : productInfoDTO
      * @desc : product Entity 정보 DTO 로 변환
-     * @auther : LeeChanSin
+     * @author : LeeChanSin
      */
     public static ProductDTO productInfoDTO(Product product){
         return ProductDTO.builder()

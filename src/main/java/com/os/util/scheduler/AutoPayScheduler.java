@@ -27,7 +27,7 @@ public class AutoPayScheduler {
     /**
      * @method autoPaymentUpdate
      * @desc : 자동결제 스케쥴링
-     * @auther : LeeChanSin
+     * @author : LeeChanSin
     */
     @Transactional
     @Scheduled(fixedDelay = 300000) // 5분마다 실행

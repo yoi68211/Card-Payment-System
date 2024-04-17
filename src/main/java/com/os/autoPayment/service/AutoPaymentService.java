@@ -89,6 +89,11 @@ public class    AutoPaymentService {
         return autoPaymentRepository.countByUpdateTimeBetween(startDate, endDate);
     }
 
+    /**
+     @method : autoAll
+     @desc : autoPayment entity 정보 dto 로 변환
+     @author : 이찬신
+     */
     public AutoPaymentDTO autoPayRoad(Long id){
         Optional<AutoPayment> autoPaymentOptional = autoPaymentRepository.findByPaymentId(id);
         if(autoPaymentOptional.isPresent()){

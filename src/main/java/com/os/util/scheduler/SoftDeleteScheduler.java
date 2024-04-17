@@ -22,7 +22,7 @@ public class SoftDeleteScheduler {
     /**
      * @method permanentlyDeleteSoftDeletedMemo
      * @desc : 데이터 보존기간 이후 hard delete
-     * @auther : LeeChanSin
+     * @author : LeeChanSin
      */
     @Scheduled(fixedDelay = 300000) // 5분마다 실행
     public void permanentlyDeleteSoftDeletedMemo() {

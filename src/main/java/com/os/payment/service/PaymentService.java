@@ -22,7 +22,7 @@ public class PaymentService {
     /**
      * @method : paymentRoad
      * @desc : 결제 정보 pk로 불러오기
-     * @auther : LeeChanSin
+     * @author : LeeChanSin
      */
     public PaymentDTO paymentRoad(Long id){
         Optional<Payment> paymentOptional = paymentRepository.findByCustomerIdAndPaymentDelYn(id, 'N');
@@ -39,7 +39,7 @@ public class PaymentService {
     /**
      * @method : getCountsByMonthRange
      * @desc : 이번달 결제등록 횟수 불러오기
-     * @auther : LeeChanSin
+     * @author : LeeChanSin
      */
     public List<Long> getCountsByMonthRange() {
 
@@ -63,7 +63,7 @@ public class PaymentService {
     /**
      * @method : getCountsByYearRange
      * @desc : 이번년도 결제등록 횟수 불러오기
-     * @auther : LeeChanSin
+     * @author : LeeChanSin
      */
     public List<Long> getCountsByYearRange() {
         int nowYear = LocalDateTime.now().getYear(); // 현재 년도

@@ -30,7 +30,7 @@ public class UpdateService {
     /**
      * @method : updateBasic
      * @desc : 일반결제 정보 변경
-     * @auther : LeeChanSin
+     * @author : LeeChanSin
      */
     public void updateBasic(UpdateDTO updateDTO){
         if(!updateDTO.getProductDelCheck().isEmpty()){
@@ -99,7 +99,7 @@ public class UpdateService {
     /**
      * @method : deleteProduct
      * @desc : product 정보 삭제
-     * @auther : LeeChanSin
+     * @author : LeeChanSin
      */
     public void deleteProduct(Long id){
 
@@ -109,7 +109,7 @@ public class UpdateService {
     /**
      * @method : savePro
      * @desc : product 정보 insert
-     * @auther : LeeChanSin
+     * @author : LeeChanSin
      */
     public void saveProduct(ProductDTO productDTO, Payment payment){
         Product product = Product.builder()
@@ -126,7 +126,7 @@ public class UpdateService {
     /**
      * @method : delUpdate
      * @desc : payment 정보 soft delete
-     * @auther : LeeChanSin
+     * @author : LeeChanSin
      */
     public void delUpdate(UpdateDTO updateDTO) {
         Long paymentId = updateDTO.getPaymentId();
@@ -149,7 +149,7 @@ public class UpdateService {
     /**
      * @method : updateAuto
      * @desc : 자동결제 정보 변경
-     * @auther : LeeChanSin
+     * @author : LeeChanSin
      */
     public void updateAuto(UpdateDTO updateDTO){
 
@@ -189,7 +189,7 @@ public class UpdateService {
     /**
      * @method : autoPayStop
      * @desc : 자동결제 중지
-     * @auther : LeeChanSin
+     * @author : LeeChanSin
      */
     public void autoPayStop(UpdateDTO updateDTO){
 

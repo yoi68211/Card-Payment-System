@@ -63,7 +63,7 @@ public class CustomerService {
     /**
      * @method : customerRoad
      * @desc : Customer 정보 pk 로 불러오기
-     * @auther : LeeChanSin
+     * @author : LeeChanSin
      */
     public CustomerLoadDTO customerRoad(Long id){
         Optional<Customer> customerOptional = customerRepository.findById(id);

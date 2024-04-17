@@ -18,7 +18,7 @@ public class CustomerLoadDTO {
     /**
      * @method : CustomerInfoDTO
      * @desc : Customer Entity 정보 DTO 로 변환
-     * @auther : LeeChanSin
+     * @author : LeeChanSin
      */
     public static CustomerLoadDTO CustomerInfoDTO(Customer customer){
         return CustomerLoadDTO.builder()

@@ -17,7 +17,7 @@ public class ProductService {
     /**
      * @method : productRoad
      * @desc : product 정보 pk로 불러오기
-     * @auther : LeeChanSin
+     * @author : LeeChanSin
      */
     public List<ProductDTO> productRoad(Long id){
         List<Product> productList = productRepository.findByPaymentId(id);

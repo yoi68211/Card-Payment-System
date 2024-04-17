@@ -82,7 +82,7 @@ public class MainController {
     /**
      * @method : chartDetail
      * @desc : 차트 상세 페이지 이동
-     * @auther : LeeChanSin
+     * @author : LeeChanSin
      */
     @GetMapping("/chartDetail")
     public String chartDetail(Model model){
@@ -112,7 +112,7 @@ public class MainController {
     /**
      * @method : pageSample
      * @desc : 헤더 사이드바 적용된 예시 페이지 이동
-     * @auther : LeeChanSin
+     * @author : LeeChanSin
      */
     @GetMapping("pageSample")
     public String pageSample() {
