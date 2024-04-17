@@ -26,7 +26,7 @@
 
 //    // 결제금액 총합
 //    let autoPayment = 0;
-//    let productList = /* [[${productList}]]; */
+//    let productList = /** [[${productList}]]; */
 //    for (let product of productList) {
 //      autoPayment += parseInt(product.amount); // 각 항목의 amount 를 정수형으로 변환하여 더함
 //    }
@@ -103,7 +103,7 @@
    const proNameRex2 = /^[\s\S]{0,100}$/;
    const autoDateRex = /^(0?[0-9]|1\d|2[0-8]|3[01])$/; // 자동결제일 정규식1 0~31까지의 숫자
 
-    /*
+    /**
         @function : __R()
         @desc : 유효성 체크 함수
         @author : 김성민

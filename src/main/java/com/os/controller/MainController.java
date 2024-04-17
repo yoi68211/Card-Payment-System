@@ -91,7 +91,7 @@ public class MainController {
     @GetMapping("/join")
     public String joinPage() { return "join"; }
 
-    /*
+    /**
     TODO: 2024-03-22 "paymentDetails.html" In the QR creation logic, I couldn't tell which code uses which code API, so I entered a random URL
           Please implement by adding payload to Payment Details DTO.
     */
@@ -109,7 +109,7 @@ public class MainController {
         return "/pageSample";
     }
 
-    /*
+    /**
         @method : insert_form
         @desc : /insert_form 으로 이동
         @author : 김성민

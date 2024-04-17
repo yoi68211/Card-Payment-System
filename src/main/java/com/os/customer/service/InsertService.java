@@ -22,7 +22,7 @@ import java.util.UUID;
 public class InsertService {
     private final CustomerRepository customerRepository;
 
-    /*
+    /**
         @method : insert_basic
         @desc : 받아온 정보를 db에 insert 하는 메서드
         @author : 김성민

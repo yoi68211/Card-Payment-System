@@ -33,6 +33,12 @@ public class CustomerService {
         throw new NoSuchElementException("객체가 null 이에요!");
     }
 
+
+    /**
+     @method : thisMonthInsertCount
+     @desc : 시작일과 종료일 사이의 날짜 범위내에 등록된 목록의 개수를 구하는 메서드
+     @author : 김홍성
+     */
     public long thisMonthInsertCount(){
         LocalDateTime now = LocalDateTime.now();
         YearMonth thisMonth = YearMonth.from(now);
@@ -43,6 +49,11 @@ public class CustomerService {
         return customerRepository.countByPayments_PaymentDelYnAndCreateTimeBetween(delYn,startOfMonth, endOfMonth);
     }
 
+    /**
+        @method : countByCustomersByPaid
+        @desc : 시작일과 종료일 사이의 날짜 범위내에 등록된 목록의 개수를 구하는 메서드
+        @author : 김홍성
+    */
     public long countByCustomersByPaid(LocalDateTime startDate, LocalDateTime endDate){
         char delYn = 'N';
 

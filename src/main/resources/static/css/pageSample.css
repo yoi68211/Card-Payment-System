@@ -182,22 +182,22 @@
         }
         .payList-nav {
             display: block;
-            opacity: 0; /* 초기에는 투명하게 설정 */
-            transition: opacity 0.2s; /* opacity 속성에 대한 트랜지션 효과 적용 */
+            opacity: 0; /** 초기에는 투명하게 설정 */
+            transition: opacity 0.2s; /** opacity 속성에 대한 트랜지션 효과 적용 */
         }
 
         .hidden {
-            opacity: 0; /* 투명하게 설정하여 숨김 */
-            pointer-events: none; /* 투명한 상태에서 이벤트 처리 비활성화 */
+            opacity: 0; /** 투명하게 설정하여 숨김 */
+            pointer-events: none; /** 투명한 상태에서 이벤트 처리 비활성화 */
         }
 
         .visible {
-            opacity: 1; /* 불투명하게 설정하여 표시 */
-            pointer-events: auto; /* 이벤트 처리 활성화 */
+            opacity: 1; /** 불투명하게 설정하여 표시 */
+            pointer-events: auto; /** 이벤트 처리 활성화 */
         }
 
         .nowPage span{
-            color: #2D5CBE; /* 이미지와 텍스트의 색상을 파란색으로 변경합니다. */
+            color: #2D5CBE; /** 이미지와 텍스트의 색상을 파란색으로 변경합니다. */
         }
 
         .nowPage img{

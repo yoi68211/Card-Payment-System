@@ -24,6 +24,11 @@ public class    AutoPaymentService {
     private final AutoPaymentRepository autoPaymentRepository;
     private final PaymentRepository paymentRepository;
 
+    /**
+        @method : UpdatePaid
+        @desc : 자동결제테이블에 insert 하는 메서드
+        @author : 김성민
+    */
     public void UpdatePaid(Long id) {
         Optional<Payment> paymentOptional = paymentRepository.findById(id);
 
@@ -48,18 +53,38 @@ public class    AutoPaymentService {
         }
     }
 
+    /**
+        @method : autoSuccess
+        @desc : 자동결제목록 중 시작일과 종료일 사이의 날짜 범위내에서 AutoStatus 가 paid 인 목록의 갯수를 구하는 메서드
+        @author : 김성민
+    */
     public long autoSuccess(LocalDateTime startDate, LocalDateTime endDate){
         return autoPaymentRepository.countByAutoStatusAndUpdateTimeBetween(AutoStatus.paid, startDate, endDate);
     }
 
+    /**
+        @method : autoStop
+        @desc : 자동결제목록 중 시작일과 종료일 사이의 날짜 범위내에서 AutoStatus 가 stop 인 목록의 갯수를 구하는 메서드
+        @author : 김성민
+    */
     public long autoStop(LocalDateTime startDate, LocalDateTime endDate){
         return autoPaymentRepository.countByAutoStatusAndUpdateTimeBetween(AutoStatus.stop, startDate, endDate);
     }
 
+    /**
+        @method : autoError
+        @desc : 자동결제목록 중 시작일과 종료일 사이의 날짜 범위내에서 AutoStatus 가 error 인 목록의 갯수를 구하는 메서드
+        @author : 김성민
+    */
     public long autoError(LocalDateTime startDate, LocalDateTime endDate){
         return autoPaymentRepository.countByAutoStatusAndUpdateTimeBetween(AutoStatus.error, startDate, endDate);
     }
 
+    /**
+        @method : autoAll
+        @desc : 자동결제목록 중 시작일과 종료일 사이의 날짜 범위내에서 목록의 갯수를 구하는 메서드
+        @author : 김성민
+    */
     public long autoAll(LocalDateTime startDate, LocalDateTime endDate){
         return autoPaymentRepository.countByUpdateTimeBetween(startDate, endDate);
     }
