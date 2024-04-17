@@ -53,7 +53,7 @@ public class ChartInsertTest {
         if (userOp.isPresent()) {
             User user = userOp.get();
 
-            // 랜덤 난수 생성
+            // 랜덤 난수 객체 생성
             Random random = new Random();
             for (int i = 1; i < 70; i++) {
                 // 월은 1부터 12까지의 랜덤한 값 설정

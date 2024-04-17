@@ -23,7 +23,7 @@ public class MemoService {
 
     /**
      @method : findAll
-     @desc :
+     @desc :메모 전체를 페이지별로 조회하는 메서드
      @author : 한석희
      */
     public List<MemoDTO> findAll() {
@@ -39,7 +39,7 @@ public class MemoService {
 
     /**
      @method : findAllMemos
-     @desc :
+     @desc : 조회된 메모들을 메모 DTO로 변환하여 페이지 단위로 반환하는 메서드
      @author : 한석희
      */
     public Page<MemoDTO> findAllMemos(Pageable pageable) {
@@ -50,7 +50,7 @@ public class MemoService {
 
     /**
      @method : findByMemoContentsContaining
-     @desc :
+     @desc : 게시글 내용을 포함하고있는 메모를 찾아주는 메서드
      @author : 한석희
      */
     public Page<MemoDTO> findByMemoContentsContaining(String keyword, Pageable pageable) {
@@ -61,7 +61,7 @@ public class MemoService {
 
     /**
      @method : findByUserUsernameContaining
-     @desc :
+     @desc :  게시자 이름으로 메모 내용을 찾아주는 메서드
      @author : 한석희
      */
     // 작성자로 메모 검색
@@ -73,7 +73,7 @@ public class MemoService {
 
     /**
      @method : findByMemoExposeYn
-     @desc :
+     @desc :  게시글 노출여부 (Y/N)으로 메모 내용을 찾아주는 메서드
      @author : 한석희
      */
     public Page<MemoDTO> findByMemoExposeYn(String keyword, Pageable pageable) {
@@ -84,7 +84,7 @@ public class MemoService {
 
     /**
      @method : save
-     @desc :
+     @desc : 메모글을 작성하고, 저장할수 있게 해주는 메서드
      @author : 한석희
      */
     public void save(MemoDTO memoDTO) {
@@ -96,7 +96,7 @@ public class MemoService {
 
     /**
      @method : deleteSelectedItems
-     @desc :
+     @desc : 체크된 글을 삭제할 수 있게 해주는 메서드
      @author : 한석희
      */
     public void deleteSelectedItems(List<Long> selectedIds) {
@@ -105,7 +105,7 @@ public class MemoService {
 
     /**
      @method : findById
-     @desc :
+     @desc : 글 번호로 해당 글을 검색할 수 있게 해주는 메서드
      @author : 한석희
      */
     public MemoDTO findById(Long id) {
@@ -121,7 +121,7 @@ public class MemoService {
 
     /**
      @method : update
-     @desc :
+     @desc : 메모글 작성자와 로그인한 사용자가 같을 경우에만 게시글을 수정할 수 있게 해주는 메서드
      @author : 한석희
      */
     public void update(MemoDTO memoDTO){
