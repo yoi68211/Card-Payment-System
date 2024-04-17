@@ -6,8 +6,11 @@
 
 
 
-
-// 탭을 변경할 때마다 해당 탭에 맞는 카테고리 생성
+/**
+* @method : monthYearChange
+* @desc : 월별 차트 년도별 차트 전환
+* @author : LeeChanSin
+*/
 function monthYearChange(tagName) {
   var today = new Date();
   var categories = [];
@@ -37,6 +40,7 @@ function monthYearChange(tagName) {
 }
 
 let categoriesMonth = monthYearChange('chartMonth');
+
 // 이번달 차트
 var optionMonth = {
     series: [{
@@ -199,7 +203,11 @@ var optionMonth = {
 
 
 
-
+/**
+* @method : openTab
+* @desc : 월별 차트 년도별 차트 전환
+* @author : LeeChanSin
+*/
     function openTab(tabName) {
         var i, tabContent, tabBtns;
         let month = document.getElementById("monthChart");

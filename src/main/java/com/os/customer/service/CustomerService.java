@@ -49,6 +49,11 @@ public class CustomerService {
         return customerRepository.countByPayments_PaymentStatusAndPayments_PaymentDelYnAndUpdateTimeBetween(OrderStatus.paid,delYn,startDate, endDate);
     }
 
+    /**
+     * @method : customerRoad
+     * @desc : Customer 정보 pk 로 불러오기
+     * @auther : LeeChanSin
+     */
     public CustomerLoadDTO customerRoad(Long id){
         Optional<Customer> customerOptional = customerRepository.findById(id);
 

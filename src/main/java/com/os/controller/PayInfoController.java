@@ -33,6 +33,11 @@ public class PayInfoController {
     private final ProductService productService;
     private final AutoPaymentService autoPaymentService;
 
+    /**
+     * @method : PayInfoController
+     * @desc : service class 와 토스 api key 생성자 주입
+     * @auther : LeeChanSin
+     */
     public PayInfoController(CustomerService customerService, AutoPaymentService autoPaymentService, @Value("${api.toss.secretKey}") String secretKey, PaymentService paymentService1, ProductService productService) {
         this.customerService = customerService;
         this.autoPaymentService = autoPaymentService;
@@ -42,7 +47,11 @@ public class PayInfoController {
 
     }
     private final String secretKey;
-
+    /**
+     * @method : payInfoDetail
+     * @desc : 결제정보 상세페이지 이동
+     * @auther : LeeChanSin
+     */
     @GetMapping("/payInfoDetail/")
     public String payInfoDetail(@RequestParam long id, Model model) {
         CustomerLoadDTO customerInfo = customerService.customerRoad(id);
@@ -59,6 +68,11 @@ public class PayInfoController {
         return "payList/basicPayInfoDetail";
     }
 
+    /**
+     * @method : payInfoDetail
+     * @desc : 자동결제 상세페이지 이동
+     * @auther : LeeChanSin
+     */
     @GetMapping("/payAutoDetail/")
     public String payAutoDetail(@RequestParam long id, Model model) {
         CustomerLoadDTO customerInfo = customerService.customerRoad(id);
@@ -77,6 +91,11 @@ public class PayInfoController {
         return "payList/autoPayInfoDetail";
     }
 
+    /**
+     * @method : receipt
+     * @desc : 신용구매도표 상세페이지로 이동
+     * @auther : LeeChanSin
+     */
     @GetMapping("/receipt/")
     public String receipt(@RequestParam("paymentId") Long paymentId,
                           @RequestParam("customerId") Long customerId,
