@@ -21,6 +21,11 @@ public class MemoService {
     private final MemoRepository memoRepository;
     private final UserService userService;
 
+    /**
+     @method : findAll
+     @desc :
+     @author : 한석희
+     */
     public List<MemoDTO> findAll() {
         LocalDateTime week = LocalDateTime.now().minusWeeks(1);
         List<Memo> MemoList = memoRepository.findAllByCreateTimeAfterOrderByCreateTimeDesc(week);
@@ -32,18 +37,33 @@ public class MemoService {
         return MemoDTOList;
     }
 
+    /**
+     @method : findAllMemos
+     @desc :
+     @author : 한석희
+     */
     public Page<MemoDTO> findAllMemos(Pageable pageable) {
         Page<Memo> memoPage = memoRepository.findAll(pageable);
 
         return memoPage.map(MemoDTO::toMemoDTO);
     }
 
+    /**
+     @method : findByMemoContentsContaining
+     @desc :
+     @author : 한석희
+     */
     public Page<MemoDTO> findByMemoContentsContaining(String keyword, Pageable pageable) {
         Page<Memo> allPaymentsPage = memoRepository.findByMemoContentsContaining(keyword, pageable);
 
         return allPaymentsPage.map(MemoDTO::toMemoDTO);
     }
 
+    /**
+     @method : findByUserUsernameContaining
+     @desc :
+     @author : 한석희
+     */
     // 작성자로 메모 검색
     public Page<MemoDTO> findByUserUsernameContaining(String keyword, Pageable pageable) {
         Page<Memo> allPaymentsPage = memoRepository.findByUserUsernameContaining(keyword, pageable);
@@ -51,13 +71,22 @@ public class MemoService {
         return allPaymentsPage.map(MemoDTO::toMemoDTO);
     }
 
+    /**
+     @method : findByMemoExposeYn
+     @desc :
+     @author : 한석희
+     */
     public Page<MemoDTO> findByMemoExposeYn(String keyword, Pageable pageable) {
         Page<Memo> allPaymentsPage = memoRepository.findByMemoExposeYn(keyword, pageable);
 
         return allPaymentsPage.map(MemoDTO::toMemoDTO);
     }
 
-
+    /**
+     @method : save
+     @desc :
+     @author : 한석희
+     */
     public void save(MemoDTO memoDTO) {
         User user = userService.findId();
         Memo memo = Memo.toEntity(memoDTO, user);
@@ -65,10 +94,20 @@ public class MemoService {
         memoRepository.save(memo);
     }
 
+    /**
+     @method : deleteSelectedItems
+     @desc :
+     @author : 한석희
+     */
     public void deleteSelectedItems(List<Long> selectedIds) {
         memoRepository.deleteAllById(selectedIds);
     }
 
+    /**
+     @method : findById
+     @desc :
+     @author : 한석희
+     */
     public MemoDTO findById(Long id) {
         Optional<Memo> optionalMemo = memoRepository.findById(id);
         if(optionalMemo.isPresent()) {
@@ -80,6 +119,11 @@ public class MemoService {
         }
     }
 
+    /**
+     @method : update
+     @desc :
+     @author : 한석희
+     */
     public void update(MemoDTO memoDTO){
         User user = userService.findId();
         Optional<Memo> memoOptional  = memoRepository.findById(memoDTO.getId());
