@@ -29,18 +29,33 @@ public class AllPaymentListService {
     private final PaymentRepository paymentRepository;
     private final EntityManager em;
 
+    /**
+     @method : findAll
+     @desc : 전체결제목록 전체조회하는 메서드
+     @author : 김지훈
+     */
     public Page<AllPaymentListDTO> findAll(Pageable pageable) {
         Page<Payment> allPaymentsPage = paymentRepository.findByPaymentDelYn('n', pageable);
 
         return allPaymentsPage.map(AllPaymentListDTO::toAllPaymentListDto);
     }
 
+    /**
+     @method : findByTitleContaining
+     @desc : 검색어로 전체결제목록 중 제목 검색하는 메서드
+     @author : 김지훈
+     */
     public Page<AllPaymentListDTO> findByTitleContaining(String keyword, Pageable pageable) {
         Page<Payment> allPaymentsPage = paymentRepository.findByPaymentTitleContainingAndPaymentDelYnNot(keyword, 'Y', pageable);
 
         return allPaymentsPage.map(AllPaymentListDTO::toAllPaymentListDto);
     }
 
+    /**
+     @method : updatePaymentDelYnById
+     @desc : 주어진 paymentId 에 해당하는 목록의 삭제 여부 업데이트 하는 메서드
+     @author : 김지훈
+     */
     public void updatePaymentDelYnById(Long id) {
         Payment payment = paymentRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 아이디가 없습니다 id : " + id));
@@ -49,8 +64,10 @@ public class AllPaymentListService {
         paymentRepository.save(payment);
     }
 
-    /***
-     * @author : 김홍성
+    /**
+     @method : detailSearch
+     @desc : 전체결제목록 상세검색하는 메서드
+     @author : 김홍성
      */
     public Page<AllPaymentListDTO> detailSearch(DetailedSearchDTO searchDTO, Pageable pageable) {
         String status = searchDTO.getStatus();
@@ -82,13 +99,22 @@ public class AllPaymentListService {
         return new PageImpl<>(result,pageable,count);
     }
 
+    /**
+     @method : convertToAllPaymentListDto
+     @desc : 전체결제목록을 AllPaymentListDTO 로 변환하는 메서드
+     @author : 김홍성
+     */
     private List<AllPaymentListDTO> convertToAllPaymentListDto(List<Payment> paymentList) {
         return paymentList.stream()
                 .map(AllPaymentListDTO::toAllPaymentListDto)
                 .collect(Collectors.toList());
     }
 
-    //querydsl where 절 BooleanExpression
+    /**
+     @method : eqDocNumber
+     @desc : 주어진 번호에 해당하는 문서번호를 동등하게 비교하는 조건을 생성하는 메서드
+     @author : 김홍성
+     */
     private BooleanExpression eqDocNumber(String DocNumber){
         if (StringUtils.hasText(DocNumber)){
             return payment.paymentDelYn.eq('N').and(payment.id.eq(Long.valueOf(DocNumber)));
@@ -96,6 +122,11 @@ public class AllPaymentListService {
         return null;
     }
 
+    /**
+     @method : likeCustomerName
+     @desc : 주어진 이름에 해당하는 고객 이름과 부분 일치하는 조건을 생성하는 메서드
+     @author : 김홍성
+     */
     private BooleanExpression likeCustomerName(String name) {
         if (StringUtils.hasText(name)) {
             return payment.paymentDelYn.eq('N').and(payment.customer.customerName.like("%" + name + "%"));
@@ -103,6 +134,11 @@ public class AllPaymentListService {
         return null;
     }
 
+    /**
+     @method : eqStatus
+     @desc : 주어진 상태 값에 해당하는 paymentStatus 를 동등하게 비교하는 조건을 생성하는 메서드
+     @author : 김홍성
+     */
     private BooleanExpression eqStatus(String status) {
         if (StringUtils.hasText(status)) {
             return payment.paymentDelYn.eq('N').and(payment.paymentStatus.eq(OrderStatus.valueOf(status)));
@@ -110,6 +146,11 @@ public class AllPaymentListService {
         return null;
     }
 
+    /**
+     @method : betweenDt
+     @desc : 시작일과 종료일 사이의 날짜 범위를 기준으로 자동 결제 업데이트 시간에 대한 조건을 생성하는 메서드
+     @author : 김홍성
+     */
     private BooleanExpression betweenDt(String startDt ,String endDt) {
         if (StringUtils.hasText(startDt) && StringUtils.hasText(endDt)) {
             LocalDateTime startDate = LocalDateTime.parse(startDt + "T00:00:00");

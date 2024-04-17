@@ -13,7 +13,11 @@ import org.springframework.stereotype.Service;
 public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
-
+    /**
+     @method : loadUserByUsername
+     @desc : 주어진 이메일을 사용하여 사용자의 인증을 처리하는 메서드
+     @author : 김홍성
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
