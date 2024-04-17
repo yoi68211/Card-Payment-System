@@ -79,6 +79,11 @@ public class MainController {
         return "dashboard";
     }
 
+    /**
+     * @method : chartDetail
+     * @desc : 차트 상세 페이지 이동
+     * @author : LeeChanSin
+     */
     @GetMapping("/chartDetail")
     public String chartDetail(Model model){
         List<Long> monthChart = paymentService.getCountsByMonthRange();
@@ -91,7 +96,7 @@ public class MainController {
     @GetMapping("/join")
     public String joinPage() { return "join"; }
 
-    /*
+    /**
     TODO: 2024-03-22 "paymentDetails.html" In the QR creation logic, I couldn't tell which code uses which code API, so I entered a random URL
           Please implement by adding payload to Payment Details DTO.
     */
@@ -104,12 +109,17 @@ public class MainController {
         return "paymentDetails";
     }
 
+    /**
+     * @method : pageSample
+     * @desc : 헤더 사이드바 적용된 예시 페이지 이동
+     * @author : LeeChanSin
+     */
     @GetMapping("pageSample")
     public String pageSample() {
         return "/pageSample";
     }
 
-    /*
+    /**
         @method : insert_form
         @desc : /insert_form 으로 이동
         @author : 김성민
@@ -120,7 +130,7 @@ public class MainController {
     }
 
     @GetMapping("/list")
-    public String findAll(Model model, @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword) {
+    public String findAll(Model model, @PageableDefault(sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword) {
         Page<AllPaymentListDTO> allPaymentsPage;
         if (keyword != null && !keyword.isEmpty()) {
             allPaymentsPage = allPaymentListService.findByTitleContaining(keyword, pageable);
@@ -154,7 +164,7 @@ public class MainController {
                          @RequestParam(value = "customerName", required = false) String customerName,
                          @RequestParam(value = "email", required = false) String email,
                          Model model,
-                         @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable) {
+                         @PageableDefault(sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable) {
         // 검색 결과 가져오는 로직 구현
         Page<AllPaymentListDTO> allPaymentsPage = allPaymentListService.detailSearch(searchDTO, pageable);
         long payCount = allPaymentsPage.getTotalElements();
@@ -177,7 +187,7 @@ public class MainController {
 
 
     @GetMapping("/autoList")
-    public String autoFindAll(Model model, @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword, @RequestParam(value = "autoStatusOnly", required = false, defaultValue = "false") boolean autoStatusOnly) {
+    public String autoFindAll(Model model, @PageableDefault(sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword, @RequestParam(value = "autoStatusOnly", required = false, defaultValue = "false") boolean autoStatusOnly) {
         Page<AutoPaymentListDTO> allPaymentsPage;
 
         if (autoStatusOnly) {
@@ -210,7 +220,7 @@ public class MainController {
                          @RequestParam(value = "transactionStatus", required = false) String transactionStatus,
                          @RequestParam(value = "payType", required = false) String payType,
                          Model model,
-                         @PageableDefault(page = 0, size = 10, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable) {
+                         @PageableDefault(sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable) {
         // 검색 결과 가져오는 로직 구현
         Page<AutoPaymentListDTO> allPaymentsPage = autoPaymentListService.detailSearch(searchDTO, pageable);
         long payCount = allPaymentsPage.getTotalElements();

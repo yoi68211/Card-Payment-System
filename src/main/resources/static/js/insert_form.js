@@ -1,4 +1,4 @@
-        /*
+        /**
             @function : validateInput
             @desc : 입력값이 숫자로만 이루어져있는지 유효성 검사하는 함수
             @author : 김성민
@@ -7,7 +7,7 @@
             return /^\d+$/.test(input) ? input : "";
         }
 
-        /*
+        /**
             @function : updateTotalItems
             @desc : 수량이 입력되면 금액을 출력하는 함수
             @author : 김성민
@@ -60,7 +60,7 @@
             }
         }
 
-        /*
+        /**
             @function : updatePrice
             @desc : 단가이 입력되면 금액을 출력하는 함수
             @author : 김성민
@@ -115,7 +115,7 @@
         let num = 2;
 
 
-        /*
+        /**
             @function : addRow
             @desc : 행추가 버튼 클릭시 행을 추가하는 함수
             @author : 김성민
@@ -171,7 +171,7 @@
             updatePrice(newRow);
         }
 
-        /*
+        /**
             @function : deleteRow
             @desc : 행삭제 버튼 클릭 시 체크된 행을 삭제하는 함수
             @author : 김성민
@@ -205,7 +205,7 @@
             }
         }
 
-        /*
+        /**
             @function : cycle
             @desc : 자동결제 체크박스 체크시 자동결제세부사항 disabled 해제하는 함수
             @author : 김성민
@@ -232,7 +232,7 @@
             }
         }
 
-        /*
+        /**
             @function : send
             @desc : 결제정보들을 등록하는 함수
             @author : 김성민
@@ -358,7 +358,7 @@
             });
         }
 
-        /*
+        /**
             @function : toggleAllCheckboxes
             @desc : 최상위 체크박스를 체크시 모든 체크박스를 체크하는 함수
             @author : 김성민
@@ -375,7 +375,7 @@
             document.getElementById('masterCheckbox').addEventListener('click', toggleAllCheckboxes);
         });
 
-        /*
+        /**
             @function : save
             @desc : 결제정보들을 임시저장테이블에 임시저장하는 함수
             @author : 김성민
@@ -475,7 +475,7 @@
                 });
             }
 
-            /*
+            /**
                 @function : load
                 @desc : 임시저장된 정보들을 불러와 덮어쓰기 해주는 함수
                 @author : 김성민

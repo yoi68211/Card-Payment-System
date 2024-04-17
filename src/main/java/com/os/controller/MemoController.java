@@ -25,9 +25,19 @@ public class MemoController {
     private final MemoService memoService;
     private final UserService userService;
 
+    /**
+     @method : saveForm
+     @desc :
+     @author : 한석희
+     */
     @GetMapping("/save")
     public String saveForm() { return "/memo/save"; }
 
+    /**
+     @method : save
+     @desc :
+     @author : 한석희
+     */
     @PostMapping("/save")
     public String save(@ModelAttribute MemoDTO memoDTO) throws IOException {
         System.out.println("memoDTO = " + memoDTO);
@@ -35,9 +45,14 @@ public class MemoController {
         return "redirect:/dashboard";
     }
 
+    /**
+     @method : findById
+     @desc :
+     @author : 한석희
+     */
     @GetMapping("/{id}")
     public String findById(@PathVariable Long id, Model model, @PageableDefault(page=1) Pageable pageable) {
-//        게시글 데이터를 가져와서 detail.html에 출력
+//        게시글 데이터를 가져와서 detail.html 에 출력
 
         MemoDTO memoDTO = memoService.findById(id);
         User session = userService.findId();
@@ -50,6 +65,11 @@ public class MemoController {
         return "/memo/detail";
     }
 
+    /**
+     @method : updateForm
+     @desc :
+     @author : 한석희
+     */
     @GetMapping("/update/{id}")
     public String updateForm(@PathVariable Long id, Model model) {
         MemoDTO memoDTO = memoService.findById(id);
@@ -58,6 +78,11 @@ public class MemoController {
         return "/memo/update";
     }
 
+    /**
+     @method : update
+     @desc :
+     @author : 한석희
+     */
     @PostMapping("/update")
     public String update(@ModelAttribute MemoDTO memoDTO, Model model) {
         memoService.update(memoDTO);
@@ -65,6 +90,11 @@ public class MemoController {
         return "redirect:/dashboard";
     }
 
+    /**
+     @method : deleteSelectedItems
+     @desc :
+     @author : 한석희
+     */
     @PostMapping("/delete")
     public ResponseEntity<String> deleteSelectedItems(@RequestBody List<Long> selectedIds) {
         try {
@@ -77,22 +107,26 @@ public class MemoController {
         }
     }
 
-    // /Memo/paging?page=1
+    /**
+     @method : paging
+     @desc :
+     @author : 한석희
+     */
     @GetMapping("/paging")
-    public String paging(Model model, @PageableDefault(page = 0, size = 10, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable,
+    public String paging(Model model, @PageableDefault(sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable,
                          @RequestParam(value = "keyword", required = false) String keyword,
                          @RequestParam(value = "columnName", required = false) String columnName) {
 
         Page<MemoDTO> allMemosPage;
 
-        // keyword와 columnName이 모두 제공되었는지 확인
+        // keyword 와 columnName 이 모두 제공되었는지 확인
         if (keyword != null && !keyword.isEmpty() && columnName != null && !columnName.isEmpty()) {
             if (columnName.equals("memoContents")) {
                 allMemosPage = memoService.findByMemoContentsContaining(keyword, pageable);
             } else if (columnName.equals("userName")) {
                 allMemosPage = memoService.findByUserUsernameContaining(keyword, pageable);
             } else if (columnName.equals("memoExposeYn")) {
-                // columnName이 memoExposeYn이면서 keyword가 Y 또는 N인 경우에만 처리
+                // columnName 이 memoExposeYn 이면서 keyword 가 Y 또는 N인 경우에만 처리
                 if (keyword.equals("Y") || keyword.equals("N")) {
                     allMemosPage = memoService.findByMemoExposeYn(keyword, pageable);
                 } else {

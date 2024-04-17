@@ -17,17 +17,32 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     @method : UserService
+     @desc : 생성자주입
+     @author : 김홍성
+     */
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     @method : getUserById
+     @desc : 주어진 사용자 ID를 사용하여 사용자를 찾는 메서드
+     @author : 김홍성
+     */
     public User getUserById(Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
 
         return userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found with ID: " + userId));
     }
 
+    /**
+     @method : updatePassword
+     @desc : 새로운 비밀번호로 변경하는 메서드
+     @author : 김홍성
+     */
     public void updatePassword(Long userId, String newPassword) {
         Optional<User> userOptional = userRepository.findById(userId);
         userOptional.ifPresent(user -> {
@@ -43,7 +58,11 @@ public class UserService {
         });
     }
 
-
+    /**
+     @method : getUserResponseById
+     @desc : 주어진 사용자 ID를 사용하여 사용자를 찾고 userResponse 에 등록하는 메서드
+     @author : 김홍성
+     */
     public UserResponse getUserResponseById(Long id) {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
@@ -60,7 +79,7 @@ public class UserService {
         }
     }
 
-    /*
+    /**
         @method : findId
         @desc : 시큐리티에서 user 정보를 가져오는 메서드
         @author : 김성민

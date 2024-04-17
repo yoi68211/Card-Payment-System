@@ -26,7 +26,7 @@ public class User{
     private String username;
 
     @Column(nullable = false ,unique = true)
-    @Email(message = "email형식으로 작성해주세요")
+    @Email(message = "email 형식으로 작성해주세요")
     private String email;
 
     @Column(nullable = false)
@@ -51,5 +51,6 @@ public class User{
         this.email = email;
         this.password = password;
         this.role = role;
+
     }
 }

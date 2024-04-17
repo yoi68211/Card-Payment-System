@@ -27,11 +27,16 @@ public class UpdateService {
     private final ProductRepository productRepository;
     private final AutoPaymentRepository autoPaymentRepository;
 
-    public boolean updateBasic(UpdateDTO updateDTO){
+    /**
+     * @method : updateBasic
+     * @desc : 일반결제 정보 변경
+     * @author : LeeChanSin
+     */
+    public void updateBasic(UpdateDTO updateDTO){
         if(!updateDTO.getProductDelCheck().isEmpty()){
 
             for(Long id : updateDTO.getProductDelCheck()){
-                delete(id);
+                deleteProduct(id);
             }
         }
 
@@ -55,7 +60,7 @@ public class UpdateService {
 
                     if(productDTO.getId() == 0){
 
-                        savePro(productDTO, payment);
+                        saveProduct(productDTO, payment);
                     }
                 }
                 // 제품 목록을 반복하며 업데이트 수행
@@ -88,18 +93,25 @@ public class UpdateService {
                 customerRepository.save(customer);
 
             }
-            return true;
-        } else {
-            return false;
         }
     }
 
-    public void delete(Long id){
+    /**
+     * @method : deleteProduct
+     * @desc : product 정보 삭제
+     * @author : LeeChanSin
+     */
+    public void deleteProduct(Long id){
 
         productRepository.deleteById(id);
     }
 
-    public void savePro(ProductDTO productDTO, Payment payment){
+    /**
+     * @method : savePro
+     * @desc : product 정보 insert
+     * @author : LeeChanSin
+     */
+    public void saveProduct(ProductDTO productDTO, Payment payment){
         Product product = Product.builder()
                 .productName(productDTO.getProductName())
                 .productTotalItems(productDTO.getProductTotalItems())
@@ -111,8 +123,12 @@ public class UpdateService {
         productRepository.save(product);
 
     }
-
-    public boolean delUpdate(UpdateDTO updateDTO) {
+    /**
+     * @method : delUpdate
+     * @desc : payment 정보 soft delete
+     * @author : LeeChanSin
+     */
+    public void delUpdate(UpdateDTO updateDTO) {
         Long paymentId = updateDTO.getPaymentId();
 
         // paymentId를 이용하여 엔티티를 조회합니다.
@@ -126,17 +142,16 @@ public class UpdateService {
             // 업데이트된 엔티티를 저장합니다.
             paymentRepository.save(payment);
 
-            return true; // 업데이트 성공 시 true 반환
-        } else {
-
-            return false; // 엔티티가 존재하지 않을 경우 false 반환
-
         }
     }
 
 
-
-    public boolean updateAuto(UpdateDTO updateDTO){
+    /**
+     * @method : updateAuto
+     * @desc : 자동결제 정보 변경
+     * @author : LeeChanSin
+     */
+    public void updateAuto(UpdateDTO updateDTO){
 
         Optional<Customer> customerOptional = customerRepository.findById(updateDTO.getCustomerId());
 
@@ -168,12 +183,14 @@ public class UpdateService {
                 }
 
             }
-            return true;
-        } else {
-            return false;
         }
     }
 
+    /**
+     * @method : autoPayStop
+     * @desc : 자동결제 중지
+     * @author : LeeChanSin
+     */
     public void autoPayStop(UpdateDTO updateDTO){
 
         Optional<AutoPayment> autoPaymentOptional = autoPaymentRepository.findById(updateDTO.getAutoPaymentId());

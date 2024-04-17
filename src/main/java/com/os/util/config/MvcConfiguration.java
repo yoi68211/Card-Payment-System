@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 public class MvcConfiguration implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**")
+        registry.addResourceHandler("/***")
                 .addResourceLocations("classpath:/templates/", "classpath:/static/")
                 .setCacheControl(CacheControl.maxAge(10, TimeUnit.MINUTES));
     }

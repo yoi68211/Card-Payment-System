@@ -19,7 +19,11 @@ public class SoftDeleteScheduler {
 
     private final CustomerRepository customerRepository;
 
-    // 스케줄링 작업 설정
+    /**
+     * @method permanentlyDeleteSoftDeletedMemo
+     * @desc : 데이터 보존기간 이후 hard delete
+     * @author : LeeChanSin
+     */
     @Scheduled(fixedDelay = 300000) // 5분마다 실행
     public void permanentlyDeleteSoftDeletedMemo() {
         // 삭제된 메모 중에서 삭제 후 5분이 지난 메모를 조회하여 영구적으로 삭제

@@ -13,21 +13,36 @@ import org.springframework.web.bind.annotation.RestController;
 public class PayInfoRestController {
     private final UpdateService updateService;
 
+    /**
+     * @method : updateDetail
+     * @desc : 일반결제 정보 변경 service 실행
+     * @author : LeeChanSin
+     */
     @PostMapping("/payDetailEdit")
     public void updateDetail(@RequestBody @Valid UpdateDTO updateDTO){
         if(updateDTO.isAutoOrBasic()){
-            boolean check = updateService.updateBasic(updateDTO);
+            updateService.updateBasic(updateDTO);
         } else{
-            boolean check = updateService.updateAuto(updateDTO);
+            updateService.updateAuto(updateDTO);
         }
     }
 
+    /**
+     * @method : deleteDetail
+     * @desc : 일반결제 정보 soft delete service 실행
+     * @author : LeeChanSin
+     */
     @PostMapping("/payDetailDel")
     public void deleteDetail(@RequestBody @Valid UpdateDTO updateDTO){
 
-        boolean check = updateService.delUpdate(updateDTO);
+        updateService.delUpdate(updateDTO);
     }
 
+    /**
+     * @method : autoPayStop
+     * @desc : 자동결제 중지 service 실행
+     * @author : LeeChanSin
+     */
     @PostMapping("/autoPayStop")
     public void autoPayStop(@RequestBody @Valid UpdateDTO updateDTO){
 

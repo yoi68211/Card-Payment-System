@@ -35,37 +35,37 @@ button {
     height: 1px;
     background-color: #DDDDDD;
     margin: 30px 50px 0 50px;
-    /* 버튼 위 여백 조정 */
+    /** 버튼 위 여백 조정 */
     transition: height 0.3s ease;
-    /* 선이 펼쳐지는 애니메이션 */
+    /** 선이 펼쳐지는 애니메이션 */
 }
 
 .expandableContent {
     overflow: hidden;
-    /* 내용이 감추어짐 */
+    /** 내용이 감추어짐 */
     transition: max-height 0.3s ease;
-    /* 내용이 펼쳐지는 애니메이션 */
+    /** 내용이 펼쳐지는 애니메이션 */
     max-height: 0;
-    /* 초기에는 감추어진 상태 */
+    /** 초기에는 감추어진 상태 */
 }
 
 .expandableContent.active {
     max-height: 1000px;
-    /* 적절한 최대 높이로 변경 */
+    /** 적절한 최대 높이로 변경 */
 }
 
 .line2 {
     height: 0;
     background-color: #DDDDDD;
     margin: 15px 50px 0 50px;
-    /* 선 간 간격 조정 */
+    /** 선 간 간격 조정 */
     transition: height 0.3s ease;
-    /* 선이 펼쳐지는 애니메이션 */
+    /** 선이 펼쳐지는 애니메이션 */
 }
 
 .expandableContent.active+.line2 {
     height: 1px;
-    /* 확장될 때 선의 높이 조정 */
+    /** 확장될 때 선의 높이 조정 */
 }
 
 .date {
@@ -255,8 +255,8 @@ button {
     background-color: #DDDDDD;
     border: 2px solid #CCCCCC;
     color: #888888;
-    opacity: 0.5; /* 예시: 투명도 조절 */
-    cursor: not-allowed; /* 예시: 커서 스타일 변경 */
+    opacity: 0.5; /** 예시: 투명도 조절 */
+    cursor: not-allowed; /** 예시: 커서 스타일 변경 */
 }
 
 .searchInput {
@@ -274,7 +274,7 @@ button {
 }
 
 .custom-table {
-    border-collapse: collapse; /* 테이블 셀 사이의 경계를 합치도록 설정 */
+    border-collapse: collapse; /** 테이블 셀 사이의 경계를 합치도록 설정 */
     border-color: #CCCCCC;
     margin: 10px 0px 0px 50px;
 }
@@ -353,14 +353,14 @@ button {
 
 .pagination li {
     display: inline-block;
-    margin-right: -6px; /* 페이지 버튼 사이의 간격을 조절할 수 있습니다. */
+    margin-right: -6px; /** 페이지 버튼 사이의 간격을 조절할 수 있습니다. */
 }
 
 .page-link {
     display: inline-block;
     padding: 3px 8px;
-    border: 1px solid #ccc; /* 네모 칸의 테두리 스타일 */
-    border-radius: 2px; /* 네모 칸의 모서리를 둥글게 만듭니다. */
+    border: 1px solid #ccc; /** 네모 칸의 테두리 스타일 */
+    border-radius: 2px; /** 네모 칸의 모서리를 둥글게 만듭니다. */
     text-decoration: none;
     font-size: 11px;
     font-weight: bold;
@@ -369,10 +369,10 @@ button {
 }
 
 .page-link:hover {
-    background-color: #f0f0f0; /* 호버 시 배경 색상 변경 */
+    background-color: #f0f0f0; /** 호버 시 배경 색상 변경 */
 }
 
 .page-item.active .page-link {
-    background-color: black; /* 선택된 페이지 번호의 배경 색상 */
-    color: white; /* 선택된 페이지 번호의 글자 색상 */
+    background-color: black; /** 선택된 페이지 번호의 배경 색상 */
+    color: white; /** 선택된 페이지 번호의 글자 색상 */
 }

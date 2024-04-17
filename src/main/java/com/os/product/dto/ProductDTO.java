@@ -15,8 +15,13 @@ public class ProductDTO {
     private int productPrice;
     private int productAmount;
 
+    /**
+     * @method : productInfoDTO
+     * @desc : product Entity 정보 DTO 로 변환
+     * @author : LeeChanSin
+     */
     public static ProductDTO productInfoDTO(Product product){
-        ProductDTO productDTO = ProductDTO.builder()
+        return ProductDTO.builder()
                 .id(product.getId())
                 .productName(product.getProductName())
                 .productPrice(product.getProductPrice())
@@ -24,6 +29,5 @@ public class ProductDTO {
                 .productAmount(product.getProductAmount())
                 .build();
 
-        return productDTO;
     }
 }

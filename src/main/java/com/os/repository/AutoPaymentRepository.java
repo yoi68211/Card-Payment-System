@@ -3,6 +3,7 @@ package com.os.repository;
 import com.os.autoPayment.entity.AutoPayment;
 import com.os.util.AutoOrderStatus;
 import com.os.util.AutoStatus;
+import io.micrometer.common.lang.NonNullApi;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Transactional
+@NonNullApi
 public interface AutoPaymentRepository extends JpaRepository<AutoPayment,Long> {
     long countByAutoStatusAndUpdateTimeBetween(AutoStatus autoStatus, LocalDateTime startDate, LocalDateTime endDate);
 

@@ -21,11 +21,11 @@
     cursor: pointer;
 }
 .gap {
-    margin: 0 30px; /* 원하는 간격 값으로 조절 */
+    margin: 0 30px; /** 원하는 간격 값으로 조절 */
 }
 
 
-/* 차트 css */
+/** 차트 css */
 .custom-tooltip{
     background-color: #2D5CBE;
     color: white;

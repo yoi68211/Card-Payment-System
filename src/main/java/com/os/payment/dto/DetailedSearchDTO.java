@@ -2,8 +2,8 @@ package com.os.payment.dto;
 
 import lombok.Data;
 
-/**
- * @auther : 김홍성 작성자
+/***
+ * @author : 김홍성 작성자
  */
 @Data
 public class DetailedSearchDTO {

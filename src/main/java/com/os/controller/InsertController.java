@@ -28,7 +28,7 @@ public class InsertController {
     private final SavePaymentService savePaymentService;
     private final UserService userService;
 
-    /*
+    /**
         @method : insertData
         @desc : 받아온 정보를 db에 insert 하는 메서드
         @author : 김성민
@@ -45,7 +45,7 @@ public class InsertController {
         }
     }
 
-    /*
+    /**
         @method : save
         @desc : 받아온 정보를 db에 insert(임시저장) 하는 메서드
         @author : 김성민
@@ -54,17 +54,20 @@ public class InsertController {
     public String save(@RequestBody SavePaymentDTO dto, RedirectAttributes redirectAttributes) {
         User user = userService.findId();
         System.out.println("dto = " + dto.toString());
+        boolean res;
         if (user.getSavePayment() == null) {
-            System.out.println("save");
-            savePaymentService.save(dto, user);
+            res = savePaymentService.save(dto, user);
         } else {
-            savePaymentService.save_update(dto);
+            res = savePaymentService.save_update(dto);
         }
-        redirectAttributes.addFlashAttribute("message", "저장이 완료되었습니다.");
-        return "redirect:/insert_form";
+        if(res) {
+            redirectAttributes.addFlashAttribute("message", "저장이 완료되었습니다.");
+            return "redirect:/insert_form";
+        }
+        return null;
     }
 
-    /*
+    /**
         @method : load
         @desc : 임시저장한 정보들을 select 해주는 메서드
         @author : 김성민
@@ -85,7 +88,7 @@ public class InsertController {
         return savePaymentLoad;
     }
 
-    /*
+    /**
         @method : load
         @desc : 임시저장한 결제물품정보들을 변환해주는 메서드
         @author : 김성민

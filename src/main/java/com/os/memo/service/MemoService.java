@@ -21,6 +21,11 @@ public class MemoService {
     private final MemoRepository memoRepository;
     private final UserService userService;
 
+    /**
+     @method : findAll
+     @desc :메모 전체를 페이지별로 조회하는 메서드
+     @author : 한석희
+     */
     public List<MemoDTO> findAll() {
         LocalDateTime week = LocalDateTime.now().minusWeeks(1);
         List<Memo> MemoList = memoRepository.findAllByCreateTimeAfterOrderByCreateTimeDesc(week);
@@ -28,21 +33,37 @@ public class MemoService {
         for(Memo Memo : MemoList){
             MemoDTOList.add(MemoDTO.toMemoDTO(Memo));
         }
+
         return MemoDTOList;
     }
 
+    /**
+     @method : findAllMemos
+     @desc : 조회된 메모들을 메모 DTO로 변환하여 페이지 단위로 반환하는 메서드
+     @author : 한석희
+     */
     public Page<MemoDTO> findAllMemos(Pageable pageable) {
         Page<Memo> memoPage = memoRepository.findAll(pageable);
 
         return memoPage.map(MemoDTO::toMemoDTO);
     }
 
+    /**
+     @method : findByMemoContentsContaining
+     @desc : 게시글 내용을 포함하고있는 메모를 찾아주는 메서드
+     @author : 한석희
+     */
     public Page<MemoDTO> findByMemoContentsContaining(String keyword, Pageable pageable) {
         Page<Memo> allPaymentsPage = memoRepository.findByMemoContentsContaining(keyword, pageable);
 
         return allPaymentsPage.map(MemoDTO::toMemoDTO);
     }
 
+    /**
+     @method : findByUserUsernameContaining
+     @desc :  게시자 이름으로 메모 내용을 찾아주는 메서드
+     @author : 한석희
+     */
     // 작성자로 메모 검색
     public Page<MemoDTO> findByUserUsernameContaining(String keyword, Pageable pageable) {
         Page<Memo> allPaymentsPage = memoRepository.findByUserUsernameContaining(keyword, pageable);
@@ -50,13 +71,22 @@ public class MemoService {
         return allPaymentsPage.map(MemoDTO::toMemoDTO);
     }
 
+    /**
+     @method : findByMemoExposeYn
+     @desc :  게시글 노출여부 (Y/N)으로 메모 내용을 찾아주는 메서드
+     @author : 한석희
+     */
     public Page<MemoDTO> findByMemoExposeYn(String keyword, Pageable pageable) {
         Page<Memo> allPaymentsPage = memoRepository.findByMemoExposeYn(keyword, pageable);
 
         return allPaymentsPage.map(MemoDTO::toMemoDTO);
     }
 
-
+    /**
+     @method : save
+     @desc : 메모글을 작성하고, 저장할수 있게 해주는 메서드
+     @author : 한석희
+     */
     public void save(MemoDTO memoDTO) {
         User user = userService.findId();
         Memo memo = Memo.toEntity(memoDTO, user);
@@ -64,10 +94,20 @@ public class MemoService {
         memoRepository.save(memo);
     }
 
+    /**
+     @method : deleteSelectedItems
+     @desc : 체크된 글을 삭제할 수 있게 해주는 메서드
+     @author : 한석희
+     */
     public void deleteSelectedItems(List<Long> selectedIds) {
         memoRepository.deleteAllById(selectedIds);
     }
 
+    /**
+     @method : findById
+     @desc : 글 번호로 해당 글을 검색할 수 있게 해주는 메서드
+     @author : 한석희
+     */
     public MemoDTO findById(Long id) {
         Optional<Memo> optionalMemo = memoRepository.findById(id);
         if(optionalMemo.isPresent()) {
@@ -79,6 +119,11 @@ public class MemoService {
         }
     }
 
+    /**
+     @method : update
+     @desc : 메모글 작성자와 로그인한 사용자가 같을 경우에만 게시글을 수정할 수 있게 해주는 메서드
+     @author : 한석희
+     */
     public void update(MemoDTO memoDTO){
         User user = userService.findId();
         Optional<Memo> memoOptional  = memoRepository.findById(memoDTO.getId());
