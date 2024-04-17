@@ -150,7 +150,7 @@ public class ChartInsertTest {
 
                 // ------------여기서부터 autopay관련-------------
                 if (i > 42 && i < 56) {
-                    // i가 31 이상이고 56 미만인 경우 AutoPayment 를 생성하고 저장
+                    // i가 42 초과이고 56 미만인 경우 AutoPayment를 생성하고 저장
                     AutoPayment autoPayment = new AutoPayment();
                     // 자동결제 최초시간
                     autoPayment.setCreateTime(createTime);
