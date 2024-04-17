@@ -48,7 +48,7 @@
                         <span>AUTO-<span class="customer-id">1313</span> 자동결제 상세내역</span>
                     </div>
                     <div>
-                        <button type="button" onclick="toggleEdit()">편집</button>
+                        <button type="button" onclick="toggleEdit()" th:if="${#strings.equals(autoPayInfo.autoStatus, 'paid')}" >편집</button>
                         <button type="button" onclick="location.href='/autoList'"><i class="fa-solid fa-chevron-left"></i>목록으로</button>
                     </div>
                 </div>

@@ -123,6 +123,15 @@
         return true;
     }
 
+    function autoMemoR(text){
+
+            if (!memoRex.test(text)) {
+                alert("메모는 300자까지만 입력 가능합니다.");
+                return false;
+            }
+            return true;
+        }
+
     function totalItemsR(text) {
         if(text == ""){
             alert("수량을 입력하세요.");

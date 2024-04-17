@@ -71,7 +71,7 @@ function toggleEdit() {
         if(!addressR(param.customerAddress)){
             return;
         }
-        if(!memoR(param.paymentMemo)){
+        if(!autoMemoR(param.paymentMemo)){
             return;
         }
 

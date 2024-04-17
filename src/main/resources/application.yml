@@ -1,11 +1,11 @@
 # ?? ?? ??
 server:
-  port: 443
+  port: 8082
 
-  ssl:
-    key-store: localhost-key.pkcs12
-    key-store-password: qwer1234
-    key-store-type: PKCS12
+#  ssl:
+#    key-store: localhost-key.pkcs12
+#    key-store-password: qwer1234
+#    key-store-type: PKCS12
 
 
 
@@ -52,8 +52,8 @@ spring:
 
 
 
-api.toss.clientKey: test_ck_6bJXmgo28eEX5LOZe16W8LAnGKWx
+api.toss.clientKey: ${Toss_clientKey}
 
-api.toss.secretKey: test_sk_LkKEypNArW2PPmGx2XpQVlmeaxYG
+api.toss.secretKey: ${Toss_secretKey}
 
 
