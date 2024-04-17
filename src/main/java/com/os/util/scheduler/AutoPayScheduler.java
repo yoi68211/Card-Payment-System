@@ -23,8 +23,12 @@ import java.util.Random;
 @Configuration
 public class AutoPayScheduler {
     private final PaymentRepository paymentRepository;
-    private final AutoPaymentRepository autoPaymentRepository;
 
+    /**
+     * @method autoPaymentUpdate
+     * @desc : 자동결제 스케쥴링
+     * @auther : LeeChanSin
+    */
     @Transactional
     @Scheduled(fixedDelay = 300000) // 5분마다 실행
     public void autoPaymentUpdate() {
@@ -32,16 +36,16 @@ public class AutoPayScheduler {
         List<Payment> payments = paymentRepository.findAllPaymentsWithAutoPaymentsAndAutoStatusPaid();
         LocalDateTime currentDateTime = LocalDateTime.now(); // 현재 날짜
         Random random = new Random();
-        System.out.println("자동결제 스케쥴러 실행!!!!@%#@^&#$^*^%$!@#$%^ㅕㄸㄲㅁㄹㅇ노헝ㄷㄱㅇ");
+
         for(Payment payment : payments){
-            System.out.println("스케쥴러 for문 실해에에에에에엥");
+
             int randomValue = random.nextInt(100); // 0부터 99까지의 랜덤한 정수 생성
             // auto_payments 의 현재날까가 next_time 의 날짜를 지났다면
             if (payment.getAutoPayments().getPaymentNextTime().isBefore(currentDateTime)
                     || payment.getAutoPayments().getPaymentNextTime().isEqual(currentDateTime)
                     && payment.getAutoPayments().getAutoOrderStatus() == AutoOrderStatus.paid) {
                 System.out.println("payment 무와아아앙 조건 완 => " + payment.getAutoPayments().getId());
-                if(randomValue < 10){
+                if(randomValue < 10){ // 테스트용 => 10% 확률로 자동결제 실패
                     payment.setPaymentStatus(OrderStatus.error);
                     payment.getAutoPayments().setAutoStatus(AutoStatus.error);
                 } else{
@@ -51,6 +55,7 @@ public class AutoPayScheduler {
                     payment.getAutoPayments().setAutoPayDate(LocalDate.now()); // 결제 날짜
                     payment.getAutoPayments().setPaymentNextTime(Payment.calculateLocalDateTime(payment.getPaymentMonth(),payment.getPaymentAutoDate()));
                     payment.setPaymentStatus(OrderStatus.paid);
+                    payment.getAutoPayments().setAutoStatus(AutoStatus.paid);
                 }
 
 

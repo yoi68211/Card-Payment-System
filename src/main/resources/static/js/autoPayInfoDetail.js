@@ -1,6 +1,11 @@
 // 편집버튼 클릭
 let isEditing = false;
 
+/**
+* @method : toggleEdit
+* @desc : 편집모드 전환
+* @author : LeeChanSin
+*/
 function toggleEdit() {
 
     if (!isEditing) {
@@ -96,6 +101,11 @@ function toggleEdit() {
     }
 }; // 편집 버튼 end
 
+/**
+* @method : fnAutoPayStop
+* @desc : 자동결제 중지 메서드 실행
+* @author : LeeChanSin
+*/
 function fnAutoPayStop(){
     let param ={
         autoPaymentId : document.getElementById('autoPaymentId').value,
@@ -124,6 +134,11 @@ function fnAutoPayStop(){
 }
 
 
+/**
+* @method : formatDateTime
+* @desc : 날짜 데이터 LocalDateTime 형식으로 변환
+* @author : LeeChanSin
+*/
 function formatDateTime(dateString) {
     // dateString을 Date 객체로 변환합니다.
     let currentDate = new Date(dateString);

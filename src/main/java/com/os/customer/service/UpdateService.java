@@ -27,11 +27,16 @@ public class UpdateService {
     private final ProductRepository productRepository;
     private final AutoPaymentRepository autoPaymentRepository;
 
+    /**
+     * @method : updateBasic
+     * @desc : 일반결제 정보 변경
+     * @auther : LeeChanSin
+     */
     public void updateBasic(UpdateDTO updateDTO){
         if(!updateDTO.getProductDelCheck().isEmpty()){
 
             for(Long id : updateDTO.getProductDelCheck()){
-                delete(id);
+                deleteProduct(id);
             }
         }
 
@@ -55,7 +60,7 @@ public class UpdateService {
 
                     if(productDTO.getId() == 0){
 
-                        savePro(productDTO, payment);
+                        saveProduct(productDTO, payment);
                     }
                 }
                 // 제품 목록을 반복하며 업데이트 수행
@@ -91,12 +96,22 @@ public class UpdateService {
         }
     }
 
-    public void delete(Long id){
+    /**
+     * @method : deleteProduct
+     * @desc : product 정보 삭제
+     * @auther : LeeChanSin
+     */
+    public void deleteProduct(Long id){
 
         productRepository.deleteById(id);
     }
 
-    public void savePro(ProductDTO productDTO, Payment payment){
+    /**
+     * @method : savePro
+     * @desc : product 정보 insert
+     * @auther : LeeChanSin
+     */
+    public void saveProduct(ProductDTO productDTO, Payment payment){
         Product product = Product.builder()
                 .productName(productDTO.getProductName())
                 .productTotalItems(productDTO.getProductTotalItems())
@@ -108,7 +123,11 @@ public class UpdateService {
         productRepository.save(product);
 
     }
-
+    /**
+     * @method : delUpdate
+     * @desc : payment 정보 soft delete
+     * @auther : LeeChanSin
+     */
     public void delUpdate(UpdateDTO updateDTO) {
         Long paymentId = updateDTO.getPaymentId();
 
@@ -127,7 +146,11 @@ public class UpdateService {
     }
 
 
-
+    /**
+     * @method : updateAuto
+     * @desc : 자동결제 정보 변경
+     * @auther : LeeChanSin
+     */
     public void updateAuto(UpdateDTO updateDTO){
 
         Optional<Customer> customerOptional = customerRepository.findById(updateDTO.getCustomerId());
@@ -163,6 +186,11 @@ public class UpdateService {
         }
     }
 
+    /**
+     * @method : autoPayStop
+     * @desc : 자동결제 중지
+     * @auther : LeeChanSin
+     */
     public void autoPayStop(UpdateDTO updateDTO){
 
         Optional<AutoPayment> autoPaymentOptional = autoPaymentRepository.findById(updateDTO.getAutoPaymentId());

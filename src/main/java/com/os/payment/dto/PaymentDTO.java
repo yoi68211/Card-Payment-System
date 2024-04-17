@@ -27,6 +27,11 @@ public class PaymentDTO {
     private int paymentFirstPay;
     private String totalAmount;
 
+    /**
+     * @method : payInfoDTO
+     * @desc : payment Entity 정보 DTO 로 변환
+     * @auther : LeeChanSin
+     */
     public static PaymentDTO payInfoDTO(Payment payment){
         String totalAmount = payment.calculateTotalAmount(payment.getProducts());
 

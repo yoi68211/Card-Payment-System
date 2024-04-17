@@ -15,6 +15,11 @@ public class CustomerLoadDTO {
     private String customerPhone;              // 고객 전화번호
     private String customerAddress;
 
+    /**
+     * @method : CustomerInfoDTO
+     * @desc : Customer Entity 정보 DTO 로 변환
+     * @auther : LeeChanSin
+     */
     public static CustomerLoadDTO CustomerInfoDTO(Customer customer){
         return CustomerLoadDTO.builder()
                 .id(customer.getId())

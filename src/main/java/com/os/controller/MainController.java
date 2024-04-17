@@ -79,6 +79,11 @@ public class MainController {
         return "dashboard";
     }
 
+    /**
+     * @method : chartDetail
+     * @desc : 차트 상세 페이지 이동
+     * @auther : LeeChanSin
+     */
     @GetMapping("/chartDetail")
     public String chartDetail(Model model){
         List<Long> monthChart = paymentService.getCountsByMonthRange();
@@ -104,6 +109,11 @@ public class MainController {
         return "paymentDetails";
     }
 
+    /**
+     * @method : pageSample
+     * @desc : 헤더 사이드바 적용된 예시 페이지 이동
+     * @auther : LeeChanSin
+     */
     @GetMapping("pageSample")
     public String pageSample() {
         return "/pageSample";

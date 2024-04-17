@@ -4,6 +4,11 @@ let productDelCheck = [];
 // 편집버튼 클릭
 let isEditing = false;
 
+/**
+* @method : toggleEdit
+* @desc : 편집모드 전환
+* @author : LeeChanSin
+*/
 function toggleEdit() {
 
     if (!isEditing) {
@@ -173,7 +178,11 @@ function toggleEdit() {
     }
 }; // 편집 버튼 end
 
-// 행추가 버튼
+/**
+* @method : fnAddTable
+* @desc : 상품정보 테이블 행추가
+* @author : LeeChanSin
+*/
 function fnAddTable() {
     // 테이블 요소 가져오기
     const tableBody = document.querySelector('.basic-footer-table tbody');
@@ -222,7 +231,13 @@ function fnAddTable() {
         tableBody.appendChild(newRow);
     }
 }
-// 헹 삭제 버튼
+
+
+/**
+* @method : fnDelTable
+* @desc : 상품정보 테이블 행삭제
+* @author : LeeChanSin
+*/
 function fnDelTable() {
     const checkedRows = [];
 
@@ -260,7 +275,12 @@ function fnDelTable() {
 
 
 }
-// 결제 내역 삭제
+
+/**
+* @method : fnDelPay
+* @desc : 상품정보 삭제 메서드 실행
+* @author : LeeChanSin
+*/
 function fnDelPay() {
     const result = confirm("삭제하시겠습니까?");
     if (!result) {
@@ -292,7 +312,11 @@ function fnDelPay() {
     });
 }
 
-
+/**
+* @method : updatePrice
+* @desc : 상품 리스트 총액 계산
+* @author : LeeChanSin
+*/
 function updatePrice(element) {
     const row = element.closest("tr");
     const count = row.querySelector('[name="productTotalItems"]');
@@ -308,6 +332,11 @@ function updatePrice(element) {
     updateTotalAmount(); // 총합 업데이트
 }
 
+/**
+* @method : updateTotalAmount
+* @desc : 상품 리스트 총액 계산
+* @author : LeeChanSin
+*/
 function updateTotalAmount() {
     const tableBody = document.querySelector('.basic-footer-table tbody');
     const rows = tableBody.querySelectorAll('tr');
@@ -325,13 +354,22 @@ function updateTotalAmount() {
 }
 
 
-
+/**
+* @method : moveQrPay
+* @desc : Qr 결제 페이지로 이동
+* @author : LeeChanSin
+*/
 function moveQrPay() {
     let customerId = document.getElementById("customerId").value;
 
     location.href = "/paymentDetails?id=" + customerId;
 }
 
+/**
+* @method : moveReceipt
+* @desc : 신용구매도표 페이지로 이동
+* @author : LeeChanSin
+*/
 function moveReceipt() {
     let f = document.getElementById("basic-form");
 
